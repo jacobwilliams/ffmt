@@ -21,7 +21,9 @@ subroutine collect_split(testsuite)
         new_unittest("split lines are stable", test_stable), &
         new_unittest("relational symbols", test_symbols), &
         new_unittest("relational letters", test_letters), &
-        new_unittest("limits of the standard", test_limits) &
+        new_unittest("limits of the standard", test_limits), &
+        new_unittest("width of the code", test_code_width), &
+        new_unittest("statements that depend on other lines", test_split_context) &
         ]
 end subroutine collect_split
 
@@ -194,5 +196,42 @@ subroutine test_limits(error)
     if (allocated(error)) return
     call check(error, diags(1)%line, 256)
 end subroutine test_limits
+
+subroutine test_code_width(error)
+    type(error_type), allocatable, intent(out) :: error
+    character, parameter :: CR = achar(13)
+    ! comments do not count
+    call check(error, longest_code('x = 1'//NL//'! '//repeat('a', 50)//NL), 5)
+    if (allocated(error)) return
+    call check(error, longest_code('x = 1    ! '//repeat('a', 50)//NL), 5)
+    if (allocated(error)) return
+    ! a `!` in a string is not a comment, also in a string continued on the next line (LF or CRLF)
+    call check(error, longest_code("s = 'a ! b'   ! c"//NL), 11)
+    if (allocated(error)) return
+    call check(error, longest_code("s = 'a&"//NL//"&b ! "//repeat('c', 20)//"'"//NL), 26)
+    if (allocated(error)) return
+    call check(error, longest_code("s = 'a&"//CR//NL//"&b ! "//repeat('c', 20)//"'"//CR//NL), 26)
+    if (allocated(error)) return
+    ! nor a quote in a comment
+    call check(error, longest_code("x = 1 ! it's"//NL//'y = 22'//NL), 6)
+    if (allocated(error)) return
+    ! preprocessor lines do not count
+    call check(error, longest_code('#define X '//repeat('a', 40)//NL//'x = 1'//NL), 5)
+end subroutine test_code_width
+
+subroutine test_split_context(error)
+    !! Split statements that are laid out again on their own, and ones that depend on the lines
+    !! around them (a comment lined up with theirs, a label, `;`), give the same result.
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    opts%line_length = 24
+    call expect(error, lines([character(len=60) :: 'subroutine s', '    call f(aaaa, bbbb, cccc)  ! a', &
+                              '                              ! b', '10  call g(aaaa, bbbb, cccc)', &
+                              '    x = 1; call h(aaaa, bbbb, cccc)', '    call k(aaaa, bbbb, cccc)', 'end subroutine']), &
+                lines([character(len=60) :: 'subroutine s', '    call f(aaaa, bbbb, &', '           cccc)  ! a', &
+                       '                              ! b', '10  call g(aaaa, bbbb, &', '           cccc)', &
+                       '    x = 1; call h( &', '        aaaa, bbbb, &', '        cccc)', '    call k(aaaa, bbbb, &', &
+                       '           cccc)', 'end subroutine']), opts)
+end subroutine test_split_context
 
 end module test_split

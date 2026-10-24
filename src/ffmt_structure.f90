@@ -43,6 +43,10 @@ type :: scope_stack_t
     !! The open constructs, outermost first.
     type(scope_t), allocatable :: s(:)   !! storage; only `s(1:top)` is in use
     integer :: top = 0                   !! number of open constructs
+contains
+    procedure :: push => stack_push          !! open a construct
+    procedure :: restore => stack_restore    !! replace the open constructs by saved ones
+    procedure :: snapshot => stack_snapshot  !! the open constructs, to save
 end type scope_stack_t
 
 type :: saved_stack_t
@@ -106,11 +110,11 @@ subroutine analyze_structure(source, views, st, diags)
 
         select case (info(k)%role)
         case (ROLE_OPEN)
-            call stack_push(stack, scope_t(info(k)%construct, info(k)%do_label, line))
+            call stack%push(scope_t(info(k)%construct, info(k)%do_label, line))
         case (ROLE_MIDDLE)
             if (stack%top == 0 .and. info(k)%construct == C_CONTAINS) then
                 ! a main program without a `program` statement
-                call stack_push(stack, scope_t(C_PROGRAM, 0, line))
+                call stack%push(scope_t(C_PROGRAM, 0, line))
             else if (stack%top == 0) then
                 call diagnose(line, construct_label(info(k)%construct)//' statement outside any construct')
             else if (.not. middle_fits(info(k)%construct, stack%s(stack%top)%construct)) then
@@ -177,17 +181,17 @@ contains
             case (PP_IF)
                 nsaved = nsaved + 1
                 if (nsaved > size(saved)) saved = [saved, saved_stack_t()]
-                saved(nsaved)%at_if = stack_snapshot(stack)
+                saved(nsaved)%at_if = stack%snapshot()
                 if (allocated(saved(nsaved)%after_first)) deallocate (saved(nsaved)%after_first)
             case (PP_ELSE)
                 if (nsaved > 0) then
-                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack_snapshot(stack)
-                    call stack_restore(stack, saved(nsaved)%at_if)
+                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack%snapshot()
+                    call stack%restore(saved(nsaved)%at_if)
                     depth(k) = stack%top
                 end if
             case (PP_ENDIF)
                 if (nsaved > 0) then
-                    if (allocated(saved(nsaved)%after_first)) call stack_restore(stack, saved(nsaved)%after_first)
+                    if (allocated(saved(nsaved)%after_first)) call stack%restore(saved(nsaved)%after_first)
                     depth(k) = stack%top
                     nsaved = nsaved - 1
                 end if
@@ -243,7 +247,7 @@ end subroutine analyze_structure
 
 pure subroutine stack_push(self, sc)
     !! Open construct `sc`, growing the storage as needed.
-    type(scope_stack_t), intent(inout) :: self   !! the stack
+    class(scope_stack_t), intent(inout) :: self  !! the stack
     type(scope_t), intent(in) :: sc               !! the construct to open
     type(scope_t), allocatable :: tmp(:)
     if (.not. allocated(self%s)) allocate (self%s(16))
@@ -258,18 +262,18 @@ end subroutine stack_push
 
 pure subroutine stack_restore(self, scopes)
     !! Replace the open constructs by `scopes` (outermost first).
-    type(scope_stack_t), intent(inout) :: self   !! the stack
+    class(scope_stack_t), intent(inout) :: self  !! the stack
     type(scope_t), intent(in) :: scopes(:)        !! a saved stack (see [[stack_snapshot]])
     integer :: j
     self%top = 0
     do j = 1, size(scopes)
-        call stack_push(self, scopes(j))
+        call self%push(scopes(j))
     end do
 end subroutine stack_restore
 
 pure function stack_snapshot(self) result(scopes)
     !! The open constructs, outermost first.
-    type(scope_stack_t), intent(in) :: self   !! the stack
+    class(scope_stack_t), intent(in) :: self  !! the stack
     type(scope_t), allocatable :: scopes(:)
     if (allocated(self%s)) then
         scopes = self%s(1:self%top)

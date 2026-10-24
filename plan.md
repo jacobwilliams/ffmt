@@ -323,12 +323,14 @@ and no shell are used.
      check compares tokens directly (signatures only when `use` statements are sorted) and reuses
      the tokens of the first pass; line pieces refer to source ranges instead of copying text;
      no per-token copies in `classify_statement` and `statement_gaps`; split passes and
-     `long_code_lines` are skipped when no line is longer than the limit. Left: a file with long
-     lines is formatted again in full for each split pass (about 15% of the time on fortranpack,
-     where 25 of 276 files, a third of the bytes, need one or two). Re-laying out only the split
-     statements would remove most of it, but the layout of a statement depends on state from
-     earlier lines (depth, comment columns), so it needs care to stay stable. Next costs after
-     that: `tokenize` (about a quarter) and the remaining `token_lower` copies.
+     `long_code_lines` are skipped when no line is longer than the limit. Later: a split pass lays out
+     only the statements it split, each on its own at its column, and splices them back
+     (`relayout`); it falls back to a full pass when a split statement depends on the lines around
+     it (`stands_alone`: a `;` on its lines, a label, a comment lined up with its trailing comment,
+     or comment spacing on). The pre-check measures only code (`longest_code`), so files whose only
+     long lines are comments skip splitting. Together about 12% faster on fortranpack (0.50 s to
+     0.44 s; splitting now costs 0.03 s). Next costs: `tokenize` (about a quarter) and the
+     remaining `token_lower` copies.
    - **Parallel formatting (later):** format several files at once with OpenMP, as fprettier does
      (`-j`; about 3x faster than its single-threaded run on 10 cores in `bench/benchmark.py`).
      The formatting path has no shared state, and a `run` split into three passes worked: find the

@@ -16,7 +16,7 @@ use ffmt_strings, only: to_s, string_t, string_builder_t, lower_char, lowercase
 implicit none
 private
 
-public :: format_text, same_code
+public :: format_text, same_code, longest_code
 public :: diagnostic_t, format_options_t
 
 integer, parameter, public :: FMT_OK = 0              !! formatted
@@ -40,7 +40,7 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     integer, parameter :: MAX_PASSES = 50   ! each pass splits each long line once
     type(diagnostic_t), allocatable :: d(:), unused(:)
     type(token_list_t) :: tokens
-    integer, allocatable :: long(:)
+    integer, allocatable :: long(:), changed(:, :)
     character(len=:), allocatable :: prepared, split
     integer :: k, nsplit
 
@@ -48,17 +48,23 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     prepared = convert_relational(sort_use(src, opts%sort_use, opts%sort_use_only, &
                                            merge(0, opts%line_length, opts%split_lines)), opts%relational)
     call format_pass(prepared, opts, out, d, tokens)
-    ! no line longer than the limit, as most files: nothing to split, and no need to look for
+    ! no code longer than the limit, as most files: nothing to split, and no need to look for
     ! code lines that are too long
-    if (opts%split_lines .and. opts%line_length > 0 .and. longest_line(out) > opts%line_length) then
-        ! split long lines and format again, until every line fits or nothing more can be split
+    if (opts%split_lines .and. opts%line_length > 0 .and. longest_code(out) > opts%line_length) then
+        ! split long lines and format again, until every line fits or nothing more can be split; only
+        ! the statements that were split need laying out again, unless one of them depends on the
+        ! lines around it
         do k = 1, MAX_PASSES
-            split = split_long_lines(out, opts%line_length, opts%continuation_indent, nsplit)
+            split = split_long_lines(out, opts%line_length, opts%continuation_indent, nsplit, changed)
             if (nsplit == 0) exit
-            call format_pass(split, opts, out, unused)
-            if (longest_line(out) <= opts%line_length) exit
+            if (allocated(changed) .and. opts%comment_spacing < 0) then
+                out = relayout(split, changed, opts)
+            else
+                call format_pass(split, opts, out, unused)
+            end if
+            if (longest_code(out) <= opts%line_length) exit
         end do
-        if (longest_line(out) > opts%line_length) then
+        if (longest_code(out) > opts%line_length) then
             long = long_code_lines(out, opts%line_length)
             do k = 1, size(long)
                 d = [d, diagnostic_t(long(k), 'line '//to_s(long(k))//' of the formatted file is longer than '// &
@@ -158,6 +164,99 @@ function limit_diagnostics(src) result(diags)
         end if
     end do
 end function limit_diagnostics
+
+function relayout(text, changed, opts) result(out)
+    !! `text` with the statements at `changed` (byte ranges, in order) laid out again, each on its own
+    !! at the column where it starts. `text` is formatted apart from those statements, and they do
+    !! not depend on the lines around them (see [[stands_alone]]), so this gives what formatting the
+    !! whole text again would, in a fraction of the time.
+    character(len=*), intent(in) :: text                 !! the text, after lines were split
+    integer, intent(in) :: changed(:, :)                 !! byte ranges of the statements to lay out
+    type(format_options_t), intent(in) :: opts           !! the formatting options
+    character(len=:), allocatable :: out
+    type(format_options_t) :: alone
+    type(diagnostic_t), allocatable :: unused(:)
+    type(string_builder_t) :: buf
+    character(len=:), allocatable :: piece
+    integer :: j, next
+
+    alone = opts
+    next = 1
+    do j = 1, size(changed, 2)
+        associate (a => changed(1, j), b => changed(2, j))
+            call buf%append(text(next:a - 1))
+            alone%base_indent = verify(text(a:b)//'x', ' ') - 1    ! its indentation
+            call format_pass(text(a:b), alone, piece, unused)
+            call buf%append(piece)
+            next = b + 1
+        end associate
+    end do
+    call buf%append(text(next:))
+    out = buf%get()
+end function relayout
+
+pure integer function longest_code(text) result(width)
+    !! An upper bound of the width of the longest code line of `text`: the characters of each line
+    !! before a comment, without the blanks before it, as [[long_code_lines]] counts them.
+    !! Preprocessor lines do not count. Strings are followed across continuation lines, so that a
+    !! `!` inside one does not end the code, but the scan does not tokenize, so it may count more
+    !! than a token-based count would; never less.
+    character(len=*), intent(in) :: text   !! the formatted text
+    integer :: k, c, w, code_w, last_nonblank
+    character :: quote
+    logical :: line_start, skip, in_comment
+
+    width = 0
+    w = 0
+    code_w = 0
+    quote = ' '
+    line_start = .true.
+    skip = .false.
+    in_comment = .false.
+    last_nonblank = 0
+    do k = 1, len(text)
+        c = iand(ichar(text(k:k)), 255)
+        if (c == 13 .and. k < len(text)) then
+            if (text(k + 1:k + 1) == achar(10)) cycle      ! CRLF: the line ends at the LF
+        end if
+        if (c == 10 .or. c == 13) then
+            width = max(width, code_w)
+            ! a string continued on the next line ends this one with `&`
+            if (quote /= ' ' .and. .not. (last_nonblank > 0 .and. text(max(1, last_nonblank):max(1, last_nonblank)) == '&')) &
+                quote = ' '
+            w = 0
+            code_w = 0
+            line_start = .true.
+            skip = .false.
+            in_comment = .false.
+            last_nonblank = 0
+            cycle
+        end if
+        if (skip .or. in_comment) cycle
+        if (c >= 128 .and. c < 192) cycle                  ! a UTF-8 continuation byte
+        w = w + 1
+        if (text(k:k) == ' ' .or. text(k:k) == achar(9)) cycle
+        if (line_start) then
+            line_start = .false.
+            if (quote == ' ' .and. (text(k:k) == '#' .or. (index('$@', text(k:k)) > 0 .and. &
+                                                           text(min(k + 1, len(text)):min(k + 1, len(text))) == ':'))) then
+                skip = .true.                              ! a preprocessor line
+                cycle
+            end if
+        end if
+        if (quote /= ' ') then
+            if (text(k:k) == quote) quote = ' '            ! a doubled quote reopens at once
+        else if (text(k:k) == '"' .or. text(k:k) == "'") then
+            quote = text(k:k)
+        else if (text(k:k) == '!') then
+            in_comment = .true.
+            cycle
+        end if
+        code_w = w
+        last_nonblank = k
+    end do
+    width = max(width, code_w)
+end function longest_code
 
 pure integer function longest_line(text) result(width)
     !! Width of the longest line of `text`, in characters (as [[utf8_width]] counts them).

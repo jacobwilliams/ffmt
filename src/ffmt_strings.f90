@@ -18,6 +18,7 @@ type, public :: string_builder_t
 contains
     procedure :: append => builder_append
     procedure :: get => builder_get
+    procedure :: length => builder_length
 end type string_builder_t
 
 contains
@@ -112,5 +113,11 @@ pure function builder_get(self) result(str)
         str = ''
     end if
 end function builder_get
+
+pure integer function builder_length(self) result(n)
+    !! Length of the string built so far.
+    class(string_builder_t), intent(in) :: self   !! the builder
+    n = self%n
+end function builder_length
 
 end module ffmt_strings

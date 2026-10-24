@@ -21,7 +21,7 @@ integer, parameter, public :: MAX_CONTINUATIONS = 255   !! continuation lines a 
 
 contains
 
-function split_long_lines(src, line_length, indent, nsplit) result(out)
+function split_long_lines(src, line_length, indent, nsplit, changed) result(out)
     !! `src` with each code line longer than `line_length` split once. The new continuation lines are indented
     !! by `indent` more than the line they come from if it is the first line of a statement, and like
     !! it if it is a continuation line, which the layout pass will usually leave in place. `nsplit`
@@ -30,12 +30,18 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
     integer, intent(in) :: line_length            !! maximum line width, in characters
     integer, intent(in) :: indent                 !! indentation step, in blanks
     integer, intent(out) :: nsplit                !! number of lines split
+    integer, allocatable, intent(out), optional :: changed(:, :)   !! where the statements that were split
+                                                  !! are in `out`: bytes `changed(1, j):changed(2, j)`.
+                                                  !! Not allocated if one of them cannot be laid out
+                                                  !! again on its own (see [[stands_alone]])
     character(len=:), allocatable :: out
 
     type(source_t) :: source
     type(string_builder_t) :: buf
     character(len=:), allocatable :: nl
-    integer :: k, j, lend, a, p, q, base, start_col, offset, ncont
+    integer :: k, j, lend, a, p, q, base, start_col, offset, ncont, before, start, nranges
+    integer, allocatable :: ranges(:, :)
+    logical :: alone
 
     nsplit = 0
     call parse_source(src, source)
@@ -47,7 +53,12 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
         end if
     end do
 
+    allocate (ranges(2, 16))
+    nranges = 0
+    alone = .true.
     do k = 1, source%stmts%n
+        before = nsplit
+        start = buf%length() + 1
         if (source%keep(k) .or. source%stmts%s(k)%kind /= SK_CODE) then
             call copy(source%stmts%s(k)%first, source%stmts%s(k)%last)
             cycle
@@ -84,8 +95,15 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
             call copy(a, lend)
             j = lend + 1
         end do
+        if (nsplit > before) then
+            if (nranges == size(ranges, 2)) ranges = reshape([ranges, ranges], [2, 2*nranges])
+            nranges = nranges + 1
+            ranges(:, nranges) = [start, buf%length()]
+            alone = alone .and. stands_alone(source, k)
+        end if
     end do
     out = buf%get()
+    if (present(changed) .and. alone) changed = ranges(:, 1:nranges)
 
 contains
 
@@ -120,6 +138,40 @@ contains
     end function indentation
 
 end function split_long_lines
+
+pure logical function stands_alone(source, k)
+    !! True if statement `k` of `source`, a code statement, can be laid out again on its own after
+    !! one of its lines is split, giving what laying out the whole text would: it takes up whole
+    !! lines (no `;` before or after it on its lines, no byte order mark), has no statement label
+    !! (which stays at the start of the line), and is not followed by a comment line that may be
+    !! lined up with a comment at the end of its last line.
+    type(source_t), intent(in) :: source   !! the source
+    integer, intent(in) :: k               !! index into `source%stmts`
+    integer :: j, f
+
+    stands_alone = .false.
+    associate (s => source%stmts%s(k), tok => source%tokens%tok)
+        if (s%first > 1) then
+            if (tok(s%first - 1)%kind /= TK_NEWLINE) return
+        end if
+        if (tok(s%last)%kind /= TK_NEWLINE .and. s%last < source%tokens%n) return
+        if (any(tok(s%first:s%last)%kind == TK_BOM)) return
+        f = s%first
+        do while (f < s%last .and. tok(f)%kind == TK_SPACE)
+            f = f + 1
+        end do
+        if (tok(f)%kind == TK_INT) return                   ! a statement label
+        if (k < source%stmts%n) then
+            if (source%stmts%s(k + 1)%kind == SK_COMMENT) then
+                ! a comment at the end of the last line, before its line break
+                j = s%last
+                if (tok(j)%kind == TK_NEWLINE) j = j - 1
+                if (j >= s%first .and. tok(j)%kind == TK_COMMENT) return
+            end if
+        end if
+    end associate
+    stands_alone = .true.
+end function stands_alone
 
 integer function break_point(tokens, src, a, lend, start_col, line_length) result(best)
     !! The token after which to split tokens `a:lend` of a line that starts at token `a` in column
