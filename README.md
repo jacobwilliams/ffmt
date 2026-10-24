@@ -292,7 +292,6 @@ expression library [fregex](https://github.com/jacobwilliams/fregex). Directory 
 | [ffmt](https://pypi.org/project/ffmt/) | Rust | Fypp, Doxygen and OpenACC/OpenMP support |
 | [LFortran](https://lfortran.org) `lfortran fmt` | C++ | formats from the compiler's syntax tree |
 | [Fortitude](https://github.com/PlasmaFAIR/fortitude) | Rust | a linter with automatic fixes, not a full formatter |
-| Emacs `f90-mode` | Emacs Lisp | indentation in the editor |
 
 ## License
 
