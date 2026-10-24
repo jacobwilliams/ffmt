@@ -11,7 +11,7 @@ use ffmt_strings, only: make_lowercase
 implicit none
 private
 
-public :: split_statements, code_tokens, statement_view
+public :: split_statements, code_tokens, statement_view, set_view
 
 ! item kinds
 integer, parameter, public :: SK_CODE = 1      !! a code statement
@@ -127,16 +127,34 @@ function code_tokens(src, tokens, stmt) result(idx)
 end function code_tokens
 
 function statement_view(src, tokens, stmt) result(v)
-    !! The view of code statement `stmt`.
+    !! The view of code statement `stmt` (see [[set_view]], which fills one in place, without a copy).
     character(len=*), intent(in) :: src          !! source text
     type(token_list_t), intent(in) :: tokens     !! tokens of `src`
     type(statement_t), intent(in) :: stmt        !! the statement
     type(statement_view_t) :: v
+    call set_view(src, tokens, stmt, v)
+end function statement_view
+
+subroutine set_view(src, tokens, stmt, v)
+    !! Make `v` the view of code statement `stmt`.
+    character(len=*), intent(in) :: src          !! source text
+    type(token_list_t), intent(in) :: tokens     !! tokens of `src`
+    type(statement_t), intent(in) :: stmt        !! the statement
+    type(statement_view_t), intent(out) :: v     !! the view
     integer :: j, p, d, total
 
-    v%code = code_tokens(src, tokens, stmt)
-    v%n = size(v%code)
-    allocate (v%kinds(v%n), v%depth(v%n), v%lo(v%n), v%hi(v%n))
+    ! the code tokens, as code_tokens finds them, counted first to allocate once
+    v%n = 0
+    do j = stmt%first, stmt%last
+        if (is_statement_code(j)) v%n = v%n + 1
+    end do
+    allocate (v%code(v%n), v%kinds(v%n), v%depth(v%n), v%lo(v%n), v%hi(v%n))
+    p = 0
+    do j = stmt%first, stmt%last
+        if (.not. is_statement_code(j)) cycle
+        p = p + 1
+        v%code(p) = j
+    end do
     total = 0
     do j = 1, v%n
         total = total + tokens%tok(v%code(j))%last - tokens%tok(v%code(j))%first + 1
@@ -166,7 +184,18 @@ function statement_view(src, tokens, stmt) result(v)
     if (v%n > 1) then
         if (v%kinds(1) == TK_INT) v%first = 2
     end if
-end function statement_view
+
+contains
+
+    logical function is_statement_code(k)
+        !! True if token `k` is one of the code tokens of the statement (not a `;` separator).
+        integer, intent(in) :: k   !! index into the token list
+        is_statement_code = is_code_kind(tokens%tok(k)%kind)
+        if (is_statement_code .and. tokens%tok(k)%kind == TK_OP) &
+            is_statement_code = src(tokens%tok(k)%first:tokens%tok(k)%last) /= ';'
+    end function is_statement_code
+
+end subroutine set_view
 
 pure function view_word(v, j) result(w)
     !! Lowercase text of code token `j`, or `''` outside the statement.

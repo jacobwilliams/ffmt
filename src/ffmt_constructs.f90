@@ -181,16 +181,23 @@ contains
     subroutine split_words()
         !! Fill `wd` with the words of the statement from code token `k` on, splitting the first
         !! one with `expand_keyword`.
-        character(len=:), allocatable :: first
         type(string_t), allocatable :: parts(:)
-        integer :: j
+        integer :: j, np
 
-        first = v%word(k)
-        parts = expand_keyword(first)
-        wd%w = parts            ! the other words are read from the view when needed (see `word`)
-        allocate (wd%tok(size(parts) + v%n - k))
-        wd%tok(1:size(parts)) = k
-        wd%n = size(parts)
+        ! only `end...`, `else...`, `select...`, `block...`, `change...` and `double...` can be
+        ! combined keywords; other first words are read from the view, like the rest (see `word`)
+        associate (first => v%low(v%lo(k):v%hi(k)))
+            if (index(first, 'end') == 1 .or. index(first, 'else') == 1 .or. index(first, 'select') == 1 .or. &
+                index(first, 'block') == 1 .or. index(first, 'change') == 1 .or. index(first, 'double') == 1) then
+                parts = expand_keyword(first)
+                if (size(parts) > 1) call move_alloc(parts, wd%w)
+            end if
+        end associate
+        if (.not. allocated(wd%w)) allocate (wd%w(0))
+        np = max(1, size(wd%w))
+        allocate (wd%tok(np + v%n - k))
+        wd%tok(1:np) = k
+        wd%n = np
         do j = k + 1, v%n
             wd%n = wd%n + 1
             wd%tok(wd%n) = j

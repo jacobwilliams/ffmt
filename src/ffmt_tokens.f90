@@ -7,7 +7,7 @@ use ffmt_strings, only: make_lowercase
 implicit none
 private
 
-public :: token_text, token_lower, is_code_kind, is_chevron, detokenize
+public :: token_text, token_lower, is_chevron, detokenize
 
 ! token kinds
 integer, parameter, public :: TK_SPACE = 1      !! blanks and tabs
@@ -25,6 +25,16 @@ integer, parameter, public :: TK_OP = 12        !! operators and punctuation: `*
 integer, parameter, public :: TK_FYPP = 13      !! inline fypp: `${...}$`, `@{...}@`, `#{...}#`
 integer, parameter, public :: TK_OTHER = 14     !! any other character
 integer, parameter, public :: TK_BOM = 15       !! UTF-8 byte order mark at the start of the file
+
+logical, parameter, public :: is_code_kind(0:15) = [.true., &                      ! 0: no kind yet
+                                                    .false., .false., .false., .false., .false., &  ! space .. preproc
+                                                    .true., .true., .true., .true., .true., .true., &
+                                                    .true., .true., .true., &     ! name .. other
+                                                    .false.]                      ! byte order mark
+    !! True for the kinds of tokens that are part of the code, as opposed to layout (blanks, line
+    !! breaks, continuation markers), comments and preprocessor lines. Indexed by kind,
+    !! `is_code_kind(t%kind)` reads like a function call, and as a constant it is inlined, where a
+    !! function in another module is not.
 
 ! comment sub-kinds
 integer, parameter, public :: CM_PLAIN = 0        !! ordinary comment
@@ -93,18 +103,6 @@ pure function token_lower(src, t) result(text)
     text = src(t%first:t%last)
     call make_lowercase(text)
 end function token_lower
-
-elemental logical function is_code_kind(kind)
-    !! True for tokens that are part of the code, as opposed to layout (blanks, line breaks,
-    !! continuation markers), comments and preprocessor lines.
-    integer, intent(in) :: kind   !! token kind, one of the TK_* constants
-    select case (kind)
-    case (TK_SPACE, TK_NEWLINE, TK_COMMENT, TK_CONT, TK_PREPROC, TK_BOM)
-        is_code_kind = .false.
-    case default
-        is_code_kind = .true.
-    end select
-end function is_code_kind
 
 pure logical function is_chevron(src, tokens, t)
     !! True if token `t` is a `<` or `>` operator directly next to another one, as in the CUDA

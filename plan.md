@@ -340,8 +340,14 @@ and no shell are used.
      it (`stands_alone`: a `;` on its lines, a label, a comment lined up with its trailing comment,
      or comment spacing on). The pre-check measures only code (`longest_code`), so files whose only
      long lines are comments skip splitting. Together about 12% faster on fortranpack (0.50 s to
-     0.44 s; splitting now costs 0.03 s). Next costs: `tokenize` (about a quarter) and the
-     remaining `token_lower` copies.
+     0.44 s; splitting now costs 0.03 s). Then another 17% (0.44 s to 0.37 s): no copy of each
+     token's text in `emit_body` (the previous token is kept as an index), a byte-length check
+     before the code-width scan (`too_long`), `is_code_kind` as a constant table (a function in
+     another module is not inlined), statement views filled in place (`set_view`, `set_views`)
+     instead of copied, no copy of the token list in `same_code`, and only the possible combined
+     keywords split in `classify_statement`. Tried without gain: pre-sizing the token list (it
+     default-initializes every element) and appending tokens without a call. What remains is
+     mostly the lexer's character loop (about a quarter of the time).
    - **Parallel formatting (later):** format several files at once with OpenMP, as fprettier does
      (`-j`; about 3x faster than its single-threaded run on 10 cores in `bench/benchmark.py`).
      The formatting path has no shared state, and a `run` split into three passes worked: find the

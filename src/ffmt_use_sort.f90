@@ -52,7 +52,7 @@ function sort_use(src, statements, only_lists, width) result(out)
             keys(k)%s = ''
             movable(k) = .false.
             if (stmts%s(k)%kind /= SK_CODE .or. source%keep(k)) cycle
-            v = statement_view(src, tokens, stmts%s(k))
+            call set_view(src, tokens, stmts%s(k), v)
             if (.not. is_use_statement(v)) cycle
             if (only_lists) call sort_only_list(src, tokens, stmts%s(k), v, width, text(k)%s)
             keys(k)%s = module_key(v)

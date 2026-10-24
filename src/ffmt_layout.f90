@@ -31,7 +31,8 @@ type :: writer_t
     integer :: pending_anchor = 0               !! the next code token is the first item after this anchor
     logical :: pending_bracket = .false.        !! the next code token is the first item after a bracket
     logical :: separated = .false.              !! a top-level `,` or `:` has been seen in the statement
-    character(len=:), allocatable :: prev       !! lowercase text of the previous code token
+    integer :: prev = 0                         !! the previous code token of the statement (index into the
+                                                !! token list), or 0
     integer :: comment_in = -1                  !! input column of the comment on the previous line, or -1
     integer :: comment_out = -1                 !! output column of that comment
     logical :: line_comment = .false.           !! a comment has been written on the current line
@@ -473,7 +474,7 @@ subroutine emit_statement(w, src, tokens, s, labeled, ind, opts)
     w%pending_bracket = .false.
     w%separated = .false.
     w%declaration = .false.
-    w%prev = ''
+    w%prev = 0
     ! a statement after `;` starts in the middle of a line
     mid_line = .false.
     if (s%first > 1) mid_line = tokens%tok(s%first - 1)%kind /= TK_NEWLINE .and. tokens%tok(s%first - 1)%kind /= TK_BOM
@@ -624,12 +625,26 @@ subroutine emit_body(w, src, tokens, first, lend)
             call put(w, src(pieces(k)%first:pieces(k)%last))
             cycle
         end if
+        if (w%cases%whole(t) == CASE_KEEP .and. w%cases%part(t) == CASE_KEEP) then
+            call write_token(t, src(pieces(k)%first:pieces(k)%last))     ! without a copy
+            cycle
+        end if
         text = src(pieces(k)%first:pieces(k)%last)
         if (w%cases%whole(t) /= CASE_KEEP) text = to_case(text, w%cases%whole(t) == CASE_UPPER)
         if (w%cases%part(t) /= CASE_KEEP) then
             call kind_part(text, tokens%tok(t)%kind, ka, kb)
             if (kb >= ka) text(ka:kb) = to_case(text(ka:kb), w%cases%part(t) == CASE_UPPER)
         end if
+        call write_token(t, text)
+    end do
+
+contains
+
+    subroutine write_token(t, text)
+        !! Write token `t` as `text` (its text with the letter case applied), tracking brackets,
+        !! anchors and trailing comments.
+        integer, intent(in) :: t                 !! index into the token list
+        character(len=*), intent(in) :: text     !! the text to write
         if (tokens%tok(t)%kind == TK_COMMENT) then
             if (.not. w%line_comment) then           ! a trailing comment: later lines may line up with it
                 w%comment_in = input_column(src, tokens%tok(t))
@@ -639,7 +654,7 @@ subroutine emit_body(w, src, tokens, first, lend)
         end if
         if (.not. is_code_kind(tokens%tok(t)%kind)) then
             call put(w, text)
-            cycle
+            return
         end if
         if (w%pending_bracket) w%bracket_first(w%nbrackets) = w%col
         if (w%pending_anchor > 0) w%anchor_col(w%pending_anchor) = w%col
@@ -660,10 +675,8 @@ subroutine emit_body(w, src, tokens, first, lend)
                 if (w%nbrackets == 0) call top_level_operator(text)
             end select
         end if
-        w%prev = token_lower(src, tokens%tok(t))
-    end do
-
-contains
+        w%prev = t
+    end subroutine write_token
 
     subroutine top_level_operator(op)
         !! Record alignment anchors at a top-level operator.
@@ -682,7 +695,9 @@ contains
             w%separated = .true.
             w%declaration = .true.
         case (':')
-            if (w%prev == 'only') call anchor(ANCHOR_ONLY)
+            if (w%prev > 0) then
+                if (token_lower(src, tokens%tok(w%prev)) == 'only') call anchor(ANCHOR_ONLY)
+            end if
             w%separated = .true.
         case (',')
             w%separated = .true.

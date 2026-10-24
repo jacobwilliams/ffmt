@@ -4,12 +4,12 @@ module ffmt_source
 !! spelling, `use` sorting) starts from one of these.
 use ffmt_tokens, only: token_list_t
 use ffmt_lexer, only: tokenize
-use ffmt_statements, only: statement_list_t, statement_view_t, statement_view, split_statements, SK_CODE
+use ffmt_statements, only: statement_list_t, statement_view_t, set_view, split_statements, SK_CODE
 use ffmt_directives, only: protected_items
 implicit none
 private
 
-public :: parse_source, statement_views
+public :: parse_source, statement_views, set_views
 
 type, public :: source_t
     !! A source text with its tokens and statements.
@@ -33,14 +33,22 @@ subroutine parse_source(text, s)
 end subroutine parse_source
 
 function statement_views(s) result(views)
-    !! The view of each item of `s` (see [[statement_view_t]]); empty for items that are not code.
+    !! The view of each item of `s` (see [[set_views]], which fills them in place, without a copy).
     type(source_t), intent(in) :: s     !! the source
     type(statement_view_t), allocatable :: views(:)
+    call set_views(s, views)
+end function statement_views
+
+subroutine set_views(s, views)
+    !! Make `views` the view of each item of `s` (see [[statement_view_t]]); empty for items that are
+    !! not code.
+    type(source_t), intent(in) :: s                                 !! the source
+    type(statement_view_t), allocatable, intent(out) :: views(:)    !! the views
     integer :: k
     allocate (views(s%stmts%n))
     do k = 1, s%stmts%n
-        if (s%stmts%s(k)%kind == SK_CODE) views(k) = statement_view(s%text, s%tokens, s%stmts%s(k))
+        if (s%stmts%s(k)%kind == SK_CODE) call set_view(s%text, s%tokens, s%stmts%s(k), views(k))
     end do
-end function statement_views
+end subroutine set_views
 
 end module ffmt_source

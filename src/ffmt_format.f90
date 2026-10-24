@@ -2,8 +2,8 @@ module ffmt_format
 !! Formatting a whole source text: the main library entry point.
 use ffmt_tokens
 use ffmt_lexer, only: tokenize
-use ffmt_statements, only: statement_t, statement_view_t, statement_view, SK_CODE, SK_PREPROC
-use ffmt_source, only: source_t, parse_source, statement_views
+use ffmt_statements, only: statement_t, statement_view_t, set_view, SK_CODE, SK_PREPROC
+use ffmt_source, only: source_t, parse_source, set_views
 use ffmt_structure, only: analyze_structure, diagnostic_t, structure_t
 use ffmt_layout, only: layout
 use ffmt_whitespace, only: compute_gaps
@@ -52,7 +52,7 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     call format_pass(prepared, opts, out, d, tokens)
     ! no code longer than the limit, as most files: nothing to split, and no need to look for
     ! code lines that are too long
-    if (opts%split_lines .and. opts%line_length > 0 .and. longest_code(out) > opts%line_length) then
+    if (opts%split_lines .and. opts%line_length > 0 .and. too_long(out, opts%line_length)) then
         ! split long lines and format again, until every line fits or nothing more can be split; only
         ! the statements that were split need laying out again, unless one of them depends on the
         ! lines around it
@@ -64,9 +64,9 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
             else
                 call format_pass(split, opts, out, unused)
             end if
-            if (longest_code(out) <= opts%line_length) exit
+            if (.not. too_long(out, opts%line_length)) exit
         end do
-        if (longest_code(out) > opts%line_length) then
+        if (too_long(out, opts%line_length)) then
             long = long_code_lines(out, opts%line_length)
             do k = 1, size(long)
                 d = [d, diagnostic_t(long(k), 'line '//to_s(long(k))//' of the formatted file is longer than '// &
@@ -108,7 +108,7 @@ subroutine format_pass(src, opts, out, diags, src_tokens)
     integer :: k
 
     call parse_source(src, source)
-    views = statement_views(source)
+    call set_views(source, views)
     call analyze_structure(source, views, st, diags)
     out = layout(source, st, compute_gaps(source, views, opts%spaces, opts%comment_spacing), &
                  compute_case(source, views, opts%letter_case), opts, long_lines)
@@ -196,6 +196,26 @@ function relayout(text, changed, opts) result(out)
     call buf%append(text(next:))
     out = buf%get()
 end function relayout
+
+pure logical function too_long(text, limit)
+    !! True if a code line of `text` may be longer than `limit` characters (see [[longest_code]]).
+    !! A line has no more characters than bytes, so the scan is only needed when a line has more
+    !! bytes than that, which finding the line breaks shows quickly.
+    character(len=*), intent(in) :: text   !! the formatted text
+    integer, intent(in) :: limit           !! the line length
+    integer :: p, q
+    too_long = .false.
+    p = 1
+    do while (p <= len(text))
+        q = index(text(p:), achar(10))
+        if (q == 0) q = len(text) - p + 2
+        if (q - 1 > limit) then
+            too_long = longest_code(text) > limit
+            return
+        end if
+        p = p + q
+    end do
+end function too_long
 
 pure integer function longest_code(text) result(width)
     !! An upper bound of the width of the longest code line of `text`: the characters of each line
@@ -290,7 +310,6 @@ logical function same_code(a, b, reordered_use, a_tokens)
     logical, intent(in), optional :: reordered_use        !! allow reordered `use` statements; default false
     type(token_list_t), intent(in), optional :: a_tokens    !! the tokens of `a`, if already known
     type(token_list_t) :: ta, tb
-    integer :: i, j
 
     if (present(reordered_use)) then
         if (reordered_use) then
@@ -299,24 +318,31 @@ logical function same_code(a, b, reordered_use, a_tokens)
         end if
     end if
     ! token by token, without building signatures
+    call tokenize(b, tb)
     if (present(a_tokens)) then
-        ta = a_tokens
+        same_code = same_lists(a_tokens)          ! without a copy of the token list
     else
         call tokenize(a, ta)
+        same_code = same_lists(ta)
     end if
-    call tokenize(b, tb)
-    same_code = .false.
-    i = 0
-    j = 0
-    do
-        i = next_code(ta, i)
-        j = next_code(tb, j)
-        if (i > ta%n .or. j > tb%n) exit
-        if (.not. same_token(a, ta%tok(i), b, tb%tok(j))) return
-    end do
-    same_code = i > ta%n .and. j > tb%n
 
 contains
+
+    logical function same_lists(ta)
+        !! True if the code tokens of `a` (`ta`) match those of `b` (`tb`).
+        type(token_list_t), intent(in) :: ta   !! the tokens of `a`
+        integer :: i, j
+        same_lists = .false.
+        i = 0
+        j = 0
+        do
+            i = next_code(ta, i)
+            j = next_code(tb, j)
+            if (i > ta%n .or. j > tb%n) exit
+            if (.not. same_token(a, ta%tok(i), b, tb%tok(j))) return
+        end do
+        same_lists = i > ta%n .and. j > tb%n
+    end function same_lists
 
     pure integer function next_code(tokens, k) result(next)
         !! The index of the first code token after token `k`, or `tokens%n + 1`.
@@ -408,7 +434,7 @@ function code_signature(src) result(sig)
         do k = 1, stmts%n
             if (stmts%s(k)%kind == SK_PREPROC) call flush_run()
             if (stmts%s(k)%kind /= SK_CODE) cycle
-            v = statement_view(src, tokens, stmts%s(k))
+            call set_view(src, tokens, stmts%s(k), v)
             if (is_use_statement(v)) then
                 ! through a variable: a gfortran 15 internal compiler error otherwise
                 item%s = use_signature(stmts%s(k), v)
