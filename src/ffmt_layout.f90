@@ -49,9 +49,13 @@ type :: writer_t
 end type writer_t
 
 type :: piece_t
-    !! A piece of an output line: a token, or the blanks before one.
-    character(len=:), allocatable :: text
+    !! A piece of an output line: a token, or the blanks before one. Its text is `src(first:last)`
+    !! (with the token's letter case applied), or `blanks` blanks if that is positive; it is not
+    !! copied, so that measuring a line allocates nothing.
     integer :: tok = 0                          !! token index, or 0 for blanks
+    integer :: first = 1                        !! first byte of the text in the source
+    integer :: last = 0                         !! last byte of the text in the source
+    integer :: blanks = 0                       !! if positive, the piece is this many blanks instead
 end type piece_t
 
 ! anchors for aligning continuation lines outside brackets, in order of preference
@@ -190,8 +194,14 @@ integer function first_piece_width(w, src, tokens, first, lend) result(width)
     call line_pieces(w, src, tokens, first, lend, pieces)
     total = 0
     do k = 1, size(pieces)
-        if (scan(pieces(k)%text, achar(10)//achar(13)) > 0) return
-        total = total + utf8_width(pieces(k)%text)
+        associate (text => src(pieces(k)%first:pieces(k)%last))
+            if (pieces(k)%blanks > 0) then
+                total = total + pieces(k)%blanks
+            else
+                if (scan(text, achar(10)//achar(13)) > 0) return
+                total = total + utf8_width(text)
+            end if
+        end associate
         if (pieces(k)%tok == 0) cycle
         if (.not. is_code_kind(tokens%tok(pieces(k)%tok)%kind)) cycle
         if (pieces(k)%tok == first .and. tokens%tok(first)%kind == TK_INT) cycle   ! a statement label
@@ -227,13 +237,19 @@ integer function line_width(w, src, tokens, first, lend) result(width)
                 return
             end if
         end if
-        if (pieces(k)%tok > 0) before_blank = width + utf8_width(pieces(k)%text)
-        j = scan(pieces(k)%text, achar(10)//achar(13))
-        if (j > 0) then                       ! a line break, or a token continued on the next line
-            width = width + utf8_width(pieces(k)%text(1:j - 1))
-            return
+        if (pieces(k)%blanks > 0) then
+            width = width + pieces(k)%blanks
+            cycle
         end if
-        width = width + utf8_width(pieces(k)%text)
+        associate (text => src(pieces(k)%first:pieces(k)%last))
+            if (pieces(k)%tok > 0) before_blank = width + utf8_width(text)
+            j = scan(text, achar(10)//achar(13))
+            if (j > 0) then                       ! a line break, or a token continued on the next line
+                width = width + utf8_width(text(1:j - 1))
+                return
+            end if
+            width = width + utf8_width(text)
+        end associate
     end do
 end function line_width
 
@@ -245,8 +261,7 @@ subroutine line_pieces(w, src, tokens, first, lend, pieces)
     type(token_list_t), intent(in) :: tokens
     integer, intent(in) :: first, lend
     type(piece_t), allocatable, intent(out) :: pieces(:)
-    integer :: t, n, g
-    character(len=:), allocatable :: text
+    integer :: t, n, g, last
 
     allocate (pieces(2*(lend - first + 1) + 1))
     n = 0
@@ -254,48 +269,44 @@ subroutine line_pieces(w, src, tokens, first, lend, pieces)
         if (tokens%tok(t)%kind == TK_SPACE) then
             if (t == lend) cycle
             if (tokens%tok(t + 1)%kind == TK_NEWLINE) cycle
-            text = token_text(src, tokens%tok(t))
+            g = -1
             ! blanks between two code tokens may be adjusted by the rule for the second one
             if (t > first .and. t < lend) then
                 if (is_code_kind(tokens%tok(t - 1)%kind) .and. is_code_kind(tokens%tok(t + 1)%kind)) then
                     g = w%gap(t + 1)
                     if (g == 0) cycle
-                    if (g > 0) text = repeat(' ', g)
                 end if
             end if
-            call add(text, 0)
+            call add(0, tokens%tok(t)%first, tokens%tok(t)%last, max(g, 0))
             cycle
         end if
         if (t > first .and. is_code_kind(tokens%tok(t)%kind)) then
             if (is_code_kind(tokens%tok(t - 1)%kind)) then     ! no blank in the input
                 g = w%gap(t)
                 if (g == GAP_MIN1) then
-                    call add(' ', 0)
+                    call add(0, 1, 0, 1)
                 else if (g > 0) then
-                    call add(repeat(' ', g), 0)
+                    call add(0, 1, 0, g)
                 end if
             end if
         end if
-        text = token_text(src, tokens%tok(t))
-        if (tokens%tok(t)%kind == TK_COMMENT) text = trim_blanks(text)
-        select case (w%case_mode(t))
-        case (CASE_LOWER)
-            text = to_case(text, .false.)
-        case (CASE_UPPER)
-            text = to_case(text, .true.)
-        end select
-        call add(text, t)
+        last = tokens%tok(t)%last
+        if (tokens%tok(t)%kind == TK_COMMENT) then       ! without trailing blanks and tabs
+            do while (last >= tokens%tok(t)%first)
+                if (src(last:last) /= ' ' .and. src(last:last) /= achar(9)) exit
+                last = last - 1
+            end do
+        end if
+        call add(t, tokens%tok(t)%first, last, 0)
     end do
     pieces = pieces(1:n)
 
 contains
 
-    subroutine add(text, tok)
-        character(len=*), intent(in) :: text
-        integer, intent(in) :: tok
+    subroutine add(tok, from, to, blanks)
+        integer, intent(in) :: tok, from, to, blanks
         n = n + 1
-        pieces(n)%text = text
-        pieces(n)%tok = tok
+        pieces(n) = piece_t(tok, from, to, blanks)
     end subroutine add
 
 end subroutine line_pieces
@@ -562,12 +573,23 @@ subroutine emit_body(w, src, tokens, first, lend)
 
     call line_pieces(w, src, tokens, first, lend, pieces)
     do k = 1, size(pieces)
-        text = pieces(k)%text
         t = pieces(k)%tok
-        if (t == 0) then
-            call put(w, text)
+        if (pieces(k)%blanks > 0) then
+            call put(w, repeat(' ', pieces(k)%blanks))
             cycle
         end if
+        if (t == 0) then
+            call put(w, src(pieces(k)%first:pieces(k)%last))
+            cycle
+        end if
+        select case (w%case_mode(t))
+        case (CASE_LOWER)
+            text = to_case(src(pieces(k)%first:pieces(k)%last), .false.)
+        case (CASE_UPPER)
+            text = to_case(src(pieces(k)%first:pieces(k)%last), .true.)
+        case default
+            text = src(pieces(k)%first:pieces(k)%last)
+        end select
         if (tokens%tok(t)%kind == TK_COMMENT) then
             if (.not. w%line_comment) then           ! a trailing comment: later lines may line up with it
                 w%comment_in = input_column(src, tokens%tok(t))

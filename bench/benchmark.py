@@ -188,6 +188,7 @@ def main():
                         help="compiler flags added to the release profile (-march=native, -flto and -Ofast "
                              "made no measurable difference with gfortran 15)")
     args = parser.parse_args()
+    sys.stdout.reconfigure(encoding="utf-8")   # the table has emoji; Windows consoles may not default to UTF-8
 
     fformat = build_fformat(args.fformat_flags)
     fprettify = find_fprettify()
@@ -223,6 +224,14 @@ def main():
             results.append((name, version(vcmd), median, best, status))
 
     fastest = min(r[2] for r in results)
+    slowest = max(r[2] for r in results)
+
+    def marker(median):
+        """🟢 for the fastest tool, 🔴 for the slowest, 🟡 for the others."""
+        if median == fastest:
+            return "🟢"
+        return "🔴" if median == slowest else "🟡"
+
     lines = [
         f"{len(files)} files, {nlines:,} lines; median of {args.runs} runs, formatting in place with "
         f"default settings. {platform.system()} {platform.machine()}, {cpu_name()}, {os.cpu_count()} cores."
@@ -234,20 +243,20 @@ def main():
     for name, ver, median, best, status in results:
         note = "" if status == 0 else f" (exit status {status})"
         lines.append(f"| {name}{note} | {ver.split()[-1]} | {median:.3f} | {nlines / median:,.0f} | "
-                     f"{median / fastest:.1f}x |")
+                     f"{marker(median)} {median / fastest:.1f}x |")
     table = "\n".join(lines)
     print(table)
 
     if args.update_readme:
         readme = ROOT / "README.md"
-        text = readme.read_text()
+        text = readme.read_text(encoding="utf-8")
         marker_start = f"<!-- benchmark:{args.corpus}:start -->"
         marker_end = f"<!-- benchmark:{args.corpus}:end -->"
         start, end = text.find(marker_start), text.find(marker_end)
         if start < 0 or end < start:
             sys.exit(f"README.md: no {marker_start} ... {marker_end} markers")
         text = text[:start + len(marker_start)] + "\n" + table + "\n" + text[end:]
-        readme.write_text(text)
+        readme.write_text(text, encoding="utf-8")
         print("updated README.md", file=sys.stderr)
 
 

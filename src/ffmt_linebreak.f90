@@ -195,7 +195,7 @@ function long_code_lines(src, line_length) result(lines)
     type(token_list_t) :: tokens
     type(statement_list_t) :: stmts
     logical, allocatable :: keep(:)
-    integer :: k, t, col, last_line
+    integer :: k, t, col, last_line, line, p, q
 
     allocate (lines(0))
     if (line_length <= 0) return
@@ -214,16 +214,38 @@ function long_code_lines(src, line_length) result(lines)
                 end if
                 if (t == stmts%s(k)%first) col = start_column(t)
                 if (tk%kind == TK_COMMENT .or. tk%kind == TK_PREPROC) cycle
-                col = col + utf8_width(token_text(src, tk))
-                if (is_code_kind(tk%kind) .and. col > line_length .and. tk%line /= last_line) then
-                    lines = [lines, tk%line]
-                    last_line = tk%line
-                end if
+                ! a token continued on later lines (a string) is measured line by line
+                line = tk%line
+                p = tk%first
+                do
+                    q = index(src(p:tk%last), achar(10))
+                    if (q == 0) exit
+                    q = p + q - 1                     ! the line feed
+                    if (q > p) then
+                        if (src(q - 1:q - 1) == achar(13)) q = q - 1
+                    end if
+                    call check_width(tk, col + utf8_width(src(p:q - 1)), line)
+                    col = 0
+                    line = line + 1
+                    p = p + index(src(p:tk%last), achar(10))
+                end do
+                col = col + utf8_width(src(p:tk%last))
+                call check_width(tk, col, line)
             end associate
         end do
     end do
 
 contains
+
+    subroutine check_width(tk, width, line)
+        !! Record `line` if it holds code token `tk` and its code is `width` characters wide, too long.
+        type(token_t), intent(in) :: tk
+        integer, intent(in) :: width, line
+        if (is_code_kind(tk%kind) .and. width > line_length .and. line /= last_line) then
+            lines = [lines, line]
+            last_line = line
+        end if
+    end subroutine check_width
 
     integer function start_column(t)
         integer, intent(in) :: t

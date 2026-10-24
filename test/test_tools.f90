@@ -9,7 +9,7 @@ use ffmt_settings
 use ffmt_diff
 use ffmt_cli
 use ffmt_options
-use ffmt_strings, only: string_t
+use ffmt_strings, only: string_t, to_s
 use fregex, only: regex_t, regex
 implicit none
 private
@@ -31,7 +31,8 @@ subroutine collect_tools(testsuite)
         new_unittest("config in fpm.toml", test_fpm_config), &
         new_unittest("settings", test_settings), &
         new_unittest("diff", test_diff), &
-        new_unittest("command line", test_command_line) &
+        new_unittest("command line", test_command_line), &
+        new_unittest("integer to string", test_to_s) &
         ]
 end subroutine collect_tools
 
@@ -260,5 +261,12 @@ subroutine test_command_line(error)
     call parse_args([string_t('-i')], cli, stat, errmsg)
     call check(error, errmsg, 'missing value for -i')
 end subroutine test_command_line
+
+subroutine test_to_s(error)
+    type(error_type), allocatable, intent(out) :: error
+    call check(error, to_s(0)//' '//to_s(7)//' '//to_s(-42)//' '//to_s(1234567890), '0 7 -42 1234567890')
+    if (allocated(error)) return
+    call check(error, to_s(huge(1))//' '//to_s(-huge(1) - 1), '2147483647 -2147483648')
+end subroutine test_to_s
 
 end module test_tools

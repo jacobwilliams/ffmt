@@ -72,7 +72,7 @@ subroutine statement_gaps(src, tokens, stmt, ws, gap)
 
     integer, allocatable :: code(:)
     integer :: i, n, depth, first
-    character(len=:), allocatable :: t, kw
+    character(len=:), allocatable :: kw
     logical :: slash_lists
 
     code = code_tokens(src, tokens, stmt)
@@ -88,61 +88,65 @@ subroutine statement_gaps(src, tokens, stmt, ws, gap)
 
     depth = 0
     do i = 1, n
-        t = text(i)
         if (tokens%tok(code(i))%kind == TK_OP) then
-            select case (t)
-            case ('(', '[')
-                if (t == '(' .and. is_control_paren(i)) call set_before(i, ws%control_paren)
-                depth = depth + 1
-            case (')', ']')
-                depth = max(0, depth - 1)
-            case ('=')
-                if (depth == 0) then
-                    call around(i, ws%assignment)
-                else
-                    call around(i, ws%keyword_args)
-                end if
-            case ('=>')
-                call around(i, ws%pointer)
-            case ('::')
-                call around(i, ws%declarations)
-            case ('==', '/=', '<=', '>=')
-                call around(i, ws%relational)
-            case ('<', '>')
-                if (.not. chevron(i)) call around(i, ws%relational)
-            case ('+', '-')
-                if (binary(i)) call around(i, ws%plus_minus)
-            case ('*')
-                if (binary(i) .and. .not. type_star(i)) call around(i, ws%mult_div)
-            case ('/')
-                if (binary(i) .and. .not. slash_lists) call around(i, ws%mult_div)
-            case ('**')
-                if (binary(i)) call around(i, ws%power)
-            case ('//')
-                if (binary(i) .and. .not. slash_lists) call around(i, ws%concat)
-            case ('%')
-                call around(i, ws%percent)
-            case (':')
-                ! a slice `a(1 : n, :)`: only between the colon and its bounds
-                if (depth > 0) then
-                    if (ends_operand(i - 1)) call set_before(i, ws%slice_colon)
-                    if (starts_operand(i + 1)) call set_before(i + 1, ws%slice_colon)
-                end if
-            case (',')
-                select case (ws%comma)
-                case (WS_ADD)
-                    call set_gap(i, 0)
-                    call set_gap(i + 1, GAP_MIN1)
-                case (WS_REMOVE)
-                    call set_gap(i, 0)
-                    call set_gap(i + 1, 0)
+            ! operators have no letters, so their text is used as it is, without a lowercase copy
+            associate (t => src(tokens%tok(code(i))%first:tokens%tok(code(i))%last))
+                select case (t)
+                case ('(', '[')
+                    if (t == '(' .and. is_control_paren(i)) call set_before(i, ws%control_paren)
+                    depth = depth + 1
+                case (')', ']')
+                    depth = max(0, depth - 1)
+                case ('=')
+                    if (depth == 0) then
+                        call around(i, ws%assignment)
+                    else
+                        call around(i, ws%keyword_args)
+                    end if
+                case ('=>')
+                    call around(i, ws%pointer)
+                case ('::')
+                    call around(i, ws%declarations)
+                case ('==', '/=', '<=', '>=')
+                    call around(i, ws%relational)
+                case ('<', '>')
+                    if (.not. chevron(i)) call around(i, ws%relational)
+                case ('+', '-')
+                    if (binary(i)) call around(i, ws%plus_minus)
+                case ('*')
+                    if (binary(i) .and. .not. type_star(i)) call around(i, ws%mult_div)
+                case ('/')
+                    if (binary(i) .and. .not. slash_lists) call around(i, ws%mult_div)
+                case ('**')
+                    if (binary(i)) call around(i, ws%power)
+                case ('//')
+                    if (binary(i) .and. .not. slash_lists) call around(i, ws%concat)
+                case ('%')
+                    call around(i, ws%percent)
+                case (':')
+                    ! a slice `a(1 : n, :)`: only between the colon and its bounds
+                    if (depth > 0) then
+                        if (ends_operand(i - 1)) call set_before(i, ws%slice_colon)
+                        if (starts_operand(i + 1)) call set_before(i + 1, ws%slice_colon)
+                    end if
+                case (',')
+                    select case (ws%comma)
+                    case (WS_ADD)
+                        call set_gap(i, 0)
+                        call set_gap(i + 1, GAP_MIN1)
+                    case (WS_REMOVE)
+                        call set_gap(i, 0)
+                        call set_gap(i + 1, 0)
+                    end select
                 end select
-            end select
+            end associate
         else if (tokens%tok(code(i))%kind == TK_NAME) then
             ! `if (x)then`: the blank before a final `then` goes with the one before the condition
-            if (t == 'then' .and. i == n .and. text(i - 1) == ')') call set_before(i, ws%control_paren)
+            if (i == n) then
+                if (text(i) == 'then' .and. text(i - 1) == ')') call set_before(i, ws%control_paren)
+            end if
         else if (tokens%tok(code(i))%kind == TK_DOTOP) then
-            select case (t)
+            select case (text(i))
             case ('.eq.', '.ne.', '.lt.', '.le.', '.gt.', '.ge.')
                 call around(i, ws%relational)
             case ('.and.', '.or.', '.eqv.', '.neqv.')

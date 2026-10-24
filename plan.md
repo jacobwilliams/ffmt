@@ -312,6 +312,17 @@ and no shell are used.
    fprettify compatibility. Parallel processing is deferred to milestone 8.
 8. **Hardening:** run on large codebases (stdlib, fpm, json-fortran, cp2k, wannier90); fuzzing;
    performance; release.
+   - **Performance (2026-10-24):** profiling with macOS `sample` found most time in small string
+     allocations. Fixed, about 3.7x faster overall: `to_s` without an internal `write`; the safety
+     check compares tokens directly (signatures only when `use` statements are sorted) and reuses
+     the tokens of the first pass; line pieces refer to source ranges instead of copying text;
+     no per-token copies in `classify_statement` and `statement_gaps`; split passes and
+     `long_code_lines` are skipped when no line is longer than the limit. Left: a file with long
+     lines is formatted again in full for each split pass (about 15% of the time on fortranpack,
+     where 25 of 276 files, a third of the bytes, need one or two). Re-laying out only the split
+     statements would remove most of it, but the layout of a statement depends on state from
+     earlier lines (depth, comment columns), so it needs care to stay stable. Next costs after
+     that: `tokenize` (about a quarter) and the remaining `token_lower` copies.
    - **Parallel formatting (later):** format several files at once with OpenMP, as fprettier does
      (`-j`; about 3x faster than its single-threaded run on 10 cores in `bench/benchmark.py`).
      The formatting path has no shared state, and a `run` split into three passes worked: find the

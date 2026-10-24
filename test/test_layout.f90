@@ -342,6 +342,14 @@ subroutine test_same_code(error)
     if (allocated(error)) return
     ! a token split across lines must stay joined
     call check(error, .not. same_code('fun&'//NL//'&ction', 'fun&'//NL//'& ction'))
+    if (allocated(error)) return
+    call check(error, same_code('IF (A .LT. B) X = 1', 'if (a<b) x=1'), 'case and relational spelling')
+    if (allocated(error)) return
+    call check(error, .not. same_code('a .le. b', 'a < b'), 'different relational operators')
+    if (allocated(error)) return
+    call check(error, .not. same_code("s = 'A'", "s = 'a'"), 'case inside a string')
+    if (allocated(error)) return
+    call check(error, .not. same_code('x = 1', 'x = 1_8'), 'kind suffix')
 end subroutine test_same_code
 
 end module test_layout

@@ -63,7 +63,7 @@ end type string_t
 
 type :: words_t
     !! The words of a statement, with combined keywords such as `endif` split into `end`, `if`.
-    type(string_t), allocatable :: w(:)
+    type(string_t), allocatable :: w(:)  !! the words of the first token; the others are its code tokens
     integer, allocatable :: tok(:)     !! index into the code token list for each word
     integer :: n = 0
 end type words_t
@@ -140,8 +140,10 @@ contains
         character(len=:), allocatable :: t
         if (j > wd%n) then
             t = ''
-        else
+        else if (j <= size(wd%w)) then
             t = wd%w(j)%s
+        else
+            t = text(wd%tok(j))
         end if
     end function word
 
@@ -154,7 +156,7 @@ contains
         if (word(j) /= '(') return
         depth = 0
         do c = wd%tok(j), size(code)
-            select case (text(c))
+            select case (src(tokens%tok(code(c))%first:tokens%tok(code(c))%last))   ! no case to ignore
             case ('(')
                 depth = depth + 1
             case (')')
@@ -205,15 +207,12 @@ contains
 
         first = text(k)
         parts = expand_keyword(first)
-        allocate (wd%w(size(parts) + size(code) - k), wd%tok(size(parts) + size(code) - k))
-        do j = 1, size(parts)
-            wd%w(j) = parts(j)
-            wd%tok(j) = k
-        end do
+        wd%w = parts            ! the other words are read from the tokens when needed (see `word`)
+        allocate (wd%tok(size(parts) + size(code) - k))
+        wd%tok(1:size(parts)) = k
         wd%n = size(parts)
         do j = k + 1, size(code)
             wd%n = wd%n + 1
-            wd%w(wd%n)%s = text(j)
             wd%tok(wd%n) = j
         end do
     end subroutine split_words

@@ -34,12 +34,26 @@ pure integer function utf8_width(text) result(w)
 end function utf8_width
 
 pure function to_s(i) result(s)
-    !! Integer to string, without padding.
+    !! Integer to string, without padding. Digits are built by hand: an internal `write` costs
+    !! far more, and this is called for every token by the safety check.
     integer, intent(in) :: i
     character(len=:), allocatable :: s
-    character(len=16) :: buf
-    write (buf, '(i0)') i
-    s = trim(buf)
+    character(len=12) :: buf
+    integer :: k, n
+
+    n = i                                   ! not abs(i), which overflows for -huge(i) - 1
+    k = len(buf) + 1
+    do
+        k = k - 1
+        buf(k:k) = achar(iachar('0') + abs(mod(n, 10)))
+        n = n/10
+        if (n == 0) exit
+    end do
+    if (i < 0) then
+        k = k - 1
+        buf(k:k) = '-'
+    end if
+    s = buf(k:)
 end function to_s
 
 pure subroutine builder_append(self, str)

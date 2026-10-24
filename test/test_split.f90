@@ -108,6 +108,13 @@ subroutine test_not_split(error)
     if (allocated(error)) return
     call check(error, diags(1)%line, 2)
     if (allocated(error)) return
+    ! a string continued over short lines is not reported, although it is longer than the limit
+    call format_text("s = 'abcdefgh&"//NL//"&ijklmnop'"//NL//"t = 'a long string that does not fit'"//NL, &
+                     opts, out, stat, errmsg, diags)
+    call check(error, size(diags), 1)
+    if (allocated(error)) return
+    call check(error, diags(1)%line, 4)
+    if (allocated(error)) return
     ! no splitting when disabled
     opts%split_lines = .false.
     call expect(error, lines([character(len=80) :: 'call f(aaaa, bbbb, cccc)']), &
