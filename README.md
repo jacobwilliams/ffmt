@@ -308,7 +308,7 @@ test-drive):
 <!-- benchmark:default:start -->
 137 files, 36,535 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores. 2 file(s) that a tool could not format were left out.
 
-| Tool | Version | Time (s) | Lines/s | vs. fastest |
+| Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
 | fformat | 0.1.0 | 0.098 | 372,949 | 🟢 1.0x |
 | fprettier | 0.5.0 | 0.158 | 231,877 | 🟡 1.6x |
@@ -321,7 +321,7 @@ depends on, at the revisions `fpm update` fetched:
 <!-- benchmark:fortranpack:start -->
 276 files, 183,666 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores.
 
-| Tool | Version | Time (s) | Lines/s | vs. fastest |
+| Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
 | fformat | 0.1.0 | 0.555 | 330,667 | 🟢 1.0x |
 | fprettier | 0.5.0 | 0.701 | 261,840 | 🟡 1.3x |

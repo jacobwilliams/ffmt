@@ -237,7 +237,7 @@ def main():
         f"default settings. {platform.system()} {platform.machine()}, {cpu_name()}, {os.cpu_count()} cores."
         + (f" {len(skipped)} file(s) that a tool could not format were left out." if skipped else ""),
         "",
-        "| Tool | Version | Time (s) | Lines/s | vs. fastest |",
+        "| Tool | Version | Time (s) | Lines/s | Relative time |",
         "|---|---|--:|--:|--:|",
     ]
     for name, ver, median, best, status in results:
