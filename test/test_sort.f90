@@ -164,6 +164,18 @@ subroutine test_only_split(error)
                 lines([character(len=80) :: &
                        'use m, only: alpha, beta, delta, &', &
                        '             epsilon, gamma, zeta']), opts)
+    if (allocated(error)) return
+    ! without line splitting, the sorted list is broken at commas to fit, aligned after `only:`
+    opts%split_lines = .false.
+    call expect(error, lines([character(len=80) :: &
+                              'subroutine s', &
+                              '    use m, only: zeta, epsilon, delta, gamma, beta, alpha', &
+                              'end subroutine s']), &
+                lines([character(len=80) :: &
+                       'subroutine s', &
+                       '    use m, only: alpha, beta, delta, &', &
+                       '                 epsilon, gamma, zeta', &
+                       'end subroutine s']), opts)
 end subroutine test_only_split
 
 subroutine test_same_code(error)

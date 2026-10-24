@@ -9,8 +9,9 @@ module ffmt_use_sort
 !! their order.
 !!
 !! The names of an `only:` list are sorted by their local name (`c => x` sorts as `c`). A list that
-!! is not sorted yet is written on one line, for line splitting to break again. A statement with a
-!! comment or preprocessor line before its last line is left alone.
+!! is not sorted yet is rewritten: on one line, for line splitting to break again, or broken at
+!! commas to fit a given width, with its continuation lines starting below the first name. A
+!! statement with a comment or preprocessor line before its last line is left alone.
 use ffmt_tokens
 use ffmt_lexer, only: tokenize
 use ffmt_statements
@@ -23,12 +24,13 @@ public :: sort_use, is_use_statement, only_items, sorted_order
 
 contains
 
-function sort_use(src, statements, only_lists) result(out)
+function sort_use(src, statements, only_lists, width) result(out)
     !! `src` with the `use` statements of each group sorted by module name (if `statements`) and
     !! the names of `only:` lists sorted (if `only_lists`).
     character(len=*), intent(in) :: src
     logical, intent(in) :: statements
     logical, intent(in) :: only_lists
+    integer, intent(in) :: width   !! line length to fit a rewritten `only:` list into, or 0 to write it on one line
     character(len=:), allocatable :: out
 
     type(token_list_t) :: tokens
@@ -54,7 +56,7 @@ function sort_use(src, statements, only_lists) result(out)
         if (stmts%s(k)%kind /= SK_CODE .or. keep(k)) cycle
         code = code_tokens(src, tokens, stmts%s(k))
         if (.not. is_use_statement(src, tokens, code)) cycle
-        if (only_lists) call sort_only_list(src, tokens, stmts%s(k), code, text(k)%s)
+        if (only_lists) call sort_only_list(src, tokens, stmts%s(k), code, width, text(k)%s)
         keys(k)%s = module_key(src, tokens, code)
         movable(k) = statements .and. whole_lines(tokens, stmts%s(k))
     end do
@@ -166,21 +168,23 @@ function sorted_order(keys) result(order)
     end do
 end function sorted_order
 
-subroutine sort_only_list(src, tokens, stmt, code, text)
+subroutine sort_only_list(src, tokens, stmt, code, width, text)
     !! Replace `text`, the text of `stmt`, by the statement with its `only:` list sorted, unless the
-    !! list is sorted already or the statement cannot be rewritten safely.
+    !! list is sorted already or the statement cannot be rewritten safely. With `width > 0`, the
+    !! list is broken after commas so that its lines fit in `width` columns where possible.
     character(len=*), intent(in) :: src
     type(token_list_t), intent(in) :: tokens
     type(statement_t), intent(in) :: stmt
     integer, intent(in) :: code(:)
+    integer, intent(in) :: width
     character(len=:), allocatable, intent(inout) :: text
 
     integer, allocatable :: starts(:), ends(:), order(:)
     type(string_t), allocatable :: keys(:)
     type(string_builder_t) :: buf
-    character(len=:), allocatable :: sep
+    character(len=:), allocatable :: sep, prefix, item, nl
     logical :: commented
-    integer :: j, n, ns
+    integer :: j, n, ns, column, used
 
     starts = only_items(src, tokens, code)
     ns = size(starts)
@@ -209,13 +213,30 @@ subroutine sort_only_list(src, tokens, stmt, code, text)
     order = sorted_order(keys)
     if (all(order == [(j, j=1, ns)])) return
 
-    call buf%append(src(tokens%tok(stmt%first)%first:tokens%tok(code(starts(1) - 1))%last))
-    if (separated(starts(1))) call buf%append(' ')
+    prefix = src(tokens%tok(stmt%first)%first:tokens%tok(code(starts(1) - 1))%last)
+    if (separated(starts(1))) prefix = prefix//' '
+    call buf%append(prefix)
     sep = ','
     if (separated(starts(2))) sep = ', '
+    nl = achar(10)
+    if (tokens%tok(stmt%last)%kind == TK_NEWLINE) nl = token_text(src, tokens%tok(stmt%last))
+    ! the column of the first name, where the continuation lines start too
+    column = len(prefix) - max(index(prefix, achar(10), back=.true.), index(prefix, achar(13), back=.true.))
+    used = column
     do j = 1, ns
-        if (j > 1) call buf%append(sep)
-        call buf%append(joined(starts(order(j)), ends(order(j))))
+        item = joined(starts(order(j)), ends(order(j)))
+        if (j > 1) then
+            ! room for the item and a `, &` after it
+            if (width > 0 .and. used + len(sep) + len(item) + 3 > width) then
+                call buf%append(', &'//nl//repeat(' ', column))
+                used = column
+            else
+                call buf%append(sep)
+                used = used + len(sep)
+            end if
+        end if
+        call buf%append(item)
+        used = used + len(item)
     end do
     call buf%append(src(tokens%tok(code(n))%last + 1:tokens%tok(stmt%last)%last))
     text = buf%get()

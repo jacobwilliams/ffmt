@@ -147,7 +147,9 @@ Milestone 7 progress:
 
 - **Sorting `use` statements** (`ffmt_use_sort`): `sort-use` and `sort-use-only`, a text pre-pass
   like relational spelling. An `only:` list that needs sorting is joined onto one line and left to
-  line splitting; a sorted list keeps its layout, so the result is stable. The safety check now
+  line splitting, or, with splitting off, broken after commas to fit the line length (measured at
+  the input's indentation); continuation alignment then lines the names up after `only:`. A
+  sorted list keeps its layout, so the result is stable. The safety check now
   compares a signature of the code tokens in which, when either option is on, the `use` statements
   of a run (between other statements and preprocessor lines) and the items of each `only:` list are
   sorted. 68 unit tests; corpus (8,896 files, both options on in the second style): no internal

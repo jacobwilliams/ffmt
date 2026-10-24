@@ -43,7 +43,10 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     character(len=:), allocatable :: split
     integer :: k, nsplit
 
-    call format_pass(convert_relational(sort_use(src, opts%sort_use, opts%sort_use_only), opts%relational), opts, out, d)
+    ! a sorted `only:` list is written on one line for splitting, or broken to fit if splitting is off
+    call format_pass(convert_relational(sort_use(src, opts%sort_use, opts%sort_use_only, &
+                                                 merge(0, opts%line_length, opts%split_lines)), &
+                                        opts%relational), opts, out, d)
     if (opts%split_lines .and. opts%line_length > 0) then
         ! split long lines and format again, until every line fits or nothing more can be split
         do k = 1, MAX_PASSES

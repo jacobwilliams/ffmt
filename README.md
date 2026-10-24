@@ -155,8 +155,9 @@ its continuation lines and trailing comment; statements of the same module keep 
 Statements on a line with another (`;`) and protected statements stay where they are.
 
 `--sort-use-only` sorts the names in each `only:` list by their local name (`c => x` sorts as `c`),
-ignoring case. A list that needs sorting is written on one line and then split like any long line;
-a list that is already sorted keeps its layout. Statements with a comment before their last line
+ignoring case. A list that needs sorting is rewritten and then split like any long line, with its
+continuation lines aligned with the first name after `only:` (with `--no-split`, it is broken after
+commas to fit the line length); a list that is already sorted keeps its layout. Statements with a comment before their last line
 are left alone. The safety check accepts these reorderings and nothing else.
 
 ### Directives
