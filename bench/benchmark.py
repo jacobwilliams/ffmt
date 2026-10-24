@@ -7,9 +7,10 @@ somewhat different amounts of work.
 Run from the repository root, in the pixi `bench` environment (which provides fprettify and the
 Rust toolchain used to install fprettier):
 
-    pixi run -e bench bench                    # default corpus, 5 runs per tool
-    pixi run -e bench bench --runs 10 DIR...   # your own files or directories
-    pixi run -e bench bench --update-readme    # also rewrite the table in README.md
+    pixi run -e bench bench                          # default corpus, 5 runs per tool
+    pixi run -e bench bench --corpus fortranpack     # fortranpack and all its dependencies
+    pixi run -e bench bench --runs 10 DIR...         # your own files or directories
+    pixi run -e bench bench --update-readme          # also rewrite the corpus's table in README.md
 """
 
 import argparse
@@ -27,8 +28,8 @@ ROOT = Path(__file__).resolve().parent.parent
 BENCH_DIR = ROOT / "build" / "bench"
 FPRETTIER_VERSION = "0.5.0"
 EXTENSIONS = {".f90", ".F90"}
-README_START = "<!-- benchmark:start -->"
-README_END = "<!-- benchmark:end -->"
+FORTRANPACK_URL = "https://github.com/jacobwilliams/fortranpack"
+FORTRANPACK_REF = "fc527da560b056b7d71ce0fa00edeb75d35ef571"
 EXE = ".exe" if os.name == "nt" else ""
 
 
@@ -36,6 +37,24 @@ def default_corpus():
     """This repository's sources and the Fortran dependencies that fpm fetches."""
     deps = ROOT / "build" / "dependencies"
     return [ROOT / "src", ROOT / "test", deps / "toml-f", deps / "fregex", deps / "test-drive"]
+
+
+def fortranpack_corpus():
+    """fortranpack at FORTRANPACK_REF, with the dependencies that `fpm update` fetches for it
+    (their latest revisions, as fortranpack does not pin them), in build/bench/fortranpack."""
+    dest = BENCH_DIR / "fortranpack"
+    if not (dest / "fpm.toml").exists():
+        print(f"cloning {FORTRANPACK_URL} ...", file=sys.stderr)
+        BENCH_DIR.mkdir(parents=True, exist_ok=True)
+        run(["git", "clone", "--quiet", FORTRANPACK_URL, str(dest)])
+        run(["git", "checkout", "--quiet", FORTRANPACK_REF], cwd=dest)
+    if not (dest / "build" / "dependencies").is_dir():
+        print("fetching the dependencies of fortranpack with fpm ...", file=sys.stderr)
+        run(["fpm", "update"], cwd=dest)
+    return [dest]
+
+
+CORPORA = {"default": default_corpus, "fortranpack": fortranpack_corpus}
 
 
 def run(cmd, **kwargs):
@@ -87,7 +106,9 @@ def collect(paths):
         for f in sorted(path.rglob("*")):
             rel = f.relative_to(path)
             if f.suffix in EXTENSIONS and f.is_file() and not any(p.startswith(".") for p in rel.parts):
-                # name the copy after its directory, but never `build`, which fformat skips
+                # rename `build` directories, which fformat skips by default, so all tools see
+                # the same files
+                rel = Path(*["_build" if p == "build" else p for p in rel.parts])
                 files.append((f, Path(f"{k}_{path.name}") / rel))
     if not files:
         sys.exit("no Fortran files found")
@@ -157,7 +178,10 @@ def cpu_name():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("paths", nargs="*", help="Fortran files or directories (default: this repository and its dependencies)")
+    parser.add_argument("paths", nargs="*", help="Fortran files or directories, instead of a --corpus")
+    parser.add_argument("--corpus", choices=sorted(CORPORA), default="default",
+                        help="default: this repository and its dependencies; fortranpack: "
+                             f"{FORTRANPACK_URL} and its dependencies")
     parser.add_argument("--runs", type=int, default=5, help="runs per tool (default 5)")
     parser.add_argument("--update-readme", action="store_true", help="replace the benchmark table in README.md")
     parser.add_argument("--fformat-flags", default="",
@@ -176,7 +200,9 @@ def main():
         ("fprettify", [fprettify, "-r", "-S"], [fprettify, "--version"]),
     ]
 
-    files = collect(args.paths or default_corpus())
+    if args.paths and args.update_readme:
+        sys.exit("--update-readme only works with a --corpus, not with paths")
+    files = collect(args.paths or CORPORA[args.corpus]())
 
     results = []
     with tempfile.TemporaryDirectory(prefix="fformat-bench-") as tmp:
@@ -215,10 +241,12 @@ def main():
     if args.update_readme:
         readme = ROOT / "README.md"
         text = readme.read_text()
-        start, end = text.find(README_START), text.find(README_END)
+        marker_start = f"<!-- benchmark:{args.corpus}:start -->"
+        marker_end = f"<!-- benchmark:{args.corpus}:end -->"
+        start, end = text.find(marker_start), text.find(marker_end)
         if start < 0 or end < start:
-            sys.exit(f"README.md: no {README_START} ... {README_END} markers")
-        text = text[:start + len(README_START)] + "\n" + table + "\n" + text[end:]
+            sys.exit(f"README.md: no {marker_start} ... {marker_end} markers")
+        text = text[:start + len(marker_start)] + "\n" + table + "\n" + text[end:]
         readme.write_text(text)
         print("updated README.md", file=sys.stderr)
 

@@ -296,13 +296,16 @@ expression library [fregex](https://github.com/jacobwilliams/fregex). Directory 
 
 ### Speed
 
-Time to format this repository's sources and the Fortran dependencies that fpm fetches (toml-f,
-fregex, test-drive), measured with [bench/benchmark.py](bench/benchmark.py). Each tool uses its
-default settings except that fprettier runs single-threaded (`-j 1`; by default it formats several
-files at once), so the tools do somewhat different amounts of work. fformat is built with fpm's
-release profile. Files that any tool cannot format are left out for all of them.
+Time to format two sets of free-form files (`.f90`, `.F90`), measured with
+[bench/benchmark.py](bench/benchmark.py). Each tool uses its default settings except that
+fprettier runs single-threaded (`-j 1`; by default it formats several files at once), so the
+tools do somewhat different amounts of work. fformat is built with fpm's release profile. Files
+that any tool cannot format are left out for all of them.
 
-<!-- benchmark:start -->
+This repository's sources and the Fortran dependencies that fpm fetches for it (toml-f, fregex,
+test-drive):
+
+<!-- benchmark:default:start -->
 137 files, 36,356 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores. 2 file(s) that a tool could not format were left out.
 
 | Tool | Version | Time (s) | Lines/s | vs. fastest |
@@ -310,11 +313,25 @@ release profile. Files that any tool cannot format are left out for all of them.
 | fformat | 0.1.0 | 0.358 | 101,425 | 2.3x |
 | fprettier | 0.5.0 | 0.159 | 228,467 | 1.0x |
 | fprettify | 0.3.7 | 4.469 | 8,135 | 28.1x |
-<!-- benchmark:end -->
+<!-- benchmark:default:end -->
 
-To rerun it, or time other files: `pixi run -e bench bench [--runs N] [--update-readme] [PATH...]`.
-The `bench` environment provides fprettify, and the Rust toolchain that installs fprettier into
-`build/bench`.
+[fortranpack](https://github.com/jacobwilliams/fortranpack) (at `fc527da`) and the 38 libraries it
+depends on, at the revisions `fpm update` fetched:
+
+<!-- benchmark:fortranpack:start -->
+276 files, 183,666 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores.
+
+| Tool | Version | Time (s) | Lines/s | vs. fastest |
+|---|---|--:|--:|--:|
+| fformat | 0.1.0 | 2.083 | 88,173 | 3.0x |
+| fprettier | 0.5.0 | 0.695 | 264,209 | 1.0x |
+| fprettify | 0.3.7 | 21.416 | 8,576 | 30.8x |
+<!-- benchmark:fortranpack:end -->
+
+To rerun them, or time other files:
+`pixi run -e bench bench [--corpus default|fortranpack] [--runs N] [--update-readme] [PATH...]`.
+The `bench` environment provides fprettify, and the Rust toolchain that installs fprettier;
+fprettier and fortranpack are downloaded into `build/bench` on first use.
 
 ## License
 
