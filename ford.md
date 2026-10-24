@@ -1,7 +1,13 @@
 ---
 project: fformat
 summary: A formatter for modern Fortran source code
+project_github: https://github.com/jacobwilliams/fformat
 author: Jacob Williams
+github: https://github.com/jacobwilliams
+predocmark_alt: >
+predocmark: <
+docmark_alt:
+docmark: !
 license: MIT
 src_dir: ./src
 output_dir: ./doc
