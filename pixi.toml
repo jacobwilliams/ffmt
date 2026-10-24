@@ -1,13 +1,13 @@
 [workspace]
 authors = ["Jacob Williams <jacobwilliams@users.noreply.github.com>"]
 channels = ["conda-forge"]
-name = "ffmt"
+name = "fformat"
 platforms = ["osx-arm64", "linux-64", "linux-aarch64", "osx-64", "win-64"]
 version = "0.1.0"
 
 [tasks]
-format = { cmd = "fpm run ffmt --profile release -- .", description = "Format this repository with ffmt itself" }
-format-check = { cmd = "fpm run ffmt --profile release -- --check .", description = "Check that this repository is formatted" }
+format = { cmd = "fpm run fformat --profile release -- .", description = "Format this repository with fformat itself" }
+format-check = { cmd = "fpm run fformat --profile release -- --check .", description = "Check that this repository is formatted" }
 graphviz-setup = { cmd = "dot -c", description = "Register the graphviz plugins that FORD uses for graphs" }
 docs = { cmd = "ford ford.md", depends-on = ["graphviz-setup"], description = "Build the API documentation with FORD (into doc/)" }
 test = { cmd = "fpm test", description = "Run the formatter tests" }

@@ -138,7 +138,7 @@ subroutine test_config(error)
     call find_config(absolute_path('fixtures/tree'), cfg, stat, errmsg)
     call check(error, stat, 0)
     if (allocated(error)) return
-    call check(error, index(cfg%path, 'fixtures/tree/.ffmt.toml') > 0, 'found '//cfg%path)
+    call check(error, index(cfg%path, 'fixtures/tree/.fformat.toml') > 0, 'found '//cfg%path)
     if (allocated(error)) return
     do k = 1, size(cfg%settings)
         call apply_setting(opts, cfg%settings(k)%key, cfg%settings(k)%value, stat, errmsg)

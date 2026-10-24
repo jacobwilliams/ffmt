@@ -1,4 +1,4 @@
-# ffmt
+# fformat
 
 A formatter for free-form Fortran, written in modern Fortran.
 
@@ -16,10 +16,90 @@ Two guarantees:
 
 Both are checked on every file of a corpus of about 10,700 open-source Fortran files.
 
+## Example
+
+Badly formatted input:
+
+```fortran
+MODULE Stats
+USE Utils_Mod, ONLY: Swap, Clamp, Assert
+USE, INTRINSIC :: iso_fortran_env, ONLY: wp=>real64, int32
+IMPLICIT NONE
+CONTAINS
+FUNCTION Mean(x,mask) RESULT(m)
+REAL(wp),INTENT(IN)::x(:)
+LOGICAL,INTENT(IN),OPTIONAL::mask(:)
+REAL(wp)::m
+INTEGER::i,n
+m=0.0_wp
+n=0
+DO i=1,SIZE(x)
+IF(PRESENT(mask))THEN
+IF(.NOT.mask(i)) CYCLE
+END IF
+m=m+x(i)
+n=n+1
+END DO
+IF(n.GT.0) m=m/n
+END FUNCTION Mean
+SUBROUTINE Report(Name,Values,Unit)
+CHARACTER(*),INTENT(IN)::Name
+REAL(wp),INTENT(IN)::Values(:)
+INTEGER,INTENT(IN)::Unit
+WRITE(Unit,'(A,": mean = ",F0.4,", min = ",F0.4,", max = ",F0.4)') Name,Mean(Values),MINVAL(Values),MAXVAL(Values)
+END SUBROUTINE Report
+END MODULE Stats
+```
+
+After formatting with
+
+```sh
+fformat --case keywords=lower,operators=lower --relational symbols \
+     --spaces comma=add,relational=add,plus-minus=add --sort-use --sort-use-only -l 100 stats.f90
+```
+
+```fortran
+module Stats
+use, intrinsic :: iso_fortran_env, only: int32, wp => real64
+use Utils_Mod, only: Assert, Clamp, Swap
+implicit none
+contains
+function Mean(x, mask) result(m)
+    real(wp), intent(in) :: x(:)
+    logical, intent(in), optional :: mask(:)
+    real(wp) :: m
+    integer :: i, n
+    m = 0.0_wp
+    n = 0
+    do i = 1, SIZE(x)
+        if (PRESENT(mask)) then
+            if (.not.mask(i)) cycle
+        end if
+        m = m + x(i)
+        n = n + 1
+    end do
+    if (n > 0) m = m/n
+end function Mean
+subroutine Report(Name, Values, Unit)
+    character(*), intent(in) :: Name
+    real(wp), intent(in) :: Values(:)
+    integer, intent(in) :: Unit
+    write(Unit, '(A,": mean = ",F0.4,", min = ",F0.4,", max = ",F0.4)') Name, Mean(Values), &
+        MINVAL(Values), MAXVAL(Values)
+end subroutine Report
+end module Stats
+```
+
+Statements are indented by nesting depth (module bodies are not indented by default; see
+`--indent-units`), keywords and `.NOT.` are lowercased while names such as `Mean`, `SIZE` and
+`Unit` keep their case, `.GT.` becomes `>`, blanks are added around `=`, `::`, `,`, `+` and
+relational operators, the `use` statements and their `only:` lists are sorted, and the long
+`write` statement is split to fit 100 columns.
+
 ## Usage
 
 ```text
-ffmt [OPTIONS] PATH...
+fformat [OPTIONS] PATH...
 ```
 
 Files are formatted in place, and only rewritten if they change. A directory is searched
@@ -57,8 +137,8 @@ Exit status: 0 on success, 1 if `--check` found files to format, 2 on errors.
 
 ### Configuration
 
-Settings are read from the nearest `.ffmt.toml` in or above a file's directory, or from
-an `[extra.ffmt]` table in an `fpm.toml` there; the nearest file is used on its own,
+Settings are read from the nearest `.fformat.toml` in or above a file's directory, or from
+an `[extra.fformat]` table in an `fpm.toml` there; the nearest file is used on its own,
 not merged with files further up. Command-line options override it.
 
 ```toml
@@ -90,7 +170,7 @@ statement and documentation comments in column 1 (the style of json-fortran and 
 use for example in `fpm.toml`:
 
 ```toml
-[extra.ffmt]
+[extra.fformat]
 base-indent = 4
 indent-procedures = false
 column1-comments = "keep"
@@ -201,6 +281,18 @@ pixi run docs                             # API documentation with FORD, in doc/
 Dependencies: [toml-f](https://github.com/toml-f/toml-f) for configuration files, and the regular
 expression library [fregex](https://github.com/jacobwilliams/fregex). Directory listing uses
 `opendir`/`readdir`/`closedir` from the C library through Fortran interfaces, with no C code.
+
+## Other Fortran formatters
+
+| Tool | Written in | Notes |
+|---|---|---|
+| [fprettify](https://github.com/pseewald/fprettify) | Python | free-form only; the reference for this project's feature set |
+| [findent](https://sourceforge.net/projects/findent/) | C++ | indentation; fixed and free form, and conversion between them |
+| [fprettier](https://github.com/fredjones42/fprettier) | Rust | a rewrite of fprettify |
+| [ffmt](https://pypi.org/project/ffmt/) | Rust | Fypp, Doxygen and OpenACC/OpenMP support |
+| [LFortran](https://lfortran.org) `lfortran fmt` | C++ | formats from the compiler's syntax tree |
+| [Fortitude](https://github.com/PlasmaFAIR/fortitude) | Rust | a linter with automatic fixes, not a full formatter |
+| Emacs `f90-mode` | Emacs Lisp | indentation in the editor |
 
 ## License
 

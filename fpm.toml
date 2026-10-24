@@ -1,4 +1,4 @@
-name = "ffmt"
+name = "fformat"
 version = "0.1.0"
 license = "MIT"
 author = "Jacob Williams"
@@ -13,7 +13,7 @@ auto-examples = true
 module-naming = false
 
 [[executable]]
-name = "ffmt"
+name = "fformat"
 source-dir = "app"
 main = "main.f90"
 

@@ -1,4 +1,4 @@
-# formatting of this repository with ffmt itself
+# formatting of this repository with fformat itself
 [files]
 # the test fixtures are deliberately not formatted
 exclude = [".*", "build", "fixtures", "doc"]

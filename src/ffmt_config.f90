@@ -4,8 +4,8 @@ module ffmt_config
 !! Settings (see [[ffmt_settings]]) are read from the nearest of these, searching from a file's
 !! directory upward:
 !!
-!! * `.ffmt.toml`
-!! * `fpm.toml`, in an `[extra.ffmt]` table
+!! * `.fformat.toml`
+!! * `fpm.toml`, in an `[extra.fformat]` table
 !!
 !! Settings are written as in the table of [[ffmt_settings]], with `spaces` and `case` as tables:
 !!
@@ -32,7 +32,7 @@ private
 
 public :: find_config, load_config
 
-character(len=*), parameter :: CONFIG_NAME = '.ffmt.toml'
+character(len=*), parameter :: CONFIG_NAME = '.fformat.toml'
 
 type, public :: config_t
     !! The settings of one configuration file.
@@ -77,7 +77,7 @@ end subroutine find_config
 
 subroutine load_config(path, fpm, cfg, found, stat, errmsg)
     !! Read the configuration in file `path`: the whole file, or with `fpm` its
-    !! `[extra.ffmt]` table. `found` is false if an `fpm.toml` has no such table.
+    !! `[extra.fformat]` table. `found` is false if an `fpm.toml` has no such table.
     character(len=*), intent(in) :: path
     logical, intent(in) :: fpm
     type(config_t), intent(out) :: cfg
@@ -101,7 +101,7 @@ subroutine load_config(path, fpm, cfg, found, stat, errmsg)
     if (fpm) then
         call get_value(top, 'extra', extra, requested=.false.)
         if (.not. associated(extra)) return
-        call get_value(extra, 'ffmt', table, requested=.false.)
+        call get_value(extra, 'fformat', table, requested=.false.)
         if (.not. associated(table)) return
     else
         table => top

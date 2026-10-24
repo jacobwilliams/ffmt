@@ -1,8 +1,8 @@
 name = "fixture"
 
-[extra.ffmt]
+[extra.fformat]
 indent = 3
 relational = "symbols"
 
-[extra.ffmt.case]
+[extra.fformat.case]
 all = "upper"

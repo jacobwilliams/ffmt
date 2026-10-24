@@ -65,7 +65,7 @@ Milestone 3 results:
 
 - **Modules.** `ffmt_options` (options type), `ffmt_layout` (indentation and continuation
   alignment), `ffmt_format` (`format_text`, the library entry point, with the token-equivalence
-  check), `ffmt_cli` and `app/main.f90` (the `ffmt` command: in place, `--stdout`,
+  check), `ffmt_cli` and `app/main.f90` (the `fformat` command: in place, `--stdout`,
   `--check`, exit codes 0/1/2), `ffmt_strings`.
 - **Defaults** follow the workspace's fprettify settings: 4-space indent, module and program bodies
   not indented (`--indent-units` to change), continuation lines aligned, line length 132.
@@ -131,8 +131,8 @@ Milestone 6 results:
   to directories are recognized and not followed. Verified on macOS arm64 only; Linux and Windows
   are untested (Docker is available here for a Linux check).
 - **Walking** (`ffmt_walk`): extensions and glob excludes (via fregex), sorted, links not followed.
-- **Configuration** (`ffmt_config`, with toml-f): nearest `.ffmt.toml` or
-  `fpm.toml` `[extra.ffmt]`; `[spaces]`, `[case]`, `[files]` tables.
+- **Configuration** (`ffmt_config`, with toml-f): nearest `.fformat.toml` or
+  `fpm.toml` `[extra.fformat]`; `[spaces]`, `[case]`, `[files]` tables.
 - **Settings** (`ffmt_settings`): one `apply_setting(key, value)` used by both the configuration
   file and the command line, so every option is validated in one place; precedence defaults <
   config < command line.
@@ -141,7 +141,7 @@ Milestone 6 results:
 - **CLI**: directories, `-` for stdin/stdout, `--diff`, `--config`, `--no-config`, `--set`,
   `--exclude`, `--extensions`.
 - **Tests.** 59 unit tests, with fixtures in `fixtures/` (outside `test/`, which fpm compiles).
-- This repository's own `.ffmt.toml` excludes the fixtures; `pixi run format` formats it.
+- This repository's own `.fformat.toml` excludes the fixtures; `pixi run format` formats it.
 
 Milestone 7 progress:
 
@@ -177,7 +177,7 @@ and lines indented inconsistently in the source.
 | Directives | `!&` (skip a line), `!&<` / `!&>` (formatting off/on), `! fprettify: <options>` in the file | `!&`, `!&<`, `!&>` (done); options in the file later |
 | Preprocessors | passes through cpp `#` and fypp `#:`/`$:`/`@:` lines, can indent fypp blocks | same |
 | OpenMP / OpenACC | keeps `!$omp` / `!$ ` conditional lines | also format the Fortran code in `!$ ` conditional lines |
-| Configuration | `.fprettify.rc` in the home directory and parent directories; command-line flags | a TOML config (`.ffmt.toml` or `[extra.ffmt]` in `fpm.toml`) using toml-f |
+| Configuration | `.fprettify.rc` in the home directory and parent directories; command-line flags | a TOML config (`.fformat.toml` or `[extra.fformat]` in `fpm.toml`) using toml-f |
 | CLI | in place, `--stdout`, `--diff`, recursive with excludes and extensions | add `--check` (non-zero exit if a file would change, for CI and pre-commit), stdin/stdout for editors, consistent exit codes |
 
 fprettify weaknesses to avoid, from reading its source:
@@ -287,7 +287,7 @@ and no shell are used.
       intrinsic keeps its case. Needs F2023 tables of intrinsic procedures and constants.
    3. **Comment spacing:** `comment-spacing = N` sets the blanks before an inline comment. It must
       leave trailing comments that are aligned in columns alone.
-   4. **Settings in a file:** a comment such as `! ffmt: indent=2, spaces.comma=add`
+   4. **Settings in a file:** a comment such as `! fformat: indent=2, spaces.comma=add`
       sets options for that file, applied after the configuration file and the command line. Only
       the first such comment counts.
    5. **Merged configuration files:** read every configuration file from the home directory down to
@@ -356,7 +356,8 @@ and no shell are used.
 
 Decided:
 
-- **Names:** the project and executable are `ffmt` (renamed from `prettify-fortran`), the modules use the `ffmt_` prefix,
+- **Names:** the project and executable are `fformat` (renamed from `prettify-fortran`, then from
+  `ffmt`, which another Fortran formatter already uses), the modules keep the `ffmt_` prefix,
   and the regex package is `fregex`.
 - **License:** MIT.
 - **Compatibility:** no fprettify compatibility (flags, config files or output).
