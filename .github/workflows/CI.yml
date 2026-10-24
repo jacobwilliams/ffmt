@@ -1,0 +1,91 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:   # run by hand from the Actions tab: also runs the Corpus job
+
+jobs:
+
+  # the unit tests, and fformat on this repository's own sources, on every platform it must
+  # support, from the same pixi environment (gfortran, fpm) used locally
+  Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    # check out the files as they are in the repository, with LF line endings, on Windows too
+    - name: Keep line endings
+      run: git config --global core.autocrlf false
+
+    - name: Checkout code
+      uses: actions/checkout@v7.0.1
+
+    # installs pixi and creates the environment from pixi.toml/pixi.lock
+    - name: Setup pixi environment
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.80.0
+        locked: true   # fail if pixi.lock is out of date with pixi.toml
+        cache: true
+        cache-write: ${{ github.ref == 'refs/heads/master' }}
+
+    - name: Run tests
+      run: pixi run test
+
+    # the release build formats the repository itself, which must already be formatted
+    - name: Check the formatting of this repository
+      run: pixi run format-check
+
+  # the API documentation (FORD), published to GitHub Pages from master
+  Documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7.0.1
+
+    - name: Setup pixi environment
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.80.0
+        locked: true
+        cache: true
+        cache-write: false   # (the Test jobs write the cache)
+
+    - name: Build documentation
+      run: pixi run docs
+
+    - name: Deploy documentation
+      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      uses: JamesIves/github-pages-deploy-action@v4.9.0
+      with:
+        branch: gh-pages   # the branch the action should deploy to
+        folder: doc        # FORD's output (ford.md)
+        single-commit: true
+
+  # fformat on stdlib, fpm, json-fortran, cp2k and wannier90 (bench/corpus.py): the corpus checks,
+  # and fpm and json-fortran formatted, built and tested. It fetches the libraries and takes a while,
+  # so it only runs when the workflow is started by hand, not on every push.
+  Corpus:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7.0.1
+
+    - name: Setup pixi environment
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.80.0
+        locked: true
+        cache: true
+        cache-write: false
+
+    - name: Check fformat on other libraries
+      run: pixi run corpus --build

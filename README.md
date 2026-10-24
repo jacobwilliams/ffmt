@@ -1,5 +1,9 @@
 # fformat
 
+[![Language](https://img.shields.io/badge/-Fortran-734f96?logo=fortran&logoColor=white)](https://github.com/topics/fortran)
+[![Build Status](https://github.com/jacobwilliams/fformat/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/fformat/actions)
+[![Docs](https://img.shields.io/badge/docs-API-blue)](https://jacobwilliams.github.io/fformat/)
+
 A formatter for free-form Fortran, written in modern Fortran.
 
 It re-indents code (statements by nesting depth, continuation lines by alignment with brackets,
