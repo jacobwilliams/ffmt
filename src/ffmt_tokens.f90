@@ -3,10 +3,11 @@ module ffmt_tokens
 !!
 !! Every byte of the source belongs to exactly one token, including blanks, comments, line breaks
 !! and continuation markers, so joining the text of all tokens reproduces the source exactly.
+use ffmt_strings, only: make_lowercase
 implicit none
 private
 
-public :: token_text, token_lower, is_code_kind, detokenize
+public :: token_text, token_lower, is_code_kind, is_chevron, detokenize
 
 ! token kinds
 integer, parameter, public :: TK_SPACE = 1      !! blanks and tabs
@@ -89,11 +90,8 @@ pure function token_lower(src, t) result(text)
     character(len=*), intent(in) :: src   !! the source the token was read from
     type(token_t), intent(in) :: t        !! a token of `src`
     character(len=:), allocatable :: text
-    integer :: k
     text = src(t%first:t%last)
-    do k = 1, len(text)
-        if (text(k:k) >= 'A' .and. text(k:k) <= 'Z') text(k:k) = achar(iachar(text(k:k)) + 32)
-    end do
+    call make_lowercase(text)
 end function token_lower
 
 elemental logical function is_code_kind(kind)
@@ -107,6 +105,30 @@ elemental logical function is_code_kind(kind)
         is_code_kind = .true.
     end select
 end function is_code_kind
+
+pure logical function is_chevron(src, tokens, t)
+    !! True if token `t` is a `<` or `>` operator directly next to another one, as in the CUDA
+    !! kernel launch `call k<<<grid, block>>>(x)`, where they are not relational operators.
+    character(len=*), intent(in) :: src          !! the source the tokens were read from
+    type(token_list_t), intent(in) :: tokens     !! tokens of `src`
+    integer, intent(in) :: t                     !! index into `tokens`
+    is_chevron = .false.
+    if (.not. is_angle(t)) return
+    if (t > 1) is_chevron = is_angle(t - 1)
+    if (t < tokens%n) is_chevron = is_chevron .or. is_angle(t + 1)
+
+contains
+
+    pure logical function is_angle(k)
+        !! True if token `k` is a `<` or `>` operator.
+        integer, intent(in) :: k   !! index into `tokens`
+        is_angle = .false.
+        if (tokens%tok(k)%kind /= TK_OP) return
+        is_angle = src(tokens%tok(k)%first:tokens%tok(k)%last) == '<' .or. &
+                   src(tokens%tok(k)%first:tokens%tok(k)%last) == '>'
+    end function is_angle
+
+end function is_chevron
 
 function detokenize(src, tokens) result(text)
     !! Join the text of all tokens.

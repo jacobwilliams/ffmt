@@ -2,9 +2,9 @@ module ffmt_format
 !! Formatting a whole source text: the main library entry point.
 use ffmt_tokens
 use ffmt_lexer, only: tokenize
-use ffmt_statements, only: statement_t, statement_list_t, split_statements, code_tokens, SK_CODE, SK_PREPROC
-use ffmt_constructs, only: stmt_info_t
-use ffmt_structure, only: analyze_structure, diagnostic_t
+use ffmt_statements, only: statement_t, statement_view_t, statement_view, SK_CODE, SK_PREPROC
+use ffmt_source, only: source_t, parse_source, statement_views
+use ffmt_structure, only: analyze_structure, diagnostic_t, structure_t
 use ffmt_layout, only: layout
 use ffmt_whitespace, only: compute_gaps
 use ffmt_case, only: compute_case
@@ -12,7 +12,7 @@ use ffmt_relational, only: convert_relational, canonical_relational
 use ffmt_linebreak, only: split_long_lines, long_code_lines
 use ffmt_options, only: format_options_t
 use ffmt_use_sort, only: sort_use, is_use_statement, only_items, sorted_order
-use ffmt_strings, only: to_s, string_t, string_builder_t
+use ffmt_strings, only: to_s, string_t, string_builder_t, lower_char
 implicit none
 private
 
@@ -86,24 +86,24 @@ subroutine format_pass(src, opts, out, diags, src_tokens)
     type(diagnostic_t), allocatable, intent(out) :: diags(:)    !! problems found in this pass
     type(token_list_t), intent(out), optional :: src_tokens     !! the tokens of `src`
 
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    type(stmt_info_t), allocatable :: info(:)
-    integer, allocatable :: depth(:), units(:), procedures(:), long_lines(:)
+    type(source_t) :: source
+    type(statement_view_t), allocatable :: views(:)
+    type(structure_t) :: st
+    integer, allocatable :: long_lines(:)
     integer :: k
 
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    call analyze_structure(src, tokens, stmts, info, depth, diags, units, procedures)
-    out = layout(src, tokens, stmts, info, depth, units, procedures, compute_gaps(src, tokens, stmts, opts%spaces), &
-                 compute_case(src, tokens, stmts, opts%letter_case), opts, long_lines)
+    call parse_source(src, source)
+    views = statement_views(source)
+    call analyze_structure(source, views, st, diags)
+    out = layout(source, st, compute_gaps(source, views, opts%spaces), compute_case(source, views, opts%letter_case), &
+                 opts, long_lines)
     do k = 1, size(long_lines)
         diags = [diags, diagnostic_t(long_lines(k), 'indentation kept: the line would be longer than '// &
                                      to_s(opts%line_length)//' characters')]
     end do
     if (present(src_tokens)) then
-        call move_alloc(tokens%tok, src_tokens%tok)
-        src_tokens%n = tokens%n
+        call move_alloc(source%tokens%tok, src_tokens%tok)
+        src_tokens%n = source%tokens%n
     end if
 end subroutine format_pass
 
@@ -202,7 +202,7 @@ pure logical function same_token(sa, s, sb, t)
     if (s%last - s%first == t%last - t%first) then
         same_token = .true.
         do k = 0, s%last - s%first
-            if (lower(sa(s%first + k:s%first + k)) /= lower(sb(t%first + k:t%first + k))) then
+            if (lower_char(sa(s%first + k:s%first + k)) /= lower_char(sb(t%first + k:t%first + k))) then
                 same_token = .false.
                 exit
             end if
@@ -215,16 +215,6 @@ pure logical function same_token(sa, s, sb, t)
         cb = canonical_relational(token_lower(sb, t))
         same_token = len(ca) == len(cb) .and. ca == cb
     end if
-
-contains
-
-    pure character function lower(c)
-        !! `c` in lowercase (ASCII).
-        character, intent(in) :: c   !! the character
-        lower = c
-        if (c >= 'A' .and. c <= 'Z') lower = achar(iachar(c) + 32)
-    end function lower
-
 end function same_token
 
 function code_signature(src) result(sig)
@@ -235,32 +225,32 @@ function code_signature(src) result(sig)
     character(len=*), intent(in) :: src   !! source text
     character(len=:), allocatable :: sig
 
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
+    type(source_t) :: source
+    type(statement_view_t) :: v
     type(string_builder_t) :: buf
     type(string_t), allocatable :: run(:)
     type(string_t) :: item
-    integer, allocatable :: code(:)
     integer :: k, j
 
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
+    call parse_source(src, source)
     allocate (run(0))
-    do k = 1, stmts%n
-        if (stmts%s(k)%kind == SK_PREPROC) call flush_run()
-        if (stmts%s(k)%kind /= SK_CODE) cycle
-        code = code_tokens(src, tokens, stmts%s(k))
-        if (is_use_statement(src, tokens, code)) then
-            ! through a variable: a gfortran 15 internal compiler error otherwise
-            item%s = use_signature(stmts%s(k), code)
-            run = [run, item]
-        else
-            call flush_run()
-            do j = stmts%s(k)%first, stmts%s(k)%last
-                if (is_code_kind(tokens%tok(j)%kind)) call buf%append(key(tokens%tok(j)))
-            end do
-        end if
-    end do
+    associate (tokens => source%tokens, stmts => source%stmts)
+        do k = 1, stmts%n
+            if (stmts%s(k)%kind == SK_PREPROC) call flush_run()
+            if (stmts%s(k)%kind /= SK_CODE) cycle
+            v = statement_view(src, tokens, stmts%s(k))
+            if (is_use_statement(v)) then
+                ! through a variable: a gfortran 15 internal compiler error otherwise
+                item%s = use_signature(stmts%s(k), v)
+                run = [run, item]
+            else
+                call flush_run()
+                do j = stmts%s(k)%first, stmts%s(k)%last
+                    if (is_code_kind(tokens%tok(j)%kind)) call buf%append(key(tokens%tok(j)))
+                end do
+            end if
+        end do
+    end associate
     call flush_run()
     sig = buf%get()
 
@@ -278,41 +268,41 @@ contains
         allocate (run(0))
     end subroutine flush_run
 
-    function use_signature(stmt, code) result(s)
+    function use_signature(stmt, v) result(s)
         !! Signature of a `use` statement, with the items of its `only:` list sorted. Any `;` that
         !! ends it comes last.
-        type(statement_t), intent(in) :: stmt   !! the `use` statement
-        integer, intent(in) :: code(:)          !! its code tokens, as indices into the token list
+        type(statement_t), intent(in) :: stmt          !! the `use` statement
+        type(statement_view_t), intent(in) :: v        !! its view
         character(len=:), allocatable :: s
         integer, allocatable :: starts(:), ends(:), order(:)
         type(string_t), allocatable :: items(:)
         integer :: p, q, first
 
-        starts = only_items(src, tokens, code)
-        first = size(code) + 1
+        starts = only_items(v)
+        first = v%n + 1
         if (size(starts) > 0) first = starts(1)
         s = ''
         do p = 1, first - 1
-            s = s//key(tokens%tok(code(p)))
+            s = s//key(source%tokens%tok(v%code(p)))
         end do
         if (size(starts) > 0) then
-            ends = [starts(2:) - 2, size(code)]
+            ends = [starts(2:) - 2, v%n]
             allocate (items(size(starts)))
             do p = 1, size(starts)
                 items(p)%s = ''
                 do q = starts(p), ends(p)
-                    items(p)%s = items(p)%s//key(tokens%tok(code(q)))
+                    items(p)%s = items(p)%s//key(source%tokens%tok(v%code(q)))
                 end do
             end do
             order = sorted_order(items)
             do p = 1, size(order)
                 s = s//items(order(p))%s
-                if (p < size(order)) s = s//key(tokens%tok(code(starts(2) - 1)))   ! the comma
+                if (p < size(order)) s = s//key(source%tokens%tok(v%code(starts(2) - 1)))   ! the comma
             end do
         end if
         do p = stmt%first, stmt%last
-            if (tokens%tok(p)%kind == TK_OP) then
-                if (token_text(src, tokens%tok(p)) == ';') s = s//key(tokens%tok(p))
+            if (source%tokens%tok(p)%kind == TK_OP) then
+                if (token_text(src, source%tokens%tok(p)) == ';') s = s//key(source%tokens%tok(p))
             end if
         end do
     end function use_signature

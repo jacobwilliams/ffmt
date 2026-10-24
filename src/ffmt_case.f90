@@ -9,21 +9,12 @@ module ffmt_case
 !! never changes the meaning of the code, so a misclassified word is a matter of style only.
 use ffmt_tokens
 use ffmt_statements
+use ffmt_options, only: case_options_t, CASE_KEEP
+use ffmt_source, only: source_t
 implicit none
 private
 
 public :: compute_case
-
-! case modes
-integer, parameter, public :: CASE_KEEP = 0
-integer, parameter, public :: CASE_LOWER = 1
-integer, parameter, public :: CASE_UPPER = 2
-
-type, public :: case_options_t
-    !! Letter case of keywords and of dot operators and logical constants.
-    integer :: keywords = CASE_KEEP    !! `if`, `end do`, `integer`, `intent(in)`, ...
-    integer :: operators = CASE_KEEP   !! `.and.`, `.eq.`, `.true.`, ...
-end type case_options_t
 
 ! words that are keywords at the start of a statement (or of a declaration attribute)
 character(len=*), parameter :: KEYWORDS(*) = [character(len=16) :: &
@@ -59,131 +50,91 @@ character(len=*), parameter :: INTRODUCERS(*) = [character(len=12) :: &
 
 contains
 
-function compute_case(src, tokens, stmts, opts) result(mode)
+function compute_case(source, views, opts) result(mode)
     !! The case mode for each token (`CASE_KEEP`, `CASE_LOWER` or `CASE_UPPER`).
-    character(len=*), intent(in) :: src           !! the source text
-    type(token_list_t), intent(in) :: tokens      !! its tokens
-    type(statement_list_t), intent(in) :: stmts   !! its statements
-    type(case_options_t), intent(in) :: opts      !! the case wanted for keywords and operators
+    type(source_t), intent(in) :: source            !! the source
+    type(statement_view_t), intent(in) :: views(:)  !! the view of each item (see [[statement_views]])
+    type(case_options_t), intent(in) :: opts        !! the case wanted for keywords and operators
     integer, allocatable :: mode(:)
     integer :: k, t
 
-    allocate (mode(tokens%n))
+    allocate (mode(source%tokens%n))
     mode = CASE_KEEP
     if (opts%operators /= CASE_KEEP) then
-        do t = 1, tokens%n
-            if (tokens%tok(t)%kind == TK_DOTOP) mode(t) = opts%operators
+        do t = 1, source%tokens%n
+            if (source%tokens%tok(t)%kind == TK_DOTOP) mode(t) = opts%operators
         end do
     end if
     if (opts%keywords == CASE_KEEP) return
-    do k = 1, stmts%n
-        if (stmts%s(k)%kind == SK_CODE) call statement_case(src, tokens, stmts%s(k), opts%keywords, mode)
+    do k = 1, source%stmts%n
+        if (source%stmts%s(k)%kind == SK_CODE) call statement_case(views(k), opts%keywords, mode)
     end do
 end function compute_case
 
-subroutine statement_case(src, tokens, stmt, kw_mode, mode)
-    !! Mark the keywords of one statement with `kw_mode`.
-    character(len=*), intent(in) :: src        !! the source text
-    type(token_list_t), intent(in) :: tokens   !! its tokens
-    type(statement_t), intent(in) :: stmt      !! the statement, a code statement
+subroutine statement_case(v, kw_mode, mode)
+    !! Mark the keywords of one code statement with `kw_mode`.
+    type(statement_view_t), intent(in) :: v    !! the statement
     integer, intent(in) :: kw_mode             !! case mode for keywords
     integer, intent(inout) :: mode(:)          !! case mode of each token, set for the keywords
+    integer :: k
 
-    integer, allocatable :: code(:)
-    integer :: n, k, j, depth
-    logical :: decl
-
-    code = code_tokens(src, tokens, stmt)
-    n = size(code)
-    if (n == 0) return
-    k = 1
-    if (kind_of(1) == TK_INT .and. n > 1) k = 2                    ! statement label
-    if (k + 1 < n) then
-        if (kind_of(k) == TK_NAME .and. word(k + 1) == ':') k = k + 2   ! construct name
+    if (v%n == 0) return
+    k = v%first
+    if (k + 1 < v%n) then
+        if (v%kind_of(k) == TK_NAME .and. v%is(k + 1, ':')) k = k + 2   ! construct name
     end if
-    if (word(k) == 'format') return
+    if (v%is(k, 'format')) return
     call leading(k)
-
-    ! attributes of a declaration: the word after each top-level `,` before `::`
-    decl = .false.
-    depth = 0
-    do j = 1, n
-        select case (word(j))
-        case ('(', '[')
-            depth = depth + 1
-        case (')', ']')
-            depth = max(0, depth - 1)
-        case ('::')
-            if (depth == 0) decl = .true.
-        end select
-    end do
-    if (decl) then
-        depth = 0
-        do j = k, n
-            select case (word(j))
-            case ('(', '[')
-                depth = depth + 1
-            case (')', ']')
-                depth = max(0, depth - 1)
-            case (',')
-                if (depth == 0 .and. is_keyword(j + 1)) then
-                    call mark(j + 1)
-                    if (word(j + 1) == 'intent') call intent_args(j + 2)
-                end if
-            case ('::')
-                if (depth == 0) exit
-            end select
-        end do
-    end if
-
-    ! `only:` of a `use` statement, `result(...)` and `bind(...)` after a parenthesis
-    depth = 0
-    do j = k + 1, n
-        select case (word(j))
-        case ('(', '[')
-            depth = depth + 1
-        case (')', ']')
-            depth = max(0, depth - 1)
-        case ('only')
-            if (depth == 0 .and. word(j + 1) == ':' .and. word(j - 1) == ',') call mark(j)
-        case ('result', 'bind')
-            if (depth == 0 .and. word(j - 1) == ')' .and. word(j + 1) == '(') call mark(j)
-        end select
-    end do
+    call attributes(k)
+    call trailing(k)
 
 contains
 
-    function word(j) result(w)
-        !! Lowercase text of code token `j`, or '' outside the statement.
-        integer, intent(in) :: j   !! index into `code(:)`
-        character(len=:), allocatable :: w
-        if (j < 1 .or. j > n) then
-            w = ''
-        else
-            w = token_lower(src, tokens%tok(code(j)))
-        end if
-    end function word
+    subroutine attributes(k)
+        !! Mark the attributes of a declaration: the word after each top-level `,` before `::`, and
+        !! `in`, `out` and `inout` in `intent(...)`.
+        integer, intent(in) :: k   !! index into `v%code(:)` of the first word of the statement
+        integer :: j
+        if (.not. any([(v%is(j, '::') .and. v%depth(j) == 0, j=1, v%n)])) return
+        do j = k, v%n
+            if (v%depth(j) > 0) cycle
+            if (v%is(j, '::')) exit
+            if (v%is(j, ',') .and. is_keyword(j + 1)) then
+                call mark(j + 1)
+                if (v%is(j + 1, 'intent')) call intent_args(j + 2)
+            end if
+        end do
+    end subroutine attributes
 
-    integer function kind_of(j)
-        !! Token kind (`TK_*`) of code token `j`, or 0 outside the statement.
-        integer, intent(in) :: j   !! index into `code(:)`
-        kind_of = 0
-        if (j >= 1 .and. j <= n) kind_of = tokens%tok(code(j))%kind
-    end function kind_of
+    subroutine trailing(k)
+        !! Mark the keywords after the leading ones: `only` of a `use` statement, and `result` and
+        !! `bind` after a parenthesis.
+        integer, intent(in) :: k   !! index into `v%code(:)` of the first word of the statement
+        integer :: j
+        do j = k + 1, v%n
+            if (v%depth(j) > 0) cycle
+            select case (v%word(j))
+            case ('only')
+                if (v%is(j + 1, ':') .and. v%is(j - 1, ',')) call mark(j)
+            case ('result', 'bind')
+                if (v%is(j - 1, ')') .and. v%is(j + 1, '(')) call mark(j)
+            end select
+        end do
+    end subroutine trailing
 
     subroutine mark(j)
         !! Give code token `j` the keyword case mode, if it is inside the statement.
-        integer, intent(in) :: j   !! index into `code(:)`
-        if (j >= 1 .and. j <= n) mode(code(j)) = kw_mode
+        integer, intent(in) :: j   !! index into `v%code(:)`
+        if (j >= 1 .and. j <= v%n) mode(v%code(j)) = kw_mode
     end subroutine mark
 
     logical function is_keyword(j)
         !! True if code token `j` is a name spelled like a keyword (including `endif`, `enddo`, ...).
-        integer, intent(in) :: j   !! index into `code(:)`
+        integer, intent(in) :: j   !! index into `v%code(:)`
         character(len=:), allocatable :: w
         is_keyword = .false.
-        if (kind_of(j) /= TK_NAME) return
-        w = word(j)
+        if (v%kind_of(j) /= TK_NAME) return
+        w = v%word(j)
         if (any(KEYWORDS == w)) then
             is_keyword = .true.
         else if (len(w) > 3) then
@@ -194,42 +145,30 @@ contains
 
     integer function after_parens(j) result(next)
         !! Index after the parenthesis group that opens at `j`, or `j` if there is none there.
-        integer, intent(in) :: j   !! index into `code(:)`
-        integer :: d
+        integer, intent(in) :: j   !! index into `v%code(:)`
         next = j
-        if (word(j) /= '(') return
-        d = 0
-        do next = j, n
-            if (word(next) == '(') d = d + 1
-            if (word(next) == ')') then
-                d = d - 1
-                if (d == 0) exit
-            end if
-        end do
+        if (.not. v%is(j, '(')) return
+        next = v%closing(j)
+        if (next == 0) next = v%n
         next = next + 1
     end function after_parens
 
     logical function is_assignment(j)
         !! True if the statement starting at `j` assigns to a variable: `name [(...)] =`, `=>` or `%`.
-        integer, intent(in) :: j   !! index into `code(:)` of the first word
+        integer, intent(in) :: j   !! index into `v%code(:)` of the first word
         integer :: m
         m = after_parens(j + 1)
-        select case (word(m))
-        case ('=', '=>', '%')
-            is_assignment = .true.
-        case default
-            is_assignment = .false.
-        end select
-        if (word(j + 1) == '=' .or. word(j + 1) == '=>' .or. word(j + 1) == '%') is_assignment = .true.
+        is_assignment = v%is(m, '=') .or. v%is(m, '=>') .or. v%is(m, '%') .or. &
+                        v%is(j + 1, '=') .or. v%is(j + 1, '=>') .or. v%is(j + 1, '%')
     end function is_assignment
 
     subroutine intent_args(j)
         !! `in`, `out` and `inout` in `intent(...)` starting at the `(` at `j`.
-        integer, intent(in) :: j   !! index into `code(:)`
+        integer, intent(in) :: j   !! index into `v%code(:)`
         integer :: m
-        if (word(j) /= '(') return
-        do m = j + 1, n
-            select case (word(m))
+        if (.not. v%is(j, '(')) return
+        do m = j + 1, v%n
+            select case (v%word(m))
             case ('in', 'out', 'inout')
                 call mark(m)
             case (')')
@@ -240,37 +179,33 @@ contains
 
     subroutine type_params(j)
         !! `kind=` and `len=` in a type selector starting at the `(` at `j`.
-        integer, intent(in) :: j   !! index into `code(:)`
-        integer :: m, d
-        if (word(j) /= '(') return
-        d = 0
-        do m = j, n
-            select case (word(m))
-            case ('(')
-                d = d + 1
-            case (')')
-                d = d - 1
-                if (d == 0) return
-            case ('kind', 'len')
-                if (d == 1 .and. word(m + 1) == '=') call mark(m)
-            end select
+        integer, intent(in) :: j   !! index into `v%code(:)`
+        integer :: m, last
+        last = v%closing(j)
+        if (last == 0) then
+            if (.not. v%is(j, '(')) return
+            last = v%n
+        end if
+        do m = j + 1, last - 1
+            if (v%depth(m) /= v%depth(j) + 1) cycle      ! directly inside the parentheses
+            if ((v%is(m, 'kind') .or. v%is(m, 'len')) .and. v%is(m + 1, '=')) call mark(m)
         end do
     end subroutine type_params
 
     recursive subroutine leading(start)
         !! Mark the leading keywords of the statement starting at code token `start`.
-        integer, intent(in) :: start   !! index into `code(:)`
+        integer, intent(in) :: start   !! index into `v%code(:)`
         integer :: j, m
         character(len=:), allocatable :: w
 
-        if (kind_of(start) /= TK_NAME) return
+        if (v%kind_of(start) /= TK_NAME) return
         if (is_assignment(start)) return
         j = start
-        do while (j <= n)
+        do while (j <= v%n)
             if (.not. is_keyword(j)) return
-            w = word(j)
+            w = v%word(j)
             call mark(j)
-            if (w == 'go' .and. word(j + 1) == 'to') call mark(j + 1)
+            if (w == 'go' .and. v%is(j + 1, 'to')) call mark(j + 1)
             if (any(INTRODUCERS == w)) return
             select case (w)
             case ('if', 'elseif', 'where', 'forall', 'while', 'case', 'rank')
@@ -280,7 +215,7 @@ contains
                     j = j + 1
                     cycle
                 end if
-                if (word(m) == 'then') then
+                if (v%is(m, 'then')) then
                     call mark(m)
                 else if (w == 'if' .or. w == 'where' .or. w == 'forall') then
                     call leading(m)                  ! one-line `if (x) call f()`
@@ -289,10 +224,10 @@ contains
             case ('integer', 'real', 'complex', 'logical', 'character', 'type', 'class', 'precision', 'procedure')
                 call type_params(j + 1)
                 m = after_parens(j + 1)
-                if (word(m) == '*') m = after_parens(m + 1) + merge(0, 1, word(m + 1) == '(')
+                if (v%is(m, '*')) m = after_parens(m + 1) + merge(0, 1, v%is(m + 1, '('))
                 j = m
                 ! after a type, only a procedure prefix or `function` can follow; a name is declared
-                select case (word(j))
+                select case (v%word(j))
                 case ('function', 'pure', 'impure', 'elemental', 'recursive', 'non_recursive', 'module', 'simple')
                     continue
                 case default
@@ -304,7 +239,7 @@ contains
             case ('select')
                 j = j + 1
             case default
-                if (word(j + 1) == '(') return       ! `write(...)`, `allocate(...)`, `dimension(...)`
+                if (v%is(j + 1, '(')) return       ! `write(...)`, `allocate(...)`, `dimension(...)`
                 j = j + 1
             end select
         end do

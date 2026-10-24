@@ -5,6 +5,8 @@ module ffmt_structure
 use ffmt_tokens
 use ffmt_statements
 use ffmt_constructs
+use ffmt_source, only: source_t
+use ffmt_strings, only: to_s
 implicit none
 private
 
@@ -16,12 +18,34 @@ type, public :: diagnostic_t
     character(len=:), allocatable :: message  !! what is wrong, e.g. `'if is not closed'`
 end type diagnostic_t
 
+type, public :: structure_t
+    !! The block structure of a source: for each item (see [[ffmt_statements]]) what it is and how
+    !! deeply it is nested.
+    type(stmt_info_t), allocatable :: info(:)   !! classification of each item (`ROLE_NONE` for non-code)
+    integer, allocatable :: depth(:)            !! nesting depth of each item: the constructs around it
+    integer, allocatable :: units(:)            !! how many of those are program units (module, submodule
+                                                !! or main program)
+    integer, allocatable :: procedures(:)       !! how many are procedure definitions (subroutine,
+                                                !! function or separate module procedure, but not
+                                                !! interface bodies)
+end type structure_t
+
 type :: scope_t
     !! An open construct on the scope stack.
     integer :: construct = C_NONE   !! one of the `C_*` constants
     integer :: do_label = 0         !! for `do 10 ...`: the label of the statement that ends the loop, else 0
     integer :: line = 0             !! source line of the opening statement
 end type scope_t
+
+type :: scope_stack_t
+    !! The open constructs, outermost first.
+    type(scope_t), allocatable :: s(:)   !! storage; only `s(1:top)` is in use
+    integer :: top = 0                   !! number of open constructs
+contains
+    procedure :: push => stack_push          !! open a construct
+    procedure :: restore => stack_restore    !! replace the open constructs by saved ones
+    procedure :: snapshot => stack_snapshot  !! the open constructs, to save
+end type scope_stack_t
 
 type :: saved_stack_t
     !! Scope stacks for one preprocessor conditional: as it was at the `#if` (restored at each
@@ -35,11 +59,9 @@ integer, parameter :: PP_OTHER = 0, PP_IF = 1, PP_ELSE = 2, PP_ENDIF = 3
 
 contains
 
-subroutine analyze_structure(src, tokens, stmts, info, depth, diags, units, procedures)
-    !! Classify every statement and compute its depth: the number of constructs enclosing it.
-    !! `units` is the number of those constructs that are program units (module, submodule or
-    !! main program), and `procedures` the number that are procedure definitions (subroutine, function
-    !! or separate module procedure, but not interface bodies), so callers can choose not to indent
+subroutine analyze_structure(source, views, st, diags)
+    !! Classify every statement and compute its depth: the number of constructs enclosing it, and
+    !! how many of those are program units and procedures, so callers can choose not to indent
     !! their bodies.
     !! An opening statement is at the depth outside its construct, the statements inside are one
     !! deeper, and middle (`else`, `contains`, ...) and closing statements are at the opening depth.
@@ -50,87 +72,73 @@ subroutine analyze_structure(src, tokens, stmts, info, depth, diags, units, proc
     !! from the structure at the `#if`, and the structure at the end of the first branch carries
     !! on after the `#endif`. That keeps code such as `#ifdef X` / `do` / `#endif` ... `#ifdef X` /
     !! `end do` / `#endif` balanced.
-    character(len=*), intent(in) :: src                           !! source text
-    type(token_list_t), intent(in) :: tokens                      !! tokens of `src`
-    type(statement_list_t), intent(in) :: stmts                   !! statements and other items of `src`
-    type(stmt_info_t), allocatable, intent(out) :: info(:)        !! classification of each item (`ROLE_NONE` for non-code)
-    integer, allocatable, intent(out) :: depth(:)                 !! nesting depth of each item
+    type(source_t), intent(in) :: source                          !! the source
+    type(statement_view_t), intent(in) :: views(:)                !! the view of each item (see [[statement_views]])
+    type(structure_t), intent(out) :: st                          !! the structure
     type(diagnostic_t), allocatable, intent(out) :: diags(:)      !! structure problems found, in the order found
-    integer, allocatable, intent(out), optional :: units(:)       !! for each item: enclosing program units
-    integer, allocatable, intent(out), optional :: procedures(:)  !! for each item: enclosing procedure definitions
 
-    type(scope_t), allocatable :: stack(:)
+    type(scope_stack_t) :: stack
     type(saved_stack_t), allocatable :: saved(:)
-    integer, allocatable :: nunits(:), nprocs(:)
-    integer :: k, top, line, nsaved
+    type(stmt_info_t), allocatable :: info(:)
+    integer, allocatable :: depth(:), nunits(:), nprocs(:)
+    integer :: k, line, nsaved
     logical :: in_interface
 
-    allocate (info(stmts%n), depth(stmts%n), diags(0), stack(16), saved(0))
-    allocate (nunits(stmts%n), nprocs(stmts%n))
-    top = 0
+    associate (n => source%stmts%n)
+        allocate (info(n), depth(n), nunits(n), nprocs(n), diags(0), saved(0))
+    end associate
     nsaved = 0
-    do k = 1, stmts%n
-        depth(k) = top
-        if (stmts%s(k)%kind == SK_PREPROC) call preprocessor(k)
-        if (stmts%s(k)%kind /= SK_CODE) then
+    do k = 1, source%stmts%n
+        depth(k) = stack%top
+        if (source%stmts%s(k)%kind == SK_PREPROC) call preprocessor(k)
+        if (source%stmts%s(k)%kind /= SK_CODE) then
             call count_units(k)
             cycle
         end if
-        line = tokens%tok(stmts%s(k)%first)%line
+        line = source%tokens%tok(source%stmts%s(k)%first)%line
         in_interface = .false.
-        if (top > 0) in_interface = stack(top)%construct == C_INTERFACE
-        info(k) = classify_statement(src, tokens, stmts%s(k), in_interface)
+        if (stack%top > 0) in_interface = stack%s(stack%top)%construct == C_INTERFACE
+        info(k) = classify_statement(source%text, source%tokens, views(k), in_interface)
 
         select case (info(k)%role)
         case (ROLE_OPEN)
-            call push(scope_t(info(k)%construct, info(k)%do_label, line))
+            call stack%push(scope_t(info(k)%construct, info(k)%do_label, line))
         case (ROLE_MIDDLE)
-            if (top == 0 .and. info(k)%construct == C_CONTAINS) then
+            if (stack%top == 0 .and. info(k)%construct == C_CONTAINS) then
                 ! a main program without a `program` statement
-                call push(scope_t(C_PROGRAM, 0, line))
-            else if (top == 0) then
+                call stack%push(scope_t(C_PROGRAM, 0, line))
+            else if (stack%top == 0) then
                 call diagnose(line, construct_label(info(k)%construct)//' statement outside any construct')
-            else if (.not. middle_fits(info(k)%construct, stack(top)%construct)) then
+            else if (.not. middle_fits(info(k)%construct, stack%s(stack%top)%construct)) then
                 call diagnose(line, construct_label(info(k)%construct)//' statement inside '// &
-                              construct_label(stack(top)%construct)//' (opened on line '//to_s(stack(top)%line)//')')
+                              opened(stack%s(stack%top)))
             else
-                depth(k) = top - 1
+                depth(k) = stack%top - 1
             end if
         case (ROLE_CLOSE)
             call close_scope(info(k)%construct, line)
-            depth(k) = top
+            depth(k) = stack%top
         end select
         call count_units(k)
 
         ! the labeled statement that ends `do 10 ...` loops is part of the innermost loop body
         if (info(k)%label > 0) then
-            do while (top > 0)
-                if (stack(top)%construct /= C_DO .or. stack(top)%do_label /= info(k)%label) exit
-                top = top - 1
+            do while (stack%top > 0)
+                if (stack%s(stack%top)%construct /= C_DO .or. stack%s(stack%top)%do_label /= info(k)%label) exit
+                stack%top = stack%top - 1
             end do
         end if
     end do
 
-    do k = top, 1, -1
-        call diagnose(stack(k)%line, construct_label(stack(k)%construct)//' is not closed')
+    do k = stack%top, 1, -1
+        call diagnose(stack%s(k)%line, construct_label(stack%s(k)%construct)//' is not closed')
     end do
-    if (present(units)) call move_alloc(nunits, units)
-    if (present(procedures)) call move_alloc(nprocs, procedures)
+    call move_alloc(info, st%info)
+    call move_alloc(depth, st%depth)
+    call move_alloc(nunits, st%units)
+    call move_alloc(nprocs, st%procedures)
 
 contains
-
-    subroutine push(s)
-        !! Push scope `s` onto `stack`, growing it if it is full.
-        type(scope_t), intent(in) :: s              !! the scope to push
-        type(scope_t), allocatable :: tmp(:)
-        if (top == size(stack)) then
-            allocate (tmp(2*top))
-            tmp(1:top) = stack(1:top)
-            call move_alloc(tmp, stack)
-        end if
-        top = top + 1
-        stack(top) = s
-    end subroutine push
 
     subroutine count_units(k)
         !! Record how many of the scopes enclosing item `k` are program units, and procedures.
@@ -139,14 +147,14 @@ contains
         nunits(k) = 0
         nprocs(k) = 0
         do j = 1, depth(k)
-            select case (stack(j)%construct)
+            select case (stack%s(j)%construct)
             case (C_MODULE, C_SUBMODULE, C_PROGRAM)
                 nunits(k) = nunits(k) + 1
             case (C_SUBROUTINE, C_FUNCTION, C_PROCEDURE)
                 ! interface bodies are declarations, not procedure definitions
                 if (j == 1) then
                     nprocs(k) = nprocs(k) + 1
-                else if (stack(j - 1)%construct /= C_INTERFACE) then
+                else if (stack%s(j - 1)%construct /= C_INTERFACE) then
                     nprocs(k) = nprocs(k) + 1
                 end if
             end select
@@ -158,39 +166,29 @@ contains
         !! the depth of the item to that of the restored stack.
         integer, intent(in) :: k   !! index into `stmts` of a preprocessor item
         integer :: j
-        do j = stmts%s(k)%first, stmts%s(k)%last
-            if (tokens%tok(j)%kind /= TK_PREPROC) cycle
-            select case (conditional_kind(token_lower(src, tokens%tok(j))))
+        do j = source%stmts%s(k)%first, source%stmts%s(k)%last
+            if (source%tokens%tok(j)%kind /= TK_PREPROC) cycle
+            select case (conditional_kind(token_lower(source%text, source%tokens%tok(j))))
             case (PP_IF)
                 nsaved = nsaved + 1
                 if (nsaved > size(saved)) saved = [saved, saved_stack_t()]
-                saved(nsaved)%at_if = stack(1:top)
+                saved(nsaved)%at_if = stack%snapshot()
                 if (allocated(saved(nsaved)%after_first)) deallocate (saved(nsaved)%after_first)
             case (PP_ELSE)
                 if (nsaved > 0) then
-                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack(1:top)
-                    call restore(saved(nsaved)%at_if)
-                    depth(k) = top
+                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack%snapshot()
+                    call stack%restore(saved(nsaved)%at_if)
+                    depth(k) = stack%top
                 end if
             case (PP_ENDIF)
                 if (nsaved > 0) then
-                    if (allocated(saved(nsaved)%after_first)) call restore(saved(nsaved)%after_first)
-                    depth(k) = top
+                    if (allocated(saved(nsaved)%after_first)) call stack%restore(saved(nsaved)%after_first)
+                    depth(k) = stack%top
                     nsaved = nsaved - 1
                 end if
             end select
         end do
     end subroutine preprocessor
-
-    subroutine restore(scopes)
-        !! Replace the scope stack by `scopes` (outermost first).
-        type(scope_t), intent(in) :: scopes(:)      !! the saved stack
-        integer :: j
-        top = 0
-        do j = 1, size(scopes)
-            call push(scopes(j))
-        end do
-    end subroutine restore
 
     subroutine close_scope(construct, line)
         !! Pop the construct closed by an `end` statement, with a diagnostic if it does not match
@@ -199,28 +197,35 @@ contains
         integer, intent(in) :: line        !! source line of the `end` statement
         integer :: j
 
-        if (top == 0) then
+        if (stack%top == 0) then
             ! `end` or `end program` may close a main program without a `program` statement
             if (construct /= C_ANY .and. construct /= C_PROGRAM) &
                 call diagnose(line, 'end '//construct_label(construct)//' without an open construct')
             return
         end if
-        if (closes(construct, stack(top)%construct)) then
-            top = top - 1
+        if (closes(construct, stack%s(stack%top)%construct)) then
+            stack%top = stack%top - 1
             return
         end if
         ! recover from a missing `end`: close down to a matching construct if there is one
-        do j = top - 1, 1, -1
-            if (closes(construct, stack(j)%construct)) then
+        do j = stack%top - 1, 1, -1
+            if (closes(construct, stack%s(j)%construct)) then
                 call diagnose(line, 'end '//construct_label(construct)//' closes '// &
-                              construct_label(stack(top)%construct)//' (opened on line '//to_s(stack(top)%line)//')')
-                top = j - 1
+                              opened(stack%s(stack%top)))
+                stack%top = j - 1
                 return
             end if
         end do
         call diagnose(line, 'end '//construct_label(construct)//' does not match '// &
-                      construct_label(stack(top)%construct)//' (opened on line '//to_s(stack(top)%line)//')')
+                      opened(stack%s(stack%top)))
     end subroutine close_scope
+
+    function opened(sc) result(text)
+        !! `sc` for messages: `do (opened on line 12)`.
+        type(scope_t), intent(in) :: sc   !! an open construct
+        character(len=:), allocatable :: text
+        text = construct_label(sc%construct)//' (opened on line '//to_s(sc%line)//')'
+    end function opened
 
     subroutine diagnose(line, message)
         !! Add a diagnostic to `diags`.
@@ -230,6 +235,43 @@ contains
     end subroutine diagnose
 
 end subroutine analyze_structure
+
+pure subroutine stack_push(self, sc)
+    !! Open construct `sc`, growing the storage as needed.
+    class(scope_stack_t), intent(inout) :: self   !! the stack
+    type(scope_t), intent(in) :: sc               !! the construct to open
+    type(scope_t), allocatable :: tmp(:)
+    if (.not. allocated(self%s)) allocate (self%s(16))
+    if (self%top == size(self%s)) then
+        allocate (tmp(2*self%top))
+        tmp(1:self%top) = self%s(1:self%top)
+        call move_alloc(tmp, self%s)
+    end if
+    self%top = self%top + 1
+    self%s(self%top) = sc
+end subroutine stack_push
+
+pure subroutine stack_restore(self, scopes)
+    !! Replace the open constructs by `scopes` (outermost first).
+    class(scope_stack_t), intent(inout) :: self   !! the stack
+    type(scope_t), intent(in) :: scopes(:)        !! a saved stack (see [[stack_snapshot]])
+    integer :: j
+    self%top = 0
+    do j = 1, size(scopes)
+        call self%push(scopes(j))
+    end do
+end subroutine stack_restore
+
+pure function stack_snapshot(self) result(scopes)
+    !! The open constructs, outermost first.
+    class(scope_stack_t), intent(in) :: self   !! the stack
+    type(scope_t), allocatable :: scopes(:)
+    if (allocated(self%s)) then
+        scopes = self%s(1:self%top)
+    else
+        allocate (scopes(0))
+    end if
+end function stack_snapshot
 
 pure integer function conditional_kind(text) result(kind)
     !! Kind of a preprocessor line (lowercase text): `PP_IF`, `PP_ELSE` (`#elif`, `#else`), `PP_ENDIF`
@@ -289,14 +331,5 @@ pure logical function middle_fits(middle, open)
         middle_fits = middle == open
     end select
 end function middle_fits
-
-pure function to_s(i) result(s)
-    !! `i` as text, without blanks.
-    integer, intent(in) :: i   !! the number
-    character(len=:), allocatable :: s
-    character(len=16) :: buf
-    write (buf, '(i0)') i
-    s = trim(buf)
-end function to_s
 
 end module ffmt_structure

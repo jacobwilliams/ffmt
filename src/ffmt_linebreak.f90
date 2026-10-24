@@ -8,9 +8,8 @@ module ffmt_linebreak
 !! the limit and moves with the last part. Lines are not split inside tokens (strings in particular),
 !! in protected code, in comment or preprocessor lines, or when a token spans lines.
 use ffmt_tokens
-use ffmt_lexer, only: tokenize
 use ffmt_statements
-use ffmt_directives, only: protected_items
+use ffmt_source, only: source_t, parse_source
 use ffmt_strings, only: string_builder_t, utf8_width
 implicit none
 private
@@ -30,49 +29,45 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
     integer, intent(out) :: nsplit                !! number of lines split
     character(len=:), allocatable :: out
 
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    logical, allocatable :: keep(:)
+    type(source_t) :: source
     type(string_builder_t) :: buf
     character(len=:), allocatable :: nl
     integer :: k, j, lend, a, p, q, base, start_col, offset
 
     nsplit = 0
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    keep = protected_items(src, tokens, stmts)
+    call parse_source(src, source)
     nl = achar(10)
-    do j = 1, tokens%n
-        if (tokens%tok(j)%kind == TK_NEWLINE) then
-            nl = token_text(src, tokens%tok(j))
+    do j = 1, source%tokens%n
+        if (source%tokens%tok(j)%kind == TK_NEWLINE) then
+            nl = token_text(src, source%tokens%tok(j))
             exit
         end if
     end do
 
-    do k = 1, stmts%n
-        if (keep(k) .or. stmts%s(k)%kind /= SK_CODE) then
-            call copy(stmts%s(k)%first, stmts%s(k)%last)
+    do k = 1, source%stmts%n
+        if (source%keep(k) .or. source%stmts%s(k)%kind /= SK_CODE) then
+            call copy(source%stmts%s(k)%first, source%stmts%s(k)%last)
             cycle
         end if
-        j = stmts%s(k)%first
-        do while (j <= stmts%s(k)%last)
+        j = source%stmts%s(k)%first
+        do while (j <= source%stmts%s(k)%last)
             lend = j
-            do while (lend < stmts%s(k)%last)
-                if (tokens%tok(lend)%kind == TK_NEWLINE) exit
+            do while (lend < source%stmts%s(k)%last)
+                if (source%tokens%tok(lend)%kind == TK_NEWLINE) exit
                 lend = lend + 1
             end do
             ! split the line once; the rest is aligned by the next layout pass and split again if needed
             a = j
             start_col = column(j)
             base = indentation(j)
-            offset = merge(indent, 0, j == stmts%s(k)%first)
-            p = break_point(tokens, src, a, lend, start_col, line_length)
+            offset = merge(indent, 0, j == source%stmts%s(k)%first)
+            p = break_point(source%tokens, src, a, lend, start_col, line_length)
             if (p > 0) then
                 call copy(a, p)
                 call buf%append(' &'//nl//repeat(' ', base + offset))
                 nsplit = nsplit + 1
                 q = p + 1
-                do while (tokens%tok(q)%kind == TK_SPACE)
+                do while (source%tokens%tok(q)%kind == TK_SPACE)
                     q = q + 1
                 end do
                 a = q
@@ -90,7 +85,7 @@ contains
         integer, intent(in) :: first, last   !! token range
         integer :: t
         do t = first, last
-            call buf%append(token_text(src, tokens%tok(t)))
+            call buf%append(token_text(src, source%tokens%tok(t)))
         end do
     end subroutine copy
 
@@ -98,15 +93,15 @@ contains
         !! Column of token `t` in `src`.
         integer, intent(in) :: t   !! index into the token list
         integer :: i
-        i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
-        column = utf8_width(src(i + 1:tokens%tok(t)%first - 1))
+        i = scan(src(1:source%tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
+        column = utf8_width(src(i + 1:source%tokens%tok(t)%first - 1))
     end function column
 
     integer function indentation(t)
         !! Indentation of the line containing token `t`.
         integer, intent(in) :: t   !! index into the token list
         integer :: i, m
-        i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.) + 1
+        i = scan(src(1:source%tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.) + 1
         m = verify(src(i:), ' '//achar(9))
         if (m == 0) then
             indentation = 0
@@ -197,27 +192,23 @@ function long_code_lines(src, line_length) result(lines)
     character(len=*), intent(in) :: src           !! the source text
     integer, intent(in) :: line_length            !! maximum line width, in characters; 0 or less for no limit
     integer, allocatable :: lines(:)
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    logical, allocatable :: keep(:)
+    type(source_t) :: source
     integer :: k, t, col, last_line, line, p, q
 
     allocate (lines(0))
     if (line_length <= 0) return
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    keep = protected_items(src, tokens, stmts)
+    call parse_source(src, source)
     last_line = 0
-    do k = 1, stmts%n
-        if (keep(k) .or. stmts%s(k)%kind /= SK_CODE) cycle
+    do k = 1, source%stmts%n
+        if (source%keep(k) .or. source%stmts%s(k)%kind /= SK_CODE) cycle
         col = 0
-        do t = stmts%s(k)%first, stmts%s(k)%last
-            associate (tk => tokens%tok(t))
+        do t = source%stmts%s(k)%first, source%stmts%s(k)%last
+            associate (tk => source%tokens%tok(t))
                 if (tk%kind == TK_NEWLINE) then
                     col = 0
                     cycle
                 end if
-                if (t == stmts%s(k)%first) col = start_column(t)
+                if (t == source%stmts%s(k)%first) col = start_column(t)
                 if (tk%kind == TK_COMMENT .or. tk%kind == TK_PREPROC) cycle
                 ! a token continued on later lines (a string) is measured line by line
                 line = tk%line
@@ -257,8 +248,8 @@ contains
         !! Column of token `t`: the width of the text before it on its line.
         integer, intent(in) :: t   !! index into the token list
         integer :: i
-        i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
-        start_column = utf8_width(src(i + 1:tokens%tok(t)%first - 1))
+        i = scan(src(1:source%tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
+        start_column = utf8_width(src(i + 1:source%tokens%tok(t)%first - 1))
     end function start_column
 
 end function long_code_lines

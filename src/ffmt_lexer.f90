@@ -4,6 +4,7 @@ module ffmt_lexer
 !! The lexer never fails: malformed input (e.g. an unterminated string) still produces tokens
 !! that cover every byte, flagged where relevant, so the formatter can leave such code alone.
 use ffmt_tokens
+use ffmt_strings, only: lower_char, lowercase
 implicit none
 private
 
@@ -244,7 +245,7 @@ subroutine lex_number(src, i, j, kind)
         kind = TK_REAL
         j = digits_end(src, j + 2)
     end if
-    c = lower(peek(src, j + 1))
+    c = lower_char(peek(src, j + 1))
     if (c == 'e' .or. c == 'd' .or. c == 'q') then
         k = j + 2
         if (peek(src, k) == '+' .or. peek(src, k) == '-') k = k + 1
@@ -300,7 +301,7 @@ integer function dotop_end(src, i) result(j)
     do while (peek(src, j) /= '.')
         j = j + 1
     end do
-    word = lower_str(src(i:j))
+    word = lowercase(src(i:j))
     if ((word == '.true.' .or. word == '.false.') .and. peek(src, j + 1) == '_' .and. &
         is_name_char(peek(src, j + 2))) j = name_end(src, j + 2)
 end function dotop_end
@@ -392,7 +393,7 @@ integer function comment_kind(text) result(kind)
     integer :: k
 
     kind = CM_PLAIN
-    low = lower_str(text)
+    low = lowercase(text)
     if (len(low) >= 2) then
         select case (low(2:2))
         case ('$')
@@ -492,25 +493,5 @@ elemental logical function is_code_char(c)
     character, intent(in) :: c   !! the character
     is_code_char = .not. (is_blank(c) .or. c == LF .or. c == CR .or. c == '!' .or. c == achar(0))
 end function is_code_char
-
-elemental character function lower(c)
-    !! `c` in lowercase (ASCII).
-    character, intent(in) :: c   !! the character
-    if (c >= 'A' .and. c <= 'Z') then
-        lower = achar(iachar(c) + 32)
-    else
-        lower = c
-    end if
-end function lower
-
-pure function lower_str(s) result(l)
-    !! `s` in lowercase (ASCII).
-    character(len=*), intent(in) :: s   !! the text
-    character(len=len(s)) :: l
-    integer :: k
-    do k = 1, len(s)
-        l(k:k) = lower(s(k:k))
-    end do
-end function lower_str
 
 end module ffmt_lexer

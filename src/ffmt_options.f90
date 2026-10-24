@@ -1,18 +1,55 @@
 module ffmt_options
-!! Formatting options.
-use ffmt_whitespace, only: whitespace_options_t, WS_KEEP, WS_ADD, WS_REMOVE
-use ffmt_case, only: case_options_t, CASE_KEEP, CASE_LOWER, CASE_UPPER
-use ffmt_relational, only: REL_KEEP, REL_SYMBOLS, REL_LETTERS
+!! Formatting options: all the settings, with their defaults, and the modes they take. The modules
+!! that apply them ([[ffmt_whitespace]], [[ffmt_case]], [[ffmt_relational]], [[ffmt_layout]]) use
+!! this module, not the other way round, so it depends on nothing.
 implicit none
 private
 
-public :: whitespace_options_t, WS_KEEP, WS_ADD, WS_REMOVE
-public :: case_options_t, CASE_KEEP, CASE_LOWER, CASE_UPPER
-public :: REL_KEEP, REL_SYMBOLS, REL_LETTERS
-
+! layout of continuation lines (see [[ffmt_layout]])
 integer, parameter, public :: CONT_ALIGN = 1    !! align continuation lines with the first item after the
                                                 !! innermost open bracket, or after the first `=`
 integer, parameter, public :: CONT_INDENT = 2   !! indent continuation lines by a fixed amount
+
+! whitespace rule modes (see [[ffmt_whitespace]])
+integer, parameter, public :: WS_KEEP = 0     !! leave the blanks as they are
+integer, parameter, public :: WS_ADD = 1      !! at least one blank on each side
+integer, parameter, public :: WS_REMOVE = 2   !! no blanks
+
+! letter case modes (see [[ffmt_case]])
+integer, parameter, public :: CASE_KEEP = 0     !! leave the case as it is
+integer, parameter, public :: CASE_LOWER = 1    !! lowercase
+integer, parameter, public :: CASE_UPPER = 2    !! uppercase
+
+! spellings of relational operators (see [[ffmt_relational]])
+integer, parameter, public :: REL_KEEP = 0      !! leave the spelling as it is
+integer, parameter, public :: REL_SYMBOLS = 1   !! `.lt.` becomes `<`, ...
+integer, parameter, public :: REL_LETTERS = 2   !! `<` becomes `.lt.`, ...
+
+type, public :: whitespace_options_t
+    !! Modes of the whitespace rules. The defaults follow the most common style in practice where it is
+    !! clear-cut, and keep the rest.
+    integer :: assignment = WS_ADD     !! `=` outside brackets: assignments, initializations, `do i = 1, n`
+    integer :: keyword_args = WS_REMOVE !! `=` inside brackets: `f(x=1)`, `intent=`, `len=*`
+    integer :: pointer = WS_ADD        !! `=>`: pointer assignment, renames, `associate`
+    integer :: declarations = WS_ADD   !! `::`
+    integer :: relational = WS_KEEP    !! `== /= < <= > >=` and `.eq.` etc.
+    integer :: logical = WS_KEEP       !! `.and. .or. .eqv. .neqv.`
+    integer :: plus_minus = WS_KEEP    !! binary `+ -`
+    integer :: mult_div = WS_KEEP      !! binary `* /`
+    integer :: power = WS_REMOVE       !! `**`
+    integer :: concat = WS_REMOVE      !! `//`
+    integer :: comma = WS_KEEP         !! `,`: with `WS_ADD`, no blank before and at least one after
+    integer :: slice_colon = WS_REMOVE !! `:` inside brackets: `a(1:n)`
+    integer :: percent = WS_REMOVE     !! `%`
+    integer :: control_paren = WS_ADD  !! between `if`, `while`, `select case`, `where`, ... and `(`, and
+                                       !! between `)` and a final `then`
+end type whitespace_options_t
+
+type, public :: case_options_t
+    !! Letter case of keywords and of dot operators and logical constants.
+    integer :: keywords = CASE_KEEP    !! `if`, `end do`, `integer`, `intent(in)`, ...
+    integer :: operators = CASE_KEEP   !! `.and.`, `.eq.`, `.true.`, ...
+end type case_options_t
 
 type, public :: format_options_t
     !! All options that control formatting. The defaults give 4-space indentation with the bodies

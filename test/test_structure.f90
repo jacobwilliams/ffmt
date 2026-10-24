@@ -6,6 +6,7 @@ use ffmt_lexer, only: tokenize
 use ffmt_statements
 use ffmt_constructs
 use ffmt_structure
+use ffmt_source, only: source_t, parse_source, statement_views
 implicit none
 private
 
@@ -25,7 +26,8 @@ subroutine collect_structure(testsuite)
         new_unittest("label-terminated do", test_label_do), &
         new_unittest("preprocessor branches", test_preprocessor_branches), &
         new_unittest("main program without program statement", test_implicit_program), &
-        new_unittest("diagnostics", test_diagnostics) &
+        new_unittest("diagnostics", test_diagnostics), &
+        new_unittest("constructs closed by end", test_closed_construct) &
         ]
 end subroutine collect_structure
 
@@ -94,7 +96,7 @@ subroutine expect_class(error, src, role, construct, in_interface)
     if (present(in_interface)) inside = in_interface
     call tokenize(src, tokens)
     call split_statements(src, tokens, stmts)
-    info = classify_statement(src, tokens, stmts%s(1), inside)
+    info = classify_statement(src, tokens, statement_view(src, tokens, stmts%s(1)), inside)
     call check(error, info%role == role .and. info%construct == construct, &
                '"'//src//'": got role '//to_s(info%role)//' construct '//construct_label(info%construct)// &
                ', expected role '//to_s(role)//' construct '//construct_label(construct))
@@ -204,13 +206,12 @@ function depths(src) result(d)
     !! Depth of each item of `src`.
     character(len=*), intent(in) :: src
     integer, allocatable :: d(:)
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    type(stmt_info_t), allocatable :: info(:)
+    type(source_t) :: source
+    type(structure_t) :: st
     type(diagnostic_t), allocatable :: diags(:)
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    call analyze_structure(src, tokens, stmts, info, d, diags)
+    call parse_source(src, source)
+    call analyze_structure(source, statement_views(source), st, diags)
+    d = st%depth
 end function depths
 
 subroutine test_depths(error)
@@ -282,18 +283,17 @@ end subroutine test_preprocessor_branches
 subroutine test_implicit_program(error)
     type(error_type), allocatable, intent(out) :: error
     character(len=:), allocatable :: src
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    type(stmt_info_t), allocatable :: info(:)
+    type(source_t) :: source
+    type(structure_t) :: st
     integer, allocatable :: d(:)
     type(diagnostic_t), allocatable :: diags(:)
 
     ! a main program may omit the `program` statement
     src = achar(239)//achar(187)//achar(191)//'x = 1'//NL//'contains'//NL//'subroutine s'//NL// &
           'end subroutine'//NL//'end program'
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    call analyze_structure(src, tokens, stmts, info, d, diags)
+    call parse_source(src, source)
+    call analyze_structure(source, statement_views(source), st, diags)
+    d = st%depth
     call check(error, size(diags), 0)
     if (allocated(error)) return
     call check(error, all(d == [0, 0, 1, 1, 0]), 'depths')
@@ -302,16 +302,15 @@ end subroutine test_implicit_program
 subroutine test_diagnostics(error)
     type(error_type), allocatable, intent(out) :: error
     character(len=:), allocatable :: src
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    type(stmt_info_t), allocatable :: info(:)
+    type(source_t) :: source
+    type(structure_t) :: st
     integer, allocatable :: d(:)
     type(diagnostic_t), allocatable :: diags(:)
 
     src = 'subroutine s'//NL//'do i = 1, 2'//NL//'end subroutine'//NL//'else'//NL//'end do'//NL//'if (x) then'
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    call analyze_structure(src, tokens, stmts, info, d, diags)
+    call parse_source(src, source)
+    call analyze_structure(source, statement_views(source), st, diags)
+    d = st%depth
     call check(error, size(diags), 4)
     if (allocated(error)) return
     call check(error, diags(1)%message, 'end subroutine closes do (opened on line 2)')
@@ -330,5 +329,17 @@ pure function to_s(i) result(s)
     write (buf, '(i0)') i
     s = trim(buf)
 end function to_s
+
+subroutine test_closed_construct(error)
+    type(error_type), allocatable, intent(out) :: error
+    call check(error, closed_construct('', '') == C_ANY, 'bare end')
+    if (allocated(error)) return
+    call check(error, closed_construct('do', '') == C_DO, 'end do')
+    if (allocated(error)) return
+    call check(error, closed_construct('block', 'data') == C_BLOCK_DATA .and. &
+               closed_construct('block', '') == C_BLOCK, 'end block [data]')
+    if (allocated(error)) return
+    call check(error, closed_construct('x', '') == C_NONE, 'end followed by a name')
+end subroutine test_closed_construct
 
 end module test_structure

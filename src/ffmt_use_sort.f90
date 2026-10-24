@@ -13,9 +13,8 @@ module ffmt_use_sort
 !! commas to fit a given width, with its continuation lines starting below the first name. A
 !! statement with a comment or preprocessor line before its last line is left alone.
 use ffmt_tokens
-use ffmt_lexer, only: tokenize
 use ffmt_statements
-use ffmt_directives, only: protected_items
+use ffmt_source, only: source_t, parse_source
 use ffmt_strings, only: string_t, string_builder_t
 implicit none
 private
@@ -33,11 +32,11 @@ function sort_use(src, statements, only_lists, width) result(out)
     integer, intent(in) :: width   !! line length to fit a rewritten `only:` list into, or 0 to write it on one line
     character(len=:), allocatable :: out
 
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    logical, allocatable :: keep(:), movable(:)
+    type(source_t) :: source
+    type(statement_view_t) :: v
+    logical, allocatable :: movable(:)
     type(string_t), allocatable :: text(:), keys(:)
-    integer, allocatable :: code(:), order(:)
+    integer, allocatable :: order(:)
     type(string_builder_t) :: buf
     integer :: k, m, j
 
@@ -45,31 +44,31 @@ function sort_use(src, statements, only_lists, width) result(out)
         out = src
         return
     end if
-    call tokenize(src, tokens)
-    call split_statements(src, tokens, stmts)
-    keep = protected_items(src, tokens, stmts)
-    allocate (text(stmts%n), keys(stmts%n), movable(stmts%n))
-    do k = 1, stmts%n
-        text(k)%s = src(tokens%tok(stmts%s(k)%first)%first:tokens%tok(stmts%s(k)%last)%last)
-        keys(k)%s = ''
-        movable(k) = .false.
-        if (stmts%s(k)%kind /= SK_CODE .or. keep(k)) cycle
-        code = code_tokens(src, tokens, stmts%s(k))
-        if (.not. is_use_statement(src, tokens, code)) cycle
-        if (only_lists) call sort_only_list(src, tokens, stmts%s(k), code, width, text(k)%s)
-        keys(k)%s = module_key(src, tokens, code)
-        movable(k) = statements .and. whole_lines(tokens, stmts%s(k))
-    end do
+    call parse_source(src, source)
+    associate (tokens => source%tokens, stmts => source%stmts)
+        allocate (text(stmts%n), keys(stmts%n), movable(stmts%n))
+        do k = 1, stmts%n
+            text(k)%s = src(tokens%tok(stmts%s(k)%first)%first:tokens%tok(stmts%s(k)%last)%last)
+            keys(k)%s = ''
+            movable(k) = .false.
+            if (stmts%s(k)%kind /= SK_CODE .or. source%keep(k)) cycle
+            v = statement_view(src, tokens, stmts%s(k))
+            if (.not. is_use_statement(v)) cycle
+            if (only_lists) call sort_only_list(src, tokens, stmts%s(k), v, width, text(k)%s)
+            keys(k)%s = module_key(v)
+            movable(k) = statements .and. whole_lines(tokens, stmts%s(k))
+        end do
+    end associate
 
     k = 1
-    do while (k <= stmts%n)
+    do while (k <= size(movable))
         if (.not. movable(k)) then
             call buf%append(text(k)%s)
             k = k + 1
             cycle
         end if
         m = k
-        do while (m < stmts%n)
+        do while (m < size(movable))
             if (.not. movable(m + 1)) exit
             m = m + 1
         end do
@@ -82,53 +81,43 @@ function sort_use(src, statements, only_lists, width) result(out)
     out = buf%get()
 end function sort_use
 
-logical function is_use_statement(src, tokens, code)
-    !! True if the code tokens `code` of a statement form a `use` statement.
-    character(len=*), intent(in) :: src        !! source text
-    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
-    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
-    character(len=:), allocatable :: second
-
+pure logical function is_use_statement(v)
+    !! True if statement `v` is a `use` statement.
+    type(statement_view_t), intent(in) :: v   !! the statement
     is_use_statement = .false.
-    if (size(code) < 2) return
-    if (tokens%tok(code(1))%kind /= TK_NAME) return
-    if (token_lower(src, tokens%tok(code(1))) /= 'use') return
-    if (tokens%tok(code(2))%kind == TK_NAME) then
+    if (v%n < 2) return
+    if (v%kinds(1) /= TK_NAME .or. .not. v%is(1, 'use')) return
+    select case (v%kinds(2))
+    case (TK_NAME)
         is_use_statement = .true.
-    else if (tokens%tok(code(2))%kind == TK_OP) then
-        second = token_text(src, tokens%tok(code(2)))
-        is_use_statement = second == ',' .or. second == '::'
-    end if
+    case (TK_OP)
+        is_use_statement = v%is(2, ',') .or. v%is(2, '::')
+    end select
 end function is_use_statement
 
-function only_items(src, tokens, code) result(starts)
-    !! Positions in `code` where the items of a `use` statement's `only:` list start. Each item
-    !! ends before the comma in front of the next one, the last at the end of `code`. Empty if there
-    !! is no `only:` list, the list is empty, or it has an empty item.
-    character(len=*), intent(in) :: src        !! source text
-    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
-    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
+function only_items(v) result(starts)
+    !! Positions in `v%code` where the items of a `use` statement's `only:` list start. Each item
+    !! ends before the comma in front of the next one, the last at the end of the statement. Empty
+    !! if there is no `only:` list, the list is empty, or it has an empty item.
+    type(statement_view_t), intent(in) :: v   !! the `use` statement
     integer, allocatable :: starts(:)
     integer :: p, q, n, depth
-    character(len=:), allocatable :: t
 
     allocate (starts(0))
-    n = size(code)
+    n = v%n
     do p = 3, n - 1
-        if (is_text(code(p - 1), ',') .and. is_text(code(p + 1), ':') .and. &
-            token_lower(src, tokens%tok(code(p))) == 'only') exit
+        if (is_op(p - 1, ',') .and. is_op(p + 1, ':') .and. v%is(p, 'only')) exit
     end do
     if (p >= n .or. p + 2 > n) return
     starts = [p + 2]
     depth = 0
     do q = p + 2, n
-        if (tokens%tok(code(q))%kind /= TK_OP) cycle
-        t = token_text(src, tokens%tok(code(q)))
-        if (t == '(' .or. t == '[') then
+        if (v%kinds(q) /= TK_OP) cycle
+        if (v%is(q, '(') .or. v%is(q, '[')) then
             depth = depth + 1
-        else if (t == ')' .or. t == ']') then
+        else if (v%is(q, ')') .or. v%is(q, ']')) then
             depth = depth - 1
-        else if (t == ',' .and. depth == 0) then
+        else if (v%is(q, ',') .and. depth == 0) then
             if (q == n .or. q == starts(size(starts))) then   ! an empty item
                 deallocate (starts)
                 allocate (starts(0))
@@ -140,13 +129,12 @@ function only_items(src, tokens, code) result(starts)
 
 contains
 
-    logical function is_text(j, text)
-        !! True if token `j` is the operator `text`.
-        integer, intent(in) :: j                 !! index into `tokens`
+    logical function is_op(j, text)
+        !! True if code token `j` is the operator `text`.
+        integer, intent(in) :: j                 !! index into `v%code(:)`
         character(len=*), intent(in) :: text     !! the operator, e.g. `,`
-        is_text = tokens%tok(j)%kind == TK_OP
-        if (is_text) is_text = token_text(src, tokens%tok(j)) == text
-    end function is_text
+        is_op = v%kinds(j) == TK_OP .and. v%is(j, text)
+    end function is_op
 
 end function only_items
 
@@ -169,14 +157,14 @@ function sorted_order(keys) result(order)
     end do
 end function sorted_order
 
-subroutine sort_only_list(src, tokens, stmt, code, width, text)
+subroutine sort_only_list(src, tokens, stmt, v, width, text)
     !! Replace `text`, the text of `stmt`, by the statement with its `only:` list sorted, unless the
     !! list is sorted already or the statement cannot be rewritten safely. With `width > 0`, the
     !! list is broken after commas so that its lines fit in `width` columns where possible.
     character(len=*), intent(in) :: src                      !! source text
     type(token_list_t), intent(in) :: tokens                 !! tokens of `src`
     type(statement_t), intent(in) :: stmt                    !! the `use` statement
-    integer, intent(in) :: code(:)                           !! indices into `tokens` of the code tokens of `stmt`
+    type(statement_view_t), intent(in) :: v                  !! the view of `stmt`
     integer, intent(in) :: width                             !! line length to fit the list into, or 0
     character(len=:), allocatable, intent(inout) :: text     !! text of `stmt`, from its first to its last token
 
@@ -187,10 +175,10 @@ subroutine sort_only_list(src, tokens, stmt, code, width, text)
     logical :: commented
     integer :: j, n, ns, column, used
 
-    starts = only_items(src, tokens, code)
+    starts = only_items(v)
     ns = size(starts)
     if (ns < 2) return
-    n = size(code)
+    n = v%n
 
     ! comments are only allowed on the last line; no preprocessor lines or tokens split across lines
     commented = .false.
@@ -204,7 +192,7 @@ subroutine sort_only_list(src, tokens, stmt, code, width, text)
             return
         end select
     end do
-    if (any(tokens%tok(code(starts(1):n))%glued)) return
+    if (any(tokens%tok(v%code(starts(1):n))%glued)) return
 
     ends = [starts(2:) - 2, n]
     allocate (keys(ns))
@@ -214,7 +202,7 @@ subroutine sort_only_list(src, tokens, stmt, code, width, text)
     order = sorted_order(keys)
     if (all(order == [(j, j=1, ns)])) return
 
-    prefix = src(tokens%tok(stmt%first)%first:tokens%tok(code(starts(1) - 1))%last)
+    prefix = src(tokens%tok(stmt%first)%first:tokens%tok(v%code(starts(1) - 1))%last)
     if (separated(starts(1))) prefix = prefix//' '
     call buf%append(prefix)
     sep = ','
@@ -239,68 +227,62 @@ subroutine sort_only_list(src, tokens, stmt, code, width, text)
         call buf%append(item)
         used = used + len(item)
     end do
-    call buf%append(src(tokens%tok(code(n))%last + 1:tokens%tok(stmt%last)%last))
+    call buf%append(src(tokens%tok(v%code(n))%last + 1:tokens%tok(stmt%last)%last))
     text = buf%get()
 
 contains
 
     logical function separated(p)
         !! True if anything (blanks, a line break) comes between code tokens `p - 1` and `p`.
-        integer, intent(in) :: p   !! index into `code(:)`
-        separated = code(p) /= code(p - 1) + 1
+        integer, intent(in) :: p   !! index into `v%code(:)`
+        separated = v%code(p) /= v%code(p - 1) + 1
     end function separated
 
     function joined(first, last) result(s)
         !! The text of code tokens `first:last`, with a blank wherever they were separated.
-        integer, intent(in) :: first, last   !! range of indices into `code(:)`
+        integer, intent(in) :: first, last   !! range of indices into `v%code(:)`
         character(len=:), allocatable :: s
         integer :: p
-        s = token_text(src, tokens%tok(code(first)))
+        s = token_text(src, tokens%tok(v%code(first)))
         do p = first + 1, last
             if (separated(p)) s = s//' '
-            s = s//token_text(src, tokens%tok(code(p)))
+            s = s//token_text(src, tokens%tok(v%code(p)))
         end do
     end function joined
 
     function local_name(first, last) result(s)
         !! Sort key of an item: its tokens before `=>`, in lowercase.
-        integer, intent(in) :: first, last   !! range of indices into `code(:)` of the item
+        integer, intent(in) :: first, last   !! range of indices into `v%code(:)` of the item
         character(len=:), allocatable :: s
         integer :: p
         s = ''
         do p = first, last
-            if (tokens%tok(code(p))%kind == TK_OP) then
-                if (token_text(src, tokens%tok(code(p))) == '=>') exit
-            end if
-            s = s//token_lower(src, tokens%tok(code(p)))
+            if (v%kinds(p) == TK_OP .and. v%is(p, '=>')) exit
+            s = s//v%word(p)
         end do
     end function local_name
 
 end subroutine sort_only_list
 
-function module_key(src, tokens, code) result(key)
+function module_key(v) result(key)
     !! Sort key of a `use` statement: the module name in lowercase.
-    character(len=*), intent(in) :: src        !! source text
-    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
-    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
+    type(statement_view_t), intent(in) :: v   !! the `use` statement
     character(len=:), allocatable :: key
-    character(len=:), allocatable :: t
     integer :: p
 
     p = 2
-    t = token_text(src, tokens%tok(code(2)))
-    if (t == '::') then
+    if (v%is(2, '::')) then
         p = 3
-    else if (t == ',') then
+    else if (v%is(2, ',')) then
         ! `use, intrinsic :: name`
-        do p = 3, size(code)
-            if (token_text(src, tokens%tok(code(p - 1))) == '::') exit
+        do p = 3, v%n
+            if (v%is(p - 1, '::')) exit
         end do
     end if
     key = ''
-    do while (p <= size(code))
-        if (token_text(src, tokens%tok(code(p))) == ',') exit
-        key = key//token_lower(src, tokens%tok(code(p)))
+    do while (p <= v%n)
+        if (v%is(p, ',')) exit
+        key = key//v%word(p)
         p = p + 1
     end do
 end function module_key

@@ -9,10 +9,9 @@ program check_corpus
 use iso_fortran_env, only: output_unit, error_unit, int64
 use ffmt_io, only: read_file
 use ffmt_tokens
-use ffmt_lexer, only: tokenize
 use ffmt_statements
-use ffmt_constructs, only: stmt_info_t
 use ffmt_structure
+use ffmt_source, only: source_t, parse_source, statement_views
 use ffmt_format, only: format_text, FMT_OK
 use ffmt_options
 implicit none
@@ -96,10 +95,8 @@ contains
 
 subroutine check_file(path)
     character(len=*), intent(in) :: path
-    type(token_list_t) :: tokens
-    type(statement_list_t) :: stmts
-    type(stmt_info_t), allocatable :: info(:)
-    integer, allocatable :: depth(:)
+    type(source_t) :: source
+    type(structure_t) :: st
     type(diagnostic_t), allocatable :: diags(:)
     integer :: d
 
@@ -111,16 +108,15 @@ subroutine check_file(path)
         return
     end if
     nbytes = nbytes + len(text)
-    call tokenize(text, tokens)
-    ntokens = ntokens + tokens%n
-    if (detokenize(text, tokens) /= text) then
+    call parse_source(text, source)
+    ntokens = ntokens + source%tokens%n
+    if (detokenize(text, source%tokens) /= text) then
         nroundtrip = nroundtrip + 1
         write (output_unit, '(a)') path//': tokens do not reproduce the source'
         return
     end if
-    call split_statements(text, tokens, stmts)
-    nstmts = nstmts + stmts%n
-    call analyze_structure(text, tokens, stmts, info, depth, diags)
+    nstmts = nstmts + source%stmts%n
+    call analyze_structure(source, statement_views(source), st, diags)
     if (size(diags) > 0) nunbalanced = nunbalanced + 1
     ndiags = ndiags + size(diags)
     do d = 1, size(diags)

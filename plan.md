@@ -192,53 +192,58 @@ fprettify weaknesses to avoid, from reading its source:
 ## 4. Architecture
 
 ```
-source text
-  └─ reader       physical lines; CRLF/LF detection (output keeps the input's line endings)
-  └─ lexer        tokens with kind, text, position, and the comments and blank lines around them;
-                  handles strings, continuations (&), ;, comments, cpp/fypp lines, !$ sentinels
-  └─ statements   tokens grouped into logical statements; each statement is classified
-                  (opens/continues/closes a scope, declaration, use, I/O, ...) by matching
-                  token patterns, with fregex where a pattern is easiest
-  └─ rules        pure passes over a statement's tokens: case, operator replacement,
-                  spacing between tokens
-  └─ layout       indentation from a scope stack; continuation alignment; line breaking
-  └─ printer      emits text that keeps comments, blank lines, directives and
-                  formatting-off regions exactly as they were
+format_text(src, opts)                                       ffmt_format
+  ├─ sort_use, convert_relational     text → text, optional   ffmt_use_sort, ffmt_relational
+  ├─ format_pass                                              ffmt_format
+  │    ├─ parse_source     tokens, items (statements and      ffmt_source: ffmt_lexer,
+  │    │                   standalone lines), protected items   ffmt_statements, ffmt_directives
+  │    ├─ statement_views  per statement: code tokens, their  ffmt_statements
+  │    │                   lowercase text, bracket depth
+  │    ├─ analyze_structure  classification and depth         ffmt_constructs, ffmt_structure
+  │    ├─ compute_gaps, compute_case  blanks and letter case  ffmt_whitespace, ffmt_case
+  │    │                   wanted per token
+  │    └─ layout           the text: indentation, continuation  ffmt_layout
+  │                        alignment, the gaps and case
+  ├─ split_long_lines + format_pass, while a line is too long  ffmt_linebreak
+  └─ same_code             safety check: the code tokens of the result match the input
 ```
 
 Key ideas:
 
 - **Tokens, not text:** every rule sees typed tokens, so strings and comments can't be changed by
   accident, and rules stay short.
-- **One pass:** classification, rules and layout run once per statement. There is no
-  separate re-parse for indentation.
+- **Parse once per pass:** each pass that works on text starts from one `source_t`
+  (`parse_source`), and the statement rules share one `statement_view_t` per statement, so
+  statements are not re-read word by word in each module.
+- **Rules return data:** classification, gaps and case are arrays over the items or tokens;
+  `layout` is the only step that writes text.
 - **Options are resolved once:** a `format_options_t` built from defaults, then the config file, then
-  the command line, then in-file directives. Each layer can only override settings it states
-  explicitly.
+  the command line. `ffmt_options` depends on nothing; the modules that apply the options use it.
 - **Library first:** `format_text(src, opts, out, stat, errmsg)` is the core API. The CLI is a thin
   driver around it.
 
 ### Modules
 
-| Module | Responsibility | State |
-|---|---|---|
-| `ffmt_tokens`, `ffmt_lexer` | token types; free-form tokenizer | done |
-| `ffmt_statements` | grouping tokens into statements and standalone lines | done |
-| `ffmt_constructs` | classifying statements as opening, continuing or closing constructs | done |
-| `ffmt_structure` | nesting depth and structure diagnostics | done |
-| `ffmt_layout` | indentation, continuation alignment, directives; later line breaking | done (no line breaking yet) |
-| `ffmt_format` | `format_text` and the token-equivalence check | done |
-| `ffmt_options` | options type | done |
-| `ffmt_cli`, `app/main.f90` | argument parsing and file processing | basics done |
-| `ffmt_io`, `ffmt_strings` | file I/O as bytes; string helpers | done |
-| `ffmt_whitespace`, `ffmt_case` | blanks around operators; letter case | done |
-| `ffmt_relational` | relational operator spelling | done |
-| `ffmt_linebreak` | splitting long lines | done |
-| `ffmt_directives` | `!&`, `!&<`, `!&>` | done |
-| `ffmt_fs`, `ffmt_walk` | directory listing through C library interfaces; finding files | done |
-| `ffmt_config`, `ffmt_settings` | configuration files; named settings | done |
-| `ffmt_diff` | unified diff for `--diff` | done |
-| `ffmt_use_sort` | sorting `use` statements and `only:` lists | done |
+| Module | Responsibility |
+|---|---|
+| `ffmt_tokens`, `ffmt_lexer` | token types; free-form tokenizer |
+| `ffmt_statements` | grouping tokens into statements and standalone lines; `statement_view_t` |
+| `ffmt_directives` | `!&`, `!&<`, `!&>` |
+| `ffmt_source` | `source_t`: a text with its tokens, items and protected items |
+| `ffmt_constructs` | classifying statements as opening, continuing or closing constructs |
+| `ffmt_structure` | nesting depth (`structure_t`) and structure diagnostics |
+| `ffmt_whitespace`, `ffmt_case` | blanks around operators; letter case |
+| `ffmt_layout` | indentation, continuation alignment, writing the text |
+| `ffmt_linebreak` | splitting long lines |
+| `ffmt_relational` | relational operator spelling |
+| `ffmt_use_sort` | sorting `use` statements and `only:` lists |
+| `ffmt_format` | `format_text` and the token-equivalence check |
+| `ffmt_options` | the options type and the modes of each option |
+| `ffmt_cli`, `app/main.f90` | argument parsing and file processing |
+| `ffmt_io`, `ffmt_strings` | file I/O as bytes; string helpers |
+| `ffmt_fs`, `ffmt_walk` | directory listing through C library interfaces; finding files |
+| `ffmt_config`, `ffmt_settings` | configuration files; named settings |
+| `ffmt_diff` | unified diff for `--diff` |
 
 **Portable file system access.** Standard Fortran cannot list directories, and `stdlib_system`
 (checked at stdlib `940bba44`) has `is_directory` and path helpers but no listing. `ffmt_fs` is
@@ -250,7 +255,7 @@ and no shell are used.
 
 | Package | Use |
 |---|---|
-| [`fregex`](https://github.com/jacobwilliams/fregex) | statement classification, directives, `--exclude` patterns |
+| [`fregex`](https://github.com/jacobwilliams/fregex) | `--exclude` patterns |
 | [`toml-f`](https://github.com/toml-f/toml-f) | config files and `fpm.toml` integration |
 | [`test-drive`](https://github.com/fortran-lang/test-drive) | tests (dev dependency) |
 | `stdlib` | not needed: `ffmt_fs` covers directory listing |

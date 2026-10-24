@@ -1,31 +1,30 @@
 module ffmt_layout
-!! Re-indents a tokenized file: statements by their nesting depth, continuation lines by
-!! alignment or a fixed indent, and comment lines like the code around them. Trailing blanks
-!! are removed. Nothing else within a line is changed.
+!! Writes the formatted text of a tokenized file: statements indented by their nesting depth,
+!! continuation lines aligned or indented by a fixed amount, comment lines indented like the code
+!! around them, and within each line the blanks and letter case that [[compute_gaps]] and
+!! [[compute_case]] ask for. Trailing blanks are removed.
 !!
 !! Items protected by formatter directives (see [[ffmt_directives]]) are written as they are.
 use ffmt_tokens
 use ffmt_statements
-use ffmt_constructs, only: stmt_info_t
+use ffmt_source, only: source_t
+use ffmt_structure, only: structure_t
 use ffmt_options
 use ffmt_whitespace, only: GAP_KEEP, GAP_MIN1
-use ffmt_case, only: CASE_LOWER, CASE_UPPER
 use ffmt_strings, only: string_builder_t, utf8_width
-use ffmt_directives, only: protected_items
 implicit none
 private
 
 public :: layout
 
 
-integer, parameter :: MAX_BRACKETS = 256
-
 type :: writer_t
     !! Output being built, and the alignment state of the current statement.
     type(string_builder_t) :: buf               !! the output text
     integer :: col = 0                          !! output column: characters since the last line break
     integer :: nbrackets = 0                    !! open brackets in the current statement
-    integer :: bracket_first(MAX_BRACKETS) = -1 !! column of the first item after each open bracket, or -1
+    integer, allocatable :: bracket_first(:)    !! column of the first item after each open bracket, or -1;
+                                                !! only `bracket_first(1:nbrackets)` is in use
     integer :: anchor_col(3) = -1               !! column of the first item after an assignment `=` / `=>`,
                                                 !! a `use` statement's `only:` and a declaration's `::`, or -1
     integer :: pending_anchor = 0               !! the next code token is the first item after this anchor
@@ -63,61 +62,56 @@ integer, parameter :: ANCHOR_ASSIGN = 1, ANCHOR_ONLY = 2, ANCHOR_DECL = 3
 
 contains
 
-function layout(src, tokens, stmts, info, depth, units, procedures, gap, case_mode, opts, long_lines) result(out)
-    !! The formatted text. `info`, `depth`, `units` and `procedures` come from [[analyze_structure]],
-    !! `gap` from [[compute_gaps]] and `case_mode` from [[compute_case]].
-    character(len=*), intent(in) :: src           !! the source text
-    type(token_list_t), intent(in) :: tokens      !! its tokens
-    type(statement_list_t), intent(in) :: stmts   !! its statements and standalone lines (items)
-    type(stmt_info_t), intent(in) :: info(:)      !! what each item is
-    integer, intent(in) :: depth(:)     !! nesting depth of each item
-    integer, intent(in) :: units(:)     !! how many of the enclosing scopes are program units
-    integer, intent(in) :: procedures(:) !! how many of the enclosing scopes are procedures
-    integer, intent(in) :: gap(:)       !! blanks wanted before each token
-    integer, intent(in) :: case_mode(:) !! letter case wanted for each token
-    type(format_options_t), intent(in) :: opts   !! the formatting options
+function layout(source, st, gap, case_mode, opts, long_lines) result(out)
+    !! The formatted text of `source`, from its structure ([[analyze_structure]]), the gaps
+    !! ([[compute_gaps]]) and the letter case ([[compute_case]]) wanted.
+    type(source_t), intent(in) :: source          !! the source
+    type(structure_t), intent(in) :: st           !! its block structure
+    integer, intent(in) :: gap(:)                 !! blanks wanted before each token
+    integer, intent(in) :: case_mode(:)           !! letter case wanted for each token
+    type(format_options_t), intent(in) :: opts    !! the formatting options
     integer, allocatable, intent(out), optional :: long_lines(:)   !! input lines that kept their indentation
                                                                    !! because the new one would make them longer
                                                                    !! than `opts%line_length`
     character(len=:), allocatable :: out
 
     type(writer_t) :: w
-    integer :: k, level
-    logical, allocatable :: keep(:)
+    integer :: k, level, ind
 
     w%line_length = opts%line_length
     w%keep_original = .not. opts%split_lines
     w%gap = gap
     w%case_mode = case_mode
     allocate (w%long_lines(0))
-    keep = protected_items(src, tokens, stmts)
-    do k = 1, stmts%n
-        level = depth(k)
-        if (.not. opts%indent_units) level = level - units(k)
-        if (.not. opts%indent_procedures) level = level - procedures(k)
-        level = max(level, 0)
-        associate (s => stmts%s(k))
-            if (keep(k)) then                   ! a formatter directive: written as it is
-                call emit_range(w, src, tokens, s%first, s%last)
-                w%comment_in = -1
-                w%stmt_in = -1
-                cycle
-            end if
-            select case (s%kind)
-            case (SK_BLANK)
-                call emit_blank(w, src, tokens, s)
-                w%comment_in = -1
-                w%stmt_in = -1
-            case (SK_PREPROC)
-                call emit_range(w, src, tokens, s%first, s%last)
-                w%comment_in = -1
-            case (SK_COMMENT)
-                call emit_comment_line(w, src, tokens, s, opts%base_indent + level*opts%indent, opts)
-            case (SK_CODE)
-                call emit_statement(w, src, tokens, s, info(k)%label > 0, opts%base_indent + level*opts%indent, opts)
-            end select
-        end associate
-    end do
+    associate (src => source%text, tokens => source%tokens)
+        do k = 1, source%stmts%n
+            level = st%depth(k)
+            if (.not. opts%indent_units) level = level - st%units(k)
+            if (.not. opts%indent_procedures) level = level - st%procedures(k)
+            ind = opts%base_indent + max(level, 0)*opts%indent
+            associate (s => source%stmts%s(k))
+                if (source%keep(k)) then                   ! a formatter directive: written as it is
+                    call emit_range(w, src, tokens, s%first, s%last)
+                    w%comment_in = -1
+                    w%stmt_in = -1
+                    cycle
+                end if
+                select case (s%kind)
+                case (SK_BLANK)
+                    call emit_blank(w, src, tokens, s)
+                    w%comment_in = -1
+                    w%stmt_in = -1
+                case (SK_PREPROC)
+                    call emit_range(w, src, tokens, s%first, s%last)
+                    w%comment_in = -1
+                case (SK_COMMENT)
+                    call emit_comment_line(w, src, tokens, s, ind, opts)
+                case (SK_CODE)
+                    call emit_statement(w, src, tokens, s, st%info(k)%label > 0, ind, opts)
+                end select
+            end associate
+        end do
+    end associate
     out = w%buf%get()
     if (present(long_lines)) long_lines = w%long_lines
 end function layout
@@ -620,11 +614,11 @@ subroutine emit_body(w, src, tokens, first, lend)
         if (tokens%tok(t)%kind == TK_OP) then
             select case (text)
             case ('(', '[')
-                if (w%nbrackets < MAX_BRACKETS) then
-                    w%nbrackets = w%nbrackets + 1
-                    w%bracket_first(w%nbrackets) = -1
-                    w%pending_bracket = .true.
-                end if
+                if (.not. allocated(w%bracket_first)) allocate (w%bracket_first(16))
+                if (w%nbrackets == size(w%bracket_first)) w%bracket_first = [w%bracket_first, w%bracket_first]
+                w%nbrackets = w%nbrackets + 1
+                w%bracket_first(w%nbrackets) = -1
+                w%pending_bracket = .true.
             case (')', ']')
                 if (w%nbrackets > 0) w%nbrackets = w%nbrackets - 1
             case default

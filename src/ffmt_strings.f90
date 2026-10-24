@@ -3,7 +3,7 @@ module ffmt_strings
 implicit none
 private
 
-public :: utf8_width, to_s
+public :: utf8_width, to_s, lower_char, lowercase, make_lowercase
 
 type, public :: string_t
     !! A variable-length string, for arrays of strings of different lengths.
@@ -55,6 +55,35 @@ pure function to_s(i) result(s)
     end if
     s = buf(k:)
 end function to_s
+
+elemental character function lower_char(c)
+    !! `c` in lowercase (ASCII letters only; other bytes, including UTF-8, are unchanged).
+    character, intent(in) :: c   !! the character
+    if (c >= 'A' .and. c <= 'Z') then
+        lower_char = achar(iachar(c) + 32)
+    else
+        lower_char = c
+    end if
+end function lower_char
+
+pure function lowercase(s) result(l)
+    !! `s` in lowercase (see [[lower_char]]).
+    character(len=*), intent(in) :: s   !! the text
+    character(len=len(s)) :: l
+    integer :: k
+    do k = 1, len(s)
+        l(k:k) = lower_char(s(k:k))
+    end do
+end function lowercase
+
+pure subroutine make_lowercase(s)
+    !! Turn `s` into lowercase in place, without a temporary copy (see [[lower_char]]).
+    character(len=*), intent(inout) :: s   !! the text
+    integer :: k
+    do k = 1, len(s)
+        if (s(k:k) >= 'A' .and. s(k:k) <= 'Z') s(k:k) = achar(iachar(s(k:k)) + 32)
+    end do
+end subroutine make_lowercase
 
 pure subroutine builder_append(self, str)
     !! Append `str` to the string, doubling the storage when it is full.

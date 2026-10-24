@@ -7,10 +7,11 @@ module ffmt_statements
 !! blanks, a comment or a preprocessor directive become items of their own. Together the items
 !! cover every token exactly once, in order.
 use ffmt_tokens
+use ffmt_strings, only: make_lowercase
 implicit none
 private
 
-public :: split_statements, code_tokens
+public :: split_statements, code_tokens, statement_view
 
 ! item kinds
 integer, parameter, public :: SK_CODE = 1      !! a code statement
@@ -32,6 +33,28 @@ type, public :: statement_list_t
 contains
     procedure :: push                        !! append an item
 end type statement_list_t
+
+type, public :: statement_view_t
+    !! The code tokens of one statement, with their lowercase text and bracket depth: what the rules
+    !! that read a statement word by word need. The procedures take an index `j` into `code(:)`;
+    !! outside `1:n` a word is `''` and its kind 0, so a rule can look before and after a token
+    !! without checking the bounds.
+    integer, allocatable :: code(:)         !! indices into the token list of the code tokens
+                                            !! (see [[code_tokens]])
+    integer :: n = 0                        !! number of code tokens
+    integer :: first = 1                    !! first code token after a statement label (`10 continue`)
+    integer, allocatable :: kinds(:)        !! kind of each code token (`TK_*`)
+    integer, allocatable :: depth(:)        !! open `(` and `[` around each code token; a bracket is
+                                            !! outside its own pair
+    character(len=:), allocatable :: low    !! lowercase text of the code tokens, one after another
+    integer, allocatable :: lo(:)           !! where the text of each code token starts in `low`
+    integer, allocatable :: hi(:)           !! where it ends
+contains
+    procedure :: word => view_word          !! lowercase text of a code token
+    procedure :: is => view_is              !! whether a code token's lowercase text is a given one
+    procedure :: kind_of => view_kind_of    !! kind of a code token
+    procedure :: closing => view_closing    !! the `)` that closes a `(`
+end type statement_view_t
 
 contains
 
@@ -102,6 +125,104 @@ function code_tokens(src, tokens, stmt) result(idx)
     end do
     idx = idx(1:n)
 end function code_tokens
+
+function statement_view(src, tokens, stmt) result(v)
+    !! The view of code statement `stmt`.
+    character(len=*), intent(in) :: src          !! source text
+    type(token_list_t), intent(in) :: tokens     !! tokens of `src`
+    type(statement_t), intent(in) :: stmt        !! the statement
+    type(statement_view_t) :: v
+    integer :: j, p, d, total
+
+    v%code = code_tokens(src, tokens, stmt)
+    v%n = size(v%code)
+    allocate (v%kinds(v%n), v%depth(v%n), v%lo(v%n), v%hi(v%n))
+    total = 0
+    do j = 1, v%n
+        total = total + tokens%tok(v%code(j))%last - tokens%tok(v%code(j))%first + 1
+    end do
+    allocate (character(len=total) :: v%low)
+    p = 0
+    d = 0
+    do j = 1, v%n
+        associate (t => tokens%tok(v%code(j)))
+            v%kinds(j) = t%kind
+            v%lo(j) = p + 1
+            v%low(p + 1:p + t%last - t%first + 1) = src(t%first:t%last)
+            call make_lowercase(v%low(p + 1:p + t%last - t%first + 1))
+            p = p + t%last - t%first + 1
+            v%hi(j) = p
+        end associate
+        v%depth(j) = d
+        if (v%kinds(j) /= TK_OP) cycle
+        select case (v%low(v%lo(j):v%hi(j)))
+        case ('(', '[')
+            d = d + 1
+        case (')', ']')
+            d = max(0, d - 1)
+            v%depth(j) = d
+        end select
+    end do
+    if (v%n > 1) then
+        if (v%kinds(1) == TK_INT) v%first = 2
+    end if
+end function statement_view
+
+pure function view_word(v, j) result(w)
+    !! Lowercase text of code token `j`, or `''` outside the statement.
+    class(statement_view_t), intent(in) :: v   !! the statement
+    integer, intent(in) :: j                   !! index into `v%code(:)`
+    character(len=:), allocatable :: w
+    if (j < 1 .or. j > v%n) then
+        w = ''
+    else
+        w = v%low(v%lo(j):v%hi(j))
+    end if
+end function view_word
+
+pure logical function view_is(v, j, text)
+    !! True if the lowercase text of code token `j` is `text`, without making a copy of it. Outside
+    !! the statement only `''` matches.
+    class(statement_view_t), intent(in) :: v   !! the statement
+    integer, intent(in) :: j                   !! index into `v%code(:)`
+    character(len=*), intent(in) :: text       !! the text, in lowercase
+    if (j < 1 .or. j > v%n) then
+        view_is = len(text) == 0
+    else
+        view_is = v%hi(j) - v%lo(j) + 1 == len(text)
+        if (view_is) view_is = v%low(v%lo(j):v%hi(j)) == text
+    end if
+end function view_is
+
+pure integer function view_kind_of(v, j) result(kind)
+    !! Kind (`TK_*`) of code token `j`, or 0 outside the statement.
+    class(statement_view_t), intent(in) :: v   !! the statement
+    integer, intent(in) :: j                   !! index into `v%code(:)`
+    kind = 0
+    if (j >= 1 .and. j <= v%n) kind = v%kinds(j)
+end function view_kind_of
+
+pure integer function view_closing(v, j) result(c)
+    !! Index of the `)` that closes the `(` at code token `j` (counting only parentheses), or 0 if
+    !! token `j` is not `(` or it is not closed.
+    class(statement_view_t), intent(in) :: v   !! the statement
+    integer, intent(in) :: j                   !! index into `v%code(:)`
+    integer :: d
+    if (.not. v%is(j, '(')) then
+        c = 0
+        return
+    end if
+    d = 0
+    do c = j, v%n
+        if (v%is(c, '(')) then
+            d = d + 1
+        else if (v%is(c, ')')) then
+            d = d - 1
+            if (d == 0) return
+        end if
+    end do
+    c = 0
+end function view_closing
 
 pure integer function line_end_token(tokens, i) result(j)
     !! Index of the line break that ends the line containing token `i`, or the last token.
