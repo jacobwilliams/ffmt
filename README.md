@@ -39,6 +39,8 @@ CRLF) are kept. Problems such as an `end do` without a `do` are reported as warn
 | `--keep-column1-comments` | leave comment lines that start in column 1 there |
 | `-l, --line-length N` | maximum line length (default 132, 0 for no limit) |
 | `--no-split` | do not split long lines |
+| `--sort-use` | sort each group of `use` statements by module name |
+| `--sort-use-only` | sort the names in `only:` lists |
 | `--relational symbols\|letters\|keep` | `.lt.` → `<`, `<` → `.lt.`, or unchanged (default) |
 | `--spaces RULE=MODE,...` | blanks around operators (see below) |
 | `--case WHAT=MODE,...` | letter case of `keywords`, `operators` or `all`: `lower`, `upper` or `keep` (default) |
@@ -69,6 +71,8 @@ continuation = "align"
 line-length = 100
 split = true
 relational = "keep"
+sort-use = false
+sort-use-only = false
 
 [spaces]             # see the table below
 comma = "add"
@@ -142,6 +146,19 @@ trailing comment may extend past it and moves with the last part. Strings, comme
 preprocessor lines and protected code are never split; a line that cannot be made to fit is
 reported. Existing continuation lines are not joined or re-flowed.
 
+### Sorting `use` statements
+
+`--sort-use` sorts each group of `use` statements by module name, ignoring case. A group is a run of
+`use` statements with nothing between them: a blank line, comment, preprocessor line or other
+statement ends it, so statements under different `#if` branches never mix. A statement moves with
+its continuation lines and trailing comment; statements of the same module keep their order.
+Statements on a line with another (`;`) and protected statements stay where they are.
+
+`--sort-use-only` sorts the names in each `only:` list by their local name (`c => x` sorts as `c`),
+ignoring case. A list that needs sorting is written on one line and then split like any long line;
+a list that is already sorted keeps its layout. Statements with a comment before their last line
+are left alone. The safety check accepts these reorderings and nothing else.
+
 ### Directives
 
 Formatter directives in comments:
@@ -181,9 +198,8 @@ pixi run docs                             # API documentation with FORD, in doc/
 ```
 
 Dependencies: [toml-f](https://github.com/toml-f/toml-f) for configuration files, and the regular
-expression library [fregex](fregex/README.md), which is developed in this repository as a separate
-fpm package. Directory listing uses `opendir`/`readdir`/`closedir` from the C library through
-Fortran interfaces, with no C code.
+expression library [fregex](https://github.com/jacobwilliams/fregex). Directory listing uses
+`opendir`/`readdir`/`closedir` from the C library through Fortran interfaces, with no C code.
 
 ## License
 

@@ -27,13 +27,13 @@ we keep their license notice.
 
 | Step | State |
 |---|---|
-| Regex engine ([`fregex/`](fregex/README.md)) | **Done.** Python `re` syntax and semantics; 16 API tests and 18,543 conformance cases generated from Python's `re`, including every fprettify regex. Separate fpm package, to be moved to its own repository. |
+| Regex engine ([fregex](https://github.com/jacobwilliams/fregex)) | **Done.** Python `re` syntax and semantics; 16 API tests and 18,543 conformance cases generated from Python's `re`, including every fprettify regex. Its own repository, used as an fpm dependency. |
 | Lexer, statements, block structure (`src/`) | **Done.** See below. |
 | Indentation and layout, CLI basics | **Done.** See below. |
 | Whitespace and case rules | **Done.** See below. |
 | Line breaking, relational spelling | **Done.** See below. |
 | Configuration, `--diff`, recursive mode, stdin | **Done.** See below. |
-| Features from fprettier (milestone 7) | Next. |
+| Features from fprettier (milestone 7) | In progress: sorting `use` statements done. |
 | Hardening and release (milestone 8) | Planned. |
 
 Milestone 2 results:
@@ -143,6 +143,16 @@ Milestone 6 results:
 - **Tests.** 59 unit tests, with fixtures in `fixtures/` (outside `test/`, which fpm compiles).
 - This repository's own `.ffmt.toml` excludes the fixtures; `pixi run format` formats it.
 
+Milestone 7 progress:
+
+- **Sorting `use` statements** (`ffmt_use_sort`): `sort-use` and `sort-use-only`, a text pre-pass
+  like relational spelling. An `only:` list that needs sorting is joined onto one line and left to
+  line splitting; a sorted list keeps its layout, so the result is stable. The safety check now
+  compares a signature of the code tokens in which, when either option is on, the `use` statements
+  of a run (between other statements and preprocessor lines) and the items of each `only:` list are
+  sorted. 68 unit tests; corpus (8,896 files, both options on in the second style): no internal
+  errors, every file stable.
+
 After milestone 6, for the user's own style (json-fortran, bspline-fortran): `base-indent`
 (indent everything, program units included), `indent-procedures = false` (interface bodies are
 still indented), `column1-comments = "keep"`, comment blocks after a statement keep extra
@@ -226,6 +236,7 @@ Key ideas:
 | `ffmt_fs`, `ffmt_walk` | directory listing through C library interfaces; finding files | done |
 | `ffmt_config`, `ffmt_settings` | configuration files; named settings | done |
 | `ffmt_diff` | unified diff for `--diff` | done |
+| `ffmt_use_sort` | sorting `use` statements and `only:` lists | done |
 
 **Portable file system access.** Standard Fortran cannot list directories, and `stdlib_system`
 (checked at stdlib `940bba44`) has `is_directory` and path helpers but no listing. `ffmt_fs` is
@@ -237,7 +248,7 @@ and no shell are used.
 
 | Package | Use |
 |---|---|
-| `fregex` (this repo, later its own repository) | statement classification, directives, `--exclude` patterns |
+| [`fregex`](https://github.com/jacobwilliams/fregex) | statement classification, directives, `--exclude` patterns |
 | [`toml-f`](https://github.com/toml-f/toml-f) | config files and `fpm.toml` integration |
 | [`test-drive`](https://github.com/fortran-lang/test-drive) | tests (dev dependency) |
 | `stdlib` | not needed: `ffmt_fs` covers directory listing |
@@ -259,8 +270,8 @@ and no shell are used.
 7. **Features from fprettier:** ideas taken from
    [fprettier](https://github.com/fredjones42/fprettier) (reviewed at `179542e`, v0.5.0), a Rust
    rewrite of fprettify. In this order:
-   1. **Sorting `use` statements** (off by default): `sort-use` sorts the `use` statements of a
-      group alphabetically, ignoring case. A group is a run of `use` statements with nothing between
+   1. *(Done.)* **Sorting `use` statements** (off by default): `sort-use` sorts the `use`
+      statements of a group alphabetically, ignoring case. A group is a run of `use` statements with nothing between
       them; a blank line, comment, preprocessor line or other statement ends it, so statements in
       different `#if` branches never mix. A statement moves with its continuation lines and trailing
       comment, and protected statements (`!&`, `!&<`…`!&>`) stay where they are. `sort-use-only`
@@ -325,8 +336,9 @@ and no shell are used.
   before a `character(*)` dummy argument, crashes at run time. Put such procedure arguments after
   string arguments (fregex's `sub(string, fn)` does).
 - gfortran 15 internal compiler error: a deferred-length character function result passed directly
-  as an actual argument (or in an array constructor) inside a recursive internal procedure. Assign
-  it to a local variable first (see `ffmt_walk`).
+  as an actual argument (or in an array constructor) inside a recursive internal procedure, or an
+  internal function's deferred-length result used in a structure constructor. Assign it to a local
+  variable first (see `ffmt_walk`, `ffmt_format`).
 - An allocatable array assigned from a function whose result has lower bound 0 becomes 1-based.
   Use explicit-bounds arrays when the bounds matter (see `ffmt_diff`).
 - Avoid editing Fortran with Python string literals: `'\'` sequences are interpreted by Python.
@@ -334,7 +346,7 @@ and no shell are used.
   results (e.g. `--check`) don't print a backtrace.
 - **Documentation:** FORD's default style. `!!` lines right after the statement they document
   (module, type, procedure), and trailing `!!` comments on arguments, components and constants.
-  `pixi run docs` and `pixi run regex-docs` build the API docs and must stay warning-free.
+  `pixi run docs` builds the API docs and must stay warning-free.
 - **Formatting:** the repository's sources are formatted by the tool itself with the default style.
 - **License:** MIT, for both packages.
 

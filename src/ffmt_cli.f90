@@ -69,6 +69,8 @@ function usage() result(text)
            '                              lines are split, and alignment uses less indentation'//nl// &
            '                              rather than exceed it'//nl// &
            '      --no-split              do not split long lines'//nl// &
+           '      --sort-use              sort each group of use statements by module name'//nl// &
+           '      --sort-use-only         sort the names in only: lists'//nl// &
            '      --relational STYLE      spelling of relational operators: "symbols" (.lt. becomes <),'//nl// &
            '                              "letters" (< becomes .lt.) or "keep" (default)'//nl// &
            '      --spaces RULE=MODE,...  blanks around operators; MODE is add (at least one blank),'//nl// &
@@ -159,6 +161,10 @@ subroutine parse_args(args, cli, stat, errmsg)
             call add('column1-comments', 'keep')
         case ('--no-split')
             call add('split', 'false')
+        case ('--sort-use')
+            call add('sort-use', 'true')
+        case ('--sort-use-only')
+            call add('sort-use-only', 'true')
         case default
             if (.not. takes_value(arg)) then
                 call fail('unknown option '//arg)

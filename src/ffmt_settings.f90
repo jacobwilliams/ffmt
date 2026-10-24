@@ -4,7 +4,7 @@ module ffmt_settings
 !! | Setting | Values |
 !! |---|---|
 !! | `indent`, `base-indent`, `continuation-indent` | 0 to 64 |
-!! | `indent-units`, `indent-procedures`, `indent-comments`, `split` | `true`, `false` |
+!! | `indent-units`, `indent-procedures`, `indent-comments`, `split`, `sort-use`, `sort-use-only` | `true`, `false` |
 !! | `continuation` | `align`, `indent` |
 !! | `column1-comments` | `indent` (like the code around them), `keep` (stay in column 1) |
 !! | `line-length` | 0 (no limit) to 100000 |
@@ -60,6 +60,10 @@ subroutine apply_setting(opts, key, value, stat, errmsg)
         end select
     case ('split')
         call read_flag(opts%split_lines)
+    case ('sort-use')
+        call read_flag(opts%sort_use)
+    case ('sort-use-only')
+        call read_flag(opts%sort_use_only)
     case ('continuation')
         select case (value)
         case ('align')

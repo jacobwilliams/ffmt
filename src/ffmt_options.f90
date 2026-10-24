@@ -33,6 +33,8 @@ type, public :: format_options_t
     logical :: split_lines = .true.         !! split code lines that are longer than `line_length`
     integer :: relational = REL_KEEP        !! spelling of relational operators: `REL_KEEP`, `REL_SYMBOLS`
                                             !! (`.lt.` becomes `<`) or `REL_LETTERS` (`<` becomes `.lt.`)
+    logical :: sort_use = .false.           !! sort the `use` statements of each group by module name
+    logical :: sort_use_only = .false.      !! sort the names in `only:` lists
     type(whitespace_options_t) :: spaces    !! whitespace rules within lines
     type(case_options_t) :: letter_case     !! letter case of keywords and operators
 end type format_options_t

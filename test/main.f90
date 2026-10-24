@@ -7,6 +7,7 @@ use test_layout, only: collect_layout
 use test_whitespace, only: collect_whitespace
 use test_case, only: collect_case
 use test_split, only: collect_split
+use test_sort, only: collect_sort
 use test_tools, only: collect_tools
 implicit none
 
@@ -21,6 +22,7 @@ testsuites = [ &
     new_testsuite("whitespace", collect_whitespace), &
     new_testsuite("case", collect_case), &
     new_testsuite("split", collect_split), &
+    new_testsuite("sort", collect_sort), &
     new_testsuite("tools", collect_tools) &
     ]
 do is = 1, size(testsuites)
