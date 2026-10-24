@@ -13,6 +13,7 @@ use ffmt_tokens
 use ffmt_statements
 use ffmt_options, only: whitespace_options_t, WS_ADD, WS_REMOVE
 use ffmt_source, only: source_t
+use ffmt_strings, only: utf8_width
 implicit none
 private
 
@@ -24,11 +25,12 @@ integer, parameter, public :: GAP_MIN1 = -2   !! at least one blank
 
 contains
 
-function compute_gaps(source, views, ws) result(gap)
+function compute_gaps(source, views, ws, comment_spacing) result(gap)
     !! The gap wanted before each token (`GAP_KEEP`, `GAP_MIN1` or a number of blanks).
     type(source_t), intent(in) :: source                !! the source
     type(statement_view_t), intent(in) :: views(:)      !! the view of each item (see [[statement_views]])
     type(whitespace_options_t), intent(in) :: ws        !! modes of the whitespace rules
+    integer, intent(in) :: comment_spacing              !! blanks before a trailing comment, or -1 to keep them
     integer, allocatable :: gap(:)
     integer :: k
 
@@ -37,7 +39,53 @@ function compute_gaps(source, views, ws) result(gap)
     do k = 1, source%stmts%n
         if (source%stmts%s(k)%kind == SK_CODE) call statement_gaps(source%text, source%tokens, views(k), ws, gap)
     end do
+    if (comment_spacing >= 0) call comment_gaps(source, comment_spacing, gap)
 end function compute_gaps
+
+subroutine comment_gaps(source, spacing, gap)
+    !! Ask for `spacing` blanks before each trailing comment (one after code or a continuation `&`),
+    !! unless a trailing comment on the line before or after starts in the same column: comments
+    !! lined up in a column are left as they are.
+    type(source_t), intent(in) :: source   !! the source
+    integer, intent(in) :: spacing         !! blanks wanted before a trailing comment
+    integer, intent(inout) :: gap(:)       !! gap wanted before each token, set for the comments
+    integer, allocatable :: tok(:), line(:), col(:)
+    integer :: t, k, n, p
+
+    allocate (tok(source%tokens%n), line(source%tokens%n), col(source%tokens%n))
+    n = 0
+    do t = 2, source%tokens%n
+        if (source%tokens%tok(t)%kind /= TK_COMMENT) cycle
+        p = t - 1
+        if (source%tokens%tok(p)%kind == TK_SPACE .and. p > 1) p = p - 1
+        if (.not. (is_code_kind(source%tokens%tok(p)%kind) .or. source%tokens%tok(p)%kind == TK_CONT)) cycle
+        if (source%tokens%tok(p)%kind == TK_SPACE) cycle
+        n = n + 1
+        tok(n) = t
+        line(n) = source%tokens%tok(t)%line
+        col(n) = column(source%tokens%tok(t)%first)
+    end do
+    do k = 1, n
+        if (k > 1) then
+            if (line(k - 1) == line(k) - 1 .and. col(k - 1) == col(k)) cycle
+        end if
+        if (k < n) then
+            if (line(k + 1) == line(k) + 1 .and. col(k + 1) == col(k)) cycle
+        end if
+        gap(tok(k)) = spacing
+    end do
+
+contains
+
+    integer function column(i)
+        !! Input column of byte `i`: the characters before it on its line.
+        integer, intent(in) :: i   !! index into the source text
+        integer :: j
+        j = scan(source%text(1:i - 1), achar(10)//achar(13), back=.true.)
+        column = utf8_width(source%text(j + 1:i - 1))
+    end function column
+
+end subroutine comment_gaps
 
 subroutine statement_gaps(src, tokens, v, ws, gap)
     !! Set the gaps wanted before the tokens of one code statement.
@@ -92,9 +140,13 @@ subroutine statement_gaps(src, tokens, v, ws, gap)
                     if (binary(i) .and. .not. slash_lists) call around(i, ws%concat)
                 case ('%')
                     call around(i, ws%percent)
+                case ('?')
+                    call around(i, ws%conditional)
                 case (':')
-                    ! a slice `a(1 : n, :)`: only between the colon and its bounds
-                    if (v%depth(i) > 0) then
+                    if (conditional_colon(i)) then
+                        call around(i, ws%conditional)
+                    else if (v%depth(i) > 0) then
+                        ! a slice `a(1 : n, :)`: only between the colon and its bounds
                         if (ends_operand(i - 1)) call set_before(i, ws%slice_colon)
                         if (starts_operand(i + 1)) call set_before(i + 1, ws%slice_colon)
                     end if
@@ -118,6 +170,11 @@ subroutine statement_gaps(src, tokens, v, ws, gap)
                 call around(i, ws%relational)
             case ('.and.', '.or.', '.eqv.', '.neqv.')
                 call around(i, ws%logical)
+            case ('.not.', '.true.', '.false.')
+                continue
+            case default
+                ! a user-defined operator, unless it is a logical constant with a kind (`.true._lk`)
+                if (index(v%word(i), '._') == 0 .and. binary(i)) call around(i, ws%defined_operators)
             end select
         end if
     end do
@@ -229,6 +286,22 @@ contains
             type_star = .false.
         end select
     end function type_star
+
+    logical function conditional_colon(j)
+        !! True if the `:` at `j` belongs to a conditional expression: a `?` comes before it at the same
+        !! bracket depth, inside the same brackets.
+        integer, intent(in) :: j   !! index into `v%code(:)` of a `:`
+        integer :: k
+        conditional_colon = .false.
+        if (v%depth(j) == 0) return
+        do k = j - 1, 1, -1
+            if (v%depth(k) < v%depth(j)) return          ! the opening bracket
+            if (v%depth(k) == v%depth(j) .and. v%is(k, '?')) then
+                conditional_colon = .true.
+                return
+            end if
+        end do
+    end function conditional_colon
 
     logical function is_control_paren(j)
         !! True if `(` at `j` follows a control keyword: `if (`, `else if (`, `do while (`,

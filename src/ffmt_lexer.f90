@@ -311,7 +311,7 @@ integer function operator_end(src, i) result(j)
     character(len=*), intent(in) :: src   !! source text
     integer, intent(in) :: i              !! byte to look at
     character(len=*), parameter :: two(*) = ['**', '//', '==', '/=', '<=', '>=', '=>', '::']
-    character(len=*), parameter :: one = '=+-*/<>()[],:;%'
+    character(len=*), parameter :: one = '=+-*/<>()[],:;%?'
     character(len=2) :: pair
     integer :: k
 

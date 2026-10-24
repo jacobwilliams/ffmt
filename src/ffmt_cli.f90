@@ -60,11 +60,15 @@ function usage() result(text)
            '      --base-indent N         columns added to every line, program units included (default 0)'//nl// &
            '      --indent-units          indent the bodies of modules, submodules and programs'//nl// &
            '      --no-indent-procedures  do not indent the bodies of subroutines and functions'//nl// &
+           '      --indent-fypp           indent the code inside fypp blocks (#:if, #:for, #:def, ...)'//nl// &
+           '                              and the fypp directive lines with it'//nl// &
            '      --continuation STYLE    continuation lines: "align" with brackets and "=" (default),'//nl// &
            '                              or "indent" by a fixed amount'//nl// &
            '      --continuation-indent N extra indentation of continuation lines (default 4)'//nl// &
            '      --no-indent-comments    leave the indentation of comment lines unchanged'//nl// &
            '      --keep-column1-comments leave comment lines that start in column 1 there'//nl// &
+           '      --comment-spacing N     blanks before a comment at the end of a line, unless it is'//nl// &
+           '                              aligned with the comment on the line before or after'//nl// &
            '  -l, --line-length N         maximum line length (default 132, 0 for no limit): longer code'//nl// &
            '                              lines are split, and alignment uses less indentation'//nl// &
            '                              rather than exceed it'//nl// &
@@ -77,9 +81,11 @@ function usage() result(text)
            '                              remove or keep. RULE is one of assignment, keyword-args,'//nl// &
            '                              pointer, declarations, relational, logical, plus-minus,'//nl// &
            '                              mult-div, power, concat, comma, slice-colon, percent,'//nl// &
-           '                              control-paren, or all'//nl// &
-           '      --case WHAT=MODE,...    letter case; WHAT is keywords, operators or all, MODE is'//nl// &
-           '                              lower, upper or keep (default keep)'//nl// &
+           '                              control-paren, conditional, defined-operators, or all'//nl// &
+           '      --case WHAT=MODE,...    letter case; WHAT is keywords, operators, procedures'//nl// &
+           '                              (intrinsic), constants (of iso_fortran_env and iso_c_binding),'//nl// &
+           '                              types (kinds and exponents) or all, MODE is lower, upper or'//nl// &
+           '                              keep (default keep)'//nl// &
            '      --set KEY=VALUE         any setting, as in a configuration file (e.g. spaces.comma=add)'//nl// &
            nl// &
            'Files:'//nl// &
@@ -153,6 +159,8 @@ subroutine parse_args(args, cli, stat, errmsg)
             cli%no_config = .true.
         case ('--indent-units')
             call add('indent-units', 'true')
+        case ('--indent-fypp')
+            call add('indent-fypp', 'true')
         case ('--no-indent-procedures')
             call add('indent-procedures', 'false')
         case ('--no-indent-comments')
@@ -197,7 +205,7 @@ contains
         character(len=*), intent(in) :: opt   !! the argument to test
         select case (opt)
         case ('-i', '--indent', '--base-indent', '--continuation', '--continuation-indent', '-l', '--line-length', '--relational', &
-              '--spaces', '--case', '--set', '--config', '--exclude', '--extensions')
+              '--spaces', '--case', '--set', '--config', '--exclude', '--extensions', '--comment-spacing')
             takes_value = .true.
         case default
             takes_value = .false.
@@ -217,6 +225,8 @@ contains
             call add('continuation', value)
         case ('--continuation-indent')
             call add('continuation-indent', value)
+        case ('--comment-spacing')
+            call add('comment-spacing', value)
         case ('-l', '--line-length')
             call add('line-length', value)
         case ('--relational')

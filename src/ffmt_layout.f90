@@ -11,6 +11,7 @@ use ffmt_source, only: source_t
 use ffmt_structure, only: structure_t
 use ffmt_options
 use ffmt_whitespace, only: GAP_KEEP, GAP_MIN1
+use ffmt_case, only: case_marks_t, kind_part
 use ffmt_strings, only: string_builder_t, utf8_width
 implicit none
 private
@@ -44,7 +45,7 @@ type :: writer_t
                                                 !! new one would make it too long (when lines are not split)
     integer, allocatable :: long_lines(:)       !! input lines that kept their indentation to stay within the line length
     integer, allocatable :: gap(:)              !! blanks wanted before each token (see [[compute_gaps]])
-    integer, allocatable :: case_mode(:)        !! letter case wanted for each token (see [[compute_case]])
+    type(case_marks_t) :: cases                 !! letter case wanted for each token (see [[compute_case]])
 end type writer_t
 
 type :: piece_t
@@ -62,13 +63,13 @@ integer, parameter :: ANCHOR_ASSIGN = 1, ANCHOR_ONLY = 2, ANCHOR_DECL = 3
 
 contains
 
-function layout(source, st, gap, case_mode, opts, long_lines) result(out)
+function layout(source, st, gap, cases, opts, long_lines) result(out)
     !! The formatted text of `source`, from its structure ([[analyze_structure]]), the gaps
     !! ([[compute_gaps]]) and the letter case ([[compute_case]]) wanted.
     type(source_t), intent(in) :: source          !! the source
     type(structure_t), intent(in) :: st           !! its block structure
     integer, intent(in) :: gap(:)                 !! blanks wanted before each token
-    integer, intent(in) :: case_mode(:)           !! letter case wanted for each token
+    type(case_marks_t), intent(in) :: cases       !! letter case wanted for each token
     type(format_options_t), intent(in) :: opts    !! the formatting options
     integer, allocatable, intent(out), optional :: long_lines(:)   !! input lines that kept their indentation
                                                                    !! because the new one would make them longer
@@ -81,13 +82,14 @@ function layout(source, st, gap, case_mode, opts, long_lines) result(out)
     w%line_length = opts%line_length
     w%keep_original = .not. opts%split_lines
     w%gap = gap
-    w%case_mode = case_mode
+    w%cases = cases
     allocate (w%long_lines(0))
     associate (src => source%text, tokens => source%tokens)
         do k = 1, source%stmts%n
             level = st%depth(k)
             if (.not. opts%indent_units) level = level - st%units(k)
             if (.not. opts%indent_procedures) level = level - st%procedures(k)
+            if (opts%indent_fypp) level = level + st%fypp(k)
             ind = opts%base_indent + max(level, 0)*opts%indent
             associate (s => source%stmts%s(k))
                 if (source%keep(k)) then                   ! a formatter directive: written as it is
@@ -102,7 +104,11 @@ function layout(source, st, gap, case_mode, opts, long_lines) result(out)
                     w%comment_in = -1
                     w%stmt_in = -1
                 case (SK_PREPROC)
-                    call emit_range(w, src, tokens, s%first, s%last)
+                    if (opts%indent_fypp) then
+                        call emit_fypp_line(w, src, tokens, s, ind)
+                    else
+                        call emit_range(w, src, tokens, s%first, s%last)
+                    end if
                     w%comment_in = -1
                 case (SK_COMMENT)
                     call emit_comment_line(w, src, tokens, s, ind, opts)
@@ -269,24 +275,29 @@ subroutine line_pieces(w, src, tokens, first, lend, pieces)
             if (t == lend) cycle
             if (tokens%tok(t + 1)%kind == TK_NEWLINE) cycle
             g = -1
-            ! blanks between two code tokens may be adjusted by the rule for the second one
+            ! blanks between two code tokens may be adjusted by the rule for the second one, and
+            ! blanks before a trailing comment by the comment spacing
             if (t > first .and. t < lend) then
                 if (is_code_kind(tokens%tok(t - 1)%kind) .and. is_code_kind(tokens%tok(t + 1)%kind)) then
                     g = w%gap(t + 1)
-                    if (g == 0) cycle
+                else if (tokens%tok(t + 1)%kind == TK_COMMENT) then
+                    g = w%gap(t + 1)
                 end if
+                if (g == 0) cycle
             end if
             call add(0, tokens%tok(t)%first, tokens%tok(t)%last, max(g, 0))
             cycle
         end if
-        if (t > first .and. is_code_kind(tokens%tok(t)%kind)) then
-            if (is_code_kind(tokens%tok(t - 1)%kind)) then     ! no blank in the input
-                g = w%gap(t)
+        if (t > first) then
+            if (is_code_kind(tokens%tok(t)%kind) .and. is_code_kind(tokens%tok(t - 1)%kind)) then
+                g = w%gap(t)                                   ! no blank in the input
                 if (g == GAP_MIN1) then
                     call add(0, 1, 0, 1)
                 else if (g > 0) then
                     call add(0, 1, 0, g)
                 end if
+            else if (tokens%tok(t)%kind == TK_COMMENT .and. tokens%tok(t - 1)%kind /= TK_SPACE) then
+                if (w%gap(t) > 0) call add(0, 1, 0, w%gap(t))  ! a trailing comment right after the code
             end if
         end if
         last = tokens%tok(t)%last
@@ -336,6 +347,32 @@ subroutine emit_range(w, src, tokens, first, last)
         call put(w, token_text(src, tokens%tok(j)))
     end do
 end subroutine emit_range
+
+subroutine emit_fypp_line(w, src, tokens, s, ind)
+    !! A preprocessor line: a fypp directive (`#:`, `#!`, `$:`, `@:`) is indented by `ind`; a cpp line
+    !! is written as it is. Continuation lines of the directive are not changed.
+    type(writer_t), intent(inout) :: w            !! the output and the alignment state
+    character(len=*), intent(in) :: src           !! the source text
+    type(token_list_t), intent(in) :: tokens      !! its tokens
+    type(statement_t), intent(in) :: s            !! the line, a preprocessor item
+    integer, intent(in) :: ind                    !! indentation, in blanks
+    integer :: f
+    f = first_non_blank(tokens, s%first, s%last)
+    if (f > s%last) then
+        call emit_range(w, src, tokens, s%first, s%last)
+        return
+    end if
+    associate (t => tokens%tok(f))
+        if (t%kind /= TK_PREPROC .or. t%last == t%first) then
+            call emit_range(w, src, tokens, s%first, s%last)
+        else if (src(t%first:t%first) == '#' .and. index(':!', src(t%first + 1:t%first + 1)) == 0) then
+            call emit_range(w, src, tokens, s%first, s%last)         ! cpp
+        else
+            call put(w, repeat(' ', ind))
+            call emit_range(w, src, tokens, f, s%last)
+        end if
+    end associate
+end subroutine emit_fypp_line
 
 subroutine emit_blank(w, src, tokens, s)
     !! A blank line: only its line break (and a byte order mark) is kept.
@@ -573,7 +610,7 @@ subroutine emit_body(w, src, tokens, first, lend)
     integer, intent(in) :: first               !! first token to write
     integer, intent(in) :: lend                !! last token of the line, its line break if it has one
     type(piece_t), allocatable :: pieces(:)
-    integer :: k, t
+    integer :: k, t, ka, kb
     character(len=:), allocatable :: text
 
     call line_pieces(w, src, tokens, first, lend, pieces)
@@ -587,14 +624,12 @@ subroutine emit_body(w, src, tokens, first, lend)
             call put(w, src(pieces(k)%first:pieces(k)%last))
             cycle
         end if
-        select case (w%case_mode(t))
-        case (CASE_LOWER)
-            text = to_case(src(pieces(k)%first:pieces(k)%last), .false.)
-        case (CASE_UPPER)
-            text = to_case(src(pieces(k)%first:pieces(k)%last), .true.)
-        case default
-            text = src(pieces(k)%first:pieces(k)%last)
-        end select
+        text = src(pieces(k)%first:pieces(k)%last)
+        if (w%cases%whole(t) /= CASE_KEEP) text = to_case(text, w%cases%whole(t) == CASE_UPPER)
+        if (w%cases%part(t) /= CASE_KEEP) then
+            call kind_part(text, tokens%tok(t)%kind, ka, kb)
+            if (kb >= ka) text(ka:kb) = to_case(text(ka:kb), w%cases%part(t) == CASE_UPPER)
+        end if
         if (tokens%tok(t)%kind == TK_COMMENT) then
             if (.not. w%line_comment) then           ! a trailing comment: later lines may line up with it
                 w%comment_in = input_column(src, tokens%tok(t))

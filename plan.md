@@ -285,36 +285,37 @@ and no shell are used.
       sorts the names of an `only:` list by their local name (`c => x` sorts as `c`), then lets
       line splitting re-break the list; a statement with a comment on any line but its last is left
       alone. The safety check needs to accept reordered `use` statements and `only:` items.
-   2. **More case categories:** `procedures` (intrinsic procedures where they are called, e.g.
-      `size(a)`), `constants` (names from `iso_fortran_env` and `iso_c_binding`, e.g. `output_unit`,
-      `c_int`) and `types` (`kind=` values, literal kind suffixes `2_int64`, exponent letters
-      `1.0e-3`). Recognize them by position, as for keywords, so that a local variable named like an
-      intrinsic keeps its case. Needs F2023 tables of intrinsic procedures and constants.
-   3. **Comment spacing:** `comment-spacing = N` sets the blanks before an inline comment. It must
-      leave trailing comments that are aligned in columns alone.
-   4. **Settings in a file:** a comment such as `! fformat: indent=2, spaces.comma=add`
-      sets options for that file, applied after the configuration file and the command line. Only
-      the first such comment counts.
-   5. **Merged configuration files:** read every configuration file from the home directory down to
-      the file's directory, each overriding only the settings it states, instead of only the
-      nearest file.
-   6. **Indenting fypp blocks** (option): indent the code inside `#:if`, `#:for`, `#:def`, ... and
-      the directive lines with it. Must work with the current treatment of preprocessor branches as
-      alternatives.
+   2. *(Done.)* **More case categories:** `case.procedures` (intrinsic procedures where they are
+      called: followed by `(` or after `call`; F2023 table 16.1, common specific names such as
+      `dsqrt`, and the procedures of `iso_c_binding`/`iso_fortran_env`), `case.constants` (the
+      constants and types of `iso_fortran_env` and `iso_c_binding`) and `case.types` (`kind=`
+      values, the kind of a declaration's type, literal kind suffixes and string kind prefixes,
+      exponent letters). Names are not changed as the first word of a statement, after `%`, as a
+      declared entity or as the name of a procedure being defined. The safety check ignores case in
+      numbers and in a string's kind prefix.
+   3. *(Done.)* **Comment spacing:** `comment-spacing = N` (default `keep`) sets the blanks before a
+      trailing comment; one in the same input column as a trailing comment on the line before or
+      after is left alone.
+   4. *(Done.)* **Indenting fypp blocks** (`indent-fypp`, off by default): code inside `#:if`,
+      `#:for`, `#:def`, `#:block`, `#:call` and `#:mute` is indented one more level, and fypp
+      directive lines are indented with the code (middle and closing directives at the level of
+      the opening one). cpp lines are not moved.
 
-   Smaller fixes to make along the way:
-   - **User-defined operators:** a whitespace rule for user-defined operators such as `.plus.`,
-     like the one for logical operators.
-   - **Fortran 2023:** recognize `enumeration type` ... `end enumeration type` as a construct, and
-     space the `?` and `:` of conditional expressions `(c ? a : b)`.
-   - **Language limits:** warn about input lines longer than 10,000 characters or statements longer
-     than 1,000,000 (F2023 6.3.2), and make sure line splitting does not create more continuation
-     lines than a compiler allows (255 before F2023).
-   - **Closed pipe:** check that `--check` or `--stdout` into a closed pipe (`... | head`) does not
-     crash.
+   Smaller fixes, done:
+   - **User-defined operators:** `spaces.defined-operators` (default `keep`) for binary ones.
+   - **Fortran 2023:** `enumeration type` ... `end enumeration type` is a construct; `?` is an
+     operator, and `spaces.conditional` (default `add`) spaces it and the `:` of a conditional
+     expression, which was treated as a slice colon before.
+   - **Language limits:** input lines longer than 10,000 characters and statements longer than
+     1,000,000 are reported, and line splitting stops at 255 continuation lines (fortranpack had a
+     statement that `-l 80` split into 381).
+   - **Closed pipe:** `--stdout` or `--diff` into `... | head` ends quietly by SIGPIPE (exit status
+     141, as for `cat`) on macOS; Linux should behave the same way but is untested, as is Windows.
 
-   Considered and not taken: whitespace "levels" 0–4 (our per-rule settings cover them) and
-   fprettify compatibility. Parallel processing is deferred to milestone 8.
+   Considered and not taken: whitespace "levels" 0–4 (our per-rule settings cover them),
+   fprettify compatibility, and settings for one file or directory (a `! fformat:` comment in a
+   file, or configuration files merged from the home directory down): one configuration applies.
+   Parallel processing is deferred to milestone 8.
 8. **Hardening:** run on large codebases (stdlib, fpm, json-fortran, cp2k, wannier90); fuzzing;
    performance; release.
    - **Performance (2026-10-24):** profiling with macOS `sample` found most time in small string

@@ -43,12 +43,20 @@ type, public :: whitespace_options_t
     integer :: percent = WS_REMOVE     !! `%`
     integer :: control_paren = WS_ADD  !! between `if`, `while`, `select case`, `where`, ... and `(`, and
                                        !! between `)` and a final `then`
+    integer :: conditional = WS_ADD    !! `?` and `:` of a conditional expression `(c ? a : b)` (F2023)
+    integer :: defined_operators = WS_KEEP !! binary user-defined operators: `a .plus. b`
 end type whitespace_options_t
 
 type, public :: case_options_t
-    !! Letter case of keywords and of dot operators and logical constants.
+    !! Letter case of keywords, dot operators and logical constants, intrinsic procedures, the constants
+    !! of the intrinsic modules, and kinds.
     integer :: keywords = CASE_KEEP    !! `if`, `end do`, `integer`, `intent(in)`, ...
     integer :: operators = CASE_KEEP   !! `.and.`, `.eq.`, `.true.`, ...
+    integer :: procedures = CASE_KEEP  !! intrinsic procedures where they are called: `size(a)`, `call cpu_time(t)`
+    integer :: constants = CASE_KEEP   !! constants and types of `iso_fortran_env` and `iso_c_binding`:
+                                       !! `output_unit`, `int64`, `c_int`, `c_ptr`
+    integer :: types = CASE_KEEP       !! kinds: `kind=` values and `real(dp)` in declarations, literal kind
+                                       !! suffixes `2_int64` and prefixes `ck_'a'`, exponent letters `1.0e-3`
 end type case_options_t
 
 type, public :: format_options_t
@@ -59,6 +67,8 @@ type, public :: format_options_t
                                             !! program units are indented (4 for code that starts in column 5)
     logical :: indent_units = .false.       !! indent the bodies of modules, submodules and main programs
     logical :: indent_procedures = .true.   !! indent the bodies of subroutines and functions
+    logical :: indent_fypp = .false.        !! indent the code inside fypp blocks (`#:if`, `#:for`, `#:def`, ...),
+                                            !! and the fypp directive lines with the code around them
     integer :: continuation = CONT_ALIGN    !! layout of continuation lines (`CONT_ALIGN` or `CONT_INDENT`)
     integer :: continuation_indent = 4      !! extra indentation of continuation lines, used with `CONT_INDENT`
                                             !! and when there is nothing to align with
@@ -72,6 +82,8 @@ type, public :: format_options_t
                                             !! (`.lt.` becomes `<`) or `REL_LETTERS` (`<` becomes `.lt.`)
     logical :: sort_use = .false.           !! sort the `use` statements of each group by module name
     logical :: sort_use_only = .false.      !! sort the names in `only:` lists
+    integer :: comment_spacing = -1         !! blanks before a trailing comment, or -1 to keep them; comments
+                                            !! aligned with one on the line before or after are kept
     type(whitespace_options_t) :: spaces    !! whitespace rules within lines
     type(case_options_t) :: letter_case     !! letter case of keywords and operators
 end type format_options_t

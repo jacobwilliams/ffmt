@@ -41,14 +41,16 @@ integer, parameter, public :: C_TEAM = 18
 integer, parameter, public :: C_WHERE = 19
 integer, parameter, public :: C_FORALL = 20
 integer, parameter, public :: C_CONTAINS = 21    !! `contains` (a middle statement of program units and types)
+integer, parameter, public :: C_ENUMERATION = 22 !! `enumeration type` (F2023)
 
-integer, parameter :: NCONSTRUCTS = 21
-character(len=*), parameter :: LABELS(0:NCONSTRUCTS) = [character(len=12) :: &
+integer, parameter :: NCONSTRUCTS = 22
+character(len=*), parameter :: LABELS(0:NCONSTRUCTS) = [character(len=16) :: &
                                                         'none', 'end', 'program', 'module', 'submodule', 'subroutine', 'function', &
                                                         'procedure', &
                                                         'block data', 'interface', 'type', 'enum', 'if', 'do', 'select', &
                                                         'associate', 'block', &
-                                                        'critical', 'change team', 'where', 'forall', 'contains']
+                                                        'critical', 'change team', 'where', 'forall', 'contains', &
+                                                        'enumeration type']
 
 type, public :: stmt_info_t
     !! What a statement does to the block structure, as found by `classify_statement`.
@@ -267,6 +269,8 @@ contains
             if (word(2) == 'interface') call set(info, ROLE_OPEN, C_INTERFACE)
         case ('enum')
             call set(info, ROLE_OPEN, C_ENUM)
+        case ('enumeration')
+            if (word(2) == 'type') call set(info, ROLE_OPEN, C_ENUMERATION)
         case ('associate')
             if (word(2) == '(') call set(info, ROLE_OPEN, C_ASSOCIATE)
         case ('critical')
@@ -370,6 +374,8 @@ pure integer function closed_construct(second, third) result(construct)
         construct = C_FORALL
     case ('enum')
         construct = C_ENUM
+    case ('enumeration')
+        construct = merge(C_ENUMERATION, C_NONE, third == 'type')
     case ('interface')
         construct = C_INTERFACE
     case ('type')

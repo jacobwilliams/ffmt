@@ -113,17 +113,19 @@ CRLF) are kept. Problems such as an `end do` without a `do` are reported as warn
 | `--base-indent N` | columns added to every line, program units included (default 0) |
 | `--indent-units` | indent the bodies of modules, submodules and programs |
 | `--no-indent-procedures` | do not indent the bodies of subroutines and functions (interface bodies still are) |
+| `--indent-fypp` | indent the code inside fypp blocks (`#:if`, `#:for`, `#:def`, ...) and their directive lines |
 | `--continuation align\|indent` | align continuation lines with brackets and `=` (default), or indent them by a fixed amount |
 | `--continuation-indent N` | extra indentation of continuation lines (default 4) |
 | `--no-indent-comments` | leave the indentation of comment lines unchanged |
 | `--keep-column1-comments` | leave comment lines that start in column 1 there |
+| `--comment-spacing N` | blanks before a comment at the end of a line (default: keep), unless it is aligned with the one above or below |
 | `-l, --line-length N` | maximum line length (default 132, 0 for no limit) |
 | `--no-split` | do not split long lines |
 | `--sort-use` | sort each group of `use` statements by module name |
 | `--sort-use-only` | sort the names in `only:` lists |
 | `--relational symbols\|letters\|keep` | `.lt.` → `<`, `<` → `.lt.`, or unchanged (default) |
 | `--spaces RULE=MODE,...` | blanks around operators (see below) |
-| `--case WHAT=MODE,...` | letter case of `keywords`, `operators` or `all`: `lower`, `upper` or `keep` (default) |
+| `--case WHAT=MODE,...` | letter case of `keywords`, `operators`, `procedures`, `constants`, `types` or `all`: `lower`, `upper` or `keep` (default) |
 | `--set KEY=VALUE` | any setting, as in a configuration file |
 | `--config FILE`, `--no-config` | use FILE, or no configuration file |
 | `--exclude PATTERN` | skip matching entries when searching directories (repeatable) |
@@ -146,7 +148,9 @@ indent = 3
 base-indent = 0
 indent-units = false
 indent-procedures = true
+indent-fypp = false
 column1-comments = "indent"     # or "keep"
+comment-spacing = "keep"        # or a number of blanks
 continuation = "align"
 line-length = 100
 split = true
@@ -204,6 +208,8 @@ statements and CUDA `<<< >>>` are recognized.
 | `relational`, `logical` | `== /= < <= > >=`, `.eq.` ...; `.and. .or. .eqv. .neqv.` | keep |
 | `plus-minus`, `mult-div` | binary `+ -`; binary `* /` | keep |
 | `comma` | `,` (with `add`: no blank before, at least one after) | keep |
+| `conditional` | `?` and `:` of a conditional expression `(c ? a : b)` (Fortran 2023) | add |
+| `defined-operators` | binary user-defined operators (`a .plus. b`) | keep |
 
 `all=MODE` sets every rule, e.g. `--spaces all=add,power=remove`. The defaults enforce the
 conventions that are nearly universal in practice and leave the ones that vary between projects alone.
@@ -216,6 +222,17 @@ the leading words of statements, declaration attributes, `intent(in)`, `kind=`/`
 (`call open(x)`, a variable called `save`) keeps its case. `--case operators=lower` applies to dot
 operators and logical constants (`.and.`, `.eq.`, `.true.`).
 
+Three more categories, also off by default, are recognized by position in the same way:
+
+| Category | Applies to |
+|---|---|
+| `procedures` | intrinsic procedures where they are called (`size(a)`, `call cpu_time(t)`), including the procedures of `iso_c_binding` |
+| `constants` | the constants and types of `iso_fortran_env` and `iso_c_binding` (`output_unit`, `int64`, `c_int`, `c_ptr`) |
+| `types` | kinds: `kind=` values, the kind of a declaration's type (`real(dp) :: x`), literal kinds (`2_int64`, `.true._lk`, `ck_'a'`) and exponent letters (`1.0e-3`) |
+
+A name is not changed as the first word of a statement (`size(i) = 1` assigns to an array), after
+`%`, as an entity being declared, or as the name of a procedure being defined.
+
 ### Long lines
 
 Code lines longer than the line length are split at a token boundary, preferring after a comma,
@@ -224,7 +241,13 @@ tokens; within the best kind, the rightmost break that fits is used. The new lin
 any continuation line. Only code counts toward the length (compilers do not limit comments), so a
 trailing comment may extend past it and moves with the last part. Strings, comment lines,
 preprocessor lines and protected code are never split; a line that cannot be made to fit is
-reported. Existing continuation lines are not joined or re-flowed.
+reported. Existing continuation lines are not joined or re-flowed. A statement is not split past
+255 continuation lines, the limit before Fortran 2023, and input lines longer than 10,000
+characters or statements longer than 1,000,000 characters (the Fortran 2023 limits) are reported.
+
+With `--comment-spacing N`, a comment at the end of a line gets `N` blanks before it. Comments
+lined up in a column with one on the line before or after keep their position, and a comment line
+that continues a trailing comment moves with it.
 
 ### Sorting `use` statements
 
@@ -250,7 +273,10 @@ Formatter directives in comments:
 | `!&<` … `!&>` | leave the lines between them unchanged |
 
 Preprocessor lines (cpp `#...`, fypp `#:`, `$:`, `@:`) are left as they are. Code under conditional
-branches is indented as if each branch were the only one.
+branches is indented as if each branch were the only one. With `--indent-fypp`, the code inside
+fypp blocks (`#:if`, `#:for`, `#:def`, `#:block`, `#:call`, `#:mute`) is indented one more level,
+and fypp directive lines are indented with the code around them (`#:else` and the closing
+directives at the level of the opening one); cpp lines stay where they are.
 
 ## Library
 
@@ -306,13 +332,13 @@ This repository's sources and the Fortran dependencies that fpm fetches for it (
 test-drive):
 
 <!-- benchmark:default:start -->
-138 files, 36,716 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores. 2 file(s) that a tool could not format were left out.
+138 files, 37,378 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores. 2 file(s) that a tool could not format were left out.
 
 | Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
-| fformat | 0.1.0 | 0.092 | 397,936 | 🟢 1.0x |
-| fprettier | 0.5.0 | 0.159 | 231,600 | 🟡 1.7x |
-| fprettify | 0.3.7 | 4.550 | 8,070 | 🔴 49.3x |
+| fformat | 0.1.0 | 0.092 | 404,169 | 🟢 1.0x |
+| fprettier | 0.5.0 | 0.156 | 239,125 | 🟡 1.7x |
+| fprettify | 0.3.7 | 4.495 | 8,316 | 🔴 48.6x |
 <!-- benchmark:default:end -->
 
 [fortranpack](https://github.com/jacobwilliams/fortranpack) (at `fc527da`) and the 38 libraries it
@@ -323,9 +349,9 @@ depends on, at the revisions `fpm update` fetched:
 
 | Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
-| fformat | 0.1.0 | 0.531 | 346,003 | 🟢 1.0x |
-| fprettier | 0.5.0 | 0.703 | 261,426 | 🟡 1.3x |
-| fprettify | 0.3.7 | 21.253 | 8,642 | 🔴 40.0x |
+| fformat | 0.1.0 | 0.526 | 349,409 | 🟢 1.0x |
+| fprettier | 0.5.0 | 0.684 | 268,394 | 🟡 1.3x |
+| fprettify | 0.3.7 | 20.851 | 8,809 | 🔴 39.7x |
 <!-- benchmark:fortranpack:end -->
 
 To rerun them, or time other files:

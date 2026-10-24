@@ -340,6 +340,11 @@ subroutine test_closed_construct(error)
                closed_construct('block', '') == C_BLOCK, 'end block [data]')
     if (allocated(error)) return
     call check(error, closed_construct('x', '') == C_NONE, 'end followed by a name')
+    if (allocated(error)) return
+    call check(error, closed_construct('enumeration', 'type') == C_ENUMERATION, 'end enumeration type')
+    if (allocated(error)) return
+    call check(error, all(depths('enumeration type, bind(c) :: color'//NL//'enumerator :: red'//NL// &
+                                 'end enumeration type') == [0, 1, 0]), 'enumeration type depths')
 end subroutine test_closed_construct
 
 end module test_structure

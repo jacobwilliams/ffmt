@@ -4,13 +4,14 @@ module ffmt_settings
 !! | Setting | Values |
 !! |---|---|
 !! | `indent`, `base-indent`, `continuation-indent` | 0 to 64 |
-!! | `indent-units`, `indent-procedures`, `indent-comments`, `split`, `sort-use`, `sort-use-only` | `true`, `false` |
+!! | `indent-units`, `indent-procedures`, `indent-fypp`, `indent-comments`, `split`, `sort-use`, `sort-use-only` | `true`, `false` |
 !! | `continuation` | `align`, `indent` |
 !! | `column1-comments` | `indent` (like the code around them), `keep` (stay in column 1) |
 !! | `line-length` | 0 (no limit) to 100000 |
 !! | `relational` | `symbols`, `letters`, `keep` |
+!! | `comment-spacing` | 0 to 64, or `keep` |
 !! | `spaces.RULE` (or `spaces.all`) | `add`, `remove`, `keep` |
-!! | `case.keywords`, `case.operators` (or `case.all`) | `lower`, `upper`, `keep` |
+!! | `case.WHAT`: `keywords`, `operators`, `procedures`, `constants`, `types` or `all` | `lower`, `upper`, `keep` |
 use ffmt_options
 use ffmt_strings, only: to_s
 implicit none
@@ -48,6 +49,8 @@ subroutine apply_setting(opts, key, value, stat, errmsg)
         call read_flag(opts%indent_units)
     case ('indent-procedures')
         call read_flag(opts%indent_procedures)
+    case ('indent-fypp')
+        call read_flag(opts%indent_fypp)
     case ('indent-comments')
         call read_flag(opts%indent_comments)
     case ('column1-comments')
@@ -65,6 +68,13 @@ subroutine apply_setting(opts, key, value, stat, errmsg)
         call read_flag(opts%sort_use)
     case ('sort-use-only')
         call read_flag(opts%sort_use_only)
+    case ('comment-spacing')
+        if (value == 'keep') then
+            opts%comment_spacing = -1
+        else
+            call read_count(64, opts%comment_spacing)
+            if (stat /= 0) errmsg = 'expected a number from 0 to 64 or keep for "'//key//'", not "'//value//'"'
+        end if
     case ('continuation')
         select case (value)
         case ('align')
@@ -153,7 +163,7 @@ contains
             select case (rule)
             case ('all')
                 ws = whitespace_options_t(mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, &
-                                          mode, mode)
+                                          mode, mode, mode, mode)
             case ('assignment')
                 ws%assignment = mode
             case ('keyword-args')
@@ -182,6 +192,10 @@ contains
                 ws%percent = mode
             case ('control-paren')
                 ws%control_paren = mode
+            case ('conditional')
+                ws%conditional = mode
+            case ('defined-operators')
+                ws%defined_operators = mode
             case default
                 stat = 1
                 errmsg = 'unknown whitespace rule "'//rule//'"'
@@ -191,7 +205,7 @@ contains
 
     subroutine set_case(what)
         !! Set the letter case of `what` in `opts%letter_case` to the value: `lower`, `upper` or `keep`.
-        character(len=*), intent(in) :: what    !! `keywords`, `operators` or `all`: the key without `case.`
+        character(len=*), intent(in) :: what    !! `keywords`, `operators`, ... or `all`: the key without `case.`
         integer :: mode
         select case (value)
         case ('lower')
@@ -206,11 +220,17 @@ contains
         end select
         select case (what)
         case ('all')
-            opts%letter_case = case_options_t(mode, mode)
+            opts%letter_case = case_options_t(mode, mode, mode, mode, mode)
         case ('keywords')
             opts%letter_case%keywords = mode
         case ('operators')
             opts%letter_case%operators = mode
+        case ('procedures')
+            opts%letter_case%procedures = mode
+        case ('constants')
+            opts%letter_case%constants = mode
+        case ('types')
+            opts%letter_case%types = mode
         case default
             stat = 1
             errmsg = 'unknown case setting "'//what//'"'

@@ -29,7 +29,9 @@ subroutine collect_layout(testsuite)
         new_unittest("procedure bodies", test_procedure_bodies), &
         new_unittest("comments after statements", test_comment_offsets), &
         new_unittest("idempotence", test_idempotence), &
-        new_unittest("same_code", test_same_code) &
+        new_unittest("same_code", test_same_code), &
+        new_unittest("comment spacing", test_comment_spacing), &
+        new_unittest("fypp blocks", test_fypp_blocks) &
         ]
 end subroutine collect_layout
 
@@ -351,5 +353,46 @@ subroutine test_same_code(error)
     if (allocated(error)) return
     call check(error, .not. same_code('x = 1', 'x = 1_8'), 'kind suffix')
 end subroutine test_same_code
+
+subroutine test_comment_spacing(error)
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    opts%comment_spacing = 1
+    call expect(error, lines([character(len=40) :: 'x = 1      ! far', 'y = 2! touching', 's = "a ! b"']), &
+                lines([character(len=40) :: 'x = 1 ! far', 'y = 2 ! touching', 's = "a ! b"']), opts)
+    if (allocated(error)) return
+    ! comments lined up in a column stay; a comment line under a trailing comment moves with it
+    call expect(error, lines([character(len=40) :: 'a = 1   ! one', 'bb = 2  ! two', 'c = 3    ! three', &
+                              '         ! more']), &
+                lines([character(len=40) :: 'a = 1   ! one', 'bb = 2  ! two', 'c = 3 ! three', '      ! more']), opts)
+    if (allocated(error)) return
+    ! after a continuation marker
+    call expect(error, lines([character(len=40) :: 'call f(a, &     ! first', '       b)']), &
+                lines([character(len=40) :: 'call f(a, & ! first', '       b)']), opts)
+    if (allocated(error)) return
+    ! lined up in the input, but not once the code is formatted: spaced, and stable
+    call expect(error, lines([character(len=40) :: 'x=1     ! a', 'yy = 2  ! b']), &
+                lines([character(len=40) :: 'x = 1 ! a', 'yy = 2 ! b']), opts)
+end subroutine test_comment_spacing
+
+subroutine test_fypp_blocks(error)
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    character(len=:), allocatable :: src, want
+    src = lines([character(len=40) :: 'subroutine s()', '#:if DEBUG', '#:for k in [1, 2]', 'print *, ${k}$', &
+                 '#:endfor', '#:else', 'x = 0', '#:endif', '#ifdef CPP', 'y = 1', '#endif', 'end subroutine'])
+    ! not indented by default
+    call expect(error, src, lines([character(len=40) :: 'subroutine s()', '#:if DEBUG', '#:for k in [1, 2]', &
+                                   '    print *, ${k}$', '#:endfor', '#:else', '    x = 0', '#:endif', '#ifdef CPP', &
+                                   '    y = 1', '#endif', 'end subroutine']))
+    if (allocated(error)) return
+    opts%indent_fypp = .true.
+    want = lines([character(len=40) :: 'subroutine s()', '    #:if DEBUG', '        #:for k in [1, 2]', &
+                  '            print *, ${k}$', '        #:endfor', '    #:else', '        x = 0', '    #:endif', &
+                  '#ifdef CPP', '    y = 1', '#endif', 'end subroutine'])
+    call expect(error, src, want, opts)
+    if (allocated(error)) return
+    call expect(error, want, want, opts)                ! stable
+end subroutine test_fypp_blocks
 
 end module test_layout

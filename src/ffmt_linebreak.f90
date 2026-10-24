@@ -16,6 +16,9 @@ private
 
 public :: split_long_lines, long_code_lines
 
+integer, parameter, public :: MAX_CONTINUATIONS = 255   !! continuation lines a statement may have before
+                                                        !! Fortran 2023 (F2018 6.3.2.1); splitting stops there
+
 contains
 
 function split_long_lines(src, line_length, indent, nsplit) result(out)
@@ -32,7 +35,7 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
     type(source_t) :: source
     type(string_builder_t) :: buf
     character(len=:), allocatable :: nl
-    integer :: k, j, lend, a, p, q, base, start_col, offset
+    integer :: k, j, lend, a, p, q, base, start_col, offset, ncont
 
     nsplit = 0
     call parse_source(src, source)
@@ -49,6 +52,10 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
             call copy(source%stmts%s(k)%first, source%stmts%s(k)%last)
             cycle
         end if
+        associate (s => source%stmts%s(k))
+            ncont = count(source%tokens%tok(s%first:s%last)%kind == TK_CONT .and. &
+                          source%tokens%tok(s%first:s%last)%sub == CT_TRAILING)
+        end associate
         j = source%stmts%s(k)%first
         do while (j <= source%stmts%s(k)%last)
             lend = j
@@ -61,8 +68,10 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
             start_col = column(j)
             base = indentation(j)
             offset = merge(indent, 0, j == source%stmts%s(k)%first)
-            p = break_point(source%tokens, src, a, lend, start_col, line_length)
+            p = 0
+            if (ncont < MAX_CONTINUATIONS) p = break_point(source%tokens, src, a, lend, start_col, line_length)
             if (p > 0) then
+                ncont = ncont + 1
                 call copy(a, p)
                 call buf%append(' &'//nl//repeat(' ', base + offset))
                 nsplit = nsplit + 1

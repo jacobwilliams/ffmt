@@ -21,7 +21,9 @@ subroutine collect_whitespace(testsuite)
         new_unittest("commas", test_commas), &
         new_unittest("not operators", test_not_operators), &
         new_unittest("joins", test_joins), &
-        new_unittest("remove everything", test_remove_all) &
+        new_unittest("remove everything", test_remove_all), &
+        new_unittest("conditional expressions", test_conditional), &
+        new_unittest("user-defined operators", test_defined_operators) &
         ]
 end subroutine collect_whitespace
 
@@ -46,7 +48,7 @@ function all_rules(mode) result(opts)
     integer, intent(in) :: mode
     type(format_options_t) :: opts
     opts%spaces = whitespace_options_t(mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, mode, &
-                                       mode, mode)
+                                       mode, mode, mode, mode)
 end function all_rules
 
 subroutine test_defaults(error)
@@ -168,5 +170,40 @@ subroutine test_remove_all(error)
     opts = all_rules(WS_REMOVE)
     call expect(error, 'if (a + b == c) call f(x, y = 1)', 'if(a+b==c) call f(x,y=1)', opts)
 end subroutine test_remove_all
+
+subroutine test_conditional(error)
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    call expect(error, 'x = (a > 0?a:-b)', 'x = (a > 0 ? a : -b)')
+    if (allocated(error)) return
+    call expect(error, 'y = (c?1:d?2:3)', 'y = (c ? 1 : d ? 2 : 3)')
+    if (allocated(error)) return
+    ! a slice inside a conditional expression is still a slice
+    call expect(error, 'z = (c ? a(1 : 2) : b)', 'z = (c ? a(1:2) : b)')
+    if (allocated(error)) return
+    call expect(error, 'w = a(i : j)', 'w = a(i:j)')
+    if (allocated(error)) return
+    opts%spaces%conditional = WS_REMOVE
+    call expect(error, 'x = (c ? a : b)', 'x = (c?a:b)', opts)
+end subroutine test_conditional
+
+subroutine test_defined_operators(error)
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    call expect(error, 'x = a.plus.b', 'x = a.plus.b')       ! kept by default
+    if (allocated(error)) return
+    opts%spaces%defined_operators = WS_ADD
+    call expect(error, 'x = a.plus.b', 'x = a .plus. b', opts)
+    if (allocated(error)) return
+    ! unary operators, logical constants with a kind and `operator(...)` are left alone
+    call expect(error, 'y = .inv.b', 'y = .inv.b', opts)
+    if (allocated(error)) return
+    call expect(error, 'f = a.and..true._lk', 'f = a.and..true._lk', opts)
+    if (allocated(error)) return
+    call expect(error, 'interface operator(.plus.)', 'interface operator(.plus.)', opts)
+    if (allocated(error)) return
+    opts%spaces%defined_operators = WS_REMOVE
+    call expect(error, 'x = a .plus. b', 'x = a.plus.b', opts)
+end subroutine test_defined_operators
 
 end module test_whitespace

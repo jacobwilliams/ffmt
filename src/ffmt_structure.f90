@@ -28,6 +28,8 @@ type, public :: structure_t
     integer, allocatable :: procedures(:)       !! how many are procedure definitions (subroutine,
                                                 !! function or separate module procedure, but not
                                                 !! interface bodies)
+    integer, allocatable :: fypp(:)             !! fypp blocks (`#:if`, `#:for`, `#:def`, ...) around each
+                                                !! item; a directive line is outside its own block
 end type structure_t
 
 type :: scope_t
@@ -41,10 +43,6 @@ type :: scope_stack_t
     !! The open constructs, outermost first.
     type(scope_t), allocatable :: s(:)   !! storage; only `s(1:top)` is in use
     integer :: top = 0                   !! number of open constructs
-contains
-    procedure :: push => stack_push          !! open a construct
-    procedure :: restore => stack_restore    !! replace the open constructs by saved ones
-    procedure :: snapshot => stack_snapshot  !! the open constructs, to save
 end type scope_stack_t
 
 type :: saved_stack_t
@@ -56,6 +54,12 @@ end type saved_stack_t
 
 ! preprocessor conditionals
 integer, parameter :: PP_OTHER = 0, PP_IF = 1, PP_ELSE = 2, PP_ENDIF = 3
+
+! fypp block directives
+integer, parameter :: FY_OTHER = 0   !! not a block directive (`#:set`, `$:`, cpp, ...)
+integer, parameter :: FY_OPEN = 1    !! `#:if`, `#:for`, `#:def`, `#:block`, `#:call`, `#:mute`
+integer, parameter :: FY_MIDDLE = 2  !! `#:elif`, `#:else`, `#:nextarg`
+integer, parameter :: FY_CLOSE = 3   !! `#:endif`, `#:endfor`, ...
 
 contains
 
@@ -102,11 +106,11 @@ subroutine analyze_structure(source, views, st, diags)
 
         select case (info(k)%role)
         case (ROLE_OPEN)
-            call stack%push(scope_t(info(k)%construct, info(k)%do_label, line))
+            call stack_push(stack, scope_t(info(k)%construct, info(k)%do_label, line))
         case (ROLE_MIDDLE)
             if (stack%top == 0 .and. info(k)%construct == C_CONTAINS) then
                 ! a main program without a `program` statement
-                call stack%push(scope_t(C_PROGRAM, 0, line))
+                call stack_push(stack, scope_t(C_PROGRAM, 0, line))
             else if (stack%top == 0) then
                 call diagnose(line, construct_label(info(k)%construct)//' statement outside any construct')
             else if (.not. middle_fits(info(k)%construct, stack%s(stack%top)%construct)) then
@@ -137,6 +141,7 @@ subroutine analyze_structure(source, views, st, diags)
     call move_alloc(depth, st%depth)
     call move_alloc(nunits, st%units)
     call move_alloc(nprocs, st%procedures)
+    st%fypp = fypp_depths(source)
 
 contains
 
@@ -172,17 +177,17 @@ contains
             case (PP_IF)
                 nsaved = nsaved + 1
                 if (nsaved > size(saved)) saved = [saved, saved_stack_t()]
-                saved(nsaved)%at_if = stack%snapshot()
+                saved(nsaved)%at_if = stack_snapshot(stack)
                 if (allocated(saved(nsaved)%after_first)) deallocate (saved(nsaved)%after_first)
             case (PP_ELSE)
                 if (nsaved > 0) then
-                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack%snapshot()
-                    call stack%restore(saved(nsaved)%at_if)
+                    if (.not. allocated(saved(nsaved)%after_first)) saved(nsaved)%after_first = stack_snapshot(stack)
+                    call stack_restore(stack, saved(nsaved)%at_if)
                     depth(k) = stack%top
                 end if
             case (PP_ENDIF)
                 if (nsaved > 0) then
-                    if (allocated(saved(nsaved)%after_first)) call stack%restore(saved(nsaved)%after_first)
+                    if (allocated(saved(nsaved)%after_first)) call stack_restore(stack, saved(nsaved)%after_first)
                     depth(k) = stack%top
                     nsaved = nsaved - 1
                 end if
@@ -238,7 +243,7 @@ end subroutine analyze_structure
 
 pure subroutine stack_push(self, sc)
     !! Open construct `sc`, growing the storage as needed.
-    class(scope_stack_t), intent(inout) :: self   !! the stack
+    type(scope_stack_t), intent(inout) :: self   !! the stack
     type(scope_t), intent(in) :: sc               !! the construct to open
     type(scope_t), allocatable :: tmp(:)
     if (.not. allocated(self%s)) allocate (self%s(16))
@@ -253,18 +258,18 @@ end subroutine stack_push
 
 pure subroutine stack_restore(self, scopes)
     !! Replace the open constructs by `scopes` (outermost first).
-    class(scope_stack_t), intent(inout) :: self   !! the stack
+    type(scope_stack_t), intent(inout) :: self   !! the stack
     type(scope_t), intent(in) :: scopes(:)        !! a saved stack (see [[stack_snapshot]])
     integer :: j
     self%top = 0
     do j = 1, size(scopes)
-        call self%push(scopes(j))
+        call stack_push(self, scopes(j))
     end do
 end subroutine stack_restore
 
 pure function stack_snapshot(self) result(scopes)
     !! The open constructs, outermost first.
-    class(scope_stack_t), intent(in) :: self   !! the stack
+    type(scope_stack_t), intent(in) :: self   !! the stack
     type(scope_t), allocatable :: scopes(:)
     if (allocated(self%s)) then
         scopes = self%s(1:self%top)
@@ -272,6 +277,62 @@ pure function stack_snapshot(self) result(scopes)
         allocate (scopes(0))
     end if
 end function stack_snapshot
+
+function fypp_depths(source) result(fypp)
+    !! The number of fypp blocks around each item of `source`. The directives are counted wherever
+    !! they are, also inside a continued statement; a directive line itself is at the level outside
+    !! its block, like `else` and `end` statements.
+    type(source_t), intent(in) :: source   !! the source
+    integer, allocatable :: fypp(:)
+    integer :: k, j, d
+
+    allocate (fypp(source%stmts%n))
+    d = 0
+    do k = 1, source%stmts%n
+        fypp(k) = d
+        do j = source%stmts%s(k)%first, source%stmts%s(k)%last
+            if (source%tokens%tok(j)%kind /= TK_PREPROC) cycle
+            select case (fypp_kind(token_lower(source%text, source%tokens%tok(j))))
+            case (FY_OPEN)
+                d = d + 1
+            case (FY_MIDDLE)
+                if (source%stmts%s(k)%kind == SK_PREPROC) fypp(k) = max(0, d - 1)
+            case (FY_CLOSE)
+                d = max(0, d - 1)
+                if (source%stmts%s(k)%kind == SK_PREPROC) fypp(k) = d
+            end select
+        end do
+    end do
+end function fypp_depths
+
+pure integer function fypp_kind(text) result(kind)
+    !! Kind of a preprocessor line (lowercase text) as a fypp block directive: one of the FY_*
+    !! constants.
+    character(len=*), intent(in) :: text   !! text of the preprocessor token, in lowercase
+    integer :: i, j
+
+    kind = FY_OTHER
+    if (len(text) < 3) return
+    if (text(1:2) /= '#:') return
+    i = 3
+    do while (i <= len(text))
+        if (text(i:i) /= ' ' .and. text(i:i) /= achar(9)) exit
+        i = i + 1
+    end do
+    j = i
+    do while (j <= len(text))
+        if (text(j:j) < 'a' .or. text(j:j) > 'z') exit
+        j = j + 1
+    end do
+    select case (text(i:j - 1))
+    case ('if', 'for', 'def', 'block', 'call', 'mute')
+        kind = FY_OPEN
+    case ('elif', 'else', 'nextarg')
+        kind = FY_MIDDLE
+    case ('endif', 'endfor', 'enddef', 'endblock', 'endcall', 'endmute')
+        kind = FY_CLOSE
+    end select
+end function fypp_kind
 
 pure integer function conditional_kind(text) result(kind)
     !! Kind of a preprocessor line (lowercase text): `PP_IF`, `PP_ELSE` (`#elif`, `#else`), `PP_ENDIF`

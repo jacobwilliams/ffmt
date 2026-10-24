@@ -20,7 +20,8 @@ subroutine collect_split(testsuite)
         new_unittest("lines that are not split", test_not_split), &
         new_unittest("split lines are stable", test_stable), &
         new_unittest("relational symbols", test_symbols), &
-        new_unittest("relational letters", test_letters) &
+        new_unittest("relational letters", test_letters), &
+        new_unittest("limits of the standard", test_limits) &
         ]
 end subroutine collect_split
 
@@ -162,5 +163,36 @@ subroutine test_letters(error)
     call expect(error, lines([character(len=80) :: 'if (a==b .or. c<=d .or. 1<2) x = 1']), &
                 lines([character(len=80) :: 'if (a.eq.b .or. c.le.d .or. 1.lt.2) x = 1']), opts)
 end subroutine test_letters
+
+subroutine test_limits(error)
+    type(error_type), allocatable, intent(out) :: error
+    type(format_options_t) :: opts
+    character(len=:), allocatable :: src, out, errmsg
+    type(diagnostic_t), allocatable :: diags(:)
+    integer :: stat, k
+
+    ! a line longer than 10,000 characters is reported
+    opts%line_length = 0
+    call format_text('x = 1'//NL//'! '//repeat('a', 10000)//NL, opts, out, stat, errmsg, diags)
+    call check(error, size(diags), 1)
+    if (allocated(error)) return
+    call check(error, diags(1)%line, 2)
+    if (allocated(error)) return
+    ! a statement with 255 continuation lines is not split further
+    opts%line_length = 20
+    src = 'x = 1 + &'//NL
+    do k = 1, 254
+        src = src//'    1 + &'//NL
+    end do
+    src = src//'    aaaa + bbbb + cccc + dddd'//NL
+    call format_text(src, opts, out, stat, errmsg, diags)
+    call check(error, stat, FMT_OK)
+    if (allocated(error)) return
+    call check(error, count([(out(k:k) == NL, k=1, len(out))]), 256)   ! no line was added
+    if (allocated(error)) return
+    call check(error, size(diags), 1)
+    if (allocated(error)) return
+    call check(error, diags(1)%line, 256)
+end subroutine test_limits
 
 end module test_split

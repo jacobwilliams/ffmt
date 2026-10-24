@@ -12,7 +12,7 @@ use ffmt_relational, only: convert_relational, canonical_relational
 use ffmt_linebreak, only: split_long_lines, long_code_lines
 use ffmt_options, only: format_options_t
 use ffmt_use_sort, only: sort_use, is_use_statement, only_items, sorted_order
-use ffmt_strings, only: to_s, string_t, string_builder_t, lower_char
+use ffmt_strings, only: to_s, string_t, string_builder_t, lower_char, lowercase
 implicit none
 private
 
@@ -66,6 +66,13 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
             end do
         end if
     end if
+    if (opts%comment_spacing >= 0) then
+        ! comments are kept where they line up in the input; once the code is formatted, some of
+        ! them may no longer line up, so decide again on the result (which is then stable)
+        split = out
+        call format_pass(split, opts, out, unused)
+    end if
+    d = [limit_diagnostics(src), d]
     if (present(diags)) diags = d
 
     stat = FMT_OK
@@ -95,8 +102,8 @@ subroutine format_pass(src, opts, out, diags, src_tokens)
     call parse_source(src, source)
     views = statement_views(source)
     call analyze_structure(source, views, st, diags)
-    out = layout(source, st, compute_gaps(source, views, opts%spaces), compute_case(source, views, opts%letter_case), &
-                 opts, long_lines)
+    out = layout(source, st, compute_gaps(source, views, opts%spaces, opts%comment_spacing), &
+                 compute_case(source, views, opts%letter_case), opts, long_lines)
     do k = 1, size(long_lines)
         diags = [diags, diagnostic_t(long_lines(k), 'indentation kept: the line would be longer than '// &
                                      to_s(opts%line_length)//' characters')]
@@ -106,6 +113,51 @@ subroutine format_pass(src, opts, out, diags, src_tokens)
         src_tokens%n = source%tokens%n
     end if
 end subroutine format_pass
+
+function limit_diagnostics(src) result(diags)
+    !! Warnings for input beyond the limits of the Fortran 2023 standard (6.3.2.1): lines longer than
+    !! 10,000 characters, and statements of more than 1,000,000 characters (counted without comments
+    !! and line breaks).
+    character(len=*), intent(in) :: src      !! source text
+    type(diagnostic_t), allocatable :: diags(:)
+    integer, parameter :: MAX_LINE = 10000, MAX_STATEMENT = 1000000
+    type(source_t) :: source
+    integer :: k, j, n, line, width, c
+
+    allocate (diags(0))
+    if (longest_line(src) > MAX_LINE) then
+        line = 1
+        width = 0
+        do k = 1, len(src)
+            c = iand(ichar(src(k:k)), 255)
+            if (c == 10) then
+                line = line + 1
+                width = 0
+            else if (c < 128 .or. c >= 192) then
+                width = width + 1
+                if (width == MAX_LINE + 1) diags = [diags, diagnostic_t(line, 'line '//to_s(line)// &
+                                                                        ' is longer than '//to_s(MAX_LINE)//' characters, '// &
+                                                                        'the limit of the Fortran standard')]
+            end if
+        end do
+    end if
+    if (len(src) <= MAX_STATEMENT) return
+    call parse_source(src, source)
+    do k = 1, source%stmts%n
+        if (source%stmts%s(k)%kind /= SK_CODE) cycle
+        n = 0
+        do j = source%stmts%s(k)%first, source%stmts%s(k)%last
+            associate (t => source%tokens%tok(j))
+                if (t%kind /= TK_COMMENT .and. t%kind /= TK_NEWLINE) n = n + t%last - t%first + 1
+            end associate
+        end do
+        if (n > MAX_STATEMENT) then
+            line = source%tokens%tok(source%stmts%s(k)%first)%line
+            diags = [diags, diagnostic_t(line, 'the statement on line '//to_s(line)//' has more than '// &
+                                         to_s(MAX_STATEMENT)//' characters, the limit of the Fortran standard')]
+        end if
+    end do
+end function limit_diagnostics
 
 pure integer function longest_line(text) result(width)
     !! Width of the longest line of `text`, in characters (as [[utf8_width]] counts them).
@@ -181,12 +233,13 @@ end function same_code
 pure logical function same_token(sa, s, sb, t)
     !! True if code token `s` of `sa` matches code token `t` of `sb`, as their keys in
     !! [[code_signature]] would: same kind (operators all alike), same glue, and the same text,
-    !! ignoring case for names and operators, with relational operators in their symbol spelling.
+    !! ignoring case where Fortran does (see [[folded_length]]), with relational operators in their
+    !! symbol spelling.
     character(len=*), intent(in) :: sa   !! source text of `s`
     character(len=*), intent(in) :: sb   !! source text of `t`
     type(token_t), intent(in) :: s       !! a code token of `sa`
     type(token_t), intent(in) :: t       !! a code token of `sb`
-    integer :: ks, kt, k
+    integer :: ks, kt, k, nfold
     character(len=:), allocatable :: ca, cb
 
     ks = s%kind
@@ -195,17 +248,17 @@ pure logical function same_token(sa, s, sb, t)
     if (kt == TK_DOTOP) kt = TK_OP
     same_token = .false.
     if (ks /= kt .or. (s%glued .neqv. t%glued)) return
-    if (ks /= TK_NAME .and. ks /= TK_OP) then
-        same_token = s%last - s%first == t%last - t%first .and. sa(s%first:s%last) == sb(t%first:t%last)
-        return
-    end if
     if (s%last - s%first == t%last - t%first) then
+        nfold = folded_length(sa(s%first:s%last), s%kind)
         same_token = .true.
         do k = 0, s%last - s%first
-            if (lower_char(sa(s%first + k:s%first + k)) /= lower_char(sb(t%first + k:t%first + k))) then
-                same_token = .false.
-                exit
+            if (k < nfold) then
+                if (lower_char(sa(s%first + k:s%first + k)) == lower_char(sb(t%first + k:t%first + k))) cycle
+            else
+                if (sa(s%first + k:s%first + k) == sb(t%first + k:t%first + k)) cycle
             end if
+            same_token = .false.
+            exit
         end do
         if (same_token) return
     end if
@@ -216,6 +269,22 @@ pure logical function same_token(sa, s, sb, t)
         same_token = len(ca) == len(cb) .and. ca == cb
     end if
 end function same_token
+
+pure integer function folded_length(text, kind) result(n)
+    !! How much of a token's text, from its start, Fortran reads ignoring case: all of a name, an
+    !! operator or a number (exponent letters and kinds), the kind prefix of a string, and none of
+    !! anything else.
+    character(len=*), intent(in) :: text   !! the token's text
+    integer, intent(in) :: kind            !! its kind (`TK_*`)
+    select case (kind)
+    case (TK_NAME, TK_OP, TK_DOTOP, TK_INT, TK_REAL)
+        n = len(text)
+    case (TK_STRING)
+        n = max(0, scan(text, '"'//"'") - 1)
+    case default
+        n = 0
+    end select
+end function folded_length
 
 function code_signature(src) result(sig)
     !! The code tokens of `src` as one string that [[same_code]] compares when `use` statements may
@@ -315,12 +384,13 @@ contains
         character(len=:), allocatable :: k
         character :: kind, glue
         select case (t%kind)
-        case (TK_NAME)
-            k = token_lower(src, t)
         case (TK_DOTOP, TK_OP)
             k = canonical_relational(token_lower(src, t))
         case default
             k = token_text(src, t)
+            associate (n => folded_length(k, t%kind))
+                k(1:n) = lowercase(k(1:n))
+            end associate
         end select
         kind = achar(64 + t%kind)
         if (t%kind == TK_DOTOP) kind = achar(64 + TK_OP)

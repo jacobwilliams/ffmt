@@ -21,7 +21,7 @@ integer, parameter, public :: TK_REAL = 8       !! real literal (`1.0`, `.5e-3_d
 integer, parameter, public :: TK_STRING = 9     !! character literal, possibly with a kind prefix
 integer, parameter, public :: TK_BOZ = 10       !! `b'0101'`, `o'17'`, `z'ff'`
 integer, parameter, public :: TK_DOTOP = 11     !! `.and.`, `.eq.`, `.true.`, user-defined `.op.`
-integer, parameter, public :: TK_OP = 12        !! operators and punctuation: `** // == /= <= >= => :: = + - * / < > ( ) [ ] , : ; %`
+integer, parameter, public :: TK_OP = 12        !! operators and punctuation: `**`, `//`, `==`, `=>`, `::`, `(`, `%`, `?`, ...
 integer, parameter, public :: TK_FYPP = 13      !! inline fypp: `${...}$`, `@{...}@`, `#{...}#`
 integer, parameter, public :: TK_OTHER = 14     !! any other character
 integer, parameter, public :: TK_BOM = 15       !! UTF-8 byte order mark at the start of the file
@@ -39,7 +39,7 @@ integer, parameter, public :: CT_LEADING = 2      !! `&` starting a continuation
 ! string sub-kinds (bit flags)
 integer, parameter, public :: STR_UNTERMINATED = 1  !! no closing quote before the end of the line
 integer, parameter, public :: STR_MULTILINE = 2     !! continued across lines
-integer, parameter, public :: STR_RAW_CONT = 4      !! a continuation line without a leading `&`, whose blanks are part of the string
+integer, parameter, public :: STR_RAW_CONT = 4      !! a continuation line without a leading `&`: its blanks are in the string
 
 type, public :: token_t
     !! One token: a byte range of the source with its kind.
