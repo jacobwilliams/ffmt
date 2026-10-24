@@ -19,7 +19,7 @@ implicit none
 character(len=:), allocatable :: path, list, text, errmsg
 integer :: k, unit, ios, stat
 integer :: nfiles, nunreadable, nroundtrip, nunbalanced, ndiags, ninternal, nunstable, nchanged
-type(format_options_t) :: styles(3)
+type(format_options_t) :: styles(4)
 integer(int64) :: nbytes, ntokens, nstmts, t0, t1, rate
 
 nfiles = 0
@@ -33,7 +33,7 @@ nstmts = 0
 ninternal = 0
 nunstable = 0
 nchanged = 0
-! the defaults, and two other styles to exercise other code paths
+! the defaults, and three other styles to exercise other code paths
 styles(2)%indent = 3
 styles(2)%indent_units = .true.
 styles(2)%continuation = CONT_INDENT
@@ -53,6 +53,12 @@ styles(2)%spaces = whitespace_options_t(WS_ADD, WS_ADD, WS_ADD, WS_ADD, WS_ADD, 
 styles(3)%spaces = whitespace_options_t(WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, &
                                         WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, WS_REMOVE, &
                                         WS_REMOVE, WS_REMOVE)
+! the options that are off by default
+styles(4)%line_length = 80
+styles(4)%letter_case = case_options_t(CASE_UPPER, CASE_UPPER, CASE_UPPER, CASE_UPPER, CASE_UPPER)
+styles(4)%comment_spacing = 1
+styles(4)%indent_fypp = .true.
+styles(4)%spaces%defined_operators = WS_ADD
 call system_clock(t0, rate)
 
 k = 0

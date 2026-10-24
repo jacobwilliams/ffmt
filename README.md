@@ -211,7 +211,9 @@ statements and CUDA `<<< >>>` are recognized.
 | `conditional` | `?` and `:` of a conditional expression `(c ? a : b)` (Fortran 2023) | add |
 | `defined-operators` | binary user-defined operators (`a .plus. b`) | keep |
 
-`all=MODE` sets every rule, e.g. `--spaces all=add,power=remove`. The defaults enforce the
+`all=MODE` sets every rule, e.g. `--spaces all=add,power=remove`. In fpm projects, keep
+`declarations` at `add`: `module procedure::f` is valid Fortran, but fpm (0.13) misreads it when it
+scans the sources for modules. The defaults enforce the
 conventions that are nearly universal in practice and leave the ones that vary between projects alone.
 
 ### Letter case

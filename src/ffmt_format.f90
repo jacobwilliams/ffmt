@@ -9,7 +9,7 @@ use ffmt_layout, only: layout
 use ffmt_whitespace, only: compute_gaps
 use ffmt_case, only: compute_case
 use ffmt_relational, only: convert_relational, canonical_relational
-use ffmt_linebreak, only: split_long_lines, long_code_lines
+use ffmt_linebreak, only: split_long_lines, long_code_lines, MAX_CONTINUATIONS
 use ffmt_options, only: format_options_t
 use ffmt_use_sort, only: sort_use, is_use_statement, only_items, sorted_order
 use ffmt_strings, only: to_s, string_t, string_builder_t, lower_char, lowercase
@@ -37,7 +37,9 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     character(len=:), allocatable, intent(out) :: errmsg   !! error message; unallocated if `stat` is `FMT_OK`
     type(diagnostic_t), allocatable, intent(out), optional :: diags(:)   !! problems found while formatting
 
-    integer, parameter :: MAX_PASSES = 50   ! each pass splits each long line once
+    ! each pass splits each long line once, and a statement gets at most MAX_CONTINUATIONS
+    ! continuation lines, so this many passes split every line that can be split
+    integer, parameter :: MAX_PASSES = MAX_CONTINUATIONS + 1
     type(diagnostic_t), allocatable :: d(:), unused(:)
     type(token_list_t) :: tokens
     integer, allocatable :: long(:), changed(:, :)

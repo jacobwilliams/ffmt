@@ -107,8 +107,12 @@ function classify_statement(src, tokens, v, in_interface) result(info)
         k = j + 1
     end if
     if (.not. is_name(k)) return
-    ! an assignment to a variable named like a keyword
-    if (v%is(k + 1, '=') .or. v%is(k + 1, '=>') .or. v%is(k + 1, '%')) return
+    ! an assignment to a variable named like a keyword, or to an element of one (`rank (1) = n`)
+    j = k + 1
+    if (v%is(j, '(')) then
+        if (v%closing(j) > 0) j = v%closing(j) + 1
+    end if
+    if (v%is(j, '=') .or. v%is(j, '=>') .or. v%is(j, '%')) return
     call split_words()
     call classify_words()
 
@@ -319,7 +323,10 @@ contains
                 call set(info, ROLE_OPEN, merge(C_FUNCTION, C_SUBROUTINE, word(j) == 'function'))
                 return
             case default
-                return
+                ! a prefix made by a cpp macro: `PURE_IF_NO_DEBUG FUNCTION f(x)`
+                if (.not. is_name_word(j)) return
+                if (word(j + 1) /= 'function' .and. word(j + 1) /= 'subroutine') return
+                j = j + 1
             end select
         end do
     end subroutine check_procedure

@@ -188,7 +188,16 @@ subroutine test_classification(error)
         case_t('type%x = 1', ROLE_NONE, C_NONE), &
         case_t('10 continue', ROLE_NONE, C_NONE), &
         case_t('call do_it()', ROLE_NONE, C_NONE), &
-        case_t('procedure, pass :: p', ROLE_NONE, C_NONE) &
+        case_t('procedure, pass :: p', ROLE_NONE, C_NONE), &
+        ! a procedure prefix made by a cpp macro
+        case_t('PURE_ARRAY_EQ FUNCTION f(a, b)', ROLE_OPEN, C_FUNCTION), &
+        case_t('MAYBE_PURE subroutine s', ROLE_OPEN, C_SUBROUTINE), &
+        case_t('call function(x)', ROLE_NONE, C_NONE), &
+        ! assignments to (elements of) variables named like keywords
+        case_t('rank (1) = n', ROLE_NONE, C_NONE), &
+        case_t('case(2)%x = 1', ROLE_NONE, C_NONE), &
+        case_t('rank (1)', ROLE_MIDDLE, C_SELECT), &
+        case_t('if (a(1) == 2) x = 1', ROLE_NONE, C_NONE) &
         ]
 
     do k = 1, size(cases)

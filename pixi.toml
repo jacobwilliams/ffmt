@@ -12,6 +12,7 @@ graphviz-setup = { cmd = "dot -c", description = "Register the graphviz plugins 
 docs = { cmd = "ford ford.md", depends-on = ["graphviz-setup"], description = "Build the API documentation with FORD (into doc/)" }
 test = { cmd = "fpm test", description = "Run the formatter tests" }
 check-corpus = { cmd = "fpm test check_corpus --profile release --", description = "Check tokenization and block structure of Fortran files: pixi run check-corpus FILE... or --files-from LISTFILE" }
+corpus = { cmd = "python bench/corpus.py", description = "Check fformat on other Fortran libraries (stdlib, fpm, json-fortran, cp2k, wannier90): pixi run corpus [--build] [NAME...]" }
 
 [dependencies]
 gfortran = "15.*"

@@ -318,6 +318,17 @@ and no shell are used.
    Parallel processing is deferred to milestone 8.
 8. **Hardening:** run on large codebases (stdlib, fpm, json-fortran, cp2k, wannier90); fuzzing;
    performance; release.
+   - **Large codebases (2026-10-24):** `pixi run corpus [--build] [NAME...]` (`bench/corpus.py`)
+     fetches the five libraries at pinned revisions into `build/corpus` and runs the corpus
+     checker (round trip, structure, four styles without internal errors and stable); with
+     `--build`, fpm and json-fortran are formatted in three styles, built and tested. 2,481 files,
+     100 MB: no round-trip failures or internal errors; both libraries build and pass their tests
+     in every style. Fixed on the way: a statement split into more than 50 lines was not finished
+     in one run (cp2k, with `sort-use-only`), a cpp macro as a procedure prefix
+     (`PURE_ARRAY_EQ FUNCTION f`) and assignments to an array named like a keyword (`rank (1) = n`)
+     were misread. Left as warnings: code that only balances once fypp chooses a branch (two
+     cp2k files) and a fypp macro made of a bare `enddo` (stdlib). Found in fpm itself: its source
+     scanner misreads `module procedure::f`, so `spaces.declarations = remove` breaks fpm builds.
    - **Performance (2026-10-24):** profiling with macOS `sample` found most time in small string
      allocations. Fixed, about 3.7x faster overall: `to_s` without an internal `write`; the safety
      check compares tokens directly (signatures only when `use` statements are sorted) and reuses
