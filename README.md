@@ -294,6 +294,28 @@ expression library [fregex](https://github.com/jacobwilliams/fregex). Directory 
 | [LFortran](https://lfortran.org) `lfortran fmt` | C++ | formats from the compiler's syntax tree |
 | [Fortitude](https://github.com/PlasmaFAIR/fortitude) | Rust | a linter with automatic fixes, not a full formatter |
 
+### Speed
+
+Time to format this repository's sources and the Fortran dependencies that fpm fetches (toml-f,
+fregex, test-drive), measured with [bench/benchmark.py](bench/benchmark.py). Each tool uses its
+default settings except that fprettier runs single-threaded (`-j 1`; by default it formats several
+files at once), so the tools do somewhat different amounts of work. fformat is built with fpm's
+release profile. Files that any tool cannot format are left out for all of them.
+
+<!-- benchmark:start -->
+137 files, 36,356 lines; median of 5 runs, formatting in place with default settings. Darwin arm64, Apple M5, 10 cores. 2 file(s) that a tool could not format were left out.
+
+| Tool | Version | Time (s) | Lines/s | vs. fastest |
+|---|---|--:|--:|--:|
+| fformat | 0.1.0 | 0.358 | 101,425 | 2.3x |
+| fprettier | 0.5.0 | 0.159 | 228,467 | 1.0x |
+| fprettify | 0.3.7 | 4.469 | 8,135 | 28.1x |
+<!-- benchmark:end -->
+
+To rerun it, or time other files: `pixi run -e bench bench [--runs N] [--update-readme] [PATH...]`.
+The `bench` environment provides fprettify, and the Rust toolchain that installs fprettier into
+`build/bench`.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

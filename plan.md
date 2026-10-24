@@ -308,10 +308,25 @@ and no shell are used.
    - **Closed pipe:** check that `--check` or `--stdout` into a closed pipe (`... | head`) does not
      crash.
 
-   Considered and not taken: whitespace "levels" 0–4 (our per-rule settings cover them), parallel
-   processing (would need OpenMP or coarrays) and fprettify compatibility.
+   Considered and not taken: whitespace "levels" 0–4 (our per-rule settings cover them) and
+   fprettify compatibility. Parallel processing is deferred to milestone 8.
 8. **Hardening:** run on large codebases (stdlib, fpm, json-fortran, cp2k, wannier90); fuzzing;
    performance; release.
+   - **Parallel formatting (later):** format several files at once with OpenMP, as fprettier does
+     (`-j`; about 3x faster than its single-threaded run on 10 cores in `bench/benchmark.py`).
+     The formatting path has no shared state, and a `run` split into three passes worked: find the
+     files and their options serially, format them in an `!$omp parallel do schedule(dynamic)`
+     with each file's messages and stdout text buffered, then print in file order; `-j/--jobs N`
+     (0 = one per processor) and `!$` sentinels so a build without OpenMP stays serial. Tried and
+     reverted (2026-10-24) because of a gfortran bug (15.3 and 16.2): the length of a
+     `character(len=:), allocatable` function result is kept in a hidden `static` variable at
+     each call site (`static integer(kind=8) slen.N` in `-fdump-tree-original`), so threads
+     corrupt each other's strings. fformat has about 200 such sites. Also, a deferred-length
+     variable that a parallel region references is copied with a length that hasn't been set yet.
+     With `openmp = "*"` in `fpm.toml`, test-drive runs the tests in parallel too, and they fail.
+     Options: report the bug to GCC and wait for a fix; turn functions with deferred-length
+     results into subroutines with an `intent(out)` argument, with a CI check that the dumps
+     contain no `static ... slen`; or run several fformat processes at once instead of threads.
 
 ## 6. Testing
 

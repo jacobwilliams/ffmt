@@ -19,3 +19,13 @@ fpm = ">=0.13.0,<0.14"
 python = "3.13.*"
 ford = ">=7.0"
 graphviz = ">=14.1.2,<15"
+
+[feature.bench.dependencies]
+fprettify = "0.3.7.*"
+rust = ">=1.87"
+
+[feature.bench.tasks]
+bench = { cmd = "python bench/benchmark.py", description = "Compare the speed of fformat, fprettify and fprettier: pixi run -e bench bench [--help]" }
+
+[environments]
+bench = ["bench"]
