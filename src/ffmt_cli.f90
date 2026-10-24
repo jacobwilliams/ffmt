@@ -50,7 +50,7 @@ function usage() result(text)
     !! The `--help` text.
     character(len=:), allocatable :: text
     character, parameter :: nl = new_line('a')
-    text = 'Usage: prettify-fortran [OPTIONS] PATH...'//nl// &
+    text = 'Usage: ffmt [OPTIONS] PATH...'//nl// &
            nl// &
            'Format free-form Fortran source files in place. A directory is searched recursively for'//nl// &
            'Fortran files; "-" reads standard input and writes standard output.'//nl// &
@@ -96,9 +96,8 @@ function usage() result(text)
            '  -h, --help                  show this help'//nl// &
            '      --version               show the version'//nl// &
            nl// &
-           'Settings come from the defaults, then the nearest .prettify-fortran.toml (or an'//nl// &
-           '[extra.prettify-fortran] table in fpm.toml) in or above the file''s directory, then the'//nl// &
-           'command line.'//nl// &
+           'Settings come from the defaults, then the nearest .ffmt.toml (or an [extra.ffmt] table in'//nl// &
+           'fpm.toml) in or above the file''s directory, then the command line.'//nl// &
            nl// &
            'Formatter directives: a statement with a "!&" comment is left unchanged, and lines'//nl// &
            'between "!&<" and "!&>" are left unchanged.'//nl// &
@@ -301,7 +300,7 @@ integer function run(cli) result(status)
         return
     end if
     if (cli%version) then
-        write (output_unit, '(a)') 'prettify-fortran '//VERSION
+        write (output_unit, '(a)') 'ffmt '//VERSION
         status = EXIT_OK
         return
     end if
@@ -373,7 +372,7 @@ subroutine config_for(cli, cache, dir, cfg, stat, errmsg)
         call load_config(cli%config, ends_with(cli%config, 'fpm.toml'), cfg, found, stat, errmsg)
         if (stat == 0 .and. .not. found) then
             stat = 1
-            errmsg = cli%config//': no [extra.prettify-fortran] table'
+            errmsg = cli%config//': no [extra.ffmt] table'
         end if
         return
     end if

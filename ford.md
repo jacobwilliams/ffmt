@@ -1,5 +1,5 @@
 ---
-project: prettify-fortran
+project: ffmt
 summary: A formatter for modern Fortran source code
 author: Jacob Williams
 license: MIT

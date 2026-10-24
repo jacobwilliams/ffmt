@@ -1,4 +1,4 @@
-# formatting of this repository with prettify-fortran itself
+# formatting of this repository with ffmt itself
 [files]
 # the test fixtures are deliberately not formatted
 exclude = [".*", "build", "fixtures", "doc"]

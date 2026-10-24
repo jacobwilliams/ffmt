@@ -1,4 +1,4 @@
-name = "prettify-fortran"
+name = "ffmt"
 version = "0.1.0"
 license = "MIT"
 author = "Jacob Williams"
@@ -13,7 +13,7 @@ auto-examples = true
 module-naming = false
 
 [[executable]]
-name = "prettify-fortran"
+name = "ffmt"
 source-dir = "app"
 main = "main.f90"
 

@@ -1,5 +1,5 @@
-program prettify_fortran
-!! The `prettify-fortran` command. See [[ffmt_cli]].
+program ffmt
+!! The `ffmt` command. See [[ffmt_cli]].
 use iso_fortran_env, only: error_unit
 use ffmt_cli, only: cli_t, string_t, parse_args, run, EXIT_OK
 implicit none
@@ -18,10 +18,10 @@ end do
 
 call parse_args(args, cli, stat, errmsg)
 if (stat /= 0) then
-    write (error_unit, '(a)') 'prettify-fortran: '//errmsg
-    write (error_unit, '(a)') 'Try "prettify-fortran --help".'
+    write (error_unit, '(a)') 'ffmt: '//errmsg
+    write (error_unit, '(a)') 'Try "ffmt --help".'
     stop stat, quiet = .true.
 end if
 stat = run(cli)
 if (stat /= EXIT_OK) stop stat, quiet = .true.
-end program prettify_fortran
+end program ffmt

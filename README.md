@@ -1,4 +1,4 @@
-# prettify-fortran
+# ffmt
 
 A formatter for free-form Fortran, written in modern Fortran.
 
@@ -19,7 +19,7 @@ Both are checked on every file of a corpus of about 10,700 open-source Fortran f
 ## Usage
 
 ```text
-prettify-fortran [OPTIONS] PATH...
+ffmt [OPTIONS] PATH...
 ```
 
 Files are formatted in place, and only rewritten if they change. A directory is searched
@@ -55,8 +55,8 @@ Exit status: 0 on success, 1 if `--check` found files to format, 2 on errors.
 
 ### Configuration
 
-Settings are read from the nearest `.prettify-fortran.toml` in or above a file's directory, or from
-an `[extra.prettify-fortran]` table in an `fpm.toml` there; the nearest file is used on its own,
+Settings are read from the nearest `.ffmt.toml` in or above a file's directory, or from
+an `[extra.ffmt]` table in an `fpm.toml` there; the nearest file is used on its own,
 not merged with files further up. Command-line options override it.
 
 ```toml
@@ -86,7 +86,7 @@ statement and documentation comments in column 1 (the style of json-fortran and 
 use for example in `fpm.toml`:
 
 ```toml
-[extra.prettify-fortran]
+[extra.ffmt]
 base-indent = 4
 indent-procedures = false
 column1-comments = "keep"
