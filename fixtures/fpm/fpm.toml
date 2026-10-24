@@ -1,0 +1,8 @@
+name = "fixture"
+
+[extra.prettify-fortran]
+indent = 3
+relational = "symbols"
+
+[extra.prettify-fortran.case]
+all = "upper"

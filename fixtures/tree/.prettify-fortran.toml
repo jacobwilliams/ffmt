@@ -1,0 +1,13 @@
+# fixture for the tests
+indent = 2
+line-length = 100
+
+[spaces]
+all = "add"
+power = "remove"
+
+[case]
+keywords = "lower"
+
+[files]
+exclude = ["skip*", "build", ".*"]

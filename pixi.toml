@@ -1,0 +1,25 @@
+[workspace]
+authors = ["Jacob Williams <jacobwilliams@users.noreply.github.com>"]
+channels = ["conda-forge"]
+name = "prettify-fortran"
+platforms = ["osx-arm64", "linux-64", "linux-aarch64", "osx-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+format = { cmd = "fpm run prettify-fortran --profile release -- .", description = "Format this repository with prettify-fortran itself" }
+format-check = { cmd = "fpm run prettify-fortran --profile release -- --check .", description = "Check that this repository is formatted" }
+graphviz-setup = { cmd = "dot -c", description = "Register the graphviz plugins that FORD uses for graphs" }
+docs = { cmd = "ford ford.md", depends-on = ["graphviz-setup"], description = "Build the API documentation with FORD (into doc/)" }
+regex-docs = { cmd = "ford ford.md", cwd = "fregex", depends-on = ["graphviz-setup"], description = "Build the fregex API documentation with FORD" }
+test = { cmd = "fpm test", description = "Run the formatter tests" }
+check-corpus = { cmd = "fpm test check_corpus --profile release --", description = "Check tokenization and block structure of Fortran files: pixi run check-corpus FILE... or --files-from LISTFILE" }
+regex-build = { cmd = "fpm build", cwd = "fregex", description = "Build the fregex library" }
+regex-test = { cmd = "fpm test", cwd = "fregex", description = "Run the fregex tests" }
+regex-gen = { cmd = "python -I tools/gen_conformance.py", cwd = "fregex", description = "Regenerate fregex conformance data from Python's re (uses ../../fprettify if present)" }
+
+[dependencies]
+gfortran = "15.*"
+fpm = ">=0.13.0,<0.14"
+python = "3.13.*"
+ford = ">=7.0"
+graphviz = ">=14.1.2,<15"

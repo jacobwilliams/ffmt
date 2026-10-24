@@ -1,0 +1,9 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+# fpm build output
+build/
+# FORD output
+doc/
+# except the test fixture that checks build directories are skipped
+!fixtures/tree/build/
