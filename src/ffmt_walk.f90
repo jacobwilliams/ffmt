@@ -33,10 +33,11 @@ end function default_exclude
 subroutine collect_files(root, extensions, exclude, files)
     !! The files under directory `root` with one of the `extensions` (without the dot) that are not
     !! excluded, sorted by path within each directory.
-    character(len=*), intent(in) :: root
-    type(string_t), intent(in) :: extensions(:)
-    type(string_t), intent(in) :: exclude(:)
-    type(string_t), allocatable, intent(out) :: files(:)
+    character(len=*), intent(in) :: root   !! the directory to search
+    type(string_t), intent(in) :: extensions(:)   !! extensions of the files to collect, without the dot
+    type(string_t), intent(in) :: exclude(:)                !! glob patterns of the files and directories to skip
+    type(string_t), allocatable, intent(out) :: files(:)    !! paths of the files, `root` joined with their
+                                                            !! relative paths (just those if `root` is `.`)
     type(regex_t), allocatable :: patterns(:)
     logical, allocatable :: by_path(:)
     integer :: k
@@ -51,8 +52,10 @@ subroutine collect_files(root, extensions, exclude, files)
 contains
 
     recursive subroutine walk(dir, rel, depth)
-        character(len=*), intent(in) :: dir, rel
-        integer, intent(in) :: depth
+        !! Add the files under directory `dir` to `files`, descending at most `MAX_DEPTH` levels.
+        character(len=*), intent(in) :: dir     !! the directory's path
+        character(len=*), intent(in) :: rel     !! its path relative to `root` (`''` for `root`)
+        integer, intent(in) :: depth            !! its depth below `root`
         type(dir_entry_t), allocatable :: entries(:)
         character(len=:), allocatable :: rel_path, path
         integer :: k, stat
@@ -79,7 +82,10 @@ contains
     end subroutine walk
 
     logical function excluded(name, rel_path)
-        character(len=*), intent(in) :: name, rel_path
+        !! True if an exclude pattern matches the entry: its `name`, or its `rel_path` for a
+        !! pattern with a `/`.
+        character(len=*), intent(in) :: name        !! the entry's name
+        character(len=*), intent(in) :: rel_path    !! its path relative to `root`
         integer :: k
         excluded = .false.
         do k = 1, size(patterns)
@@ -93,7 +99,9 @@ contains
     end function excluded
 
     logical function has_extension(name)
-        character(len=*), intent(in) :: name
+        !! True if file name `name` ends with `.` and one of the `extensions`, after at least one
+        !! other character.
+        character(len=*), intent(in) :: name   !! the file name
         integer :: k, n
         has_extension = .false.
         do k = 1, size(extensions)
@@ -111,7 +119,7 @@ end subroutine collect_files
 
 pure function child(dir, name) result(path)
     !! `dir/name`, or just `name` in the current directory.
-    character(len=*), intent(in) :: dir, name
+    character(len=*), intent(in) :: dir, name   !! the directory, and the name of an entry in it
     character(len=:), allocatable :: path
     if (dir == '.') then
         path = name
@@ -122,7 +130,7 @@ end function child
 
 subroutine sort_entries(entries)
     !! Sort by name (insertion sort: directories are small).
-    type(dir_entry_t), intent(inout) :: entries(:)
+    type(dir_entry_t), intent(inout) :: entries(:)      !! a directory listing
     type(dir_entry_t) :: e
     integer :: i, j
     do i = 2, size(entries)
@@ -139,7 +147,7 @@ end subroutine sort_entries
 
 function glob_to_regex(glob) result(re)
     !! A regular expression (for a full match) equivalent to the glob pattern `glob`.
-    character(len=*), intent(in) :: glob
+    character(len=*), intent(in) :: glob   !! the glob pattern
     character(len=:), allocatable :: re
     integer :: i, j
     re = ''

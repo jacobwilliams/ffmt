@@ -22,7 +22,7 @@ integer, parameter :: MAX_BRACKETS = 256
 
 type :: writer_t
     !! Output being built, and the alignment state of the current statement.
-    type(string_builder_t) :: buf
+    type(string_builder_t) :: buf               !! the output text
     integer :: col = 0                          !! output column: characters since the last line break
     integer :: nbrackets = 0                    !! open brackets in the current statement
     integer :: bracket_first(MAX_BRACKETS) = -1 !! column of the first item after each open bracket, or -1
@@ -66,16 +66,16 @@ contains
 function layout(src, tokens, stmts, info, depth, units, procedures, gap, case_mode, opts, long_lines) result(out)
     !! The formatted text. `info`, `depth`, `units` and `procedures` come from [[analyze_structure]],
     !! `gap` from [[compute_gaps]] and `case_mode` from [[compute_case]].
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(in) :: stmts
-    type(stmt_info_t), intent(in) :: info(:)
+    character(len=*), intent(in) :: src           !! the source text
+    type(token_list_t), intent(in) :: tokens      !! its tokens
+    type(statement_list_t), intent(in) :: stmts   !! its statements and standalone lines (items)
+    type(stmt_info_t), intent(in) :: info(:)      !! what each item is
     integer, intent(in) :: depth(:)     !! nesting depth of each item
     integer, intent(in) :: units(:)     !! how many of the enclosing scopes are program units
     integer, intent(in) :: procedures(:) !! how many of the enclosing scopes are procedures
     integer, intent(in) :: gap(:)       !! blanks wanted before each token
     integer, intent(in) :: case_mode(:) !! letter case wanted for each token
-    type(format_options_t), intent(in) :: opts
+    type(format_options_t), intent(in) :: opts   !! the formatting options
     integer, allocatable, intent(out), optional :: long_lines(:)   !! input lines that kept their indentation
                                                                    !! because the new one would make them longer
                                                                    !! than `opts%line_length`
@@ -133,13 +133,15 @@ integer function fitting_column(w, src, tokens, f, lend, candidates, from, prefi
     !!
     !! The input line starts with token `f`. The output line is `prefix` characters (e.g. `& ` for a
     !! leading continuation marker) followed by tokens `from:lend` (default `f:lend`).
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: f, lend
-    integer, intent(in) :: candidates(:)
-    integer, intent(in), optional :: from, prefix
-    logical, intent(in), optional :: always_original
+    type(writer_t), intent(inout) :: w                 !! the output and the alignment state
+    character(len=*), intent(in) :: src                !! the source text
+    type(token_list_t), intent(in) :: tokens           !! its tokens
+    integer, intent(in) :: f                           !! first non-blank token of the input line
+    integer, intent(in) :: lend                        !! last token of the line, its line break if it has one
+    integer, intent(in) :: candidates(:)               !! columns to try, best first; negative ones are skipped
+    integer, intent(in), optional :: from              !! first token written after the prefix; requires `prefix`
+    integer, intent(in), optional :: prefix            !! width of the text written before token `from`
+    logical, intent(in), optional :: always_original   !! try the original column even when lines are split
     integer :: k, width, ncand, first_piece
     logical :: original
 
@@ -183,10 +185,11 @@ end function fitting_column
 integer function first_piece_width(w, src, tokens, first, lend) result(width)
     !! Width of tokens `first:lend` up to the end of the first code token that has another code token
     !! after it on the line (the shortest first part of a split), or a huge value if there is none.
-    type(writer_t), intent(in) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, lend
+    type(writer_t), intent(in) :: w            !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: first               !! first token of the part of the line to measure
+    integer, intent(in) :: lend                !! last token of the line, its line break if it has one
     type(piece_t), allocatable :: pieces(:)
     integer :: k, m, total
 
@@ -220,10 +223,11 @@ integer function line_width(w, src, tokens, first, lend) result(width)
     !! Width of tokens `first:lend` as they will be written on one line, without the line break and
     !! without a trailing comment (compilers only limit the length of the code). A comment on a line
     !! of its own counts.
-    type(writer_t), intent(in) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, lend
+    type(writer_t), intent(in) :: w            !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: first               !! first token of the part of the line to measure
+    integer, intent(in) :: lend                !! last token of the line, its line break if it has one
     type(piece_t), allocatable :: pieces(:)
     integer :: k, j, before_blank
 
@@ -256,11 +260,12 @@ end function line_width
 subroutine line_pieces(w, src, tokens, first, lend, pieces)
     !! The pieces of output for tokens `first:lend` of a line: the tokens, with the blanks between them
     !! adjusted by the whitespace rules and trailing blanks removed.
-    type(writer_t), intent(in) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, lend
-    type(piece_t), allocatable, intent(out) :: pieces(:)
+    type(writer_t), intent(in) :: w                        !! the output and the alignment state
+    character(len=*), intent(in) :: src                    !! the source text
+    type(token_list_t), intent(in) :: tokens               !! its tokens
+    integer, intent(in) :: first                           !! first token of the part of the line
+    integer, intent(in) :: lend                            !! last token of the line, its line break if it has one
+    type(piece_t), allocatable, intent(out) :: pieces(:)   !! the pieces, in order
     integer :: t, n, g, last
 
     allocate (pieces(2*(lend - first + 1) + 1))
@@ -304,7 +309,8 @@ subroutine line_pieces(w, src, tokens, first, lend, pieces)
 contains
 
     subroutine add(tok, from, to, blanks)
-        integer, intent(in) :: tok, from, to, blanks
+        !! Append a piece with these components (see [[piece_t]]).
+        integer, intent(in) :: tok, from, to, blanks   !! its `tok`, `first`, `last` and `blanks`
         n = n + 1
         pieces(n) = piece_t(tok, from, to, blanks)
     end subroutine add
@@ -313,8 +319,8 @@ end subroutine line_pieces
 
 subroutine put(w, text)
     !! Append `text` and track the output column.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: text
+    type(writer_t), intent(inout) :: w     !! the output and the alignment state
+    character(len=*), intent(in) :: text   !! text to append; it may contain line breaks
     integer :: j
     call w%buf%append(text)
     j = scan(text, achar(10)//achar(13), back=.true.)
@@ -327,10 +333,10 @@ end subroutine put
 
 subroutine emit_range(w, src, tokens, first, last)
     !! Append tokens unchanged.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, last
+    type(writer_t), intent(inout) :: w         !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: first, last         !! the tokens `first:last` to append
     integer :: j
     do j = first, last
         call put(w, token_text(src, tokens%tok(j)))
@@ -339,10 +345,10 @@ end subroutine emit_range
 
 subroutine emit_blank(w, src, tokens, s)
     !! A blank line: only its line break (and a byte order mark) is kept.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: s
+    type(writer_t), intent(inout) :: w         !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    type(statement_t), intent(in) :: s         !! the blank line item
     integer :: j
     do j = s%first, s%last
         if (tokens%tok(j)%kind == TK_NEWLINE .or. tokens%tok(j)%kind == TK_BOM) &
@@ -355,12 +361,12 @@ subroutine emit_comment_line(w, src, tokens, s, ind, opts)
     !! above (a continued trailing comment) stays lined up with it. Comment lines directly after a
     !! statement that are indented more than it keep their extra indentation. With `keep_column1_comments`, a
     !! comment that starts in column 1 stays there.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: s
-    integer, intent(in) :: ind
-    type(format_options_t), intent(in) :: opts
+    type(writer_t), intent(inout) :: w           !! the output and the alignment state
+    character(len=*), intent(in) :: src          !! the source text
+    type(token_list_t), intent(in) :: tokens     !! its tokens
+    type(statement_t), intent(in) :: s           !! the comment line item
+    integer, intent(in) :: ind                   !! indentation of the code around it, in blanks
+    type(format_options_t), intent(in) :: opts   !! the formatting options
     integer :: j, col
 
     if (.not. opts%indent_comments) then
@@ -393,10 +399,11 @@ integer function comment_column(w, src, tokens, j, default) result(col)
     !! Output column for the comment-only line with comment token `j`: lined up with the comment on
     !! the line above if it was lined up with it in the input, otherwise `default`. Records the
     !! comment for the next line.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: j, default
+    type(writer_t), intent(inout) :: w         !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: j                   !! the comment token
+    integer, intent(in) :: default             !! column to use if it is not lined up with the comment above
     integer :: in_col
     in_col = input_column(src, tokens%tok(j))
     col = default
@@ -408,8 +415,8 @@ end function comment_column
 
 pure integer function input_column(src, t) result(col)
     !! Column of token `t` in the input (characters before it on its line).
-    character(len=*), intent(in) :: src
-    type(token_t), intent(in) :: t
+    character(len=*), intent(in) :: src   !! the source text
+    type(token_t), intent(in) :: t        !! a token of `src`
     integer :: j
     j = scan(src(1:t%first - 1), achar(10)//achar(13), back=.true.)
     col = utf8_width(src(j + 1:t%first - 1))
@@ -419,13 +426,13 @@ subroutine emit_statement(w, src, tokens, s, labeled, ind, opts)
     !! A code statement, with its continuation lines and the comment, blank and preprocessor lines
     !! between them. The first line is indented to `ind`; a statement label stays at the start of
     !! the line.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: s
-    logical, intent(in) :: labeled
-    integer, intent(in) :: ind
-    type(format_options_t), intent(in) :: opts
+    type(writer_t), intent(inout) :: w           !! the output and the alignment state
+    character(len=*), intent(in) :: src          !! the source text
+    type(token_list_t), intent(in) :: tokens     !! its tokens
+    type(statement_t), intent(in) :: s           !! the code statement
+    logical, intent(in) :: labeled               !! the statement has a statement label
+    integer, intent(in) :: ind                   !! indentation of the statement, in blanks
+    type(format_options_t), intent(in) :: opts   !! the formatting options
     integer :: j, lend, f
     logical :: first_line, mid_line
 
@@ -492,7 +499,7 @@ contains
 
     subroutine start_statement(f)
         !! Record where the statement starting with token `f` begins, for comment lines after it.
-        integer, intent(in) :: f
+        integer, intent(in) :: f   !! first code token of the statement, after any label
         w%stmt_in = -1
         if (f > s%last) return
         w%stmt_in = input_column(src, tokens%tok(f))
@@ -506,9 +513,9 @@ pure integer function continuation_target(w, ind, opts) result(target)
     !! Column for the code of a continuation line: the first item after the innermost open
     !! bracket; outside brackets, the first item after an assignment, a `use` statement's `only:`
     !! or a declaration's `::`; otherwise a fixed indent.
-    type(writer_t), intent(in) :: w
-    integer, intent(in) :: ind
-    type(format_options_t), intent(in) :: opts
+    type(writer_t), intent(in) :: w              !! the output and the alignment state
+    integer, intent(in) :: ind                   !! indentation of the statement, in blanks
+    type(format_options_t), intent(in) :: opts   !! the formatting options
     integer :: a
     target = ind + opts%continuation_indent
     if (opts%continuation /= CONT_ALIGN) return
@@ -527,10 +534,13 @@ end function continuation_target
 subroutine emit_continuation(w, src, tokens, f, lend, aligned, indented)
     !! A continuation line whose first non-blank token is `f`, with its code starting at the column
     !! `aligned`, or at `indented` or its original column if that would make the line too long.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: f, lend, aligned, indented
+    type(writer_t), intent(inout) :: w         !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: f                   !! first non-blank token of the line
+    integer, intent(in) :: lend                !! last token of the line, its line break if it has one
+    integer, intent(in) :: aligned             !! preferred column for the code (see [[continuation_target]])
+    integer, intent(in) :: indented            !! column for the code with a fixed continuation indent
     integer :: g, target, orig
 
     if (tokens%tok(f)%kind /= TK_CONT) then
@@ -563,10 +573,11 @@ end subroutine emit_continuation
 subroutine emit_body(w, src, tokens, first, lend)
     !! Tokens `first:lend` of a line (see [[line_pieces]]), while tracking open brackets and the
     !! anchors for aligning continuation lines.
-    type(writer_t), intent(inout) :: w
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, lend
+    type(writer_t), intent(inout) :: w         !! the output and the alignment state
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    integer, intent(in) :: first               !! first token to write
+    integer, intent(in) :: lend                !! last token of the line, its line break if it has one
     type(piece_t), allocatable :: pieces(:)
     integer :: k, t
     character(len=:), allocatable :: text
@@ -627,7 +638,7 @@ contains
 
     subroutine top_level_operator(op)
         !! Record alignment anchors at a top-level operator.
-        character(len=*), intent(in) :: op
+        character(len=*), intent(in) :: op   !! text of the operator
         select case (op)
         case ('=', '=>')
             ! an assignment, unless a `,` or `:` came first (`use m, only: a => b`, `integer :: n = 1`),
@@ -650,15 +661,16 @@ contains
     end subroutine top_level_operator
 
     subroutine anchor(a)
-        integer, intent(in) :: a
+        !! Make the next code token the first item after anchor `a`, unless that anchor is already set.
+        integer, intent(in) :: a   !! `ANCHOR_ASSIGN`, `ANCHOR_ONLY` or `ANCHOR_DECL`
         if (w%anchor_col(a) < 0) w%pending_anchor = a
     end subroutine anchor
 end subroutine emit_body
 
 pure integer function first_non_blank(tokens, first, last) result(f)
     !! First token in `first:last` that is not a blank, or `last + 1`.
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: first, last
+    type(token_list_t), intent(in) :: tokens   !! the token list
+    integer, intent(in) :: first, last         !! the token range to search
     do f = first, last
         if (tokens%tok(f)%kind /= TK_SPACE) return
     end do
@@ -667,8 +679,8 @@ end function first_non_blank
 
 pure function to_case(text, upper) result(t)
     !! `text` in ASCII upper or lower case.
-    character(len=*), intent(in) :: text
-    logical, intent(in) :: upper
+    character(len=*), intent(in) :: text   !! the text to convert
+    logical, intent(in) :: upper           !! true for upper case, false for lower case
     character(len=len(text)) :: t
     integer :: k, c
     t = text
@@ -681,7 +693,7 @@ end function to_case
 
 pure function trim_blanks(text) result(t)
     !! `text` without trailing blanks and tabs.
-    character(len=*), intent(in) :: text
+    character(len=*), intent(in) :: text   !! the text to trim
     character(len=:), allocatable :: t
     integer :: n
     n = len(text)

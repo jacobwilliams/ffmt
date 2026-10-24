@@ -49,10 +49,10 @@ contains
 
 function compute_gaps(src, tokens, stmts, ws) result(gap)
     !! The gap wanted before each token (`GAP_KEEP`, `GAP_MIN1` or a number of blanks).
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(in) :: stmts
-    type(whitespace_options_t), intent(in) :: ws
+    character(len=*), intent(in) :: src                 !! the source text
+    type(token_list_t), intent(in) :: tokens            !! its tokens
+    type(statement_list_t), intent(in) :: stmts         !! its statements
+    type(whitespace_options_t), intent(in) :: ws        !! modes of the whitespace rules
     integer, allocatable :: gap(:)
     integer :: k
 
@@ -64,11 +64,12 @@ function compute_gaps(src, tokens, stmts, ws) result(gap)
 end function compute_gaps
 
 subroutine statement_gaps(src, tokens, stmt, ws, gap)
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
-    type(whitespace_options_t), intent(in) :: ws
-    integer, intent(inout) :: gap(:)
+    !! Set the gaps wanted before the tokens of one code statement.
+    character(len=*), intent(in) :: src                 !! the source text
+    type(token_list_t), intent(in) :: tokens            !! its tokens
+    type(statement_t), intent(in) :: stmt               !! the statement, a code statement
+    type(whitespace_options_t), intent(in) :: ws        !! modes of the whitespace rules
+    integer, intent(inout) :: gap(:)                    !! gap wanted before each token, set where a rule applies
 
     integer, allocatable :: code(:)
     integer :: i, n, depth, first
@@ -159,7 +160,7 @@ contains
 
     function text(j) result(s)
         !! Lowercase text of code token `j`, or '' outside the statement.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: s
         if (j < 1 .or. j > n) then
             s = ''
@@ -170,7 +171,7 @@ contains
 
     logical function adjacent(j)
         !! True if code tokens `j - 1` and `j` are on the same line with only blanks between them.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         integer :: k
         adjacent = .false.
         if (j < 2 .or. j > n) return
@@ -184,14 +185,17 @@ contains
     subroutine set_gap(j, g)
         !! Ask for gap `g` before code token `j`, if it is on the same line as the previous token and the
         !! two tokens can be written next to each other without becoming different tokens.
-        integer, intent(in) :: j, g
+        integer, intent(in) :: j   !! index into `code(:)`
+        integer, intent(in) :: g   !! the gap: `GAP_MIN1` or a number of blanks
         if (.not. adjacent(j)) return
         if (g == 0 .and. .not. can_join(j)) return
         gap(code(j)) = g
     end subroutine set_gap
 
     subroutine set_before(j, mode)
-        integer, intent(in) :: j, mode
+        !! Apply rule mode `mode` to the blanks before code token `j`.
+        integer, intent(in) :: j      !! index into `code(:)`
+        integer, intent(in) :: mode   !! `WS_KEEP`, `WS_ADD` or `WS_REMOVE`
         select case (mode)
         case (WS_ADD)
             call set_gap(j, GAP_MIN1)
@@ -202,14 +206,15 @@ contains
 
     subroutine around(j, mode)
         !! Apply `mode` on both sides of operator `j`.
-        integer, intent(in) :: j, mode
+        integer, intent(in) :: j      !! index into `code(:)`
+        integer, intent(in) :: mode   !! `WS_KEEP`, `WS_ADD` or `WS_REMOVE`
         call set_before(j, mode)
         call set_before(j + 1, mode)
     end subroutine around
 
     logical function can_join(j)
         !! True if tokens `j - 1` and `j` keep their meaning when written without a blank between them.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: a, b
         integer :: ka, kb
         a = text(j - 1)
@@ -230,12 +235,14 @@ contains
 
     logical function binary(j)
         !! True if operator `j` has an operand on both sides (not unary `-x` or `print *`).
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         binary = ends_operand(j - 1) .and. starts_operand(j + 1)
     end function binary
 
     logical function ends_operand(j)
-        integer, intent(in) :: j
+        !! True if code token `j` can end an operand: a name, literal, inline fypp, logical constant,
+        !! `)` or `]`, but not a statement label.
+        integer, intent(in) :: j   !! index into `code(:)`
         ends_operand = .false.
         if (j < 1) return
         select case (tokens%tok(code(j))%kind)
@@ -249,7 +256,9 @@ contains
     end function ends_operand
 
     logical function starts_operand(j)
-        integer, intent(in) :: j
+        !! True if code token `j` can start an operand: a name, literal, inline fypp, dot operator,
+        !! `(`, `[` or a sign.
+        integer, intent(in) :: j   !! index into `code(:)`
         starts_operand = .false.
         if (j > n) return
         select case (tokens%tok(code(j))%kind)
@@ -262,7 +271,7 @@ contains
 
     logical function type_star(j)
         !! True for the `*` of a length or kind selector: `real*8`, `character*(*)`, `character*10`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         select case (text(j - 1))
         case ('real', 'integer', 'complex', 'logical', 'character', 'precision')
             type_star = .true.
@@ -273,7 +282,7 @@ contains
 
     logical function chevron(j)
         !! True for `<` or `>` next to another one: CUDA kernel launches `<<< ... >>>`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         chevron = .false.
         if (j > 1) chevron = (text(j - 1) == '<' .or. text(j - 1) == '>') .and. adjacent_raw(j)
         if (j < n) chevron = chevron .or. ((text(j + 1) == '<' .or. text(j + 1) == '>') .and. adjacent_raw(j + 1))
@@ -281,14 +290,14 @@ contains
 
     logical function adjacent_raw(j)
         !! True if code tokens `j - 1` and `j` touch.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         adjacent_raw = code(j) == code(j - 1) + 1
     end function adjacent_raw
 
     logical function is_control_paren(j)
         !! True if `(` at `j` follows a control keyword: `if (`, `else if (`, `do while (`,
         !! `select case (`, `where (`, `forall (`, `case (`, `rank (`, `do concurrent (`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: prev
         is_control_paren = .false.
         if (j < 2) return
@@ -308,8 +317,8 @@ contains
 end subroutine statement_gaps
 
 elemental logical function is_word(kind)
-    !! Tokens that would run together with a following word: names, numbers, BOZ and inline fypp.
-    integer, intent(in) :: kind
+    !! Tokens that would run together with a following word: names, numbers and BOZ literals.
+    integer, intent(in) :: kind   !! token kind (`TK_*`)
     is_word = kind == TK_NAME .or. kind == TK_INT .or. kind == TK_REAL .or. kind == TK_BOZ
 end function is_word
 

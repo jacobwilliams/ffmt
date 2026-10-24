@@ -50,28 +50,31 @@ character(len=*), parameter :: LABELS(0:NCONSTRUCTS) = [character(len=12) :: &
                                                         'critical', 'change team', 'where', 'forall', 'contains']
 
 type, public :: stmt_info_t
-    integer :: role = ROLE_NONE
-    integer :: construct = C_NONE
+    !! What a statement does to the block structure, as found by `classify_statement`.
+    integer :: role = ROLE_NONE      !! `ROLE_OPEN`, `ROLE_MIDDLE`, `ROLE_CLOSE`, or `ROLE_NONE` for other statements
+    integer :: construct = C_NONE    !! the construct opened, continued or closed: one of the `C_*` constants
     integer :: label = 0         !! statement label, or 0
     integer :: do_label = 0      !! for `do 10 ...`: the label of the statement that ends the loop
     character(len=:), allocatable :: name  !! construct name, as in `outer: do`
 end type stmt_info_t
 
 type :: string_t
-    character(len=:), allocatable :: s
+    !! A string, for arrays of strings of different lengths.
+    character(len=:), allocatable :: s  !! the text
 end type string_t
 
 type :: words_t
     !! The words of a statement, with combined keywords such as `endif` split into `end`, `if`.
     type(string_t), allocatable :: w(:)  !! the words of the first token; the others are its code tokens
     integer, allocatable :: tok(:)     !! index into the code token list for each word
-    integer :: n = 0
+    integer :: n = 0                   !! number of words
 end type words_t
 
 contains
 
 pure function construct_label(construct) result(label)
-    integer, intent(in) :: construct
+    !! Name of a construct for messages (`'if'`, `'select'`, `'end'` for a bare `end`), or `'?'`.
+    integer, intent(in) :: construct   !! one of the `C_*` constants
     character(len=:), allocatable :: label
     if (construct < 0 .or. construct > NCONSTRUCTS) then
         label = '?'
@@ -83,10 +86,10 @@ end function construct_label
 function classify_statement(src, tokens, stmt, in_interface) result(info)
     !! Classify a code statement. `in_interface` is true directly inside an interface block,
     !! where `module procedure` lists procedures instead of starting one.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
-    logical, intent(in) :: in_interface
+    character(len=*), intent(in) :: src         !! source text
+    type(token_list_t), intent(in) :: tokens    !! tokens of `src`
+    type(statement_t), intent(in) :: stmt       !! the statement, a range of `tokens`
+    logical, intent(in) :: in_interface         !! the innermost open construct is an interface block
     type(stmt_info_t) :: info
 
     integer, allocatable :: code(:)
@@ -125,7 +128,7 @@ contains
 
     function text(j) result(t)
         !! Lowercase text of code token `j`, or '' past the end.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: t
         if (j < 1 .or. j > size(code)) then
             t = ''
@@ -136,7 +139,7 @@ contains
 
     function word(j) result(t)
         !! Lowercase word `j`, or '' past the end.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into the words `wd`
         character(len=:), allocatable :: t
         if (j > wd%n) then
             t = ''
@@ -150,7 +153,7 @@ contains
     integer function after_parens(j) result(next)
         !! Index of the code token after the parenthesis that opens at word `j`, or 0 if word `j`
         !! is not `(` or the parenthesis is not closed.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into the words `wd`
         integer :: c, depth
         next = 0
         if (word(j) /= '(') return
@@ -171,7 +174,7 @@ contains
 
     logical function is_name_word(j)
         !! True if word `j` is a name, or inline fypp that generates one (`${name}$`).
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into the words `wd`
         is_name_word = .false.
         if (j > wd%n) return
         is_name_word = tokens%tok(code(wd%tok(j)))%kind == TK_NAME .or. tokens%tok(code(wd%tok(j)))%kind == TK_FYPP
@@ -179,7 +182,7 @@ contains
 
     logical function has_attribute(attr)
         !! True if `attr` appears among the words before `::`.
-        character(len=*), intent(in) :: attr
+        character(len=*), intent(in) :: attr   !! the attribute, in lowercase
         integer :: j
         has_attribute = .false.
         do j = 2, wd%n
@@ -192,8 +195,8 @@ contains
     end function has_attribute
 
     integer function word_at(c) result(j)
-        !! Word index of code token `c`.
-        integer, intent(in) :: c
+        !! Index of the first word at or after code token `c`, or `wd%n + 1` if there is none.
+        integer, intent(in) :: c   !! index into `code(:)`
         do j = 1, wd%n
             if (wd%tok(j) >= c) return
         end do
@@ -201,6 +204,8 @@ contains
     end function word_at
 
     subroutine split_words()
+        !! Fill `wd` with the words of the statement from code token `k` on, splitting the first
+        !! one with `expand_keyword`.
         character(len=:), allocatable :: first
         type(string_t), allocatable :: parts(:)
         integer :: j
@@ -218,6 +223,7 @@ contains
     end subroutine split_words
 
     subroutine classify_words()
+        !! Set `info` from the words in `wd`, by the first word.
         integer :: c
         character(len=:), allocatable :: label_text
 
@@ -309,6 +315,8 @@ contains
     end subroutine classify_words
 
     subroutine set_end()
+        !! Set `info` for an `end` statement (word 1), by the construct named in word 2. An `end`
+        !! followed by a word that names no construct is left unclassified.
         integer :: construct
 
         select case (word(2))
@@ -359,8 +367,9 @@ contains
     end subroutine set_end
 
     subroutine check_procedure(j0)
-        !! `[prefixes] [type-spec] function name` or `[prefixes] subroutine name`, starting at word `j`.
-        integer, intent(in) :: j0
+        !! `[prefixes] [type-spec] function name` or `[prefixes] subroutine name`, starting at word `j0`:
+        !! if the words match, set `info` to open a function or subroutine.
+        integer, intent(in) :: j0   !! index of the first word to look at
         integer :: j, c
 
         j = j0
@@ -395,7 +404,7 @@ contains
 
     subroutine skip_selector(j)
         !! Skip a kind or length selector after an intrinsic type: `(kind=8)`, `(len=*)`, `*8`, `*(*)`.
-        integer, intent(inout) :: j
+        integer, intent(inout) :: j   !! word index: the word after the type name, then the word after the selector
         integer :: c
         if (word(j) == '(') then
             c = after_parens(j)
@@ -414,8 +423,10 @@ contains
 end function classify_statement
 
 pure subroutine set(info, role, construct)
-    type(stmt_info_t), intent(inout) :: info
-    integer, intent(in) :: role, construct
+    !! Set the role and construct of `info`.
+    type(stmt_info_t), intent(inout) :: info   !! the classification to update
+    integer, intent(in) :: role                !! one of the `ROLE_*` constants
+    integer, intent(in) :: construct           !! one of the `C_*` constants
     info%role = role
     info%construct = construct
 end subroutine set
@@ -423,7 +434,7 @@ end subroutine set
 pure function expand_keyword(w) result(parts)
     !! Split a keyword that may be written as one word (`endif`, `elseif`, `selectcase`,
     !! `endblockdata`, ...) into its parts. Other words are returned unchanged.
-    character(len=*), intent(in) :: w
+    character(len=*), intent(in) :: w   !! the word, in lowercase
     type(string_t), allocatable :: parts(:)
     character(len=*), parameter :: ends(*) = [character(len=11) :: &
                                               'associate', 'blockdata', 'block', 'critical', 'do', 'enum', 'forall', 'function', &

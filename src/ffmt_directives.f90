@@ -10,16 +10,16 @@ private
 
 public :: protected_items
 
-integer, parameter :: DIR_NONE = 0, DIR_KEEP = 1, DIR_OFF = 2, DIR_ON = 3
+integer, parameter :: DIR_NONE = 0, DIR_KEEP = 1, DIR_OFF = 2, DIR_ON = 3   !! none, `!&`, `!&<`, `!&>`
 
 contains
 
 function protected_items(src, tokens, stmts) result(keep)
     !! True for each item that must be written exactly as it is: statements with a `!&` comment, and
     !! everything from a `!&<` line to the next `!&>` line, both included.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(in) :: stmts
+    character(len=*), intent(in) :: src              !! source text
+    type(token_list_t), intent(in) :: tokens         !! tokens of `src`
+    type(statement_list_t), intent(in) :: stmts      !! items of `tokens`
     logical, allocatable :: keep(:)
     logical :: off
     integer :: k, j, d
@@ -45,9 +45,9 @@ function protected_items(src, tokens, stmts) result(keep)
 end function protected_items
 
 integer function directive(src, t)
-    !! Formatter directive of a comment token.
-    character(len=*), intent(in) :: src
-    type(token_t), intent(in) :: t
+    !! Formatter directive (one of the DIR_* constants) of a comment token.
+    character(len=*), intent(in) :: src   !! source text
+    type(token_t), intent(in) :: t        !! a comment token of `src`
     character(len=:), allocatable :: text
     integer :: n
     directive = DIR_NONE

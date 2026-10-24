@@ -8,10 +8,11 @@ public :: read_file, write_file, read_stdin
 contains
 
 subroutine read_file(path, text, stat, errmsg)
-    character(len=*), intent(in) :: path
-    character(len=:), allocatable, intent(out) :: text
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    !! All bytes of file `path`.
+    character(len=*), intent(in) :: path   !! the file to read
+    character(len=:), allocatable, intent(out) :: text      !! the contents; `''` if the file cannot be opened
+    integer, intent(out) :: stat                            !! `iostat` of the open or read: nonzero on failure
+    character(len=:), allocatable, intent(out) :: errmsg    !! the system's message, if `stat` is nonzero
     integer :: unit, nbytes
     character(len=256) :: msg
 
@@ -33,10 +34,11 @@ subroutine read_file(path, text, stat, errmsg)
 end subroutine read_file
 
 subroutine write_file(path, text, stat, errmsg)
-    character(len=*), intent(in) :: path
-    character(len=*), intent(in) :: text
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    !! Replace the contents of file `path` (created if needed) with the bytes of `text`.
+    character(len=*), intent(in) :: path   !! the file to write
+    character(len=*), intent(in) :: text   !! the new contents
+    integer, intent(out) :: stat                            !! `iostat` of the open or write: nonzero on failure
+    character(len=:), allocatable, intent(out) :: errmsg    !! the system's message, if `stat` is nonzero
     integer :: unit
     character(len=256) :: msg
 
@@ -56,7 +58,7 @@ subroutine read_stdin(text)
     !! last line without one; carriage returns of CRLF line endings are kept as part of the line.
     use, intrinsic :: iso_fortran_env, only: input_unit
     use ffmt_strings, only: string_builder_t
-    character(len=:), allocatable, intent(out) :: text
+    character(len=:), allocatable, intent(out) :: text      !! the input
     type(string_builder_t) :: buf
     character(len=4096) :: chunk
     integer :: ios, n

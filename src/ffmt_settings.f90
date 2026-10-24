@@ -20,18 +20,19 @@ public :: apply_setting
 
 type, public :: setting_t
     !! A named setting with its value as text.
-    character(len=:), allocatable :: key
-    character(len=:), allocatable :: value
+    character(len=:), allocatable :: key        !! the name, e.g. `indent` or `spaces.comma`
+    character(len=:), allocatable :: value      !! the value, e.g. `4`, `true` or `add`
 end type setting_t
 
 contains
 
 subroutine apply_setting(opts, key, value, stat, errmsg)
     !! Apply one setting to `opts`. `stat` is nonzero, with a message, for an unknown setting or a bad value.
-    type(format_options_t), intent(inout) :: opts
-    character(len=*), intent(in) :: key, value
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    type(format_options_t), intent(inout) :: opts           !! the options to change
+    character(len=*), intent(in) :: key                     !! setting name, as in the table above
+    character(len=*), intent(in) :: value                   !! its value as text
+    integer, intent(out) :: stat        !! 0, or 1 for an unknown setting or a bad value
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, if `stat` is nonzero
 
     stat = 0
     select case (key)
@@ -98,14 +99,16 @@ subroutine apply_setting(opts, key, value, stat, errmsg)
 contains
 
     subroutine fail(expected)
-        character(len=*), intent(in) :: expected
+        !! Report a bad value for the setting.
+        character(len=*), intent(in) :: expected    !! description of the values allowed
         stat = 1
         errmsg = 'expected '//expected//' for "'//key//'", not "'//value//'"'
     end subroutine fail
 
     subroutine read_count(max_value, n)
-        integer, intent(in) :: max_value
-        integer, intent(inout) :: n
+        !! Read the value as a whole number from 0 to `max_value` into `n`; `n` is unchanged if it is not one.
+        integer, intent(in) :: max_value    !! largest value allowed
+        integer, intent(inout) :: n         !! the option to set
         integer :: ios, v
         if (verify(value, '0123456789') == 0 .and. len(value) > 0 .and. len(value) <= 9) then
             read (value, *, iostat=ios) v
@@ -118,7 +121,8 @@ contains
     end subroutine read_count
 
     subroutine read_flag(flag)
-        logical, intent(inout) :: flag
+        !! Read the value, `true` or `false`, into `flag`; `flag` is unchanged if it is neither.
+        logical, intent(inout) :: flag      !! the option to set
         select case (value)
         case ('true')
             flag = .true.
@@ -130,7 +134,9 @@ contains
     end subroutine read_flag
 
     subroutine set_spaces(rule)
-        character(len=*), intent(in) :: rule
+        !! Set whitespace rule `rule` of `opts%spaces` (all rules for `all`) to the value: `add`,
+        !! `remove` or `keep`.
+        character(len=*), intent(in) :: rule    !! rule name, the key without `spaces.`, e.g. `comma`
         integer :: mode
         select case (value)
         case ('add')
@@ -184,7 +190,8 @@ contains
     end subroutine set_spaces
 
     subroutine set_case(what)
-        character(len=*), intent(in) :: what
+        !! Set the letter case of `what` in `opts%letter_case` to the value: `lower`, `upper` or `keep`.
+        character(len=*), intent(in) :: what    !! `keywords`, `operators` or `all`: the key without `case.`
         integer :: mode
         select case (value)
         case ('lower')

@@ -26,7 +26,7 @@ integer, parameter, public :: TK_OTHER = 14     !! any other character
 integer, parameter, public :: TK_BOM = 15       !! UTF-8 byte order mark at the start of the file
 
 ! comment sub-kinds
-integer, parameter, public :: CM_PLAIN = 0
+integer, parameter, public :: CM_PLAIN = 0        !! ordinary comment
 integer, parameter, public :: CM_DIRECTIVE = 1    !! compiler directive: `!$omp`, `!$acc`, `!dir$`, `!gcc$`, ...
 integer, parameter, public :: CM_CONDITIONAL = 2  !! OpenMP conditional compilation: `!$ code`
 integer, parameter, public :: CM_FORMATTER = 3    !! formatter directive: `!&`, `!&<`, `!&>`
@@ -41,7 +41,8 @@ integer, parameter, public :: STR_MULTILINE = 2     !! continued across lines
 integer, parameter, public :: STR_RAW_CONT = 4      !! a continuation line without a leading `&`, whose blanks are part of the string
 
 type, public :: token_t
-    integer :: kind = 0
+    !! One token: a byte range of the source with its kind.
+    integer :: kind = 0       !! one of the TK_* constants
     integer :: first = 1      !! first byte in the source
     integer :: last = 0       !! last byte in the source
     integer :: line = 1       !! line of the first byte
@@ -50,17 +51,19 @@ type, public :: token_t
 end type token_t
 
 type, public :: token_list_t
-    type(token_t), allocatable :: tok(:)
-    integer :: n = 0
+    !! The tokens of a source text, in source order.
+    type(token_t), allocatable :: tok(:)   !! storage; only `tok(1:n)` is in use
+    integer :: n = 0                       !! number of tokens
 contains
-    procedure :: push
+    procedure :: push                      !! append a token
 end type token_list_t
 
 contains
 
 subroutine push(self, t)
-    class(token_list_t), intent(inout) :: self
-    type(token_t), intent(in) :: t
+    !! Append token `t`, growing the storage as needed.
+    class(token_list_t), intent(inout) :: self   !! the token list
+    type(token_t), intent(in) :: t               !! token to append
     type(token_t), allocatable :: tmp(:)
 
     if (.not. allocated(self%tok)) allocate (self%tok(256))
@@ -74,16 +77,17 @@ subroutine push(self, t)
 end subroutine push
 
 pure function token_text(src, t) result(text)
-    character(len=*), intent(in) :: src
-    type(token_t), intent(in) :: t
+    !! Token text, as it appears in the source.
+    character(len=*), intent(in) :: src   !! the source the token was read from
+    type(token_t), intent(in) :: t        !! a token of `src`
     character(len=:), allocatable :: text
     text = src(t%first:t%last)
 end function token_text
 
 pure function token_lower(src, t) result(text)
     !! Token text in lowercase (ASCII).
-    character(len=*), intent(in) :: src
-    type(token_t), intent(in) :: t
+    character(len=*), intent(in) :: src   !! the source the token was read from
+    type(token_t), intent(in) :: t        !! a token of `src`
     character(len=:), allocatable :: text
     integer :: k
     text = src(t%first:t%last)
@@ -95,7 +99,7 @@ end function token_lower
 elemental logical function is_code_kind(kind)
     !! True for tokens that are part of the code, as opposed to layout (blanks, line breaks,
     !! continuation markers), comments and preprocessor lines.
-    integer, intent(in) :: kind
+    integer, intent(in) :: kind   !! token kind, one of the TK_* constants
     select case (kind)
     case (TK_SPACE, TK_NEWLINE, TK_COMMENT, TK_CONT, TK_PREPROC, TK_BOM)
         is_code_kind = .false.
@@ -106,8 +110,8 @@ end function is_code_kind
 
 function detokenize(src, tokens) result(text)
     !! Join the text of all tokens.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
+    character(len=*), intent(in) :: src          !! the source the tokens were read from
+    type(token_list_t), intent(in) :: tokens     !! tokens of `src`
     character(len=:), allocatable :: text
     integer :: k, n, total
 

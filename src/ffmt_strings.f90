@@ -7,14 +7,14 @@ public :: utf8_width, to_s
 
 type, public :: string_t
     !! A variable-length string, for arrays of strings of different lengths.
-    character(len=:), allocatable :: s
+    character(len=:), allocatable :: s      !! the string
 end type string_t
 
 type, public :: string_builder_t
     !! Builds a string by appending pieces in amortized constant time.
     private
-    character(len=:), allocatable :: buf
-    integer :: n = 0
+    character(len=:), allocatable :: buf    !! storage; only `buf(1:n)` is in use
+    integer :: n = 0                        !! length of the string so far
 contains
     procedure :: append => builder_append
     procedure :: get => builder_get
@@ -24,7 +24,7 @@ contains
 
 pure integer function utf8_width(text) result(w)
     !! Number of characters (code points) in UTF-8 `text`: bytes that are not continuation bytes.
-    character(len=*), intent(in) :: text
+    character(len=*), intent(in) :: text   !! UTF-8 bytes
     integer :: k, c
     w = 0
     do k = 1, len(text)
@@ -36,7 +36,7 @@ end function utf8_width
 pure function to_s(i) result(s)
     !! Integer to string, without padding. Digits are built by hand: an internal `write` costs
     !! far more, and this is called for every token by the safety check.
-    integer, intent(in) :: i
+    integer, intent(in) :: i            !! the number
     character(len=:), allocatable :: s
     character(len=12) :: buf
     integer :: k, n
@@ -57,8 +57,9 @@ pure function to_s(i) result(s)
 end function to_s
 
 pure subroutine builder_append(self, str)
-    class(string_builder_t), intent(inout) :: self
-    character(len=*), intent(in) :: str
+    !! Append `str` to the string, doubling the storage when it is full.
+    class(string_builder_t), intent(inout) :: self   !! the builder
+    character(len=*), intent(in) :: str   !! the piece to append
     character(len=:), allocatable :: tmp
 
     if (len(str) == 0) return
@@ -73,7 +74,8 @@ pure subroutine builder_append(self, str)
 end subroutine builder_append
 
 pure function builder_get(self) result(str)
-    class(string_builder_t), intent(in) :: self
+    !! The string built so far.
+    class(string_builder_t), intent(in) :: self   !! the builder
     character(len=:), allocatable :: str
     if (allocated(self%buf)) then
         str = self%buf(1:self%n)

@@ -30,11 +30,11 @@ subroutine format_text(src, opts, out, stat, errmsg, diags)
     !! As a safety check, the code tokens of the result are compared with those of the input. If they
     !! differ, which would be a bug in the formatter, `out` is the unchanged input and `stat` is
     !! `FMT_ERR_INTERNAL`.
-    character(len=*), intent(in) :: src
-    type(format_options_t), intent(in) :: opts
-    character(len=:), allocatable, intent(out) :: out
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    character(len=*), intent(in) :: src                    !! source text to format
+    type(format_options_t), intent(in) :: opts             !! formatting options
+    character(len=:), allocatable, intent(out) :: out      !! the formatted text
+    integer, intent(out) :: stat                           !! `FMT_OK` or `FMT_ERR_INTERNAL`
+    character(len=:), allocatable, intent(out) :: errmsg   !! error message; unallocated if `stat` is `FMT_OK`
     type(diagnostic_t), allocatable, intent(out), optional :: diags(:)   !! problems found while formatting
 
     integer, parameter :: MAX_PASSES = 50   ! each pass splits each long line once
@@ -80,10 +80,10 @@ end subroutine format_text
 
 subroutine format_pass(src, opts, out, diags, src_tokens)
     !! One pass of the formatter: structure, whitespace, case and layout.
-    character(len=*), intent(in) :: src
-    type(format_options_t), intent(in) :: opts
-    character(len=:), allocatable, intent(out) :: out
-    type(diagnostic_t), allocatable, intent(out) :: diags(:)
+    character(len=*), intent(in) :: src                         !! source text
+    type(format_options_t), intent(in) :: opts                  !! formatting options
+    character(len=:), allocatable, intent(out) :: out           !! the formatted text
+    type(diagnostic_t), allocatable, intent(out) :: diags(:)    !! problems found in this pass
     type(token_list_t), intent(out), optional :: src_tokens     !! the tokens of `src`
 
     type(token_list_t) :: tokens
@@ -109,7 +109,7 @@ end subroutine format_pass
 
 pure integer function longest_line(text) result(width)
     !! Width of the longest line of `text`, in characters (as [[utf8_width]] counts them).
-    character(len=*), intent(in) :: text
+    character(len=*), intent(in) :: text   !! text whose lines end with LF
     integer :: k, c, w
     width = 0
     w = 0
@@ -132,8 +132,9 @@ logical function same_code(a, b, reordered_use, a_tokens)
     !!
     !! With `reordered_use`, `use` statements may also be in a different order within a run of them
     !! (not across other statements or preprocessor lines), and so may the items of an `only:` list.
-    character(len=*), intent(in) :: a, b
-    logical, intent(in), optional :: reordered_use
+    character(len=*), intent(in) :: a                     !! first source text
+    character(len=*), intent(in) :: b                     !! second source text
+    logical, intent(in), optional :: reordered_use        !! allow reordered `use` statements; default false
     type(token_list_t), intent(in), optional :: a_tokens    !! the tokens of `a`, if already known
     type(token_list_t) :: ta, tb
     integer :: i, j
@@ -166,8 +167,8 @@ contains
 
     pure integer function next_code(tokens, k) result(next)
         !! The index of the first code token after token `k`, or `tokens%n + 1`.
-        type(token_list_t), intent(in) :: tokens
-        integer, intent(in) :: k
+        type(token_list_t), intent(in) :: tokens   !! the token list
+        integer, intent(in) :: k                   !! index into `tokens`, or 0 to start at the beginning
         next = k + 1
         do while (next <= tokens%n)
             if (is_code_kind(tokens%tok(next)%kind)) return
@@ -181,8 +182,10 @@ pure logical function same_token(sa, s, sb, t)
     !! True if code token `s` of `sa` matches code token `t` of `sb`, as their keys in
     !! [[code_signature]] would: same kind (operators all alike), same glue, and the same text,
     !! ignoring case for names and operators, with relational operators in their symbol spelling.
-    character(len=*), intent(in) :: sa, sb
-    type(token_t), intent(in) :: s, t
+    character(len=*), intent(in) :: sa   !! source text of `s`
+    character(len=*), intent(in) :: sb   !! source text of `t`
+    type(token_t), intent(in) :: s       !! a code token of `sa`
+    type(token_t), intent(in) :: t       !! a code token of `sb`
     integer :: ks, kt, k
     character(len=:), allocatable :: ca, cb
 
@@ -216,7 +219,8 @@ pure logical function same_token(sa, s, sb, t)
 contains
 
     pure character function lower(c)
-        character, intent(in) :: c
+        !! `c` in lowercase (ASCII).
+        character, intent(in) :: c   !! the character
         lower = c
         if (c >= 'A' .and. c <= 'Z') lower = achar(iachar(c) + 32)
     end function lower
@@ -228,7 +232,7 @@ function code_signature(src) result(sig)
     !! be reordered: for each token its kind (operators all alike), whether it is glued to the
     !! previous token, and its text as `key` gives it. The signatures of `use` statements in a run
     !! are sorted, and so are those of the items of each `only:` list.
-    character(len=*), intent(in) :: src
+    character(len=*), intent(in) :: src   !! source text
     character(len=:), allocatable :: sig
 
     type(token_list_t) :: tokens
@@ -263,6 +267,7 @@ function code_signature(src) result(sig)
 contains
 
     subroutine flush_run()
+        !! Append the signatures of the pending run of `use` statements, sorted, and empty the run.
         integer, allocatable :: order(:)
         integer :: p
         order = sorted_order(run)
@@ -276,8 +281,8 @@ contains
     function use_signature(stmt, code) result(s)
         !! Signature of a `use` statement, with the items of its `only:` list sorted. Any `;` that
         !! ends it comes last.
-        type(statement_t), intent(in) :: stmt
-        integer, intent(in) :: code(:)
+        type(statement_t), intent(in) :: stmt   !! the `use` statement
+        integer, intent(in) :: code(:)          !! its code tokens, as indices into the token list
         character(len=:), allocatable :: s
         integer, allocatable :: starts(:), ends(:), order(:)
         type(string_t), allocatable :: items(:)
@@ -316,7 +321,7 @@ contains
         !! What must match: the kind, the glue, and the text, ignoring case for names and operators,
         !! with relational operators in their symbol spelling. The length is included, since `==`
         !! pads with blanks.
-        type(token_t), intent(in) :: t
+        type(token_t), intent(in) :: t   !! a code token of `src`
         character(len=:), allocatable :: k
         character :: kind, glue
         select case (t%kind)

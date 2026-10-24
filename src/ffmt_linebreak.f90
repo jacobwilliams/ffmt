@@ -24,9 +24,10 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
     !! by `indent` more than the line they come from if it is the first line of a statement, and like
     !! it if it is a continuation line, which the layout pass will usually leave in place. `nsplit`
     !! returns the number of splits.
-    character(len=*), intent(in) :: src
-    integer, intent(in) :: line_length, indent
-    integer, intent(out) :: nsplit
+    character(len=*), intent(in) :: src           !! the source text
+    integer, intent(in) :: line_length            !! maximum line width, in characters
+    integer, intent(in) :: indent                 !! indentation step, in blanks
+    integer, intent(out) :: nsplit                !! number of lines split
     character(len=:), allocatable :: out
 
     type(token_list_t) :: tokens
@@ -85,7 +86,8 @@ function split_long_lines(src, line_length, indent, nsplit) result(out)
 contains
 
     subroutine copy(first, last)
-        integer, intent(in) :: first, last
+        !! Append the text of tokens `first:last` to the output.
+        integer, intent(in) :: first, last   !! token range
         integer :: t
         do t = first, last
             call buf%append(token_text(src, tokens%tok(t)))
@@ -94,7 +96,7 @@ contains
 
     integer function column(t)
         !! Column of token `t` in `src`.
-        integer, intent(in) :: t
+        integer, intent(in) :: t   !! index into the token list
         integer :: i
         i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
         column = utf8_width(src(i + 1:tokens%tok(t)%first - 1))
@@ -102,7 +104,7 @@ contains
 
     integer function indentation(t)
         !! Indentation of the line containing token `t`.
-        integer, intent(in) :: t
+        integer, intent(in) :: t   !! index into the token list
         integer :: i, m
         i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.) + 1
         m = verify(src(i:), ' '//achar(9))
@@ -118,9 +120,12 @@ end function split_long_lines
 integer function break_point(tokens, src, a, lend, start_col, line_length) result(best)
     !! The token after which to split tokens `a:lend` of a line that starts at token `a` in column
     !! `start_col`, or 0 if the code fits or cannot be split.
-    type(token_list_t), intent(in) :: tokens
-    character(len=*), intent(in) :: src
-    integer, intent(in) :: a, lend, start_col, line_length
+    type(token_list_t), intent(in) :: tokens      !! the tokens of `src`
+    character(len=*), intent(in) :: src           !! the source text
+    integer, intent(in) :: a                      !! first token of the line
+    integer, intent(in) :: lend                   !! last token of the line, its line break if it has one
+    integer, intent(in) :: start_col              !! column of token `a`
+    integer, intent(in) :: line_length            !! maximum line width, in characters
     integer :: t, cend, p, q, prio, best_prio, end_col
 
     best = 0
@@ -158,7 +163,7 @@ contains
 
     integer function end_column(t)
         !! Column just after token `t`, for a line starting at token `a` in column `start_col`.
-        integer, intent(in) :: t
+        integer, intent(in) :: t   !! index into the token list
         end_column = start_col + utf8_width(src(tokens%tok(a)%first:tokens%tok(t)%last))
     end function end_column
 
@@ -166,8 +171,8 @@ end function break_point
 
 pure integer function priority(text, kind) result(prio)
     !! How good a place the end of a token with this text is for a line break (1 is best).
-    character(len=*), intent(in) :: text
-    integer, intent(in) :: kind
+    character(len=*), intent(in) :: text   !! lowercase text of the token
+    integer, intent(in) :: kind            !! token kind (`TK_*`)
     prio = 4
     select case (kind)
     case (TK_OP)
@@ -189,8 +194,8 @@ end function priority
 function long_code_lines(src, line_length) result(lines)
     !! Line numbers of code lines whose code (without a trailing comment) is longer than `line_length`,
     !! outside protected code.
-    character(len=*), intent(in) :: src
-    integer, intent(in) :: line_length
+    character(len=*), intent(in) :: src           !! the source text
+    integer, intent(in) :: line_length            !! maximum line width, in characters; 0 or less for no limit
     integer, allocatable :: lines(:)
     type(token_list_t) :: tokens
     type(statement_list_t) :: stmts
@@ -239,8 +244,9 @@ contains
 
     subroutine check_width(tk, width, line)
         !! Record `line` if it holds code token `tk` and its code is `width` characters wide, too long.
-        type(token_t), intent(in) :: tk
-        integer, intent(in) :: width, line
+        type(token_t), intent(in) :: tk   !! the token
+        integer, intent(in) :: width      !! width of the line up to the end of `tk` on it
+        integer, intent(in) :: line       !! line number
         if (is_code_kind(tk%kind) .and. width > line_length .and. line /= last_line) then
             lines = [lines, line]
             last_line = line
@@ -248,7 +254,8 @@ contains
     end subroutine check_width
 
     integer function start_column(t)
-        integer, intent(in) :: t
+        !! Column of token `t`: the width of the text before it on its line.
+        integer, intent(in) :: t   !! index into the token list
         integer :: i
         i = scan(src(1:tokens%tok(t)%first - 1), achar(10)//achar(13), back=.true.)
         start_column = utf8_width(src(i + 1:tokens%tok(t)%first - 1))

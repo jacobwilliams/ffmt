@@ -24,8 +24,8 @@ contains
 
 function convert_relational(src, style) result(out)
     !! `src` with every relational operator written in `style` (`REL_SYMBOLS` or `REL_LETTERS`).
-    character(len=*), intent(in) :: src
-    integer, intent(in) :: style
+    character(len=*), intent(in) :: src   !! source text
+    integer, intent(in) :: style          !! one of the REL_* constants; `REL_KEEP` returns `src`
     character(len=:), allocatable :: out
 
     type(token_list_t) :: tokens
@@ -60,7 +60,7 @@ contains
 
     integer function operator_index(j)
         !! Index of token `j` in the operator tables, or 0 if it is not a relational operator.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into the token list
         character(len=:), allocatable :: t
         operator_index = 0
         if (tokens%tok(j)%kind /= TK_OP .and. tokens%tok(j)%kind /= TK_DOTOP) return
@@ -75,14 +75,15 @@ contains
 
     logical function chevron(j)
         !! True for `<` or `>` directly next to another one, as in `<<<` and `>>>`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into the token list
         chevron = .false.
         if (j > 1) chevron = is_angle(j - 1)
         if (j < tokens%n) chevron = chevron .or. is_angle(j + 1)
     end function chevron
 
     logical function is_angle(j)
-        integer, intent(in) :: j
+        !! True if token `j` is a `<` or `>` operator.
+        integer, intent(in) :: j   !! index into the token list
         character(len=:), allocatable :: t
         is_angle = .false.
         if (tokens%tok(j)%kind /= TK_OP) return
@@ -94,7 +95,7 @@ end function convert_relational
 
 pure function canonical_relational(text) result(t)
     !! The symbol spelling of a lowercase relational operator; other text is returned unchanged.
-    character(len=*), intent(in) :: text
+    character(len=*), intent(in) :: text   !! operator text, in lowercase
     character(len=:), allocatable :: t
     integer :: r
     r = findloc(LETTERS, text, dim=1)

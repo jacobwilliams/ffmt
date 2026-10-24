@@ -13,30 +13,33 @@ private
 public :: split_statements, code_tokens
 
 ! item kinds
-integer, parameter, public :: SK_CODE = 1
-integer, parameter, public :: SK_BLANK = 2
-integer, parameter, public :: SK_COMMENT = 3
-integer, parameter, public :: SK_PREPROC = 4
+integer, parameter, public :: SK_CODE = 1      !! a code statement
+integer, parameter, public :: SK_BLANK = 2     !! a line with only blanks
+integer, parameter, public :: SK_COMMENT = 3   !! a line with only a comment
+integer, parameter, public :: SK_PREPROC = 4   !! a preprocessor directive line
 
 type, public :: statement_t
-    integer :: kind = SK_CODE
+    !! An item: a code statement or a standalone line, as a range of the token list.
+    integer :: kind = SK_CODE   !! one of the SK_* constants
     integer :: first = 1    !! first token
     integer :: last = 0     !! last token
 end type statement_t
 
 type, public :: statement_list_t
-    type(statement_t), allocatable :: s(:)
-    integer :: n = 0
+    !! The items of a source text, in order.
+    type(statement_t), allocatable :: s(:)   !! storage; only `s(1:n)` is in use
+    integer :: n = 0                         !! number of items
 contains
-    procedure :: push
+    procedure :: push                        !! append an item
 end type statement_list_t
 
 contains
 
 subroutine split_statements(src, tokens, stmts)
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(out) :: stmts
+    !! Group `tokens` into code statements and standalone blank, comment and preprocessor lines.
+    character(len=*), intent(in) :: src              !! source text
+    type(token_list_t), intent(in) :: tokens         !! tokens of `src`
+    type(statement_list_t), intent(out) :: stmts     !! the items, covering every token once
     integer :: i, lend, start, semi, kind
 
     allocate (stmts%s(64))
@@ -81,9 +84,9 @@ end subroutine split_statements
 function code_tokens(src, tokens, stmt) result(idx)
     !! Indices of the code tokens of a statement: no blanks, line breaks, comments, continuation
     !! markers, preprocessor lines or `;` separators.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
+    character(len=*), intent(in) :: src          !! source text
+    type(token_list_t), intent(in) :: tokens     !! tokens of `src`
+    type(statement_t), intent(in) :: stmt        !! the statement
     integer, allocatable :: idx(:)
     integer :: k, n
 
@@ -102,8 +105,8 @@ end function code_tokens
 
 pure integer function line_end_token(tokens, i) result(j)
     !! Index of the line break that ends the line containing token `i`, or the last token.
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: i
+    type(token_list_t), intent(in) :: tokens   !! the token list
+    integer, intent(in) :: i                   !! a token at or after the start of the line
     do j = i, tokens%n
         if (tokens%tok(j)%kind == TK_NEWLINE) return
     end do
@@ -112,8 +115,8 @@ end function line_end_token
 
 pure integer function line_kind(tokens, i, lend) result(kind)
     !! Kind of the line `i:lend` from its first non-blank token.
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: i, lend
+    type(token_list_t), intent(in) :: tokens   !! the token list
+    integer, intent(in) :: i, lend             !! first and last token of the line
     integer :: k
     kind = SK_BLANK
     do k = i, lend
@@ -133,9 +136,9 @@ end function line_kind
 
 pure integer function find_semicolon(src, tokens, i, lend) result(semi)
     !! A `;` in `i:lend` that is followed by more code on the line, or 0.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: i, lend
+    character(len=*), intent(in) :: src        !! source text
+    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
+    integer, intent(in) :: i, lend             !! tokens to search, up to the end of the line
     integer :: k, m
     do k = i, lend
         if (tokens%tok(k)%kind /= TK_OP) cycle
@@ -155,8 +158,8 @@ end function find_semicolon
 
 pure logical function ends_with_continuation(tokens, i, lend)
     !! True if the last token of the line before any comment is a continuation `&`.
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: i, lend
+    type(token_list_t), intent(in) :: tokens   !! the token list
+    integer, intent(in) :: i, lend             !! tokens to search, up to the end of the line
     integer :: k
     ends_with_continuation = .false.
     do k = lend, i, -1
@@ -173,8 +176,9 @@ pure logical function ends_with_continuation(tokens, i, lend)
 end function ends_with_continuation
 
 subroutine push(self, s)
-    class(statement_list_t), intent(inout) :: self
-    type(statement_t), intent(in) :: s
+    !! Append item `s`, growing the storage as needed.
+    class(statement_list_t), intent(inout) :: self   !! the item list
+    type(statement_t), intent(in) :: s               !! item to append
     type(statement_t), allocatable :: tmp(:)
     if (.not. allocated(self%s)) allocate (self%s(64))
     if (self%n == size(self%s)) then

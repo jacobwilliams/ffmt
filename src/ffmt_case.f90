@@ -61,10 +61,10 @@ contains
 
 function compute_case(src, tokens, stmts, opts) result(mode)
     !! The case mode for each token (`CASE_KEEP`, `CASE_LOWER` or `CASE_UPPER`).
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(in) :: stmts
-    type(case_options_t), intent(in) :: opts
+    character(len=*), intent(in) :: src           !! the source text
+    type(token_list_t), intent(in) :: tokens      !! its tokens
+    type(statement_list_t), intent(in) :: stmts   !! its statements
+    type(case_options_t), intent(in) :: opts      !! the case wanted for keywords and operators
     integer, allocatable :: mode(:)
     integer :: k, t
 
@@ -83,11 +83,11 @@ end function compute_case
 
 subroutine statement_case(src, tokens, stmt, kw_mode, mode)
     !! Mark the keywords of one statement with `kw_mode`.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
-    integer, intent(in) :: kw_mode
-    integer, intent(inout) :: mode(:)
+    character(len=*), intent(in) :: src        !! the source text
+    type(token_list_t), intent(in) :: tokens   !! its tokens
+    type(statement_t), intent(in) :: stmt      !! the statement, a code statement
+    integer, intent(in) :: kw_mode             !! case mode for keywords
+    integer, intent(inout) :: mode(:)          !! case mode of each token, set for the keywords
 
     integer, allocatable :: code(:)
     integer :: n, k, j, depth
@@ -155,7 +155,7 @@ contains
 
     function word(j) result(w)
         !! Lowercase text of code token `j`, or '' outside the statement.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: w
         if (j < 1 .or. j > n) then
             w = ''
@@ -165,19 +165,21 @@ contains
     end function word
 
     integer function kind_of(j)
-        integer, intent(in) :: j
+        !! Token kind (`TK_*`) of code token `j`, or 0 outside the statement.
+        integer, intent(in) :: j   !! index into `code(:)`
         kind_of = 0
         if (j >= 1 .and. j <= n) kind_of = tokens%tok(code(j))%kind
     end function kind_of
 
     subroutine mark(j)
-        integer, intent(in) :: j
+        !! Give code token `j` the keyword case mode, if it is inside the statement.
+        integer, intent(in) :: j   !! index into `code(:)`
         if (j >= 1 .and. j <= n) mode(code(j)) = kw_mode
     end subroutine mark
 
     logical function is_keyword(j)
         !! True if code token `j` is a name spelled like a keyword (including `endif`, `enddo`, ...).
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         character(len=:), allocatable :: w
         is_keyword = .false.
         if (kind_of(j) /= TK_NAME) return
@@ -192,7 +194,7 @@ contains
 
     integer function after_parens(j) result(next)
         !! Index after the parenthesis group that opens at `j`, or `j` if there is none there.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         integer :: d
         next = j
         if (word(j) /= '(') return
@@ -209,7 +211,7 @@ contains
 
     logical function is_assignment(j)
         !! True if the statement starting at `j` assigns to a variable: `name [(...)] =`, `=>` or `%`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)` of the first word
         integer :: m
         m = after_parens(j + 1)
         select case (word(m))
@@ -223,7 +225,7 @@ contains
 
     subroutine intent_args(j)
         !! `in`, `out` and `inout` in `intent(...)` starting at the `(` at `j`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         integer :: m
         if (word(j) /= '(') return
         do m = j + 1, n
@@ -238,7 +240,7 @@ contains
 
     subroutine type_params(j)
         !! `kind=` and `len=` in a type selector starting at the `(` at `j`.
-        integer, intent(in) :: j
+        integer, intent(in) :: j   !! index into `code(:)`
         integer :: m, d
         if (word(j) /= '(') return
         d = 0
@@ -257,7 +259,7 @@ contains
 
     recursive subroutine leading(start)
         !! Mark the leading keywords of the statement starting at code token `start`.
-        integer, intent(in) :: start
+        integer, intent(in) :: start   !! index into `code(:)`
         integer :: j, m
         character(len=:), allocatable :: w
 

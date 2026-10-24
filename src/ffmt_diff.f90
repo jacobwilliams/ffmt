@@ -14,8 +14,9 @@ public :: unified_diff
 integer, parameter :: OP_EQUAL = 0, OP_DELETE = 1, OP_INSERT = 2
 
 type :: edit_t
+    !! The edits that turn the lines of one text into those of the other, in order.
     integer, allocatable :: op(:)   !! OP_EQUAL, OP_DELETE (line of a) or OP_INSERT (line of b)
-    integer :: n = 0
+    integer :: n = 0                !! number of edits in `op`
 end type edit_t
 
 contains
@@ -23,8 +24,10 @@ contains
 function unified_diff(a, b, name, context) result(diff)
     !! The changes from `a` to `b` as a unified diff with `context` lines of context (default 3),
     !! with `name` in the headers. Empty if the texts are equal.
-    character(len=*), intent(in) :: a, b, name
-    integer, intent(in), optional :: context
+    character(len=*), intent(in) :: a       !! the old text
+    character(len=*), intent(in) :: b       !! the new text
+    character(len=*), intent(in) :: name    !! file name for the `---` and `+++` headers
+    integer, intent(in), optional :: context   !! number of unchanged lines shown around each change
     character(len=:), allocatable :: diff
 
     type(string_t), allocatable :: la(:), lb(:)
@@ -109,8 +112,9 @@ function unified_diff(a, b, name, context) result(diff)
 contains
 
     subroutine add_line(mark, line)
-        character, intent(in) :: mark
-        character(len=*), intent(in) :: line
+        !! Append `line` to the diff after `mark`, with a "No newline" note if it has no line ending.
+        character, intent(in) :: mark           !! ` ` for context, `-` for a deleted line, `+` for an inserted one
+        character(len=*), intent(in) :: line    !! the line, with its line ending
         call buf%append(mark//line)
         if (len(line) == 0) then
             call buf%append(new_line('a')//'\ No newline at end of file'//new_line('a'))
@@ -123,7 +127,8 @@ end function unified_diff
 
 pure function range_text(start, n) result(text)
     !! `start,n` for a hunk header; `start` is the line before the hunk when it is empty.
-    integer, intent(in) :: start, n
+    integer, intent(in) :: start    !! first line of the hunk
+    integer, intent(in) :: n        !! number of lines in the hunk
     character(len=:), allocatable :: text
     if (n == 0) then
         text = to_s(start - 1)//',0'
@@ -136,7 +141,7 @@ end function range_text
 
 function split_lines(text) result(lines)
     !! The lines of `text`, each with its line ending (the last one may have none).
-    character(len=*), intent(in) :: text
+    character(len=*), intent(in) :: text   !! the text
     type(string_t), allocatable :: lines(:)
     integer :: i, j, n
 
@@ -159,8 +164,8 @@ end function split_lines
 
 subroutine line_ids(la, lb, ia, ib)
     !! Number the distinct lines, so that equal lines have equal numbers.
-    type(string_t), intent(in) :: la(:), lb(:)
-    integer, allocatable, intent(out) :: ia(:), ib(:)
+    type(string_t), intent(in) :: la(:), lb(:)          !! the lines of the two texts
+    integer, allocatable, intent(out) :: ia(:), ib(:)   !! the number of each line of `la` and `lb`
     integer, allocatable :: slot(:)     ! hash table: id of the line in each slot, or 0
     type(string_t), allocatable :: seen(:)
     integer :: k, nseen, mask
@@ -183,7 +188,8 @@ subroutine line_ids(la, lb, ia, ib)
 contains
 
     integer function id_of(line)
-        character(len=*), intent(in) :: line
+        !! The number of `line`: that of an equal line seen before, or the next new number.
+        character(len=*), intent(in) :: line   !! a line of `la` or `lb`
         integer :: h
         h = int(iand(hash(line), int(mask, int64)))
         do
@@ -208,7 +214,7 @@ end subroutine line_ids
 
 pure integer(int64) function hash(s) result(h)
     !! FNV-1a hash.
-    character(len=*), intent(in) :: s
+    character(len=*), intent(in) :: s   !! the bytes to hash
     integer :: k
     h = 1469598103_int64
     do k = 1, len(s)
@@ -221,9 +227,9 @@ end function hash
 recursive subroutine lcs(a, a0, a1, b, b0, b1, e)
     !! Append the edits that turn `a(a0:a1)` into `b(b0:b1)` along a longest common subsequence
     !! (Hirschberg's algorithm).
-    integer, intent(in) :: a(:), b(:)
-    integer, intent(in) :: a0, a1, b0, b1
-    type(edit_t), intent(inout) :: e
+    integer, intent(in) :: a(:), b(:)           !! line numbers of the two texts, from `line_ids`
+    integer, intent(in) :: a0, a1, b0, b1       !! the ranges of `a` and `b` to compare
+    type(edit_t), intent(inout) :: e            !! the edits so far; `e%op` must have room for the new ones
     integer :: lo_a, lo_b, hi_a, hi_b, nsuffix, k
 
     ! common prefix and suffix, without recursion
@@ -253,7 +259,7 @@ contains
 
     recursive subroutine middle(a0, a1, b0, b1)
         !! The edits for `a(a0:a1)` and `b(b0:b1)`, which differ at both ends.
-        integer, intent(in) :: a0, a1, b0, b1
+        integer, intent(in) :: a0, a1, b0, b1   !! the ranges of `a` and `b`
         integer :: fwd(0:b1 - b0 + 1), bwd(0:b1 - b0 + 1)   ! (not allocatable: assignment would make them 1-based)
         integer :: mid, k, best, split, j
         if (a0 > a1) then
@@ -305,7 +311,8 @@ contains
     end subroutine middle
 
     subroutine push(op)
-        integer, intent(in) :: op
+        !! Append edit `op` (`OP_EQUAL`, `OP_DELETE` or `OP_INSERT`) to `e`.
+        integer, intent(in) :: op       !! the edit
         e%n = e%n + 1
         e%op(e%n) = op
     end subroutine push
@@ -314,7 +321,7 @@ end subroutine lcs
 
 pure function lcs_lengths(a, b) result(row)
     !! `row(k)`: the length of the longest common subsequence of `a` and `b(1:k)`.
-    integer, intent(in) :: a(:), b(:)
+    integer, intent(in) :: a(:), b(:)   !! line numbers of the two texts
     integer :: row(0:size(b))
     integer :: prev(0:size(b))
     integer :: i, k

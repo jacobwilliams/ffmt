@@ -34,14 +34,14 @@ type, public :: cli_t
     logical :: check = .false.                      !! report files that would change; write nothing
     logical :: diff = .false.                       !! write a diff of the changes; write nothing else
     logical :: quiet = .false.                      !! do not report warnings
-    logical :: help = .false.
-    logical :: version = .false.
+    logical :: help = .false.                       !! show the `--help` text and do nothing else
+    logical :: version = .false.                    !! show the version and do nothing else
 end type cli_t
 
 type :: config_cache_t
     !! Configurations already found, by directory.
-    type(string_t), allocatable :: dirs(:)
-    type(config_t), allocatable :: configs(:)
+    type(string_t), allocatable :: dirs(:)          !! absolute paths of the directories looked up
+    type(config_t), allocatable :: configs(:)       !! the configuration that applies in each of `dirs`
 end type config_cache_t
 
 contains
@@ -109,10 +109,10 @@ end function usage
 
 subroutine parse_args(args, cli, stat, errmsg)
     !! Parse command-line arguments (without the program name).
-    type(string_t), intent(in) :: args(:)
-    type(cli_t), intent(out) :: cli
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    type(string_t), intent(in) :: args(:)                   !! the arguments, in order
+    type(cli_t), intent(out) :: cli                         !! the parsed command line
+    integer, intent(out) :: stat                            !! 0, or `EXIT_ERROR` for a bad command line
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, if `stat` is nonzero
     type(format_options_t) :: scratch
     integer :: k, j
     character(len=:), allocatable :: arg
@@ -193,7 +193,8 @@ subroutine parse_args(args, cli, stat, errmsg)
 contains
 
     logical function takes_value(opt)
-        character(len=*), intent(in) :: opt
+        !! True if option `opt` (as written, e.g. `-i` or `--indent`) is followed by a value.
+        character(len=*), intent(in) :: opt   !! the argument to test
         select case (opt)
         case ('-i', '--indent', '--base-indent', '--continuation', '--continuation-indent', '-l', '--line-length', '--relational', &
               '--spaces', '--case', '--set', '--config', '--exclude', '--extensions')
@@ -204,7 +205,9 @@ contains
     end function takes_value
 
     subroutine option_value(opt, value)
-        character(len=*), intent(in) :: opt, value
+        !! Record option `opt`, one for which `takes_value` is true, with `value`, the argument after it.
+        character(len=*), intent(in) :: opt     !! the option, as written
+        character(len=*), intent(in) :: value   !! its value
         select case (opt)
         case ('-i', '--indent')
             call add('indent', value)
@@ -234,13 +237,16 @@ contains
     end subroutine option_value
 
     subroutine add(key, value)
-        character(len=*), intent(in) :: key, value
+        !! Append the setting `key` with `value` to `cli%settings`.
+        character(len=*), intent(in) :: key     !! setting name, as in a configuration file
+        character(len=*), intent(in) :: value   !! its value as text
         cli%settings = [cli%settings, setting_t(key, value)]
     end subroutine add
 
     subroutine add_list(prefix, text)
         !! Comma-separated `NAME=VALUE` items.
-        character(len=*), intent(in) :: prefix, text
+        character(len=*), intent(in) :: prefix  !! prepended to each `NAME` to make the setting name, e.g. `spaces.`
+        character(len=*), intent(in) :: text    !! the items
         integer :: i, j, eq
         character(len=:), allocatable :: item
         i = 1
@@ -263,7 +269,9 @@ contains
     end subroutine add_list
 
     subroutine extension_list(text)
-        character(len=*), intent(in) :: text
+        !! Set `cli%extensions` from the comma-separated list `text`, dropping a leading `.` of each
+        !! extension and skipping empty items.
+        character(len=*), intent(in) :: text   !! the value of `--extensions`
         integer :: i, j
         allocate (cli%extensions(0))
         i = 1
@@ -286,7 +294,8 @@ contains
     end subroutine extension_list
 
     subroutine fail(msg)
-        character(len=*), intent(in) :: msg
+        !! Make parsing fail with `EXIT_ERROR` and message `msg`.
+        character(len=*), intent(in) :: msg   !! what is wrong
         stat = EXIT_ERROR
         errmsg = msg
     end subroutine fail
@@ -295,7 +304,7 @@ end subroutine parse_args
 
 integer function run(cli) result(status)
     !! Format the paths of `cli` and return the exit status.
-    type(cli_t), intent(in) :: cli
+    type(cli_t), intent(in) :: cli      !! the parsed command line
     type(config_cache_t) :: cache
     type(string_t), allocatable :: files(:)
     integer :: k, j
@@ -331,11 +340,12 @@ end function run
 subroutine directory_files(cli, cache, dir, files, status)
     !! The Fortran files under `dir`, selected with the `[files]` settings of its configuration and
     !! the command line.
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
-    character(len=*), intent(in) :: dir
-    type(string_t), allocatable, intent(out) :: files(:)
-    integer, intent(inout) :: status
+    type(cli_t), intent(in) :: cli                          !! the parsed command line
+    type(config_cache_t), intent(inout) :: cache            !! configurations found so far
+    character(len=*), intent(in) :: dir                     !! the directory, as given on the command line
+    type(string_t), allocatable, intent(out) :: files(:)    !! paths of the files found
+    integer, intent(inout) :: status                        !! exit status so far; set to `EXIT_ERROR` if the
+                                                            !! configuration cannot be read
     type(config_t) :: cfg
     type(string_t), allocatable :: extensions(:), exclude(:)
     integer :: stat
@@ -359,12 +369,12 @@ end subroutine directory_files
 
 subroutine config_for(cli, cache, dir, cfg, stat, errmsg)
     !! The configuration that applies in directory `dir` (absolute).
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
-    character(len=*), intent(in) :: dir
-    type(config_t), intent(out) :: cfg
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    type(cli_t), intent(in) :: cli                          !! the parsed command line (`--config`, `--no-config`)
+    type(config_cache_t), intent(inout) :: cache            !! configurations found so far; `cfg` is added
+    character(len=*), intent(in) :: dir   !! absolute path of the directory
+    type(config_t), intent(out) :: cfg                      !! the configuration; `cfg%path` is `''` if there is none
+    integer, intent(out) :: stat                            !! nonzero if a configuration file cannot be read
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, if `stat` is nonzero
     logical :: found
     integer :: k
 
@@ -396,12 +406,12 @@ end subroutine config_for
 
 subroutine options_for(cli, cache, dir, opts, stat, errmsg)
     !! The options for a file in directory `dir`: defaults, then configuration, then command line.
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
-    character(len=*), intent(in) :: dir
-    type(format_options_t), intent(out) :: opts
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    type(cli_t), intent(in) :: cli                          !! the parsed command line
+    type(config_cache_t), intent(inout) :: cache            !! configurations found so far
+    character(len=*), intent(in) :: dir                     !! the file's directory, relative or absolute
+    type(format_options_t), intent(out) :: opts             !! the options
+    integer, intent(out) :: stat                            !! nonzero for an unreadable configuration or a bad setting
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, if `stat` is nonzero
     type(config_t) :: cfg
     integer :: k
 
@@ -421,18 +431,21 @@ subroutine options_for(cli, cache, dir, opts, stat, errmsg)
 end subroutine options_for
 
 integer function process_stdin(cli, cache) result(status)
-    !! Format standard input to standard output (or report it with `--check` / `--diff`).
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
+    !! Format standard input to standard output (or report it with `--check` / `--diff`), with
+    !! the configuration of the current directory, and return the exit status.
+    type(cli_t), intent(in) :: cli                  !! the parsed command line
+    type(config_cache_t), intent(inout) :: cache    !! configurations found so far
     character(len=:), allocatable :: text
     call read_stdin(text)
     status = process_text(cli, cache, '<stdin>', '.', text, .true.)
 end function process_stdin
 
 integer function process_file(cli, cache, path) result(status)
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
-    character(len=*), intent(in) :: path
+    !! Format file `path` in place (or write it to standard output, or report it with `--check` /
+    !! `--diff`), with the configuration of its directory, and return the exit status.
+    type(cli_t), intent(in) :: cli                  !! the parsed command line
+    type(config_cache_t), intent(inout) :: cache    !! configurations found so far
+    character(len=*), intent(in) :: path   !! the file, as given on the command line or found in a directory
     character(len=:), allocatable :: text, errmsg, dir
     integer :: stat
 
@@ -448,10 +461,13 @@ end function process_file
 
 integer function process_text(cli, cache, name, dir, text, to_stdout) result(status)
     !! Format `text` from file `name` in directory `dir`, and write or report the result.
-    type(cli_t), intent(in) :: cli
-    type(config_cache_t), intent(inout) :: cache
-    character(len=*), intent(in) :: name, dir, text
-    logical, intent(in) :: to_stdout
+    type(cli_t), intent(in) :: cli                  !! the parsed command line
+    type(config_cache_t), intent(inout) :: cache    !! configurations found so far
+    character(len=*), intent(in) :: name            !! the file, for messages and diff headers and to write
+                                                    !! the result to; `<stdin>` for standard input
+    character(len=*), intent(in) :: dir             !! the directory whose configuration applies
+    character(len=*), intent(in) :: text            !! the source as read
+    logical, intent(in) :: to_stdout                !! write the result to standard output instead of to `name`
     type(format_options_t) :: opts
     character(len=:), allocatable :: out, errmsg
     type(diagnostic_t), allocatable :: diags(:)
@@ -498,7 +514,8 @@ integer function process_text(cli, cache, name, dir, text, to_stdout) result(sta
 end function process_text
 
 pure logical function ends_with(s, suffix)
-    character(len=*), intent(in) :: s, suffix
+    !! True if string `s` ends with `suffix`.
+    character(len=*), intent(in) :: s, suffix   !! the string, and the ending to look for
     ends_with = .false.
     if (len(s) >= len(suffix)) ends_with = s(len(s) - len(suffix) + 1:) == suffix
 end function ends_with

@@ -27,9 +27,9 @@ contains
 function sort_use(src, statements, only_lists, width) result(out)
     !! `src` with the `use` statements of each group sorted by module name (if `statements`) and
     !! the names of `only:` lists sorted (if `only_lists`).
-    character(len=*), intent(in) :: src
-    logical, intent(in) :: statements
-    logical, intent(in) :: only_lists
+    character(len=*), intent(in) :: src          !! source text
+    logical, intent(in) :: statements            !! sort the `use` statements of each group
+    logical, intent(in) :: only_lists            !! sort the names of `only:` lists
     integer, intent(in) :: width   !! line length to fit a rewritten `only:` list into, or 0 to write it on one line
     character(len=:), allocatable :: out
 
@@ -84,9 +84,9 @@ end function sort_use
 
 logical function is_use_statement(src, tokens, code)
     !! True if the code tokens `code` of a statement form a `use` statement.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: code(:)
+    character(len=*), intent(in) :: src        !! source text
+    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
+    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
     character(len=:), allocatable :: second
 
     is_use_statement = .false.
@@ -105,9 +105,9 @@ function only_items(src, tokens, code) result(starts)
     !! Positions in `code` where the items of a `use` statement's `only:` list start. Each item
     !! ends before the comma in front of the next one, the last at the end of `code`. Empty if there
     !! is no `only:` list, the list is empty, or it has an empty item.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: code(:)
+    character(len=*), intent(in) :: src        !! source text
+    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
+    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
     integer, allocatable :: starts(:)
     integer :: p, q, n, depth
     character(len=:), allocatable :: t
@@ -141,8 +141,9 @@ function only_items(src, tokens, code) result(starts)
 contains
 
     logical function is_text(j, text)
-        integer, intent(in) :: j
-        character(len=*), intent(in) :: text
+        !! True if token `j` is the operator `text`.
+        integer, intent(in) :: j                 !! index into `tokens`
+        character(len=*), intent(in) :: text     !! the operator, e.g. `,`
         is_text = tokens%tok(j)%kind == TK_OP
         if (is_text) is_text = token_text(src, tokens%tok(j)) == text
     end function is_text
@@ -151,7 +152,7 @@ end function only_items
 
 function sorted_order(keys) result(order)
     !! The order in which `keys` are sorted (a stable sort, comparing in ASCII order).
-    type(string_t), intent(in) :: keys(:)
+    type(string_t), intent(in) :: keys(:)   !! the sort keys
     integer, allocatable :: order(:)
     integer :: i, j, t
 
@@ -172,12 +173,12 @@ subroutine sort_only_list(src, tokens, stmt, code, width, text)
     !! Replace `text`, the text of `stmt`, by the statement with its `only:` list sorted, unless the
     !! list is sorted already or the statement cannot be rewritten safely. With `width > 0`, the
     !! list is broken after commas so that its lines fit in `width` columns where possible.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
-    integer, intent(in) :: code(:)
-    integer, intent(in) :: width
-    character(len=:), allocatable, intent(inout) :: text
+    character(len=*), intent(in) :: src                      !! source text
+    type(token_list_t), intent(in) :: tokens                 !! tokens of `src`
+    type(statement_t), intent(in) :: stmt                    !! the `use` statement
+    integer, intent(in) :: code(:)                           !! indices into `tokens` of the code tokens of `stmt`
+    integer, intent(in) :: width                             !! line length to fit the list into, or 0
+    character(len=:), allocatable, intent(inout) :: text     !! text of `stmt`, from its first to its last token
 
     integer, allocatable :: starts(:), ends(:), order(:)
     type(string_t), allocatable :: keys(:)
@@ -245,13 +246,13 @@ contains
 
     logical function separated(p)
         !! True if anything (blanks, a line break) comes between code tokens `p - 1` and `p`.
-        integer, intent(in) :: p
+        integer, intent(in) :: p   !! index into `code(:)`
         separated = code(p) /= code(p - 1) + 1
     end function separated
 
     function joined(first, last) result(s)
         !! The text of code tokens `first:last`, with a blank wherever they were separated.
-        integer, intent(in) :: first, last
+        integer, intent(in) :: first, last   !! range of indices into `code(:)`
         character(len=:), allocatable :: s
         integer :: p
         s = token_text(src, tokens%tok(code(first)))
@@ -263,7 +264,7 @@ contains
 
     function local_name(first, last) result(s)
         !! Sort key of an item: its tokens before `=>`, in lowercase.
-        integer, intent(in) :: first, last
+        integer, intent(in) :: first, last   !! range of indices into `code(:)` of the item
         character(len=:), allocatable :: s
         integer :: p
         s = ''
@@ -279,9 +280,9 @@ end subroutine sort_only_list
 
 function module_key(src, tokens, code) result(key)
     !! Sort key of a `use` statement: the module name in lowercase.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    integer, intent(in) :: code(:)
+    character(len=*), intent(in) :: src        !! source text
+    type(token_list_t), intent(in) :: tokens   !! tokens of `src`
+    integer, intent(in) :: code(:)             !! indices into `tokens` of the statement's code tokens
     character(len=:), allocatable :: key
     character(len=:), allocatable :: t
     integer :: p
@@ -307,8 +308,8 @@ end function module_key
 pure logical function whole_lines(tokens, stmt)
     !! True if `stmt` takes up whole lines on its own, ending with a line break, so that it can
     !! be moved.
-    type(token_list_t), intent(in) :: tokens
-    type(statement_t), intent(in) :: stmt
+    type(token_list_t), intent(in) :: tokens   !! tokens of the source
+    type(statement_t), intent(in) :: stmt      !! the statement, a range of `tokens`
     whole_lines = .false.
     if (tokens%tok(stmt%last)%kind /= TK_NEWLINE) return
     if (stmt%first > 1) then

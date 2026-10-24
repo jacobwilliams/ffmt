@@ -37,8 +37,8 @@ character(len=*), parameter :: CONFIG_NAME = '.fformat.toml'
 type, public :: config_t
     !! The settings of one configuration file.
     character(len=:), allocatable :: path               !! the file, or `''` if there is none
-    type(setting_t), allocatable :: settings(:)
-    type(string_t), allocatable :: extensions(:)        !! `files.extensions`; not allocated if the file does not set it
+    type(setting_t), allocatable :: settings(:)         !! the formatting settings, in the order they are applied
+    type(string_t), allocatable :: extensions(:)      !! `files.extensions`; not allocated if the file does not set it
     type(string_t), allocatable :: exclude(:)           !! `files.exclude`, likewise
 end type config_t
 
@@ -47,10 +47,10 @@ contains
 subroutine find_config(dir, cfg, stat, errmsg)
     !! The configuration for files in directory `dir` (an absolute path): from the nearest config file
     !! in `dir` or its parents. `cfg%path` is `''` if there is none.
-    character(len=*), intent(in) :: dir
-    type(config_t), intent(out) :: cfg
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    character(len=*), intent(in) :: dir   !! absolute path of the directory
+    type(config_t), intent(out) :: cfg   !! the configuration found
+    integer, intent(out) :: stat                            !! nonzero if the config file found cannot be read
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, with the file name, if `stat` is nonzero
     character(len=:), allocatable :: d, candidate
     logical :: exists, found
 
@@ -78,12 +78,12 @@ end subroutine find_config
 subroutine load_config(path, fpm, cfg, found, stat, errmsg)
     !! Read the configuration in file `path`: the whole file, or with `fpm` its
     !! `[extra.fformat]` table. `found` is false if an `fpm.toml` has no such table.
-    character(len=*), intent(in) :: path
-    logical, intent(in) :: fpm
-    type(config_t), intent(out) :: cfg
-    logical, intent(out) :: found
-    integer, intent(out) :: stat
-    character(len=:), allocatable, intent(out) :: errmsg
+    character(len=*), intent(in) :: path                    !! the TOML file
+    logical, intent(in) :: fpm                              !! `path` is an `fpm.toml`
+    type(config_t), intent(out) :: cfg                      !! the configuration; empty if not `found`
+    logical, intent(out) :: found                           !! the file has a configuration
+    integer, intent(out) :: stat                            !! nonzero for bad TOML, an unknown key or a bad value
+    character(len=:), allocatable, intent(out) :: errmsg    !! what is wrong, with the file name, if `stat` is nonzero
 
     type(toml_table), allocatable, target :: top
     type(toml_table), pointer :: extra, table
@@ -114,8 +114,8 @@ contains
 
     recursive subroutine read_table(t, prefix)
         !! Add the settings in table `t`, with keys prefixed by `prefix`.
-        type(toml_table), intent(inout) :: t
-        character(len=*), intent(in) :: prefix
+        type(toml_table), intent(inout) :: t   !! the table to read
+        character(len=*), intent(in) :: prefix  !! `''` for the top level, or `spaces.` / `case.`
         type(toml_key), allocatable :: keys(:)
         class(toml_value), pointer :: v
         type(toml_table), pointer :: sub
@@ -154,9 +154,9 @@ contains
 
     function value_text(t, key, kind) result(text)
         !! A string, integer or boolean value as text.
-        type(toml_table), intent(inout) :: t
-        character(len=*), intent(in) :: key
-        integer, intent(in) :: kind
+        type(toml_table), intent(inout) :: t    !! the table holding the value
+        character(len=*), intent(in) :: key     !! the value's key in `t`
+        integer, intent(in) :: kind             !! the value's type, a `toml_type` member
         character(len=:), allocatable :: text
         integer :: i
         logical :: flag
@@ -176,7 +176,8 @@ contains
     end function value_text
 
     subroutine read_files(t)
-        type(toml_table), intent(inout) :: t
+        !! Read the `[files]` table `t` into `cfg%extensions` and `cfg%exclude`.
+        type(toml_table), intent(inout) :: t   !! the `[files]` table
         type(toml_key), allocatable :: keys(:)
         integer :: k
         call t%get_keys(keys)
@@ -195,9 +196,9 @@ contains
 
     subroutine read_list(t, key, list)
         !! An array of strings.
-        type(toml_table), intent(inout) :: t
-        character(len=*), intent(in) :: key
-        type(string_t), allocatable, intent(inout) :: list(:)
+        type(toml_table), intent(inout) :: t                    !! the `[files]` table
+        character(len=*), intent(in) :: key                     !! the array's key in `t`
+        type(string_t), allocatable, intent(inout) :: list(:)   !! the strings, replacing any earlier list
         type(toml_array), pointer :: arr
         character(len=:), allocatable :: item
         integer :: i, ios
@@ -219,7 +220,8 @@ contains
     end subroutine read_list
 
     subroutine bad(msg)
-        character(len=*), intent(in) :: msg
+        !! Make loading fail with message `msg`, prefixed with the file name.
+        character(len=*), intent(in) :: msg   !! what is wrong
         stat = 1
         errmsg = path//': '//msg
     end subroutine bad
@@ -228,7 +230,7 @@ end subroutine load_config
 
 subroutine empty(cfg)
     !! A configuration with nothing set.
-    type(config_t), intent(out) :: cfg
+    type(config_t), intent(out) :: cfg      !! set to have no file, no settings and no `[files]` lists
     cfg%path = ''
     allocate (cfg%settings(0))
 end subroutine empty

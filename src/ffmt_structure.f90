@@ -11,21 +11,23 @@ private
 public :: analyze_structure
 
 type, public :: diagnostic_t
-    integer :: line = 0
-    character(len=:), allocatable :: message
+    !! A problem with the block structure, such as an `end` that matches no open construct.
+    integer :: line = 0                       !! source line of the statement concerned
+    character(len=:), allocatable :: message  !! what is wrong, e.g. `'if is not closed'`
 end type diagnostic_t
 
 type :: scope_t
-    integer :: construct = C_NONE
-    integer :: do_label = 0
-    integer :: line = 0
+    !! An open construct on the scope stack.
+    integer :: construct = C_NONE   !! one of the `C_*` constants
+    integer :: do_label = 0         !! for `do 10 ...`: the label of the statement that ends the loop, else 0
+    integer :: line = 0             !! source line of the opening statement
 end type scope_t
 
 type :: saved_stack_t
     !! Scope stacks for one preprocessor conditional: as it was at the `#if` (restored at each
     !! `#elif` / `#else`) and as it was at the end of the first branch (used after `#endif`).
-    type(scope_t), allocatable :: at_if(:)
-    type(scope_t), allocatable :: after_first(:)
+    type(scope_t), allocatable :: at_if(:)        !! the stack at the `#if`
+    type(scope_t), allocatable :: after_first(:)  !! the stack at the end of the first branch; unallocated until then
 end type saved_stack_t
 
 ! preprocessor conditionals
@@ -48,14 +50,14 @@ subroutine analyze_structure(src, tokens, stmts, info, depth, diags, units, proc
     !! from the structure at the `#if`, and the structure at the end of the first branch carries
     !! on after the `#endif`. That keeps code such as `#ifdef X` / `do` / `#endif` ... `#ifdef X` /
     !! `end do` / `#endif` balanced.
-    character(len=*), intent(in) :: src
-    type(token_list_t), intent(in) :: tokens
-    type(statement_list_t), intent(in) :: stmts
-    type(stmt_info_t), allocatable, intent(out) :: info(:)
-    integer, allocatable, intent(out) :: depth(:)
-    type(diagnostic_t), allocatable, intent(out) :: diags(:)
-    integer, allocatable, intent(out), optional :: units(:)
-    integer, allocatable, intent(out), optional :: procedures(:)
+    character(len=*), intent(in) :: src                           !! source text
+    type(token_list_t), intent(in) :: tokens                      !! tokens of `src`
+    type(statement_list_t), intent(in) :: stmts                   !! statements and other items of `src`
+    type(stmt_info_t), allocatable, intent(out) :: info(:)        !! classification of each item (`ROLE_NONE` for non-code)
+    integer, allocatable, intent(out) :: depth(:)                 !! nesting depth of each item
+    type(diagnostic_t), allocatable, intent(out) :: diags(:)      !! structure problems found, in the order found
+    integer, allocatable, intent(out), optional :: units(:)       !! for each item: enclosing program units
+    integer, allocatable, intent(out), optional :: procedures(:)  !! for each item: enclosing procedure definitions
 
     type(scope_t), allocatable :: stack(:)
     type(saved_stack_t), allocatable :: saved(:)
@@ -118,7 +120,8 @@ subroutine analyze_structure(src, tokens, stmts, info, depth, diags, units, proc
 contains
 
     subroutine push(s)
-        type(scope_t), intent(in) :: s
+        !! Push scope `s` onto `stack`, growing it if it is full.
+        type(scope_t), intent(in) :: s              !! the scope to push
         type(scope_t), allocatable :: tmp(:)
         if (top == size(stack)) then
             allocate (tmp(2*top))
@@ -131,7 +134,7 @@ contains
 
     subroutine count_units(k)
         !! Record how many of the scopes enclosing item `k` are program units, and procedures.
-        integer, intent(in) :: k
+        integer, intent(in) :: k   !! index into `stmts`
         integer :: j
         nunits(k) = 0
         nprocs(k) = 0
@@ -151,8 +154,9 @@ contains
     end subroutine count_units
 
     subroutine preprocessor(k)
-        !! Save or restore the scope stack at preprocessor conditionals.
-        integer, intent(in) :: k
+        !! Save or restore the scope stack at the preprocessor conditionals in item `k`, and set
+        !! the depth of the item to that of the restored stack.
+        integer, intent(in) :: k   !! index into `stmts` of a preprocessor item
         integer :: j
         do j = stmts%s(k)%first, stmts%s(k)%last
             if (tokens%tok(j)%kind /= TK_PREPROC) cycle
@@ -179,7 +183,8 @@ contains
     end subroutine preprocessor
 
     subroutine restore(scopes)
-        type(scope_t), intent(in) :: scopes(:)
+        !! Replace the scope stack by `scopes` (outermost first).
+        type(scope_t), intent(in) :: scopes(:)      !! the saved stack
         integer :: j
         top = 0
         do j = 1, size(scopes)
@@ -188,7 +193,10 @@ contains
     end subroutine restore
 
     subroutine close_scope(construct, line)
-        integer, intent(in) :: construct, line
+        !! Pop the construct closed by an `end` statement, with a diagnostic if it does not match
+        !! the innermost open construct. If an outer one matches, everything down to it is closed.
+        integer, intent(in) :: construct   !! construct named by the `end` (`C_ANY` for a bare `end`)
+        integer, intent(in) :: line        !! source line of the `end` statement
         integer :: j
 
         if (top == 0) then
@@ -215,16 +223,18 @@ contains
     end subroutine close_scope
 
     subroutine diagnose(line, message)
-        integer, intent(in) :: line
-        character(len=*), intent(in) :: message
+        !! Add a diagnostic to `diags`.
+        integer, intent(in) :: line             !! source line
+        character(len=*), intent(in) :: message !! text of the warning
         diags = [diags, diagnostic_t(line, message)]
     end subroutine diagnose
 
 end subroutine analyze_structure
 
 pure integer function conditional_kind(text) result(kind)
-    !! Kind of a preprocessor line (lowercase text).
-    character(len=*), intent(in) :: text
+    !! Kind of a preprocessor line (lowercase text): `PP_IF`, `PP_ELSE` (`#elif`, `#else`), `PP_ENDIF`
+    !! or `PP_OTHER`.
+    character(len=*), intent(in) :: text   !! text of the preprocessor token, in lowercase
     character(len=:), allocatable :: directive
     integer :: i, j
 
@@ -254,7 +264,8 @@ end function conditional_kind
 
 pure logical function closes(closing, open)
     !! True if an `end` of kind `closing` ends the open construct `open`.
-    integer, intent(in) :: closing, open
+    integer, intent(in) :: closing   !! construct named by the `end` (`C_ANY` for a bare `end`)
+    integer, intent(in) :: open      !! construct that is open
     closes = closing == open .or. closing == C_ANY
     ! `end function` / `end subroutine` may close a separate module procedure, and vice versa
     if (closing == C_PROCEDURE) closes = closes .or. open == C_FUNCTION .or. open == C_SUBROUTINE
@@ -262,7 +273,10 @@ pure logical function closes(closing, open)
 end function closes
 
 pure logical function middle_fits(middle, open)
-    integer, intent(in) :: middle, open
+    !! True if a middle statement of construct `middle` (`else` of `C_IF`, `contains`, ...) may
+    !! appear directly inside the open construct `open`.
+    integer, intent(in) :: middle   !! construct of the middle statement
+    integer, intent(in) :: open     !! construct that is open
     select case (middle)
     case (C_CONTAINS)
         select case (open)
@@ -277,7 +291,8 @@ pure logical function middle_fits(middle, open)
 end function middle_fits
 
 pure function to_s(i) result(s)
-    integer, intent(in) :: i
+    !! `i` as text, without blanks.
+    integer, intent(in) :: i   !! the number
     character(len=:), allocatable :: s
     character(len=16) :: buf
     write (buf, '(i0)') i
