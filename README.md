@@ -286,6 +286,7 @@ expression library [fregex](https://github.com/jacobwilliams/fregex). Directory 
 
 | Tool | Written in | Notes |
 |---|---|---|
+| [fformat](https://github.com/jacobwilliams/fformat) | Fortran | this project; free-form only, with token-checked output |
 | [fprettify](https://github.com/pseewald/fprettify) | Python | free-form only; the reference for this project's feature set |
 | [findent](https://sourceforge.net/projects/findent/) | C++ | indentation; fixed and free form, and conversion between them |
 | [fprettier](https://github.com/fredjones42/fprettier) | Rust | a rewrite of fprettify |
