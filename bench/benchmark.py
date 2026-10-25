@@ -1,11 +1,11 @@
-"""Compare the speed of fformat, fprettify and fprettier.
+"""Compare the speed of fformat, fprettify, fprettier and ffmt.
 
 Each formatter formats a fresh copy of the same Fortran files in place, several times; the
 median wall-clock time is reported. Every tool runs with its default settings, so the tools do
 somewhat different amounts of work.
 
 Run from the repository root, in the pixi `bench` environment (which provides fprettify and the
-Rust toolchain used to install fprettier):
+Rust toolchain used to install fprettier and ffmt):
 
     pixi run -e bench bench                          # default corpus, 5 runs per tool
     pixi run -e bench bench --corpus fortranpack     # fortranpack and all its dependencies
@@ -27,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BENCH_DIR = ROOT / "build" / "bench"
 FPRETTIER_VERSION = "0.5.0"
+FFMT_VERSION = "0.4.5"
 EXTENSIONS = {".f90", ".F90"}
 FORTRANPACK_URL = "https://github.com/jacobwilliams/fortranpack"
 FORTRANPACK_REF = "fc527da560b056b7d71ce0fa00edeb75d35ef571"
@@ -75,14 +76,14 @@ def build_fformat(flags):
     sys.exit("could not build fformat:\n" + out.stdout + out.stderr)
 
 
-def install_fprettier():
-    """Install fprettier with cargo into build/bench/cargo, if not already there."""
+def install_crate(crate, version):
+    """Install a formatter written in Rust with cargo into build/bench/cargo, if not already there,
+    and return the path of its executable."""
     root = BENCH_DIR / "cargo"
-    exe = root / "bin" / ("fprettier" + EXE)
+    exe = root / "bin" / (crate + EXE)
     if not exe.exists():
-        print(f"installing fprettier {FPRETTIER_VERSION} with cargo ...", file=sys.stderr)
-        run(["cargo", "install", "fprettier", "--version", FPRETTIER_VERSION, "--locked",
-             "--root", str(root)])
+        print(f"installing {crate} {version} with cargo ...", file=sys.stderr)
+        run(["cargo", "install", crate, "--version", version, "--locked", "--root", str(root)])
     return exe
 
 
@@ -192,11 +193,14 @@ def main():
 
     fformat = build_fformat(args.fformat_flags)
     fprettify = find_fprettify()
-    fprettier = install_fprettier()
+    fprettier = install_crate("fprettier", FPRETTIER_VERSION)
+    ffmt = install_crate("ffmt", FFMT_VERSION)
 
-    # all single-threaded: fprettier formats files in parallel by default, fformat does not (yet)
+    # all single-threaded: fprettier formats files in parallel by default (ffmt and fformat do not);
+    # ffmt's cache of formatted files would let a run skip work
     tools = [
         ("fformat", [str(fformat), "--no-config"], [str(fformat), "--version"]),
+        ("ffmt", [str(ffmt), "--no-cache", "--no-ignore", "--quiet", "-j", "1"], [str(ffmt), "--version"]),
         ("fprettier", [str(fprettier), "-r", "-S", "-j", "1"], [str(fprettier), "--version"]),
         ("fprettify", [fprettify, "-r", "-S"], [fprettify, "--version"]),
     ]
@@ -224,13 +228,13 @@ def main():
             results.append((name, version(vcmd), median, best, status))
 
     fastest = min(r[2] for r in results)
-    slowest = max(r[2] for r in results)
+    results.sort(key=lambda r: r[2])      # fastest first
 
     def marker(median):
-        """🟢 for the fastest tool, 🔴 for the slowest, 🟡 for the others."""
+        """🟢 for the fastest tool, 🔴 for one 10 times slower or more, 🟡 for the others."""
         if median == fastest:
             return "🟢"
-        return "🔴" if median == slowest else "🟡"
+        return "🔴" if median >= 10 * fastest else "🟡"
 
     lines = [
         f"{len(files)} files, {nlines:,} lines; median of {args.runs} runs, formatting in place with "

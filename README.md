@@ -330,9 +330,10 @@ expression library [fregex](https://github.com/jacobwilliams/fregex). Directory 
 
 Time to format two sets of free-form files (`.f90`, `.F90`), measured with
 [bench/benchmark.py](bench/benchmark.py). Each tool uses its default settings except that
-fprettier runs single-threaded (`-j 1`; by default it formats several files at once), so the
-tools do somewhat different amounts of work. fformat is built with fpm's release profile. Files
-that any tool cannot format are left out for all of them.
+fprettier runs single-threaded (`-j 1`; by default it formats several files at once) and ffmt
+without its cache of formatted files (`--no-cache`), so the tools do somewhat different amounts
+of work. fformat is built with fpm's release profile. Files that any tool cannot format are left
+out for all of them.
 
 This repository's sources and the Fortran dependencies that fpm fetches for it (toml-f, fregex,
 test-drive):
@@ -342,9 +343,10 @@ test-drive):
 
 | Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
-| fformat | 0.1.0 | 0.077 | 493,865 | 🟢 1.0x |
-| fprettier | 0.5.0 | 0.161 | 237,515 | 🟡 2.1x |
-| fprettify | 0.3.7 | 4.603 | 8,307 | 🔴 59.5x |
+| fformat | 0.1.0 | 0.074 | 515,804 | 🟢 1.0x |
+| fprettier | 0.5.0 | 0.153 | 249,785 | 🟡 2.1x |
+| ffmt | 0.4.5 | 2.342 | 16,328 | 🔴 31.6x |
+| fprettify | 0.3.7 | 4.505 | 8,487 | 🔴 60.8x |
 <!-- benchmark:default:end -->
 
 [fortranpack](https://github.com/jacobwilliams/fortranpack) (at `fc527da`) and the 38 libraries it
@@ -355,15 +357,16 @@ depends on, at the revisions `fpm update` fetched:
 
 | Tool | Version | Time (s) | Lines/s | Relative time |
 |---|---|--:|--:|--:|
-| fformat | 0.1.0 | 0.381 | 482,298 | 🟢 1.0x |
-| fprettier | 0.5.0 | 0.683 | 268,758 | 🟡 1.8x |
-| fprettify | 0.3.7 | 20.729 | 8,861 | 🔴 54.4x |
+| fformat | 0.1.0 | 0.370 | 496,213 | 🟢 1.0x |
+| fprettier | 0.5.0 | 0.680 | 270,035 | 🟡 1.8x |
+| ffmt | 0.4.5 | 11.021 | 16,664 | 🔴 29.8x |
+| fprettify | 0.3.7 | 20.692 | 8,876 | 🔴 55.9x |
 <!-- benchmark:fortranpack:end -->
 
 To rerun them, or time other files:
 `pixi run -e bench bench [--corpus default|fortranpack] [--runs N] [--update-readme] [PATH...]`.
-The `bench` environment provides fprettify, and the Rust toolchain that installs fprettier;
-fprettier and fortranpack are downloaded into `build/bench` on first use.
+The `bench` environment provides fprettify, and the Rust toolchain that installs fprettier and
+ffmt; they and fortranpack are downloaded into `build/bench` on first use.
 
 ## License
 
