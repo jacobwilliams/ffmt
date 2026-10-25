@@ -20,7 +20,7 @@ integer, parameter, public :: EXIT_OK = 0         !! success
 integer, parameter, public :: EXIT_CHANGED = 1    !! with `--check`: some files are not formatted
 integer, parameter, public :: EXIT_ERROR = 2      !! bad arguments, unreadable files or internal errors
 
-character(len=*), parameter, public :: VERSION = '0.1.0'
+character(len=*), parameter, public :: VERSION = '1.0.1'
 
 type, public :: cli_t
     !! Parsed command line.
