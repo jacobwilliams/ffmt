@@ -1,0 +1,1133 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_case &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_case
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 4.9% of total for modules and submodules.">267 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_case.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_case.f90.html'>ffmt_case.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_case</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_case.html#variable-intrinsic_constants">INTRINSIC_CONSTANTS</a>
+            <a class="list-group-item" href="../module/ffmt_case.html#variable-intrinsic_procedures">INTRINSIC_PROCEDURES</a>
+            <a class="list-group-item" href="../module/ffmt_case.html#variable-introducers">INTRODUCERS</a>
+            <a class="list-group-item" href="../module/ffmt_case.html#variable-keywords">KEYWORDS</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_case.html#type-case_marks_t">case_marks_t</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_case.html#proc-compute_case">compute_case</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_case.html#proc-kind_part">kind_part</a>
+            <a class="list-group-item" href="../module/ffmt_case.html#proc-names_case">names_case</a>
+            <a class="list-group-item" href="../module/ffmt_case.html#proc-statement_case">statement_case</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Letter case of keywords, dot operators, intrinsic procedures, the constants of the intrinsic
+modules, and kinds.</p>
+<p>Fortran names are not reserved, so a word is only treated as a keyword where its position makes it
+one: the leading words of a statement (<code>end subroutine</code>, <code>integer</code>, <code>if</code>, <code>else if</code>, <code>select case</code>,
+<code>implicit none</code>, ...), the attributes of a declaration before <code>::</code>, <code>in</code>/<code>out</code>/<code>inout</code> in <code>intent()</code>,
+<code>kind=</code>/<code>len=</code> in a type, <code>then</code>, <code>only:</code>, <code>result()</code> and <code>bind()</code>. A word that names something
+(<code>call open(...)</code>, <code>subroutine real</code>, <code>end function do</code>) keeps its case. Changing the case of a name
+never changes the meaning of the code, so a misclassified word is a matter of style only.</p>
+<p>Intrinsic procedures are recognized where they are called (followed by <code>(</code>, or after <code>call</code>), and the
+constants and types of <code>iso_fortran_env</code> and <code>iso_c_binding</code> wherever they are used, but not as the
+first word of a statement, after <code>%</code>, as an entity being declared, or as the name of a procedure
+being defined. Kinds are the values of <code>kind=</code>, the kind of a declaration's type (<code>real(dp) :: x</code>),
+the kind of a literal (<code>2_int64</code>, <code>.true._lk</code>, <code>ck_'a'</code>) and exponent letters (<code>1.0e-3</code>).</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_source.html'>ffmt_source</a></li>
+                  <li class="list-inline-item"><a href='ffmt_statements.html'>ffmt_statements</a></li>
+                  <li class="list-inline-item"><a href='ffmt_options.html'>ffmt_options</a></li>
+                  <li class="list-inline-item"><a href='ffmt_tokens.html'>ffmt_tokens</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_case~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_caseUsesGraph" width="641pt" height="203pt"
+ viewBox="0.00 0.00 641.00 203.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_case~~UsesGraph" class="graph" transform="scale(0.965914 0.965914) rotate(0) translate(4 205.87)">
+<title>module~~ffmt_case~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-205.87 659.62,-205.87 659.62,4 -4,4"/>
+<!-- module~ffmt_case -->
+<g id="module~~ffmt_case~~UsesGraph_node1" class="node">
+<title>module~ffmt_case</title>
+<polygon fill="none" stroke="black" points="655.62,-141.87 592.35,-141.87 592.35,-117.6 655.62,-117.6 655.62,-141.87"/>
+<text xml:space="preserve" text-anchor="middle" x="623.98" y="-126.13" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_case</text>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~ffmt_case~~UsesGraph_node2" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node2"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="556.35,-201.87 478.83,-201.87 478.83,-177.6 556.35,-177.6 556.35,-201.87"/>
+<text xml:space="preserve" text-anchor="middle" x="517.59" y="-186.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_case~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M601.1,-142.31C586.35,-150.79 566.65,-162.12 550.2,-171.57"/>
+<polygon fill="#000000" stroke="#000000" points="548.68,-168.4 541.76,-176.42 552.17,-174.47 548.68,-168.4"/>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~ffmt_case~~UsesGraph_node3" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node3"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="554.47,-121.87 480.7,-121.87 480.7,-97.6 554.47,-97.6 554.47,-121.87"/>
+<text xml:space="preserve" text-anchor="middle" x="517.59" y="-106.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_case~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M591.95,-123.79C583.75,-122.22 574.71,-120.49 565.86,-118.79"/>
+<polygon fill="#000000" stroke="#000000" points="566.8,-115.41 556.32,-116.96 565.49,-122.28 566.8,-115.41"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~ffmt_case~~UsesGraph_node4" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node4"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-121.87 219.54,-121.87 219.54,-97.6 317.31,-97.6 317.31,-121.87"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-106.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_case~~UsesGraph_edge3" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M591.87,-135.59C548.65,-143.02 468,-154.34 399.07,-149.73"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_node5" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node5"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-81.87 109.77,-81.87 109.77,-57.6 183.54,-57.6 183.54,-81.87"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-66.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_edge4" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605.23,-117.26C592.15,-108.46 573.7,-96.85 556.35,-88.73 454.86,-41.29 427.88,-26.75 317.31,-8.73 274.42,-1.75 260.33,6.24 219.54,-8.73 197.78,-16.72 178.1,-34.54 164.85,-48.87"/>
+<polygon fill="#000000" stroke="#000000" points="162.48,-46.27 158.48,-56.08 167.72,-50.9 162.48,-46.27"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_case~~UsesGraph_edge7" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M496.05,-122.2C473.12,-134.8 434.55,-152.11 399.07,-149.73"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-149.73C365.58,-147.63 331.56,-136.49 306.56,-126.5"/>
+<polygon fill="#000000" stroke="#000000" points="308.07,-123.34 297.49,-122.75 305.4,-129.8 308.07,-123.34"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_edge8" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-69.73C341.94,-56.36 325.99,-74.07 269.42,-69.73"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-69.73C243.7,-67.92 217.25,-67.72 195.26,-68.07"/>
+<polygon fill="#000000" stroke="#000000" points="195.31,-64.56 185.39,-68.27 195.46,-71.56 195.31,-64.56"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~ffmt_case~~UsesGraph_node6" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node6"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="442.83,-121.87 353.31,-121.87 353.31,-97.6 442.83,-97.6 442.83,-121.87"/>
+<text xml:space="preserve" text-anchor="middle" x="398.07" y="-106.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~ffmt_case~~UsesGraph_edge5" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M480.37,-109.73C472.21,-109.73 463.37,-109.73 454.62,-109.73"/>
+<polygon fill="#000000" stroke="#000000" points="454.76,-106.23 444.76,-109.73 454.76,-113.23 454.76,-106.23"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~ffmt_case~~UsesGraph_node7" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node7"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-41.87 236.04,-41.87 236.04,-17.6 300.81,-17.6 300.81,-41.87"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-26.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_case~~UsesGraph_edge6" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.63,-97.11C461.25,-88.31 428.6,-76.9 399.07,-69.73"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-69.73C368.3,-62.76 336.53,-52.81 311.88,-44.58"/>
+<polygon fill="#000000" stroke="#000000" points="313.13,-41.3 302.53,-41.42 310.89,-47.94 313.13,-41.3"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_edge10" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M229.86,-97.19C218.73,-93.47 206.41,-89.36 194.76,-85.47"/>
+<polygon fill="#000000" stroke="#000000" points="195.89,-82.15 185.3,-82.31 193.67,-88.79 195.89,-82.15"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_case~~UsesGraph_node8" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_case~~UsesGraph_node8"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-81.87 0,-81.87 0,-57.6 73.77,-57.6 73.77,-81.87"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-66.13" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_case~~UsesGraph_edge9" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.14,-105.99C187.77,-103.04 146.1,-98.18 109.77,-90.73 101.71,-89.08 93.25,-86.97 85.07,-84.72"/>
+<polygon fill="#000000" stroke="#000000" points="86.2,-81.4 75.62,-82.01 84.27,-88.13 86.2,-81.4"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_case~~UsesGraph_edge11" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-69.73C101.83,-69.73 93.65,-69.73 85.66,-69.73"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-66.23 75.67,-69.73 85.67,-73.23 85.67,-66.23"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_case~~UsesGraph_edge12" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M353.14,-109.73C345.4,-109.73 337.22,-109.73 329.13,-109.73"/>
+<polygon fill="#000000" stroke="#000000" points="329.32,-106.23 319.32,-109.73 329.32,-113.23 329.32,-106.23"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_edge13" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M369.9,-97.25C344.54,-86.57 305.32,-72.49 269.42,-69.73"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_case~~UsesGraph_edge15" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.64,-40.35C223.07,-44.55 208.35,-49.46 194.59,-54.06"/>
+<polygon fill="#000000" stroke="#000000" points="193.63,-50.69 185.26,-57.18 195.85,-57.33 193.63,-50.69"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_case~~UsesGraph_edge14" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.77,-32.01C203.76,-34.67 152.98,-39.88 109.77,-48.73 101.71,-50.39 93.25,-52.5 85.07,-54.75"/>
+<polygon fill="#000000" stroke="#000000" points="84.27,-51.34 75.62,-57.46 86.2,-58.07 84.27,-51.34"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleffmt_caseUsesGraph = svgPanZoom('#moduleffmt_caseUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_case~~UsedByGraph Pages: 1 -->
+<svg id="moduleffmt_caseUsedByGraph" width="379pt" height="52pt"
+ viewBox="0.00 0.00 379.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_case~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48.27)">
+<title>module~~ffmt_case~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-48.27 375.31,-48.27 375.31,4 -4,4"/>
+<!-- module~ffmt_case -->
+<g id="module~~ffmt_case~~UsedByGraph_node1" class="node">
+<title>module~ffmt_case</title>
+<polygon fill="none" stroke="black" points="63.27,-44.27 0,-44.27 0,-20 63.27,-20 63.27,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="31.64" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_case</text>
+</g>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_case~~UsedByGraph_node2" class="node">
+<title>module~ffmt_format</title>
+<g id="a_module~~ffmt_case~~UsedByGraph_node2"><a xlink:href="../module/ffmt_format.html" xlink:title="ffmt_format">
+<polygon fill="#337ab7" stroke="#337ab7" points="281.31,-44.27 206.79,-44.27 206.79,-20 281.31,-20 281.31,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="244.05" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_case~~UsedByGraph_edge1" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M206.29,-32.74C194.91,-32.9 182.33,-33.06 170.79,-33.13 139,-33.35 131.06,-33.37 99.27,-33.13 91.42,-33.08 83.05,-32.98 74.98,-32.87"/>
+<polygon fill="#000000" stroke="#000000" points="75.05,-29.37 65,-32.72 74.95,-36.37 75.05,-29.37"/>
+</g>
+<!-- module~ffmt_layout -->
+<g id="module~~ffmt_case~~UsedByGraph_node3" class="node">
+<title>module~ffmt_layout</title>
+<g id="a_module~~ffmt_case~~UsedByGraph_node3"><a xlink:href="../module/ffmt_layout.html" xlink:title="ffmt_layout">
+<polygon fill="#337ab7" stroke="#337ab7" points="170.79,-24.27 99.27,-24.27 99.27,0 170.79,0 170.79,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="135.03" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_layout -->
+<g id="module~~ffmt_case~~UsedByGraph_edge4" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_layout</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M206.52,-25.31C198.7,-23.85 190.34,-22.28 182.21,-20.77"/>
+<polygon fill="#000000" stroke="#000000" points="182.91,-17.34 172.44,-18.94 181.63,-24.22 182.91,-17.34"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_case~~UsedByGraph_edge2" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M98.85,-19.07C91.08,-20.61 82.76,-22.25 74.74,-23.83"/>
+<polygon fill="#000000" stroke="#000000" points="74.31,-20.35 65.17,-25.72 75.66,-27.22 74.31,-20.35"/>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_case~~UsedByGraph_node4" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~ffmt_case~~UsedByGraph_node4"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="371.31,-44.27 317.31,-44.27 317.31,-20 371.31,-20 371.31,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="344.31" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~ffmt_case~~UsedByGraph_edge3" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M316.98,-32.13C309.64,-32.13 301.42,-32.13 293.24,-32.13"/>
+<polygon fill="#000000" stroke="#000000" points="293.31,-28.64 283.31,-32.14 293.31,-35.64 293.31,-28.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-intrinsic_constants"></span>
+              character(len=*),
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>INTRINSIC_CONSTANTS</strong>(*)</td>
+<td> =</td>
+                <td>[character(len=28)::&#39;atomic_int_kind&#39;, &#39;atomic_logical_kind&#39;, &#39;c_alert&#39;, &#39;c_backspace&#39;, &#39;c_bool&#39;, &#39;c_carriage_return&#39;, &#39;c_char&#39;, &#39;c_double&#39;, &#39;c_double_complex&#39;, &#39;c_float&#39;, &#39;c_float128&#39;, &#39;c_float128_complex&#39;, &#39;c_float_complex&#39;, &#39;c_form_feed&#39;, &#39;c_funptr&#39;, &#39;c_horizontal_tab&#39;, &#39;c_int&#39;, &#39;c_int128_t&#39;, &#39;c_int16_t&#39;, &#39;c_int32_t&#39;, &#39;c_int64_t&#39;, &#39;c_int8_t&#39;, &#39;c_int_fast128_t&#39;, &#39;c_int_fast16_t&#39;, &#39;c_int_fast32_t&#39;, &#39;c_int_fast64_t&#39;, &#39;c_int_fast8_t&#39;, &#39;c_int_least128_t&#39;, &#39;c_int_least16_t&#39;, &#39;c_int_least32_t&#39;, &#39;c_int_least64_t&#39;, &#39;c_int_least8_t&#39;, &#39;c_intmax_t&#39;, &#39;c_intptr_t&#39;, &#39;c_long&#39;, &#39;c_long_double&#39;, &#39;c_long_double_complex&#39;, &#39;c_long_long&#39;, &#39;c_new_line&#39;, &#39;c_null_char&#39;, &#39;c_null_funptr&#39;, &#39;c_null_ptr&#39;, &#39;c_ptr&#39;, &#39;c_ptrdiff_t&#39;, &#39;c_short&#39;, &#39;c_signed_char&#39;, &#39;c_size_t&#39;, &#39;c_vertical_tab&#39;, &#39;character_kinds&#39;, &#39;character_storage_size&#39;, &#39;current_team&#39;, &#39;error_unit&#39;, &#39;event_type&#39;, &#39;file_storage_size&#39;, &#39;initial_team&#39;, &#39;input_unit&#39;, &#39;int16&#39;, &#39;int32&#39;, &#39;int64&#39;, &#39;int8&#39;, &#39;integer_kinds&#39;, &#39;iostat_end&#39;, &#39;iostat_eor&#39;, &#39;iostat_inquire_internal_unit&#39;, &#39;lock_type&#39;, &#39;logical16&#39;, &#39;logical32&#39;, &#39;logical64&#39;, &#39;logical8&#39;, &#39;logical_kinds&#39;, &#39;notify_type&#39;, &#39;numeric_storage_size&#39;, &#39;output_unit&#39;, &#39;parent_team&#39;, &#39;real128&#39;, &#39;real16&#39;, &#39;real32&#39;, &#39;real64&#39;, &#39;real_kinds&#39;, &#39;stat_failed_image&#39;, &#39;stat_locked&#39;, &#39;stat_locked_other_image&#39;, &#39;stat_stopped_image&#39;, &#39;stat_unlocked&#39;, &#39;stat_unlocked_failed_image&#39;, &#39;team_type&#39;]</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-intrinsic_procedures"></span>
+              character(len=*),
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>INTRINSIC_PROCEDURES</strong>(*)</td>
+<td> =</td>
+                <td>[character(len=24)::&#39;abs&#39;, &#39;achar&#39;, &#39;acos&#39;, &#39;acosd&#39;, &#39;acosh&#39;, &#39;acospi&#39;, &#39;adjustl&#39;, &#39;adjustr&#39;, &#39;aimag&#39;, &#39;aint&#39;, &#39;all&#39;, &#39;allocated&#39;, &#39;alog&#39;, &#39;alog10&#39;, &#39;amax0&#39;, &#39;amax1&#39;, &#39;amin0&#39;, &#39;amin1&#39;, &#39;amod&#39;, &#39;anint&#39;, &#39;any&#39;, &#39;asin&#39;, &#39;asind&#39;, &#39;asinh&#39;, &#39;asinpi&#39;, &#39;associated&#39;, &#39;atan&#39;, &#39;atan2&#39;, &#39;atan2d&#39;, &#39;atan2pi&#39;, &#39;atand&#39;, &#39;atanh&#39;, &#39;atanpi&#39;, &#39;atomic_add&#39;, &#39;atomic_and&#39;, &#39;atomic_cas&#39;, &#39;atomic_define&#39;, &#39;atomic_fetch_add&#39;, &#39;atomic_fetch_and&#39;, &#39;atomic_fetch_or&#39;, &#39;atomic_fetch_xor&#39;, &#39;atomic_or&#39;, &#39;atomic_ref&#39;, &#39;atomic_xor&#39;, &#39;bessel_j0&#39;, &#39;bessel_j1&#39;, &#39;bessel_jn&#39;, &#39;bessel_y0&#39;, &#39;bessel_y1&#39;, &#39;bessel_yn&#39;, &#39;bge&#39;, &#39;bgt&#39;, &#39;bit_size&#39;, &#39;ble&#39;, &#39;blt&#39;, &#39;btest&#39;, &#39;c_associated&#39;, &#39;c_f_pointer&#39;, &#39;c_f_procpointer&#39;, &#39;c_f_strpointer&#39;, &#39;c_funloc&#39;, &#39;c_loc&#39;, &#39;c_sizeof&#39;, &#39;cabs&#39;, &#39;ccos&#39;, &#39;ceiling&#39;, &#39;cexp&#39;, &#39;char&#39;, &#39;clog&#39;, &#39;cmplx&#39;, &#39;co_broadcast&#39;, &#39;co_max&#39;, &#39;co_min&#39;, &#39;co_reduce&#39;, &#39;co_sum&#39;, &#39;command_argument_count&#39;, &#39;compiler_options&#39;, &#39;compiler_version&#39;, &#39;conjg&#39;, &#39;cos&#39;, &#39;cosd&#39;, &#39;cosh&#39;, &#39;coshape&#39;, &#39;cospi&#39;, &#39;count&#39;, &#39;cpu_time&#39;, &#39;cshift&#39;, &#39;csin&#39;, &#39;csqrt&#39;, &#39;dabs&#39;, &#39;dacos&#39;, &#39;dasin&#39;, &#39;datan&#39;, &#39;datan2&#39;, &#39;date_and_time&#39;, &#39;dble&#39;, &#39;dcos&#39;, &#39;dcosh&#39;, &#39;ddim&#39;, &#39;dexp&#39;, &#39;digits&#39;, &#39;dim&#39;, &#39;dint&#39;, &#39;dlog&#39;, &#39;dlog10&#39;, &#39;dmax1&#39;, &#39;dmin1&#39;, &#39;dmod&#39;, &#39;dnint&#39;, &#39;dot_product&#39;, &#39;dprod&#39;, &#39;dshiftl&#39;, &#39;dshiftr&#39;, &#39;dsign&#39;, &#39;dsin&#39;, &#39;dsinh&#39;, &#39;dsqrt&#39;, &#39;dtan&#39;, &#39;dtanh&#39;, &#39;eoshift&#39;, &#39;epsilon&#39;, &#39;erf&#39;, &#39;erfc&#39;, &#39;erfc_scaled&#39;, &#39;event_query&#39;, &#39;execute_command_line&#39;, &#39;exp&#39;, &#39;exponent&#39;, &#39;extends_type_of&#39;, &#39;f_c_string&#39;, &#39;failed_images&#39;, &#39;findloc&#39;, &#39;float&#39;, &#39;floor&#39;, &#39;fraction&#39;, &#39;gamma&#39;, &#39;get_command&#39;, &#39;get_command_argument&#39;, &#39;get_environment_variable&#39;, &#39;get_team&#39;, &#39;huge&#39;, &#39;hypot&#39;, &#39;iabs&#39;, &#39;iachar&#39;, &#39;iall&#39;, &#39;iand&#39;, &#39;iany&#39;, &#39;ibclr&#39;, &#39;ibits&#39;, &#39;ibset&#39;, &#39;ichar&#39;, &#39;idim&#39;, &#39;idint&#39;, &#39;idnint&#39;, &#39;ieor&#39;, &#39;ifix&#39;, &#39;image_index&#39;, &#39;image_status&#39;, &#39;index&#39;, &#39;int&#39;, &#39;ior&#39;, &#39;iparity&#39;, &#39;is_contiguous&#39;, &#39;is_iostat_end&#39;, &#39;is_iostat_eor&#39;, &#39;ishft&#39;, &#39;ishftc&#39;, &#39;isign&#39;, &#39;kind&#39;, &#39;lbound&#39;, &#39;lcobound&#39;, &#39;leadz&#39;, &#39;len&#39;, &#39;len_trim&#39;, &#39;lge&#39;, &#39;lgt&#39;, &#39;lle&#39;, &#39;llt&#39;, &#39;log&#39;, &#39;log10&#39;, &#39;log_gamma&#39;, &#39;logical&#39;, &#39;maskl&#39;, &#39;maskr&#39;, &#39;matmul&#39;, &#39;max&#39;, &#39;max0&#39;, &#39;max1&#39;, &#39;maxexponent&#39;, &#39;maxloc&#39;, &#39;maxval&#39;, &#39;merge&#39;, &#39;merge_bits&#39;, &#39;min&#39;, &#39;min0&#39;, &#39;min1&#39;, &#39;minexponent&#39;, &#39;minloc&#39;, &#39;minval&#39;, &#39;mod&#39;, &#39;modulo&#39;, &#39;move_alloc&#39;, &#39;mvbits&#39;, &#39;nearest&#39;, &#39;new_line&#39;, &#39;nint&#39;, &#39;norm2&#39;, &#39;not&#39;, &#39;null&#39;, &#39;num_images&#39;, &#39;out_of_range&#39;, &#39;pack&#39;, &#39;parity&#39;, &#39;popcnt&#39;, &#39;poppar&#39;, &#39;precision&#39;, &#39;present&#39;, &#39;product&#39;, &#39;radix&#39;, &#39;random_init&#39;, &#39;random_number&#39;, &#39;random_seed&#39;, &#39;range&#39;, &#39;rank&#39;, &#39;real&#39;, &#39;reduce&#39;, &#39;repeat&#39;, &#39;reshape&#39;, &#39;rrspacing&#39;, &#39;same_type_as&#39;, &#39;scale&#39;, &#39;scan&#39;, &#39;selected_char_kind&#39;, &#39;selected_int_kind&#39;, &#39;selected_logical_kind&#39;, &#39;selected_real_kind&#39;, &#39;set_exponent&#39;, &#39;shape&#39;, &#39;shifta&#39;, &#39;shiftl&#39;, &#39;shiftr&#39;, &#39;sign&#39;, &#39;sin&#39;, &#39;sind&#39;, &#39;sinh&#39;, &#39;sinpi&#39;, &#39;size&#39;, &#39;sngl&#39;, &#39;spacing&#39;, &#39;split&#39;, &#39;spread&#39;, &#39;sqrt&#39;, &#39;stopped_images&#39;, &#39;storage_size&#39;, &#39;sum&#39;, &#39;system_clock&#39;, &#39;tan&#39;, &#39;tand&#39;, &#39;tanh&#39;, &#39;tanpi&#39;, &#39;team_number&#39;, &#39;this_image&#39;, &#39;tiny&#39;, &#39;tokenize&#39;, &#39;trailz&#39;, &#39;transfer&#39;, &#39;transpose&#39;, &#39;trim&#39;, &#39;ubound&#39;, &#39;ucobound&#39;, &#39;unpack&#39;, &#39;verify&#39;]</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-introducers"></span>
+              character(len=*),
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>INTRODUCERS</strong>(*)</td>
+<td> =</td>
+                <td>[character(len=12)::&#39;call&#39;, &#39;subroutine&#39;, &#39;function&#39;, &#39;program&#39;, &#39;module&#39;, &#39;submodule&#39;, &#39;use&#39;, &#39;entry&#39;, &#39;procedure&#39;, &#39;interface&#39;, &#39;go&#39;, &#39;goto&#39;, &#39;cycle&#39;, &#39;exit&#39;, &#39;data&#39;, &#39;common&#39;, &#39;namelist&#39;, &#39;is&#39;]</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-keywords"></span>
+              character(len=*),
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>KEYWORDS</strong>(*)</td>
+<td> =</td>
+                <td>[character(len=16)::&#39;abstract&#39;, &#39;allocatable&#39;, &#39;allocate&#39;, &#39;assign&#39;, &#39;associate&#39;, &#39;asynchronous&#39;, &#39;backspace&#39;, &#39;bind&#39;, &#39;block&#39;, &#39;call&#39;, &#39;case&#39;, &#39;change&#39;, &#39;character&#39;, &#39;class&#39;, &#39;close&#39;, &#39;codimension&#39;, &#39;common&#39;, &#39;complex&#39;, &#39;concurrent&#39;, &#39;contains&#39;, &#39;contiguous&#39;, &#39;continue&#39;, &#39;critical&#39;, &#39;cycle&#39;, &#39;data&#39;, &#39;deallocate&#39;, &#39;default&#39;, &#39;deferred&#39;, &#39;dimension&#39;, &#39;do&#39;, &#39;double&#39;, &#39;doubleprecision&#39;, &#39;elemental&#39;, &#39;else&#39;, &#39;elseif&#39;, &#39;elsewhere&#39;, &#39;end&#39;, &#39;endfile&#39;, &#39;entry&#39;, &#39;enum&#39;, &#39;enumerator&#39;, &#39;enumeration&#39;, &#39;equivalence&#39;, &#39;error&#39;, &#39;exit&#39;, &#39;extends&#39;, &#39;external&#39;, &#39;final&#39;, &#39;flush&#39;, &#39;forall&#39;, &#39;function&#39;, &#39;generic&#39;, &#39;go&#39;, &#39;goto&#39;, &#39;if&#39;, &#39;implicit&#39;, &#39;import&#39;, &#39;impure&#39;, &#39;include&#39;, &#39;inquire&#39;, &#39;integer&#39;, &#39;intent&#39;, &#39;interface&#39;, &#39;intrinsic&#39;, &#39;is&#39;, &#39;logical&#39;, &#39;module&#39;, &#39;namelist&#39;, &#39;non_intrinsic&#39;, &#39;non_overridable&#39;, &#39;non_recursive&#39;, &#39;none&#39;, &#39;nopass&#39;, &#39;nullify&#39;, &#39;open&#39;, &#39;optional&#39;, &#39;parameter&#39;, &#39;pass&#39;, &#39;pause&#39;, &#39;pointer&#39;, &#39;precision&#39;, &#39;print&#39;, &#39;private&#39;, &#39;procedure&#39;, &#39;program&#39;, &#39;protected&#39;, &#39;public&#39;, &#39;pure&#39;, &#39;rank&#39;, &#39;read&#39;, &#39;real&#39;, &#39;recursive&#39;, &#39;return&#39;, &#39;rewind&#39;, &#39;save&#39;, &#39;select&#39;, &#39;selectcase&#39;, &#39;selectrank&#39;, &#39;selecttype&#39;, &#39;sequence&#39;, &#39;simple&#39;, &#39;stop&#39;, &#39;submodule&#39;, &#39;subroutine&#39;, &#39;sync&#39;, &#39;target&#39;, &#39;team&#39;, &#39;then&#39;, &#39;type&#39;, &#39;use&#39;, &#39;value&#39;, &#39;volatile&#39;, &#39;wait&#39;, &#39;where&#39;, &#39;while&#39;, &#39;write&#39;]</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-case_marks_t"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/case_marks_t.html'>case_marks_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>The letter case wanted for each token (<code>CASE_KEEP</code>, <code>CASE_LOWER</code> or <code>CASE_UPPER</code>).</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-part"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>part</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>for the kind part of a token only (see <a href="../proc/kind_part.html">kind_part</a>), applied
+after <code>whole</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-whole"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>whole</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>for the whole text of each token</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-compute_case"></span> <h3>public  function <a href='../proc/compute_case.html'>compute_case</a>(source, views, opts) result(marks)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The letter case wanted for each token.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-source"></span>
+              type(<a href='../type/source_t.html'>source_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>source</strong></td>
+            <td>
+<p>the source</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-views"></span>
+              type(<a href='../type/statement_view_t.html'>statement_view_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>views</strong>(:)</td>
+            <td>
+<p>the view of each item (see <a href="../proc/statement_views.html">statement_views</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts"></span>
+              type(<a href='../type/case_options_t.html'>case_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the case wanted for each category</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/case_marks_t.html'>case_marks_t</a>)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-kind_part"></span> <h3>public pure subroutine <a href='../proc/kind_part.html'>kind_part</a>(text, kind, a, b)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Where the kind is in the text of a token of kind <code>kind</code>: <code>text(a:b)</code>, or <code>b &lt; a</code> if it has none.
+For a logical constant it is the suffix (<code>_lk</code> in <code>.true._lk</code>), for a string the prefix (<code>ck</code> in
+<code>ck_'a'</code>). Numbers have letters only in their exponent and kind, so they are cased whole.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~4"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the token's text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-kind"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>kind</strong></td>
+            <td>
+<p>its kind (<code>TK_*</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~2"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+<p>the range of the kind in <code>text</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~2"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong></td>
+            <td>
+<p>the range of the kind in <code>text</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-names_case"></span> <h3>private  subroutine <a href='../proc/names_case.html'>names_case</a>(v, opts, mode)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Mark the intrinsic procedures, the constants of the intrinsic modules and the kinds named in
+one code statement.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v"></span>
+              type(<a href='../type/statement_view_t.html'>statement_view_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>the statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~2"></span>
+              type(<a href='../type/case_options_t.html'>case_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the case wanted for each category</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mode"></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mode</strong>(:)</td>
+            <td>
+<p>case mode of each token, set for the names</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-statement_case"></span> <h3>private  subroutine <a href='../proc/statement_case.html'>statement_case</a>(v, kw_mode, mode)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Mark the keywords of one code statement with <code>kw_mode</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-v~2"></span>
+              type(<a href='../type/statement_view_t.html'>statement_view_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>v</strong></td>
+            <td>
+<p>the statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-kw_mode"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>kw_mode</strong></td>
+            <td>
+<p>case mode for keywords</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mode~2"></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mode</strong>(:)</td>
+            <td>
+<p>case mode of each token, set for the keywords</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

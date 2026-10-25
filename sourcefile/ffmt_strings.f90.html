@@ -1,0 +1,997 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_strings.f90 &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_strings.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.8% of total for source files.">96 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_strings.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">ffmt_strings.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_strings.html">ffmt_strings</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/ffmt_strings.f90.html#src">ffmt_strings.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: sourcefile~~ffmt_strings.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefileffmt_stringsf90AfferentGraph" width="641pt" height="428pt"
+ viewBox="0.00 0.00 641.00 428.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph" class="graph" transform="scale(0.536882 0.536882) rotate(0) translate(4 794.06)">
+<title>sourcefile~~ffmt_strings.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-794.06 1189.93,-794.06 1189.93,4 -4,4"/>
+<!-- sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~ffmt_strings.f90</title>
+<polygon fill="none" stroke="black" points="94.02,-269.13 0,-269.13 0,-244.87 94.02,-244.87 94.02,-269.13"/>
+<text xml:space="preserve" text-anchor="middle" x="47.01" y="-253.4" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_strings.f90</text>
+</g>
+<!-- sourcefile~ffmt_cli.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~ffmt_cli.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/ffmt_cli.f90.html" xlink:title="ffmt_cli.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1185.93,-621.13 1115.16,-621.13 1115.16,-596.87 1185.93,-596.87 1185.93,-621.13"/>
+<text xml:space="preserve" text-anchor="middle" x="1150.54" y="-605.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-747C709.07,-749.18 700.02,-761.14 657.6,-768 575.67,-781.26 554.32,-796.11 471.82,-787"/>
+</g>
+<!-- sourcefile~ffmt_config.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node3" class="node">
+<title>sourcefile~ffmt_config.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/ffmt_config.f90.html" xlink:title="ffmt_config.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1077.66,-661.13 985.89,-661.13 985.89,-636.87 1077.66,-636.87 1077.66,-661.13"/>
+<text xml:space="preserve" text-anchor="middle" x="1031.77" y="-645.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_config.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge18" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_config.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1114.83,-620.89C1104.03,-624.59 1091.92,-628.74 1080.4,-632.69"/>
+<polygon fill="#000000" stroke="#000000" points="1079.35,-629.35 1071.03,-635.9 1081.62,-635.97 1079.35,-629.35"/>
+</g>
+<!-- sourcefile~ffmt_diff.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node5" class="node">
+<title>sourcefile~ffmt_diff.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/ffmt_diff.f90.html" xlink:title="ffmt_diff.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="648.6,-759.13 572.58,-759.13 572.58,-734.87 648.6,-734.87 648.6,-759.13"/>
+<text xml:space="preserve" text-anchor="middle" x="610.59" y="-743.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_diff.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_diff.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge20" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_diff.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-747C721.52,-747 687.33,-747 660.32,-747"/>
+<polygon fill="#000000" stroke="#000000" points="660.35,-743.5 650.35,-747 660.35,-750.5 660.35,-743.5"/>
+</g>
+<!-- sourcefile~ffmt_format.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node6" class="node">
+<title>sourcefile~ffmt_format.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/ffmt_format.f90.html" xlink:title="ffmt_format.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1079.16,-527.13 984.39,-527.13 984.39,-502.87 1079.16,-502.87 1079.16,-527.13"/>
+<text xml:space="preserve" text-anchor="middle" x="1031.77" y="-511.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge21" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1134.28,-596.71C1114.72,-580.97 1080.57,-553.48 1057.33,-534.77"/>
+<polygon fill="#000000" stroke="#000000" points="1059.58,-532.09 1049.6,-528.54 1055.19,-537.54 1059.58,-532.09"/>
+</g>
+<!-- sourcefile~ffmt_io.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node7" class="node">
+<title>sourcefile~ffmt_io.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node7"><a xlink:href="../sourcefile/ffmt_io.f90.html" xlink:title="ffmt_io.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="352.93,-687.13 285.16,-687.13 285.16,-662.87 352.93,-662.87 352.93,-687.13"/>
+<text xml:space="preserve" text-anchor="middle" x="319.05" y="-671.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_io.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_io.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge22" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_io.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1138.65,-621.53C1125.82,-635.48 1103.2,-657.69 1079.16,-670 946.97,-737.7 902.5,-747 753.98,-747"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-747C709.04,-748.63 699.85,-733.88 657.6,-726 553.11,-706.51 429.37,-689.3 364.62,-680.74"/>
+<polygon fill="#000000" stroke="#000000" points="365.11,-677.27 354.74,-679.44 364.2,-684.21 365.11,-677.27"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node12" class="node">
+<title>sourcefile~ffmt_settings.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node12"><a xlink:href="../sourcefile/ffmt_settings.f90.html" xlink:title="ffmt_settings.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="948.39,-641.13 848.37,-641.13 848.37,-616.87 948.39,-616.87 948.39,-641.13"/>
+<text xml:space="preserve" text-anchor="middle" x="898.38" y="-625.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_settings.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge28" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1114.76,-611.78C1074.74,-614.98 1008.31,-620.29 959.79,-624.17"/>
+<polygon fill="#000000" stroke="#000000" points="959.69,-620.67 950,-624.95 960.24,-627.65 959.69,-620.67"/>
+</g>
+<!-- sourcefile~ffmt_walk.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node17" class="node">
+<title>sourcefile~ffmt_walk.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node17"><a xlink:href="../sourcefile/ffmt_walk.f90.html" xlink:title="ffmt_walk.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="218.41,-59.13 135.64,-59.13 135.64,-34.87 218.41,-34.87 218.41,-59.13"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-43.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_walk.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_walk.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge57" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_walk.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1147.33,-596.56C1131.59,-509.91 1033.26,0 899.38,0 899.38,0 899.38,0 469.82,0 384.92,0 287.86,-19.64 229.84,-33.52"/>
+<polygon fill="#000000" stroke="#000000" points="229.13,-30.09 220.24,-35.86 230.79,-36.9 229.13,-30.09"/>
+</g>
+<!-- sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge2" class="edge">
+<title>sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M985.72,-652.36C930.94,-656.42 835.7,-663.41 753.98,-669"/>
+</g>
+<!-- sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge29" class="edge">
+<title>sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M985.56,-642.12C977.3,-640.86 968.56,-639.53 959.94,-638.22"/>
+<polygon fill="#000000" stroke="#000000" points="960.64,-634.78 950.22,-636.74 959.58,-641.7 960.64,-634.78"/>
+</g>
+<!-- sourcefile~ffmt_constructs.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node4" class="node">
+<title>sourcefile~ffmt_constructs.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/ffmt_constructs.f90.html" xlink:title="ffmt_constructs.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="527.58,-607.13 414.06,-607.13 414.06,-582.87 527.58,-582.87 527.58,-607.13"/>
+<text xml:space="preserve" text-anchor="middle" x="470.82" y="-591.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge3" class="edge">
+<title>sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.05,-597C255.96,-579.59 233.33,-668.16 178.03,-635"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node13" class="node">
+<title>sourcefile~ffmt_statements.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node13"><a xlink:href="../sourcefile/ffmt_statements.f90.html" xlink:title="ffmt_statements.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="378.06,-451.13 260.04,-451.13 260.04,-426.87 378.06,-426.87 378.06,-451.13"/>
+<text xml:space="preserve" text-anchor="middle" x="319.05" y="-435.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge31" class="edge">
+<title>sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M457.41,-582.45C445.48,-570.01 427.36,-550.11 414.06,-531 394.97,-503.58 402.59,-487.69 378.06,-465 374.96,-462.13 371.49,-459.54 367.84,-457.21"/>
+<polygon fill="#000000" stroke="#000000" points="369.59,-454.18 359.16,-452.36 366.18,-460.29 369.59,-454.18"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node15" class="node">
+<title>sourcefile~ffmt_tokens.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node15"><a xlink:href="../sourcefile/ffmt_tokens.f90.html" xlink:title="ffmt_tokens.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="224.04,-393.13 130.02,-393.13 130.02,-368.87 224.04,-368.87 224.04,-393.13"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-377.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge44" class="edge">
+<title>sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M413.72,-603.2C385.17,-605.51 350.22,-605.46 320.05,-597"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.05,-597C232.38,-572.98 195.28,-455.69 183.01,-404.72"/>
+<polygon fill="#000000" stroke="#000000" points="186.44,-404.01 180.81,-395.03 179.61,-405.56 186.44,-404.01"/>
+</g>
+<!-- sourcefile~ffmt_diff.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge4" class="edge">
+<title>sourcefile~ffmt_diff.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M588.04,-759.41C561.25,-773.39 513.93,-793.38 471.82,-787"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-787C369.34,-771.77 348.01,-746.89 260.04,-696 220.72,-673.26 216.99,-658.36 178.03,-635"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge5" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-631C688.55,-643.42 676.22,-667.93 611.59,-669"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node8" class="node">
+<title>sourcefile~ffmt_layout.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node8"><a xlink:href="../sourcefile/ffmt_layout.f90.html" xlink:title="ffmt_layout.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="944.26,-473.13 852.49,-473.13 852.49,-448.87 944.26,-448.87 944.26,-473.13"/>
+<text xml:space="preserve" text-anchor="middle" x="898.38" y="-457.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge23" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1000.3,-502.48C982.39,-495.11 959.52,-485.72 940.08,-477.73"/>
+<polygon fill="#000000" stroke="#000000" points="941.67,-474.6 931.09,-474.03 939.01,-481.07 941.67,-474.6"/>
+</g>
+<!-- sourcefile~ffmt_lexer.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node9" class="node">
+<title>sourcefile~ffmt_lexer.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node9"><a xlink:href="../sourcefile/ffmt_lexer.f90.html" xlink:title="ffmt_lexer.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="360.81,-185.13 277.29,-185.13 277.29,-160.87 360.81,-160.87 360.81,-185.13"/>
+<text xml:space="preserve" text-anchor="middle" x="319.05" y="-169.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_lexer.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge24" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_lexer.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1029.11,-502.66C1022.4,-458.21 993.04,-305.2 899.38,-236"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C849.09,-200.32 861.84,-165.02 812.37,-131 789.89,-115.54 779.66,-121.26 753.98,-112"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-112C612.78,-61.81 434.45,-123.77 357.81,-155.92"/>
+<polygon fill="#000000" stroke="#000000" points="356.47,-152.69 348.65,-159.84 359.22,-159.12 356.47,-152.69"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node10" class="node">
+<title>sourcefile~ffmt_linebreak.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node10"><a xlink:href="../sourcefile/ffmt_linebreak.f90.html" xlink:title="ffmt_linebreak.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="807.12,-248.13 698.85,-248.13 698.85,-223.87 807.12,-223.87 807.12,-248.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-232.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_linebreak.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_linebreak.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge26" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_linebreak.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C872.46,-217.58 837.87,-217.08 808.91,-221.42"/>
+<polygon fill="#000000" stroke="#000000" points="808.45,-217.94 799.2,-223.11 809.65,-224.84 808.45,-217.94"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node11" class="node">
+<title>sourcefile~ffmt_relational.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node11"><a xlink:href="../sourcefile/ffmt_relational.f90.html" xlink:title="ffmt_relational.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="807.49,-164.13 698.47,-164.13 698.47,-139.87 807.49,-139.87 807.49,-164.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-148.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge27" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C859.56,-208.05 853.83,-195.2 812.37,-173 809.84,-171.64 807.2,-170.34 804.5,-169.1"/>
+<polygon fill="#000000" stroke="#000000" points="805.89,-165.88 795.31,-165.19 803.14,-172.32 805.89,-165.88"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge33" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-589C831.47,-597.1 818.98,-617.36 753.98,-631"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-631C669.37,-648.34 639.54,-643.81 563.58,-607 537.88,-594.55 497.25,-530 471.82,-517"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node14" class="node">
+<title>sourcefile~ffmt_structure.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node14"><a xlink:href="../sourcefile/ffmt_structure.f90.html" xlink:title="ffmt_structure.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="805.99,-550.13 699.97,-550.13 699.97,-525.87 805.99,-525.87 805.99,-550.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-534.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge41" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-589C855.57,-594.13 810.22,-573.1 781.96,-556.49"/>
+<polygon fill="#000000" stroke="#000000" points="784.01,-553.64 773.65,-551.42 780.36,-559.62 784.01,-553.64"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge46" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-112C690.25,-92.05 676.33,-147.77 611.59,-152"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-152C515.73,-158.13 492.83,-181.59 414.06,-233 365.62,-264.61 375.91,-307.98 320.05,-323"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.05,-323C280.47,-332.35 239.81,-350.12 212.04,-363.54"/>
+<polygon fill="#000000" stroke="#000000" points="210.85,-360.23 203.42,-367.78 213.94,-366.51 210.85,-360.23"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node16" class="node">
+<title>sourcefile~ffmt_use_sort.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node16"><a xlink:href="../sourcefile/ffmt_use_sort.f90.html" xlink:title="ffmt_use_sort.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="804.49,-206.13 701.47,-206.13 701.47,-181.87 804.49,-181.87 804.49,-206.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-190.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_use_sort.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_use_sort.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge56" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_use_sort.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C873.83,-218.6 843.17,-208.38 816.25,-202.39"/>
+<polygon fill="#000000" stroke="#000000" points="816.95,-198.96 806.45,-200.38 815.55,-205.82 816.95,-198.96"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node18" class="node">
+<title>sourcefile~ffmt_whitespace.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node18"><a xlink:href="../sourcefile/ffmt_whitespace.f90.html" xlink:title="ffmt_whitespace.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="812.37,-493.13 693.6,-493.13 693.6,-468.87 812.37,-468.87 812.37,-493.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-477.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge58" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1017.15,-527.56C994.66,-547.08 947.45,-583.1 899.38,-589"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-589C848.24,-595.04 852.45,-546.08 812.37,-517 803.97,-510.9 794.51,-504.78 785.7,-499.36"/>
+<polygon fill="#000000" stroke="#000000" points="787.78,-496.53 777.41,-494.36 784.17,-502.52 787.78,-496.53"/>
+</g>
+<!-- sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node19" class="node">
+<title>sourcefile~ffmt_case.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node19"><a xlink:href="../sourcefile/ffmt_case.f90.html" xlink:title="ffmt_case.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="794.74,-328.13 711.22,-328.13 711.22,-303.87 794.74,-303.87 794.74,-328.13"/>
+<text xml:space="preserve" text-anchor="middle" x="752.98" y="-312.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge60" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C861.38,-209.4 851.81,-268.84 812.37,-290 806.67,-293.06 800.54,-296.07 794.47,-298.9"/>
+<polygon fill="#000000" stroke="#000000" points="793.43,-295.53 785.77,-302.84 796.33,-301.9 793.43,-295.53"/>
+</g>
+<!-- sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node21" class="node">
+<title>sourcefile~ffmt_source.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node21"><a xlink:href="../sourcefile/ffmt_source.f90.html" xlink:title="ffmt_source.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="657.6,-318.13 563.58,-318.13 563.58,-293.87 657.6,-293.87 657.6,-318.13"/>
+<text xml:space="preserve" text-anchor="middle" x="610.59" y="-302.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge64" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.38,-236C844.17,-196.68 819.61,-284.41 753.98,-276"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-276C718.16,-271.66 680.38,-280.54 652.54,-289.73"/>
+<polygon fill="#000000" stroke="#000000" points="651.74,-286.3 643.44,-292.89 654.04,-292.92 651.74,-286.3"/>
+</g>
+<!-- sourcefile~ffmt_io.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge6" class="edge">
+<title>sourcefile~ffmt_io.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M284.69,-670.5C255.02,-665.36 211.31,-654.96 178.03,-635"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge7" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M889.01,-473.57C875.09,-493.74 845.41,-533.61 812.37,-559 765.79,-594.8 744.88,-588.34 693.6,-617 655.93,-638.06 654.75,-668.52 611.59,-669"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-669C546.53,-670.04 534.16,-625.45 471.82,-635"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge34" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-441C548.5,-436.87 531.72,-428.28 471.82,-441"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge42" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M874.02,-473.54C850.48,-486.18 813.93,-505.81 787.34,-520.09"/>
+<polygon fill="#000000" stroke="#000000" points="785.82,-516.93 778.67,-524.75 789.13,-523.1 785.82,-516.93"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge47" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M852.34,-457.78C796.03,-453.78 696.7,-446.76 611.59,-441"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-441C564.57,-436.39 455.21,-402.85 414.06,-384 368.78,-363.25 368.15,-310.07 320.05,-323"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge59" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M852.01,-467.33C843.04,-468.58 833.44,-469.92 823.88,-471.25"/>
+<polygon fill="#000000" stroke="#000000" points="823.64,-467.75 814.22,-472.6 824.61,-474.68 823.64,-467.75"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge61" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M884.91,-448.39C859.99,-423.19 803.9,-366.47 773.86,-336.1"/>
+<polygon fill="#000000" stroke="#000000" points="776.71,-334 767.19,-329.35 771.73,-338.92 776.71,-334"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge65" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M894.5,-448.54C886.77,-417.82 862.63,-337.86 812.37,-295 791.61,-277.29 781.05,-279.47 753.98,-276"/>
+</g>
+<!-- sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge8" class="edge">
+<title>sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M288.49,-160.39C253.85,-146.34 198.55,-126.41 178.03,-133"/>
+</g>
+<!-- sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge48" class="edge">
+<title>sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M309.71,-185.39C286.71,-219.56 222.14,-315.47 192.83,-359.01"/>
+<polygon fill="#000000" stroke="#000000" points="190.03,-356.91 187.35,-367.16 195.84,-360.82 190.03,-356.91"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge9" class="edge">
+<title>sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M714.43,-223.46C624.36,-193.98 397.81,-123.41 320.05,-133"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge35" class="edge">
+<title>sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M739.81,-248.39C718.41,-270.05 674.7,-313.76 657.6,-327 648.02,-334.41 483.68,-438.56 471.82,-441"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge49" class="edge">
+<title>sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M698.41,-236.3C641.94,-237.03 550.43,-239.42 471.82,-247"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-247C444.53,-250.62 437.45,-250.71 414.06,-261 368.25,-281.16 368.38,-310.01 320.05,-323"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge66" class="edge">
+<title>sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M722.69,-248.54C713.33,-252.69 702.97,-257.41 693.6,-262 676.98,-270.15 658.81,-279.81 643.81,-288.01"/>
+<polygon fill="#000000" stroke="#000000" points="642.39,-284.79 635.31,-292.68 645.76,-290.93 642.39,-284.79"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge10" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M714.43,-139.37C707.02,-135.79 699.66,-131.37 693.6,-126 670.32,-105.39 684.28,-81.97 657.6,-66 586.67,-23.54 553.11,-41.98 471.82,-57"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-57C443.17,-61.2 438.29,-69.12 414.06,-81 371.19,-102.02 367.61,-128.73 320.05,-133"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.05,-133C256.07,-138.57 237.28,-113.96 178.03,-133"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M176.03,-133C123.1,-150.01 81.4,-204.23 61.24,-235.05"/>
+<polygon fill="#000000" stroke="#000000" points="58.45,-232.91 56.06,-243.23 64.37,-236.66 58.45,-232.91"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge36" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M712.79,-164.59C706.27,-167.11 699.66,-169.94 693.6,-173 654.43,-192.8 652.38,-211.81 611.59,-228"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-228C516.09,-265.12 493.25,-279.97 414.06,-342 384.6,-365.07 355.34,-397.07 337.48,-417.9"/>
+<polygon fill="#000000" stroke="#000000" points="334.87,-415.56 331.09,-425.46 340.22,-420.08 334.87,-415.56"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge50" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M698.26,-150.36C672.09,-149.98 640.17,-150.13 611.59,-152"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge67" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M706.11,-164.63C701.61,-166.98 697.33,-169.74 693.6,-173 667.54,-195.75 675.74,-212.55 657.6,-242 648.54,-256.71 637.22,-272.48 628.08,-284.68"/>
+<polygon fill="#000000" stroke="#000000" points="625.48,-282.33 622.22,-292.41 631.05,-286.56 625.48,-282.33"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge11" class="edge">
+<title>sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M866.42,-641.59C837.8,-652.27 793.82,-666.27 753.98,-669"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.98,-669C689.73,-673.26 673.98,-667.97 611.59,-669"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge12" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M312.58,-451.58C291.85,-498.37 217.3,-658.55 178.03,-635"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M176.03,-635C112.28,-596.77 65.47,-357.11 51.98,-280.51"/>
+<polygon fill="#000000" stroke="#000000" points="55.45,-280.04 50.3,-270.79 48.55,-281.24 55.45,-280.04"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge52" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M287.67,-426.41C267.48,-418.05 240.75,-406.98 218.73,-397.86"/>
+<polygon fill="#000000" stroke="#000000" points="220.33,-394.73 209.75,-394.14 217.65,-401.2 220.33,-394.73"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge13" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-593C546.7,-604.93 535.09,-625.31 471.82,-635"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_constructs.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge19" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_constructs.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-593C586.99,-597.38 561.92,-598.75 539.42,-598.75"/>
+<polygon fill="#000000" stroke="#000000" points="539.47,-595.25 529.43,-598.65 539.4,-602.25 539.47,-595.25"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge38" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M699.73,-544.58C641.35,-549.61 545.38,-550.83 471.82,-517"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-517C445.79,-504.72 437.29,-506.73 414.06,-493 396.61,-482.69 395.43,-475.44 378.06,-465 373.05,-461.99 367.62,-459.1 362.17,-456.43"/>
+<polygon fill="#000000" stroke="#000000" points="363.67,-453.27 353.13,-452.21 360.7,-459.61 363.67,-453.27"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge53" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M727.95,-550.55C700.62,-564.06 654.25,-584.73 611.59,-593"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-593C587.21,-597.34 435,-540 414.06,-531 370.2,-512.14 363.56,-498.67 320.05,-479"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge68" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M723.04,-525.48C712.5,-519.68 701.3,-511.85 693.6,-502 661.14,-460.47 678.48,-437.4 657.6,-389 648.39,-367.66 635.36,-344.63 625.51,-328.25"/>
+<polygon fill="#000000" stroke="#000000" points="628.57,-326.54 620.36,-319.83 622.59,-330.19 628.57,-326.54"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge14" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M163.29,-368.66C141.14,-347.21 95.38,-302.88 68.66,-277"/>
+<polygon fill="#000000" stroke="#000000" points="71.41,-274.79 61.79,-270.35 66.54,-279.82 71.41,-274.79"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge15" class="edge">
+<title>sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M710.13,-181.43C704.39,-179 698.72,-176.2 693.6,-173 674.67,-161.18 676.13,-150.44 657.6,-138 582.81,-87.79 560.68,-42.24 471.82,-57"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge39" class="edge">
+<title>sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M701.22,-202.71C674.06,-208.26 640.38,-216.57 611.59,-228"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge54" class="edge">
+<title>sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M715,-181.48C677.02,-168.85 622.03,-151.32 611.59,-152"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge69" class="edge">
+<title>sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M709.32,-206.53C703.82,-208.95 698.43,-211.76 693.6,-215 665.68,-233.75 640.96,-264.05 626.14,-284.49"/>
+<polygon fill="#000000" stroke="#000000" points="623.47,-282.21 620.57,-292.39 629.19,-286.24 623.47,-282.21"/>
+</g>
+<!-- sourcefile~ffmt_walk.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge16" class="edge">
+<title>sourcefile~ffmt_walk.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M167.93,-59.41C158.64,-73.7 143.02,-97.91 130.02,-119 104.97,-159.63 76.73,-207.66 60.78,-235.01"/>
+<polygon fill="#000000" stroke="#000000" points="57.89,-233.03 55.88,-243.43 63.94,-236.55 57.89,-233.03"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_strings.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge17" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_strings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M720.88,-493.51C682.03,-509.93 614.47,-541.16 563.58,-579 545.17,-592.69 546.97,-603.74 527.58,-616 505.45,-629.99 497.86,-632.3 471.82,-635"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-635C405.35,-641.91 233.3,-668.9 178.03,-635"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge40" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M693.15,-482.57C636.41,-483.62 548.14,-484.01 471.82,-479"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-479C433.42,-476.09 393.54,-465.03 364.09,-455.28"/>
+<polygon fill="#000000" stroke="#000000" points="365.37,-452.02 354.77,-452.11 363.11,-458.64 365.37,-452.02"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge55" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-479C403.47,-473.7 380.7,-506.43 320.05,-479"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.05,-479C293.33,-467.82 283.29,-473.99 260.04,-460 234.36,-444.55 210.34,-419.7 195.02,-402"/>
+<polygon fill="#000000" stroke="#000000" points="197.93,-400.03 188.81,-394.64 192.58,-404.54 197.93,-400.03"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge70" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M741.89,-468.41C718.11,-438.77 658.36,-364.3 628.76,-327.4"/>
+<polygon fill="#000000" stroke="#000000" points="631.53,-325.26 622.54,-319.65 626.07,-329.64 631.53,-325.26"/>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge30" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-403C547.33,-415.6 534.03,-428.2 471.82,-441"/>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge43" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M739.08,-328.55C715.92,-349.95 664.71,-392.25 611.59,-403"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M609.59,-403C565.07,-412.01 570.01,-358.23 527.58,-342 441.07,-308.9 409.45,-298.78 320.05,-323"/>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge63" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M711,-313.08C697.91,-312.15 683.17,-311.1 669.12,-310.1"/>
+<polygon fill="#000000" stroke="#000000" points="669.79,-306.64 659.57,-309.42 669.29,-313.62 669.79,-306.64"/>
+</g>
+<!-- sourcefile~ffmt_directives.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_node20" class="node">
+<title>sourcefile~ffmt_directives.f90</title>
+<g id="a_sourcefile~~ffmt_strings.f90~~AfferentGraph_node20"><a xlink:href="../sourcefile/ffmt_directives.f90.html" xlink:title="ffmt_directives.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="525.7,-375.13 415.93,-375.13 415.93,-350.87 525.7,-350.87 525.7,-375.13"/>
+<text xml:space="preserve" text-anchor="middle" x="470.82" y="-359.4" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge32" class="edge">
+<title>sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M445.09,-375.55C420.48,-388.04 382.5,-407.31 354.86,-421.34"/>
+<polygon fill="#000000" stroke="#000000" points="353.5,-418.1 346.17,-425.75 356.67,-424.34 353.5,-418.1"/>
+</g>
+<!-- sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge45" class="edge">
+<title>sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M437.95,-350.47C400.93,-336.62 342.13,-317.02 320.05,-323"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_lexer.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge25" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_lexer.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M598.93,-293.54C584.38,-277.31 556.78,-249.12 527.58,-233 478.45,-205.88 415.85,-189.96 372.32,-181.42"/>
+<polygon fill="#000000" stroke="#000000" points="373.09,-178.01 362.61,-179.59 371.79,-184.88 373.09,-178.01"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge37" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M596.69,-318.6C587.47,-327.62 574.76,-340.05 563.58,-351 522.77,-390.97 527.77,-429.49 471.82,-441"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M469.82,-441C443.98,-446.32 415.09,-447.11 389.64,-446.12"/>
+<polygon fill="#000000" stroke="#000000" points="389.88,-442.63 379.72,-445.63 389.53,-449.62 389.88,-442.63"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge51" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M587.62,-293.49C555.08,-275.51 495.39,-244.73 471.82,-247"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_directives.f90 -->
+<g id="sourcefile~~ffmt_strings.f90~~AfferentGraph_edge62" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_directives.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M579.36,-318.51C559.71,-326.64 533.85,-337.34 512.42,-346.2"/>
+<polygon fill="#000000" stroke="#000000" points="511.28,-342.88 503.38,-349.94 513.96,-349.35 511.28,-342.88"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var pansourcefileffmt_stringsf90AfferentGraph = svgPanZoom('#sourcefileffmt_stringsf90AfferentGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="200pt" height="32pt"
+ viewBox="0.00 0.00 200.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 195.52,-28.27 195.52,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="191.52,-24.27 87.75,-24.27 87.75,0 191.52,0 191.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">ffmt_strings</span><span class="w"></span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="c">!! String helpers.</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="k">implicit none</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="k">private</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">utf8_width</span><span class="p">,</span><span class="w"> </span><span class="n">to_s</span><span class="p">,</span><span class="w"> </span><span class="n">lower_char</span><span class="p">,</span><span class="w"> </span><span class="n">lowercase</span><span class="p">,</span><span class="w"> </span><span class="n">make_lowercase</span><span class="w"></span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">string_t</span><span class="w"></span>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">    </span><span class="c">!! A variable-length string, for arrays of strings of different lengths.</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w">      </span><span class="c">!! the string</span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="k">end type </span><span class="n">string_t</span><span class="w"></span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">string_builder_t</span><span class="w"></span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">    </span><span class="c">!! Builds a string by appending pieces in amortized constant time.</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">    </span><span class="k">private</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="k">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">buf</span><span class="w">    </span><span class="c">!! storage; only `buf(1:n)` is in use</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                        </span><span class="c">!! length of the string so far</span>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="k">contains</span>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="k">    procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">append</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">builder_append</span><span class="w"></span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a><span class="w">    </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">builder_get</span><span class="w"></span>
+<a id="ln-21" name="ln-21" href="#ln-21"></a><span class="w">    </span><span class="k">procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">builder_length</span><span class="w"></span>
+<a id="ln-22" name="ln-22" href="#ln-22"></a><span class="k">end type </span><span class="n">string_builder_t</span><span class="w"></span>
+<a id="ln-23" name="ln-23" href="#ln-23"></a>
+<a id="ln-24" name="ln-24" href="#ln-24"></a><span class="k">contains</span>
+<a id="ln-25" name="ln-25" href="#ln-25"></a>
+<a id="ln-26" name="ln-26" href="#ln-26"></a><span class="k">pure </span><span class="kt">integer </span><span class="k">function </span><span class="n">utf8_width</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="w"></span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">    </span><span class="c">!! Number of characters (code points) in UTF-8 `text`: bytes that are not continuation bytes.</span>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">text</span><span class="w">   </span><span class="c">!! UTF-8 bytes</span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="w"></span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">iand</span><span class="p">(</span><span class="nb">ichar</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)),</span><span class="w"> </span><span class="mi">255</span><span class="p">)</span><span class="w"></span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">192</span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="w">    </span><span class="k">end do</span>
+<a id="ln-35" name="ln-35" href="#ln-35"></a><span class="k">end function </span><span class="n">utf8_width</span><span class="w"></span>
+<a id="ln-36" name="ln-36" href="#ln-36"></a>
+<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="k">pure function </span><span class="n">to_s</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<a id="ln-38" name="ln-38" href="#ln-38"></a><span class="w">    </span><span class="c">!! Integer to string, without padding. Digits are built by hand: an internal `write` costs</span>
+<a id="ln-39" name="ln-39" href="#ln-39"></a><span class="w">    </span><span class="c">!! far more, and this is called for every token by the safety check.</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w">            </span><span class="c">!! the number</span>
+<a id="ln-41" name="ln-41" href="#ln-41"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+<a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">buf</span><span class="w"></span>
+<a id="ln-43" name="ln-43" href="#ln-43"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<a id="ln-44" name="ln-44" href="#ln-44"></a>
+<a id="ln-45" name="ln-45" href="#ln-45"></a><span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w">                                   </span><span class="c">! not abs(i), which overflows for -huge(i) - 1</span>
+<a id="ln-46" name="ln-46" href="#ln-46"></a><span class="w">    </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<a id="ln-47" name="ln-47" href="#ln-47"></a><span class="w">    </span><span class="k">do</span>
+<a id="ln-48" name="ln-48" href="#ln-48"></a><span class="k">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<a id="ln-49" name="ln-49" href="#ln-49"></a><span class="w">        </span><span class="n">buf</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">achar</span><span class="p">(</span><span class="nb">iachar</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)))</span><span class="w"></span>
+<a id="ln-50" name="ln-50" href="#ln-50"></a><span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="mi">10</span><span class="w"></span>
+<a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<a id="ln-52" name="ln-52" href="#ln-52"></a><span class="k">    end do</span>
+<a id="ln-53" name="ln-53" href="#ln-53"></a><span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="k">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">        </span><span class="n">buf</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"></span>
+<a id="ln-56" name="ln-56" href="#ln-56"></a><span class="w">    </span><span class="k">end if</span>
+<a id="ln-57" name="ln-57" href="#ln-57"></a><span class="k">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf</span><span class="p">(</span><span class="n">k</span><span class="p">:)</span><span class="w"></span>
+<a id="ln-58" name="ln-58" href="#ln-58"></a><span class="k">end function </span><span class="n">to_s</span><span class="w"></span>
+<a id="ln-59" name="ln-59" href="#ln-59"></a>
+<a id="ln-60" name="ln-60" href="#ln-60"></a><span class="k">elemental </span><span class="kt">character </span><span class="k">function </span><span class="n">lower_char</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<a id="ln-61" name="ln-61" href="#ln-61"></a><span class="w">    </span><span class="c">!! `c` in lowercase (ASCII letters only; other bytes, including UTF-8, are unchanged).</span>
+<a id="ln-62" name="ln-62" href="#ln-62"></a><span class="w">    </span><span class="kt">character</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w">   </span><span class="c">!! the character</span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;Z&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-64" name="ln-64" href="#ln-64"></a><span class="k">        </span><span class="n">lower_char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">achar</span><span class="p">(</span><span class="nb">iachar</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">32</span><span class="p">)</span><span class="w"></span>
+<a id="ln-65" name="ln-65" href="#ln-65"></a><span class="w">    </span><span class="k">else</span>
+<a id="ln-66" name="ln-66" href="#ln-66"></a><span class="k">        </span><span class="n">lower_char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<a id="ln-67" name="ln-67" href="#ln-67"></a><span class="w">    </span><span class="k">end if</span>
+<a id="ln-68" name="ln-68" href="#ln-68"></a><span class="k">end function </span><span class="n">lower_char</span><span class="w"></span>
+<a id="ln-69" name="ln-69" href="#ln-69"></a>
+<a id="ln-70" name="ln-70" href="#ln-70"></a><span class="k">pure function </span><span class="n">lowercase</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<a id="ln-71" name="ln-71" href="#ln-71"></a><span class="w">    </span><span class="c">!! `s` in lowercase (see [[lower_char]]).</span>
+<a id="ln-72" name="ln-72" href="#ln-72"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w">   </span><span class="c">!! the text</span>
+<a id="ln-73" name="ln-73" href="#ln-73"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">l</span><span class="w"></span>
+<a id="ln-74" name="ln-74" href="#ln-74"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<a id="ln-75" name="ln-75" href="#ln-75"></a><span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<a id="ln-76" name="ln-76" href="#ln-76"></a><span class="w">        </span><span class="n">l</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lower_char</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">))</span><span class="w"></span>
+<a id="ln-77" name="ln-77" href="#ln-77"></a><span class="w">    </span><span class="k">end do</span>
+<a id="ln-78" name="ln-78" href="#ln-78"></a><span class="k">end function </span><span class="n">lowercase</span><span class="w"></span>
+<a id="ln-79" name="ln-79" href="#ln-79"></a>
+<a id="ln-80" name="ln-80" href="#ln-80"></a><span class="k">pure subroutine </span><span class="n">make_lowercase</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<a id="ln-81" name="ln-81" href="#ln-81"></a><span class="w">    </span><span class="c">!! Turn `s` into lowercase in place, without a temporary copy (see [[lower_char]]).</span>
+<a id="ln-82" name="ln-82" href="#ln-82"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w">   </span><span class="c">!! the text</span>
+<a id="ln-83" name="ln-83" href="#ln-83"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<a id="ln-84" name="ln-84" href="#ln-84"></a><span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<a id="ln-85" name="ln-85" href="#ln-85"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">s</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;Z&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">s</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">achar</span><span class="p">(</span><span class="nb">iachar</span><span class="p">(</span><span class="n">s</span><span class="p">(</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">32</span><span class="p">)</span><span class="w"></span>
+<a id="ln-86" name="ln-86" href="#ln-86"></a><span class="w">    </span><span class="k">end do</span>
+<a id="ln-87" name="ln-87" href="#ln-87"></a><span class="k">end subroutine </span><span class="n">make_lowercase</span><span class="w"></span>
+<a id="ln-88" name="ln-88" href="#ln-88"></a>
+<a id="ln-89" name="ln-89" href="#ln-89"></a><span class="k">pure subroutine </span><span class="n">builder_append</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"></span>
+<a id="ln-90" name="ln-90" href="#ln-90"></a><span class="w">    </span><span class="c">!! Append `str` to the string, doubling the storage when it is full.</span>
+<a id="ln-91" name="ln-91" href="#ln-91"></a><span class="w">    </span><span class="k">class</span><span class="p">(</span><span class="n">string_builder_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="w">   </span><span class="c">!! the builder</span>
+<a id="ln-92" name="ln-92" href="#ln-92"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w">   </span><span class="c">!! the piece to append</span>
+<a id="ln-93" name="ln-93" href="#ln-93"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tmp</span><span class="w"></span>
+<a id="ln-94" name="ln-94" href="#ln-94"></a>
+<a id="ln-95" name="ln-95" href="#ln-95"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<a id="ln-96" name="ln-96" href="#ln-96"></a><span class="k">    if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">allocated</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">))</span><span class="w"> </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">)))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">)</span><span class="w"></span>
+<a id="ln-97" name="ln-97" href="#ln-97"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-98" name="ln-98" href="#ln-98"></a><span class="k">        allocate</span><span class="w"> </span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">)))</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tmp</span><span class="p">)</span><span class="w"></span>
+<a id="ln-99" name="ln-99" href="#ln-99"></a><span class="w">        </span><span class="n">tmp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<a id="ln-100" name="ln-100" href="#ln-100"></a><span class="w">        </span><span class="k">call </span><span class="nb">move_alloc</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">)</span><span class="w"></span>
+<a id="ln-101" name="ln-101" href="#ln-101"></a><span class="w">    </span><span class="k">end if</span>
+<a id="ln-102" name="ln-102" href="#ln-102"></a><span class="k">    </span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
+<a id="ln-103" name="ln-103" href="#ln-103"></a><span class="w">    </span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"></span>
+<a id="ln-104" name="ln-104" href="#ln-104"></a><span class="k">end subroutine </span><span class="n">builder_append</span><span class="w"></span>
+<a id="ln-105" name="ln-105" href="#ln-105"></a>
+<a id="ln-106" name="ln-106" href="#ln-106"></a><span class="k">pure function </span><span class="n">builder_get</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w"></span>
+<a id="ln-107" name="ln-107" href="#ln-107"></a><span class="w">    </span><span class="c">!! The string built so far.</span>
+<a id="ln-108" name="ln-108" href="#ln-108"></a><span class="w">    </span><span class="k">class</span><span class="p">(</span><span class="n">string_builder_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="w">   </span><span class="c">!! the builder</span>
+<a id="ln-109" name="ln-109" href="#ln-109"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">str</span><span class="w"></span>
+<a id="ln-110" name="ln-110" href="#ln-110"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-111" name="ln-111" href="#ln-111"></a><span class="k">        </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">buf</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<a id="ln-112" name="ln-112" href="#ln-112"></a><span class="w">    </span><span class="k">else</span>
+<a id="ln-113" name="ln-113" href="#ln-113"></a><span class="k">        </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<a id="ln-114" name="ln-114" href="#ln-114"></a><span class="w">    </span><span class="k">end if</span>
+<a id="ln-115" name="ln-115" href="#ln-115"></a><span class="k">end function </span><span class="n">builder_get</span><span class="w"></span>
+<a id="ln-116" name="ln-116" href="#ln-116"></a>
+<a id="ln-117" name="ln-117" href="#ln-117"></a><span class="k">pure </span><span class="kt">integer </span><span class="k">function </span><span class="n">builder_length</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<a id="ln-118" name="ln-118" href="#ln-118"></a><span class="w">    </span><span class="c">!! Length of the string built so far.</span>
+<a id="ln-119" name="ln-119" href="#ln-119"></a><span class="w">    </span><span class="k">class</span><span class="p">(</span><span class="n">string_builder_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span><span class="w">   </span><span class="c">!! the builder</span>
+<a id="ln-120" name="ln-120" href="#ln-120"></a><span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">%</span><span class="n">n</span><span class="w"></span>
+<a id="ln-121" name="ln-121" href="#ln-121"></a><span class="k">end function </span><span class="n">builder_length</span><span class="w"></span>
+<a id="ln-122" name="ln-122" href="#ln-122"></a>
+<a id="ln-123" name="ln-123" href="#ln-123"></a><span class="k">end module </span><span class="n">ffmt_strings</span><span class="w"></span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,924 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>emit_comment_line &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>emit_comment_line
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.6% of total for procedures.">31 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_layout.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_layout.f90.html'>ffmt_layout.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_layout.html'>ffmt_layout</a></li>
+            <li class="breadcrumb-item active" aria-current="page">emit_comment_line</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/emit_comment_line.html#src">emit_comment_line</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine emit_comment_line(w, src, tokens, s, ind, opts)  
+</h2>
+    
+
+    <p>A comment line, re-indented to <code>ind</code>. A comment that lines up with the comment on the line
+above (a continued trailing comment) stays lined up with it. Comment lines directly after a
+statement that are indented more than it keep their extra indentation. With <code>keep_column1_comments</code>, a
+comment that starts in column 1 stays there.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~14"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+                <p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~32"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+                <p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~14"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+                <p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~6"></span>
+              type(<a href='../type/statement_t.html'>statement_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+                <p>the comment line item</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ind~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ind</strong></td>
+            <td>
+                <p>indentation of the code around it, in blanks</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~7"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+                <p>the formatting options</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~emit_comment_line~~CallsGraph Pages: 1 -->
+<svg id="procemit_comment_lineCallsGraph" width="641pt" height="207pt"
+ viewBox="0.00 0.00 641.00 207.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~emit_comment_line~~CallsGraph" class="graph" transform="scale(0.889845 0.889845) rotate(0) translate(4 228.27)">
+<title>proc~~emit_comment_line~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-228.27 716.35,-228.27 716.35,4 -4,4"/>
+<!-- proc~emit_comment_line -->
+<g id="proc~~emit_comment_line~~CallsGraph_node1" class="node">
+<title>proc~emit_comment_line</title>
+<polygon fill="none" stroke="black" points="116.52,-124.27 0,-124.27 0,-100 116.52,-100 116.52,-124.27"/>
+<text xml:space="preserve" text-anchor="middle" x="58.26" y="-108.54" font-family="Helvetica,sans-Serif" font-size="10.50">emit_comment_line</text>
+</g>
+<!-- proc~comment_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_node2" class="node">
+<title>proc~comment_column</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node2"><a xlink:href="../proc/comment_column.html" xlink:title="comment_column">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="260.04,-184.27 152.52,-184.27 152.52,-160 260.04,-160 260.04,-184.27"/>
+<text xml:space="preserve" text-anchor="middle" x="206.28" y="-168.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">comment_column</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~comment_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge1" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~comment_column</title>
+<path fill="none" stroke="#000000" d="M89.87,-124.71C111.48,-133.59 140.68,-145.59 164.3,-155.3"/>
+<polygon fill="#000000" stroke="#000000" points="162.73,-158.43 173.31,-159 165.39,-151.96 162.73,-158.43"/>
+</g>
+<!-- proc~emit_range -->
+<g id="proc~~emit_comment_line~~CallsGraph_node3" class="node">
+<title>proc~emit_range</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node3"><a xlink:href="../proc/emit_range.html" xlink:title="emit_range">
+<polygon fill="#d9534f" stroke="#d9534f" points="242.41,-104.27 170.14,-104.27 170.14,-80 242.41,-80 242.41,-104.27"/>
+<text xml:space="preserve" text-anchor="middle" x="206.28" y="-88.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">emit_range</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~emit_range -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge2" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~emit_range</title>
+<path fill="none" stroke="#000000" d="M116.97,-104.23C130.78,-102.34 145.36,-100.34 158.6,-98.53"/>
+<polygon fill="#000000" stroke="#000000" points="158.91,-102.02 168.34,-97.19 157.96,-95.08 158.91,-102.02"/>
+</g>
+<!-- proc~input_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_node4" class="node">
+<title>proc~input_column</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node4"><a xlink:href="../proc/input_column.html" xlink:title="input_column">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="381.43,-224.27 297.91,-224.27 297.91,-200 381.43,-200 381.43,-224.27"/>
+<text xml:space="preserve" text-anchor="middle" x="339.67" y="-208.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">input_column</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~input_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge3" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~input_column</title>
+<path fill="none" stroke="#000000" d="M69.15,-124.64C84.67,-143.23 116.7,-177.63 152.52,-193.13 194.94,-211.49 247.71,-215.31 286.22,-215.09"/>
+<polygon fill="#000000" stroke="#000000" points="286.23,-218.59 296.18,-214.92 286.12,-211.59 286.23,-218.59"/>
+</g>
+<!-- proc~put -->
+<g id="proc~~emit_comment_line~~CallsGraph_node5" class="node">
+<title>proc~put</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node5"><a xlink:href="../proc/put.html" xlink:title="put">
+<polygon fill="#d9534f" stroke="#d9534f" points="366.67,-131.27 312.67,-131.27 312.67,-107 366.67,-107 366.67,-131.27"/>
+<text xml:space="preserve" text-anchor="middle" x="339.67" y="-115.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">put</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~put -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge4" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~put</title>
+<path fill="none" stroke="#000000" d="M116.82,-113.58C172.04,-114.96 253.84,-117.01 301.14,-118.19"/>
+<polygon fill="#000000" stroke="#000000" points="300.79,-121.69 310.88,-118.44 300.97,-114.69 300.79,-121.69"/>
+</g>
+<!-- proc~token_text -->
+<g id="proc~~emit_comment_line~~CallsGraph_node6" class="node">
+<title>proc~token_text</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node6"><a xlink:href="../proc/token_text.html" xlink:title="token_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="372.81,-72.27 306.54,-72.27 306.54,-48 372.81,-48 372.81,-72.27"/>
+<text xml:space="preserve" text-anchor="middle" x="339.67" y="-56.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">token_text</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~token_text -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge5" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~token_text</title>
+<path fill="none" stroke="#000000" d="M81.46,-99.68C99.88,-90.02 127.07,-77.27 152.52,-71.14 200.29,-59.62 256.86,-57.89 295,-58.39"/>
+<polygon fill="#000000" stroke="#000000" points="294.64,-61.89 304.7,-58.58 294.77,-54.89 294.64,-61.89"/>
+</g>
+<!-- proc~trim_blanks -->
+<g id="proc~~emit_comment_line~~CallsGraph_node7" class="node">
+<title>proc~trim_blanks</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node7"><a xlink:href="../proc/trim_blanks.html" xlink:title="trim_blanks">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="242.79,-24.27 169.77,-24.27 169.77,0 242.79,0 242.79,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="206.28" y="-8.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">trim_blanks</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~trim_blanks -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge6" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~trim_blanks</title>
+<path fill="none" stroke="#000000" d="M73.09,-99.6C90.71,-84.02 122.48,-57.15 152.52,-38.14 157.08,-35.25 162,-32.45 166.95,-29.82"/>
+<polygon fill="#000000" stroke="#000000" points="168.35,-33.03 175.67,-25.37 165.17,-26.79 168.35,-33.03"/>
+</g>
+<!-- proc~comment_column&#45;&gt;proc~input_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge8" class="edge">
+<title>proc~comment_column&#45;&gt;proc~input_column</title>
+<path fill="none" stroke="#000000" d="M248.49,-184.68C260.6,-188.37 274,-192.45 286.69,-196.31"/>
+<polygon fill="#000000" stroke="#000000" points="285.57,-199.63 296.16,-199.19 287.61,-192.93 285.57,-199.63"/>
+</g>
+<!-- proc~fitting_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_node9" class="node">
+<title>proc~fitting_column</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node9"><a xlink:href="../proc/fitting_column.html" xlink:title="fitting_column">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="383.31,-182.27 296.04,-182.27 296.04,-158 383.31,-158 383.31,-182.27"/>
+<text xml:space="preserve" text-anchor="middle" x="339.67" y="-166.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fitting_column</text>
+</a>
+</g>
+</g>
+<!-- proc~comment_column&#45;&gt;proc~fitting_column -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge7" class="edge">
+<title>proc~comment_column&#45;&gt;proc~fitting_column</title>
+<path fill="none" stroke="#000000" d="M260.34,-171.33C268.29,-171.21 276.49,-171.08 284.46,-170.96"/>
+<polygon fill="#000000" stroke="#000000" points="284.45,-174.46 294.39,-170.81 284.34,-167.46 284.45,-174.46"/>
+</g>
+<!-- proc~emit_range&#45;&gt;proc~put -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge9" class="edge">
+<title>proc~emit_range&#45;&gt;proc~put</title>
+<path fill="none" stroke="#000000" d="M242.84,-99.44C260.88,-103.15 282.79,-107.65 301.11,-111.42"/>
+<polygon fill="#000000" stroke="#000000" points="300.28,-114.82 310.78,-113.4 301.69,-107.96 300.28,-114.82"/>
+</g>
+<!-- proc~emit_range&#45;&gt;proc~token_text -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge10" class="edge">
+<title>proc~emit_range&#45;&gt;proc~token_text</title>
+<path fill="none" stroke="#000000" d="M242.84,-83.48C259.05,-79.53 278.38,-74.82 295.43,-70.67"/>
+<polygon fill="#000000" stroke="#000000" points="295.88,-74.16 304.77,-68.39 294.23,-67.36 295.88,-74.16"/>
+</g>
+<!-- proc~utf8_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_node10" class="node">
+<title>proc~utf8_width</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node10"><a xlink:href="../proc/utf8_width.html" xlink:title="utf8_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="710.1,-174.27 643.83,-174.27 643.83,-150 710.1,-150 710.1,-174.27"/>
+<text xml:space="preserve" text-anchor="middle" x="676.96" y="-158.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">utf8_width</text>
+</a>
+</g>
+</g>
+<!-- proc~input_column&#45;&gt;proc~utf8_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge11" class="edge">
+<title>proc~input_column&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M381.74,-213.5C434.4,-214.27 528.16,-212.35 605.58,-193.13 618.05,-190.04 631.09,-184.89 642.52,-179.67"/>
+<polygon fill="#000000" stroke="#000000" points="644.02,-182.83 651.53,-175.36 641,-176.51 644.02,-182.83"/>
+</g>
+<!-- proc~builder_append -->
+<g id="proc~~emit_comment_line~~CallsGraph_node8" class="node">
+<title>proc~builder_append</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node8"><a xlink:href="../proc/builder_append.html" xlink:title="string_builder_t%builder_append">
+<polygon fill="#d9534f" stroke="#d9534f" points="605.58,-62.27 419.31,-62.27 419.31,-38 605.58,-38 605.58,-62.27"/>
+<text xml:space="preserve" text-anchor="middle" x="512.44" y="-46.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">string_builder_t%builder_append</text>
+</a>
+</g>
+</g>
+<!-- proc~put&#45;&gt;proc~builder_append -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge12" class="edge">
+<title>proc~put&#45;&gt;proc~builder_append</title>
+<path fill="none" stroke="#000000" d="M357.61,-106.55C372.98,-95.7 396.64,-80.35 419.31,-71.14 423.88,-69.28 428.65,-67.57 433.5,-65.99"/>
+<polygon fill="#000000" stroke="#000000" points="434.21,-69.44 442.78,-63.2 432.19,-62.73 434.21,-69.44"/>
+</g>
+<!-- proc~put&#45;&gt;proc~utf8_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge13" class="edge">
+<title>proc~put&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M367.03,-122.01C414.7,-127.28 518.4,-139.06 605.58,-151.13 614.18,-152.33 623.36,-153.69 632.16,-155.05"/>
+<polygon fill="#000000" stroke="#000000" points="631.49,-158.49 641.92,-156.57 632.58,-151.57 631.49,-158.49"/>
+</g>
+<!-- proc~first_piece_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_node11" class="node">
+<title>proc~first_piece_width</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node11"><a xlink:href="../proc/first_piece_width.html" xlink:title="first_piece_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="562.45,-184.27 462.43,-184.27 462.43,-160 562.45,-160 562.45,-184.27"/>
+<text xml:space="preserve" text-anchor="middle" x="512.44" y="-168.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">first_piece_width</text>
+</a>
+</g>
+</g>
+<!-- proc~fitting_column&#45;&gt;proc~first_piece_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge14" class="edge">
+<title>proc~fitting_column&#45;&gt;proc~first_piece_width</title>
+<path fill="none" stroke="#000000" d="M383.77,-170.64C404.05,-170.88 428.58,-171.16 450.7,-171.42"/>
+<polygon fill="#000000" stroke="#000000" points="450.46,-174.92 460.5,-171.54 450.54,-167.92 450.46,-174.92"/>
+</g>
+<!-- proc~line_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_node12" class="node">
+<title>proc~line_width</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node12"><a xlink:href="../proc/line_width.html" xlink:title="line_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="544.83,-104.27 480.06,-104.27 480.06,-80 544.83,-80 544.83,-104.27"/>
+<text xml:space="preserve" text-anchor="middle" x="512.44" y="-88.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_width</text>
+</a>
+</g>
+</g>
+<!-- proc~fitting_column&#45;&gt;proc~line_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge15" class="edge">
+<title>proc~fitting_column&#45;&gt;proc~line_width</title>
+<path fill="none" stroke="#000000" d="M368.11,-157.6C396.66,-144.56 441.57,-124.05 473.5,-109.47"/>
+<polygon fill="#000000" stroke="#000000" points="474.77,-112.73 482.42,-105.39 471.87,-106.37 474.77,-112.73"/>
+</g>
+<!-- proc~first_piece_width&#45;&gt;proc~utf8_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge17" class="edge">
+<title>proc~first_piece_width&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M562.65,-169.11C584.72,-167.75 610.55,-166.16 631.97,-164.84"/>
+<polygon fill="#000000" stroke="#000000" points="632.09,-168.34 641.85,-164.23 631.66,-161.35 632.09,-168.34"/>
+</g>
+<!-- proc~line_pieces -->
+<g id="proc~~emit_comment_line~~CallsGraph_node13" class="node">
+<title>proc~line_pieces</title>
+<g id="a_proc~~emit_comment_line~~CallsGraph_node13"><a xlink:href="../proc/line_pieces.html" xlink:title="line_pieces">
+<polygon fill="#d9534f" stroke="#d9534f" points="712.35,-113.27 641.58,-113.27 641.58,-89 712.35,-89 712.35,-113.27"/>
+<text xml:space="preserve" text-anchor="middle" x="676.96" y="-97.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_pieces</text>
+</a>
+</g>
+</g>
+<!-- proc~first_piece_width&#45;&gt;proc~line_pieces -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge16" class="edge">
+<title>proc~first_piece_width&#45;&gt;proc~line_pieces</title>
+<path fill="none" stroke="#000000" d="M542.13,-159.61C568.5,-148.08 607.83,-130.9 637.04,-118.14"/>
+<polygon fill="#000000" stroke="#000000" points="638.15,-121.48 645.91,-114.26 635.35,-115.06 638.15,-121.48"/>
+</g>
+<!-- proc~line_width&#45;&gt;proc~utf8_width -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge19" class="edge">
+<title>proc~line_width&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M544.92,-98.67C563.09,-103.02 586.13,-109.52 605.58,-118.14 621.02,-124.97 637.06,-134.76 649.93,-143.38"/>
+<polygon fill="#000000" stroke="#000000" points="647.61,-146.03 657.84,-148.81 651.58,-140.26 647.61,-146.03"/>
+</g>
+<!-- proc~line_width&#45;&gt;proc~line_pieces -->
+<g id="proc~~emit_comment_line~~CallsGraph_edge18" class="edge">
+<title>proc~line_width&#45;&gt;proc~line_pieces</title>
+<path fill="none" stroke="#000000" d="M545.17,-93.89C569.33,-95.23 602.96,-97.09 630.06,-98.59"/>
+<polygon fill="#000000" stroke="#000000" points="629.54,-102.07 639.72,-99.13 629.93,-95.08 629.54,-102.07"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocemit_comment_lineCallsGraph = svgPanZoom('#procemit_comment_lineCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~emit_comment_line~~CalledByGraph Pages: 1 -->
+<svg id="procemit_comment_lineCalledByGraph" width="641pt" height="56pt"
+ viewBox="0.00 0.00 641.00 56.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~emit_comment_line~~CalledByGraph" class="graph" transform="scale(0.755789 0.755789) rotate(0) translate(4 70.27)">
+<title>proc~~emit_comment_line~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-70.27 844.12,-70.27 844.12,4 -4,4"/>
+<!-- proc~emit_comment_line -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node1" class="node">
+<title>proc~emit_comment_line</title>
+<polygon fill="none" stroke="black" points="840.12,-45.27 723.6,-45.27 723.6,-21 840.12,-21 840.12,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="781.86" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50">emit_comment_line</text>
+</g>
+<!-- proc~layout -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node2" class="node">
+<title>proc~layout</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node2"><a xlink:href="../proc/layout.html" xlink:title="layout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="687.6,-45.27 633.6,-45.27 633.6,-21 687.6,-21 687.6,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="660.6" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">layout</text>
+</a>
+</g>
+</g>
+<!-- proc~layout&#45;&gt;proc~emit_comment_line -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge1" class="edge">
+<title>proc~layout&#45;&gt;proc~emit_comment_line</title>
+<path fill="none" stroke="#000000" d="M688.07,-33.13C695.24,-33.13 703.35,-33.13 711.71,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="711.7,-36.64 721.7,-33.14 711.7,-29.64 711.7,-36.64"/>
+</g>
+<!-- proc~format_pass -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node3" class="node">
+<title>proc~format_pass</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node3"><a xlink:href="../proc/format_pass.html" xlink:title="format_pass">
+<polygon fill="#d9534f" stroke="#d9534f" points="597.6,-45.27 520.83,-45.27 520.83,-21 597.6,-21 597.6,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="559.21" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_pass</text>
+</a>
+</g>
+</g>
+<!-- proc~format_pass&#45;&gt;proc~layout -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge2" class="edge">
+<title>proc~format_pass&#45;&gt;proc~layout</title>
+<path fill="none" stroke="#000000" d="M598.07,-33.13C605.87,-33.13 614.08,-33.13 621.87,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="621.75,-36.64 631.75,-33.14 621.75,-29.64 621.75,-36.64"/>
+</g>
+<!-- proc~format_text -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node4" class="node">
+<title>proc~format_text</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node4"><a xlink:href="../proc/format_text.html" xlink:title="format_text">
+<polygon fill="#d9534f" stroke="#d9534f" points="393.81,-45.27 321.54,-45.27 321.54,-21 393.81,-21 393.81,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="357.67" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_text</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~format_pass -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge3" class="edge">
+<title>proc~format_text&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M394.13,-33.73C405.53,-33.9 418.2,-34.05 429.81,-34.13 454.26,-34.31 460.38,-34.3 484.83,-34.13 492.71,-34.08 501.07,-34 509.21,-33.9"/>
+<polygon fill="#000000" stroke="#000000" points="509.04,-37.4 518.99,-33.77 508.95,-30.4 509.04,-37.4"/>
+</g>
+<!-- proc~relayout -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node5" class="node">
+<title>proc~relayout</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node5"><a xlink:href="../proc/relayout.html" xlink:title="relayout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="484.83,-25.27 429.81,-25.27 429.81,-1 484.83,-1 484.83,-25.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.32" y="-9.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">relayout</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~relayout -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge6" class="edge">
+<title>proc~format_text&#45;&gt;proc~relayout</title>
+<path fill="none" stroke="#000000" d="M394.2,-25.86C402.04,-24.25 410.38,-22.54 418.31,-20.92"/>
+<polygon fill="#000000" stroke="#000000" points="418.97,-24.36 428.06,-18.92 417.56,-17.5 418.97,-24.36"/>
+</g>
+<!-- proc~relayout&#45;&gt;proc~format_pass -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge4" class="edge">
+<title>proc~relayout&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M485.09,-18.49C492.56,-19.99 500.92,-21.66 509.24,-23.33"/>
+<polygon fill="#000000" stroke="#000000" points="508.5,-26.75 519,-25.28 509.88,-19.89 508.5,-26.75"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node6" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node6"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="285.54,-45.27 208.77,-45.27 208.77,-21 285.54,-21 285.54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="247.15" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~format_text -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge5" class="edge">
+<title>proc~process_text&#45;&gt;proc~format_text</title>
+<path fill="none" stroke="#000000" d="M285.81,-33.13C293.54,-33.13 301.77,-33.13 309.78,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="309.77,-36.64 319.77,-33.14 309.77,-29.64 309.77,-36.64"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node7" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node7"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-66.27 94.5,-66.27 94.5,-42 168.27,-42 168.27,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge7" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.7,-47.43C177.86,-45.74 187.84,-43.9 197.5,-42.12"/>
+<polygon fill="#000000" stroke="#000000" points="197.94,-45.59 207.14,-40.34 196.67,-38.71 197.94,-45.59"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node8" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node8"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-24.27 90,-24.27 90,0 172.77,0 172.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge8" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M173.14,-19.66C180.94,-21.1 189.18,-22.62 197.21,-24.1"/>
+<polygon fill="#000000" stroke="#000000" points="196.39,-27.51 206.85,-25.88 197.66,-20.62 196.39,-27.51"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~emit_comment_line~~CalledByGraph_node9" class="node">
+<title>proc~run</title>
+<g id="a_proc~~emit_comment_line~~CalledByGraph_node9"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-45.27 0,-45.27 0,-21 54,-21 54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge9" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-38.54C63.15,-40.34 73.22,-42.41 83.09,-44.43"/>
+<polygon fill="#000000" stroke="#000000" points="82.09,-47.8 92.59,-46.38 83.5,-40.95 82.09,-47.8"/>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~emit_comment_line~~CalledByGraph_edge10" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-27.73C61.86,-26.19 70.3,-24.46 78.75,-22.73"/>
+<polygon fill="#000000" stroke="#000000" points="79.22,-26.2 88.31,-20.76 77.81,-19.35 79.22,-26.2"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocemit_comment_lineCalledByGraph = svgPanZoom('#procemit_comment_lineCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">emit_comment_line</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">ind</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! A comment line, re-indented to `ind`. A comment that lines up with the comment on the line</span>
+<span class="w">    </span><span class="c">!! above (a continued trailing comment) stays lined up with it. Comment lines directly after a</span>
+<span class="w">    </span><span class="c">!! statement that are indented more than it keep their extra indentation. With `keep_column1_comments`, a</span>
+<span class="w">    </span><span class="c">!! comment that starts in column 1 stays there.</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">writer_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="w">           </span><span class="c">!! the output and the alignment state</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">src</span><span class="w">          </span><span class="c">!! the source text</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">token_list_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tokens</span><span class="w">     </span><span class="c">!! its tokens</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">statement_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s</span><span class="w">           </span><span class="c">!! the comment line item</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ind</span><span class="w">                   </span><span class="c">!! indentation of the code around it, in blanks</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">format_options_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">opts</span><span class="w">   </span><span class="c">!! the formatting options</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">opts</span><span class="p">%</span><span class="n">indent_comments</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        call </span><span class="n">emit_range</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">%</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">%</span><span class="n">last</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">w</span><span class="p">%</span><span class="n">comment_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">    end if</span>
+<span class="k">    do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">%</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">%</span><span class="n">last</span><span class="w"></span>
+<span class="w">        </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">j</span><span class="p">)%</span><span class="nb">kind</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">TK_BOM</span><span class="p">,</span><span class="w"> </span><span class="n">TK_NEWLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">put</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">token_text</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">TK_COMMENT</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">opts</span><span class="p">%</span><span class="n">keep_column1_comments</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">input_column</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                         </span><span class="c">! a comment in column 1 stays there</span>
+<span class="w">                </span><span class="n">w</span><span class="p">%</span><span class="n">comment_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ind</span><span class="w"></span>
+<span class="w">                </span><span class="c">! comments directly after a statement and indented deeper than it (such as FORD</span>
+<span class="w">                </span><span class="c">! `!!` documentation) keep their extra indentation</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="p">%</span><span class="n">stmt_in</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">stmt_out</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">input_column</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">stmt_in</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">comment_column</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">            call </span><span class="n">put</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="nb">repeat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">put</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">trim_blanks</span><span class="p">(</span><span class="n">token_text</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">j</span><span class="p">))))</span><span class="w"></span>
+<span class="w">        </span><span class="k">end select</span>
+<span class="k">    end do</span>
+<span class="k">end subroutine </span><span class="n">emit_comment_line</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

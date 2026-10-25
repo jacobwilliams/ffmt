@@ -1,0 +1,1131 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>directory_files &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>directory_files
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.5% of total for procedures.">25 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_cli.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_cli.f90.html'>ffmt_cli.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_cli.html'>ffmt_cli</a></li>
+            <li class="breadcrumb-item active" aria-current="page">directory_files</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/directory_files.html#src">directory_files</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine directory_files(cli, cache, dir, files, status)  
+</h2>
+    
+
+    <p>The Fortran files under <code>dir</code>, selected with the <code>[files]</code> settings of its configuration and
+the command line.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~3"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+                <p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~2"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+                <p>configurations found so far</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~11"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+                <p>the directory, as given on the command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-files~3"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>files</strong>(:)</td>
+            <td>
+                <p>paths of the files found</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-status~6"></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>status</strong></td>
+            <td>
+                <p>exit status so far; set to <code>EXIT_ERROR</code> if the
+configuration cannot be read</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~directory_files~~CallsGraph Pages: 1 -->
+<svg id="procdirectory_filesCallsGraph" width="614pt" height="673pt"
+ viewBox="0.00 0.00 614.00 673.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~directory_files~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 669.27)">
+<title>proc~~directory_files~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-669.27 609.85,-669.27 609.85,4 -4,4"/>
+<!-- proc~directory_files -->
+<g id="proc~~directory_files~~CallsGraph_node1" class="node">
+<title>proc~directory_files</title>
+<polygon fill="none" stroke="black" points="85.77,-232.27 0,-232.27 0,-208 85.77,-208 85.77,-232.27"/>
+<text xml:space="preserve" text-anchor="middle" x="42.88" y="-216.53" font-family="Helvetica,sans-Serif" font-size="10.50">directory_files</text>
+</g>
+<!-- proc~absolute_path -->
+<g id="proc~~directory_files~~CallsGraph_node2" class="node">
+<title>proc~absolute_path</title>
+<g id="a_proc~~directory_files~~CallsGraph_node2"><a xlink:href="../proc/absolute_path.html" xlink:title="absolute_path">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="220.29,-603.27 133.77,-603.27 133.77,-579 220.29,-579 220.29,-603.27"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-587.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">absolute_path</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~absolute_path -->
+<g id="proc~~directory_files~~CallsGraph_edge1" class="edge">
+<title>proc~directory_files&#45;&gt;proc~absolute_path</title>
+<path fill="none" stroke="#000000" d="M48.28,-232.48C67.29,-285.84 142.58,-497.21 167.77,-567.94"/>
+<polygon fill="#000000" stroke="#000000" points="164.46,-569.07 171.11,-577.32 171.05,-566.72 164.46,-569.07"/>
+</g>
+<!-- proc~collect_files -->
+<g id="proc~~directory_files~~CallsGraph_node3" class="node">
+<title>proc~collect_files</title>
+<g id="a_proc~~directory_files~~CallsGraph_node3"><a xlink:href="../proc/collect_files.html" xlink:title="collect_files">
+<polygon fill="#d9534f" stroke="#d9534f" points="213.91,-358.27 140.14,-358.27 140.14,-334 213.91,-334 213.91,-358.27"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-342.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">collect_files</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~collect_files -->
+<g id="proc~~directory_files~~CallsGraph_edge2" class="edge">
+<title>proc~directory_files&#45;&gt;proc~collect_files</title>
+<path fill="none" stroke="#000000" d="M57.04,-232.68C79.89,-254.47 127.13,-299.51 154.72,-325.81"/>
+<polygon fill="#000000" stroke="#000000" points="152.18,-328.23 161.83,-332.6 157.01,-323.17 152.18,-328.23"/>
+</g>
+<!-- proc~config_for -->
+<g id="proc~~directory_files~~CallsGraph_node4" class="node">
+<title>proc~config_for</title>
+<g id="a_proc~~directory_files~~CallsGraph_node4"><a xlink:href="../proc/config_for.html" xlink:title="config_for">
+<polygon fill="#d9534f" stroke="#d9534f" points="209.41,-232.27 144.64,-232.27 144.64,-208 209.41,-208 209.41,-232.27"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-216.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">config_for</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~config_for -->
+<g id="proc~~directory_files~~CallsGraph_edge3" class="edge">
+<title>proc~directory_files&#45;&gt;proc~config_for</title>
+<path fill="none" stroke="#000000" d="M86.06,-220.13C101.11,-220.13 118.07,-220.13 133.17,-220.13"/>
+<polygon fill="#000000" stroke="#000000" points="132.78,-223.64 142.78,-220.14 132.78,-216.64 132.78,-223.64"/>
+</g>
+<!-- proc~default_exclude -->
+<g id="proc~~directory_files~~CallsGraph_node5" class="node">
+<title>proc~default_exclude</title>
+<g id="a_proc~~directory_files~~CallsGraph_node5"><a xlink:href="../proc/default_exclude.html" xlink:title="default_exclude">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="224.79,-190.27 129.27,-190.27 129.27,-166 224.79,-166 224.79,-190.27"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-174.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">default_exclude</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~default_exclude -->
+<g id="proc~~directory_files~~CallsGraph_edge4" class="edge">
+<title>proc~directory_files&#45;&gt;proc~default_exclude</title>
+<path fill="none" stroke="#000000" d="M83.53,-207.53C96.73,-203.34 111.61,-198.61 125.52,-194.19"/>
+<polygon fill="#000000" stroke="#000000" points="126.5,-197.55 134.97,-191.19 124.38,-190.88 126.5,-197.55"/>
+</g>
+<!-- proc~default_extensions -->
+<g id="proc~~directory_files~~CallsGraph_node6" class="node">
+<title>proc~default_extensions</title>
+<g id="a_proc~~directory_files~~CallsGraph_node6"><a xlink:href="../proc/default_extensions.html" xlink:title="default_extensions">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="232.29,-148.27 121.77,-148.27 121.77,-124 232.29,-124 232.29,-148.27"/>
+<text xml:space="preserve" text-anchor="middle" x="177.03" y="-132.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">default_extensions</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~default_extensions -->
+<g id="proc~~directory_files~~CallsGraph_edge5" class="edge">
+<title>proc~directory_files&#45;&gt;proc~default_extensions</title>
+<path fill="none" stroke="#000000" d="M56.73,-207.61C71.45,-193.79 96.78,-171.6 121.77,-157.13 123.94,-155.88 126.19,-154.67 128.5,-153.51"/>
+<polygon fill="#000000" stroke="#000000" points="129.84,-156.75 137.45,-149.39 126.91,-150.39 129.84,-156.75"/>
+</g>
+<!-- proc~current_directory -->
+<g id="proc~~directory_files~~CallsGraph_node9" class="node">
+<title>proc~current_directory</title>
+<g id="a_proc~~directory_files~~CallsGraph_node9"><a xlink:href="../proc/current_directory.html" xlink:title="current_directory">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="370.56,-665.27 268.29,-665.27 268.29,-641 370.56,-641 370.56,-665.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-649.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">current_directory</text>
+</a>
+</g>
+</g>
+<!-- proc~absolute_path&#45;&gt;proc~current_directory -->
+<g id="proc~~directory_files~~CallsGraph_edge6" class="edge">
+<title>proc~absolute_path&#45;&gt;proc~current_directory</title>
+<path fill="none" stroke="#000000" d="M205.19,-603.73C223.06,-611.95 246.99,-622.84 268.29,-632.13 271.25,-633.43 274.31,-634.75 277.4,-636.07"/>
+<polygon fill="#000000" stroke="#000000" points="275.91,-639.24 286.48,-639.92 278.64,-632.79 275.91,-639.24"/>
+</g>
+<!-- proc~is_absolute -->
+<g id="proc~~directory_files~~CallsGraph_node13" class="node">
+<title>proc~is_absolute</title>
+<g id="a_proc~~directory_files~~CallsGraph_node13"><a xlink:href="../proc/is_absolute.html" xlink:title="is_absolute">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="354.81,-623.27 284.04,-623.27 284.04,-599 354.81,-599 354.81,-623.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-607.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_absolute</text>
+</a>
+</g>
+</g>
+<!-- proc~absolute_path&#45;&gt;proc~is_absolute -->
+<g id="proc~~directory_files~~CallsGraph_edge7" class="edge">
+<title>proc~absolute_path&#45;&gt;proc~is_absolute</title>
+<path fill="none" stroke="#000000" d="M220.53,-597.19C236.93,-599.53 255.72,-602.2 272.43,-604.58"/>
+<polygon fill="#000000" stroke="#000000" points="271.72,-608.02 282.11,-605.96 272.7,-601.09 271.72,-608.02"/>
+</g>
+<!-- proc~join_path -->
+<g id="proc~~directory_files~~CallsGraph_node14" class="node">
+<title>proc~join_path</title>
+<g id="a_proc~~directory_files~~CallsGraph_node14"><a xlink:href="../proc/join_path.html" xlink:title="join_path">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="485.95,-603.27 425.68,-603.27 425.68,-579 485.95,-579 485.95,-603.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-587.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">join_path</text>
+</a>
+</g>
+</g>
+<!-- proc~absolute_path&#45;&gt;proc~join_path -->
+<g id="proc~~directory_files~~CallsGraph_edge8" class="edge">
+<title>proc~absolute_path&#45;&gt;proc~join_path</title>
+<path fill="none" stroke="#000000" d="M220.73,-590.56C235.76,-590.39 252.78,-590.22 268.29,-590.13 313.74,-589.88 325.11,-589.87 370.56,-590.13 384.85,-590.22 400.49,-590.39 414.39,-590.56"/>
+<polygon fill="#000000" stroke="#000000" points="414.02,-594.05 424.06,-590.68 414.11,-587.05 414.02,-594.05"/>
+</g>
+<!-- fullmatch -->
+<g id="proc~~directory_files~~CallsGraph_node7" class="node">
+<title>fullmatch</title>
+<polygon fill="#777777" stroke="#777777" points="350.31,-400.27 288.54,-400.27 288.54,-376 350.31,-376 350.31,-400.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-384.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fullmatch</text>
+</g>
+<!-- proc~collect_files&#45;&gt;fullmatch -->
+<g id="proc~~directory_files~~CallsGraph_edge9" class="edge">
+<title>proc~collect_files&#45;&gt;fullmatch</title>
+<path fill="none" stroke="#000000" d="M214.19,-356.95C233.43,-362.71 257.17,-369.81 277.14,-375.78"/>
+<polygon fill="#000000" stroke="#000000" points="276.05,-379.11 286.64,-378.63 278.06,-372.41 276.05,-379.11"/>
+</g>
+<!-- proc~child -->
+<g id="proc~~directory_files~~CallsGraph_node8" class="node">
+<title>proc~child</title>
+<g id="a_proc~~directory_files~~CallsGraph_node8"><a xlink:href="../proc/child.html" xlink:title="child">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="346.42,-524.27 292.42,-524.27 292.42,-500 346.42,-500 346.42,-524.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-508.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">child</text>
+</a>
+</g>
+</g>
+<!-- proc~collect_files&#45;&gt;proc~child -->
+<g id="proc~~directory_files~~CallsGraph_edge10" class="edge">
+<title>proc~collect_files&#45;&gt;proc~child</title>
+<path fill="none" stroke="#000000" d="M188.58,-358.61C212.47,-386.85 270.89,-455.93 300.54,-490.98"/>
+<polygon fill="#000000" stroke="#000000" points="297.64,-492.98 306.77,-498.36 302.99,-488.46 297.64,-492.98"/>
+</g>
+<!-- proc~glob_to_regex -->
+<g id="proc~~directory_files~~CallsGraph_node12" class="node">
+<title>proc~glob_to_regex</title>
+<g id="a_proc~~directory_files~~CallsGraph_node12"><a xlink:href="../proc/glob_to_regex.html" xlink:title="glob_to_regex">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="361.93,-358.27 276.91,-358.27 276.91,-334 361.93,-334 361.93,-358.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-342.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">glob_to_regex</text>
+</a>
+</g>
+</g>
+<!-- proc~collect_files&#45;&gt;proc~glob_to_regex -->
+<g id="proc~~directory_files~~CallsGraph_edge11" class="edge">
+<title>proc~collect_files&#45;&gt;proc~glob_to_regex</title>
+<path fill="none" stroke="#000000" d="M214.19,-346.13C229.63,-346.13 247.98,-346.13 264.95,-346.13"/>
+<polygon fill="#000000" stroke="#000000" points="264.9,-349.64 274.9,-346.14 264.9,-342.64 264.9,-349.64"/>
+</g>
+<!-- proc~list_directory -->
+<g id="proc~~directory_files~~CallsGraph_node15" class="node">
+<title>proc~list_directory</title>
+<g id="a_proc~~directory_files~~CallsGraph_node15"><a xlink:href="../proc/list_directory.html" xlink:title="list_directory">
+<polygon fill="#d9534f" stroke="#d9534f" points="358.93,-443.27 279.91,-443.27 279.91,-419 358.93,-419 358.93,-443.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-427.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">list_directory</text>
+</a>
+</g>
+</g>
+<!-- proc~collect_files&#45;&gt;proc~list_directory -->
+<g id="proc~~directory_files~~CallsGraph_edge12" class="edge">
+<title>proc~collect_files&#45;&gt;proc~list_directory</title>
+<path fill="none" stroke="#000000" d="M194.03,-358.75C211.6,-372.25 240.96,-393.8 268.29,-409.13 271.09,-410.71 274.02,-412.24 277,-413.73"/>
+<polygon fill="#000000" stroke="#000000" points="275.3,-416.8 285.84,-417.92 278.3,-410.47 275.3,-416.8"/>
+</g>
+<!-- proc~sort_entries -->
+<g id="proc~~directory_files~~CallsGraph_node17" class="node">
+<title>proc~sort_entries</title>
+<g id="a_proc~~directory_files~~CallsGraph_node17"><a xlink:href="../proc/sort_entries.html" xlink:title="sort_entries">
+<polygon fill="#d9534f" stroke="#d9534f" points="356.31,-316.27 282.54,-316.27 282.54,-292 356.31,-292 356.31,-316.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-300.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sort_entries</text>
+</a>
+</g>
+</g>
+<!-- proc~collect_files&#45;&gt;proc~sort_entries -->
+<g id="proc~~directory_files~~CallsGraph_edge13" class="edge">
+<title>proc~collect_files&#45;&gt;proc~sort_entries</title>
+<path fill="none" stroke="#000000" d="M214.19,-335.32C231.63,-330.1 252.77,-323.78 271.44,-318.19"/>
+<polygon fill="#000000" stroke="#000000" points="272.36,-321.57 280.94,-315.35 270.36,-314.86 272.36,-321.57"/>
+</g>
+<!-- regex -->
+<g id="proc~~directory_files~~CallsGraph_node18" class="node">
+<title>regex</title>
+<polygon fill="#777777" stroke="#777777" points="346.42,-274.27 292.42,-274.27 292.42,-250 346.42,-250 346.42,-274.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-258.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">regex</text>
+</g>
+<!-- proc~collect_files&#45;&gt;regex -->
+<g id="proc~~directory_files~~CallsGraph_edge14" class="edge">
+<title>proc~collect_files&#45;&gt;regex</title>
+<path fill="none" stroke="#000000" d="M193.66,-333.67C211.15,-320.11 240.66,-298.34 268.29,-283.13 272.52,-280.81 277.07,-278.57 281.63,-276.48"/>
+<polygon fill="#000000" stroke="#000000" points="283,-279.7 290.78,-272.5 280.21,-273.28 283,-279.7"/>
+</g>
+<!-- proc~ends_with -->
+<g id="proc~~directory_files~~CallsGraph_node10" class="node">
+<title>proc~ends_with</title>
+<g id="a_proc~~directory_files~~CallsGraph_node10"><a xlink:href="../proc/ends_with.html" xlink:title="ends_with">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="351.43,-150.27 287.41,-150.27 287.41,-126 351.43,-126 351.43,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ends_with</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~ends_with -->
+<g id="proc~~directory_files~~CallsGraph_edge15" class="edge">
+<title>proc~config_for&#45;&gt;proc~ends_with</title>
+<path fill="none" stroke="#000000" d="M209.7,-210.73C217.45,-207.68 225.47,-203.84 232.29,-199.13 251.98,-185.56 248.79,-172.98 268.29,-159.13 270.96,-157.24 273.83,-155.47 276.79,-153.83"/>
+<polygon fill="#000000" stroke="#000000" points="278.3,-156.99 285.71,-149.43 275.2,-150.72 278.3,-156.99"/>
+</g>
+<!-- proc~find_config -->
+<g id="proc~~directory_files~~CallsGraph_node11" class="node">
+<title>proc~find_config</title>
+<g id="a_proc~~directory_files~~CallsGraph_node11"><a xlink:href="../proc/find_config.html" xlink:title="find_config">
+<polygon fill="#d9534f" stroke="#d9534f" points="354.43,-192.27 284.41,-192.27 284.41,-168 354.43,-168 354.43,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="319.42" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_config</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~find_config -->
+<g id="proc~~directory_files~~CallsGraph_edge16" class="edge">
+<title>proc~config_for&#45;&gt;proc~find_config</title>
+<path fill="none" stroke="#000000" d="M209.89,-211.06C228.59,-205.73 252.53,-198.91 273.17,-193.03"/>
+<polygon fill="#000000" stroke="#000000" points="274.13,-196.4 282.78,-190.29 272.21,-189.66 274.13,-196.4"/>
+</g>
+<!-- proc~load_config -->
+<g id="proc~~directory_files~~CallsGraph_node16" class="node">
+<title>proc~load_config</title>
+<g id="a_proc~~directory_files~~CallsGraph_node16"><a xlink:href="../proc/load_config.html" xlink:title="load_config">
+<polygon fill="#d9534f" stroke="#d9534f" points="492.33,-192.27 419.31,-192.27 419.31,-168 492.33,-168 492.33,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">load_config</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~load_config -->
+<g id="proc~~directory_files~~CallsGraph_edge17" class="edge">
+<title>proc~config_for&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M209.9,-218.42C248.25,-216.02 314.46,-210.84 370.56,-201.13 382.84,-199.01 395.98,-196.07 408.14,-193.06"/>
+<polygon fill="#000000" stroke="#000000" points="408.69,-196.53 417.52,-190.67 406.96,-189.74 408.69,-196.53"/>
+</g>
+<!-- proc~child&#45;&gt;proc~join_path -->
+<g id="proc~~directory_files~~CallsGraph_edge18" class="edge">
+<title>proc~child&#45;&gt;proc~join_path</title>
+<path fill="none" stroke="#000000" d="M340.07,-524.67C357.41,-535.62 383.44,-551.81 406.56,-565.13 411.26,-567.84 416.26,-570.64 421.19,-573.34"/>
+<polygon fill="#000000" stroke="#000000" points="419.31,-576.3 429.77,-577.99 422.65,-570.15 419.31,-576.3"/>
+</g>
+<!-- interface~c_getcwd -->
+<g id="proc~~directory_files~~CallsGraph_node24" class="node">
+<title>interface~c_getcwd</title>
+<g id="a_proc~~directory_files~~CallsGraph_node24"><a xlink:href="../interface/c_getcwd.html" xlink:title="c_getcwd">
+<polygon fill="#a7506f" stroke="#a7506f" points="486.33,-665.27 425.31,-665.27 425.31,-641 486.33,-641 486.33,-665.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-649.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c_getcwd</text>
+</a>
+</g>
+</g>
+<!-- proc~current_directory&#45;&gt;interface~c_getcwd -->
+<g id="proc~~directory_files~~CallsGraph_edge19" class="edge">
+<title>proc~current_directory&#45;&gt;interface~c_getcwd</title>
+<path fill="none" stroke="#000000" d="M370.85,-653.13C384.91,-653.13 400.01,-653.13 413.48,-653.13"/>
+<polygon fill="#000000" stroke="#000000" points="413.31,-656.64 423.31,-653.14 413.31,-649.64 413.31,-656.64"/>
+</g>
+<!-- proc~find_config&#45;&gt;proc~join_path -->
+<g id="proc~~directory_files~~CallsGraph_edge21" class="edge">
+<title>proc~find_config&#45;&gt;proc~join_path</title>
+<path fill="none" stroke="#000000" d="M334.46,-192.68C346.21,-204.07 362.34,-221.99 370.56,-241.13 421.97,-360.89 355.29,-412.32 406.56,-532.13 412.66,-546.39 423.29,-559.96 433.02,-570.48"/>
+<polygon fill="#000000" stroke="#000000" points="430.33,-572.74 439.81,-577.47 435.35,-567.86 430.33,-572.74"/>
+</g>
+<!-- proc~find_config&#45;&gt;proc~load_config -->
+<g id="proc~~directory_files~~CallsGraph_edge22" class="edge">
+<title>proc~find_config&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M354.69,-180.13C370.81,-180.13 390.3,-180.13 407.78,-180.13"/>
+<polygon fill="#000000" stroke="#000000" points="407.7,-183.64 417.7,-180.14 407.7,-176.64 407.7,-183.64"/>
+</g>
+<!-- proc~empty -->
+<g id="proc~~directory_files~~CallsGraph_node29" class="node">
+<title>proc~empty</title>
+<g id="a_proc~~directory_files~~CallsGraph_node29"><a xlink:href="../proc/empty.html" xlink:title="empty">
+<polygon fill="#d9534f" stroke="#d9534f" points="600.46,-24.27 546.46,-24.27 546.46,0 600.46,0 600.46,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">empty</text>
+</a>
+</g>
+</g>
+<!-- proc~find_config&#45;&gt;proc~empty -->
+<g id="proc~~directory_files~~CallsGraph_edge20" class="edge">
+<title>proc~find_config&#45;&gt;proc~empty</title>
+<path fill="none" stroke="#000000" d="M354.56,-170.91C404.76,-157.1 493.8,-131.56 505.08,-121.13 536.12,-92.46 514.35,-65.87 541.08,-33.13 541.32,-32.84 541.57,-32.55 541.82,-32.26"/>
+<polygon fill="#000000" stroke="#000000" points="544.03,-34.98 549.03,-25.64 539.29,-29.82 544.03,-34.98"/>
+</g>
+<!-- proc~parent_directory -->
+<g id="proc~~directory_files~~CallsGraph_node33" class="node">
+<title>proc~parent_directory</title>
+<g id="a_proc~~directory_files~~CallsGraph_node33"><a xlink:href="../proc/parent_directory.html" xlink:title="parent_directory">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="505.08,-112.27 406.56,-112.27 406.56,-88 505.08,-88 505.08,-112.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-96.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">parent_directory</text>
+</a>
+</g>
+</g>
+<!-- proc~find_config&#45;&gt;proc~parent_directory -->
+<g id="proc~~directory_files~~CallsGraph_edge23" class="edge">
+<title>proc~find_config&#45;&gt;proc~parent_directory</title>
+<path fill="none" stroke="#000000" d="M354.67,-167.67C360.15,-165.15 365.63,-162.29 370.56,-159.13 388.84,-147.43 388.87,-138.71 406.56,-126.13 410.4,-123.41 414.56,-120.76 418.77,-118.27"/>
+<polygon fill="#000000" stroke="#000000" points="420.24,-121.45 427.25,-113.5 416.81,-115.35 420.24,-121.45"/>
+</g>
+<!-- re_escape -->
+<g id="proc~~directory_files~~CallsGraph_node35" class="node">
+<title>re_escape</title>
+<polygon fill="#777777" stroke="#777777" points="488.58,-245.27 423.06,-245.27 423.06,-221 488.58,-221 488.58,-245.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-229.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">re_escape</text>
+</g>
+<!-- proc~glob_to_regex&#45;&gt;re_escape -->
+<g id="proc~~directory_files~~CallsGraph_edge24" class="edge">
+<title>proc~glob_to_regex&#45;&gt;re_escape</title>
+<path fill="none" stroke="#000000" d="M358.51,-333.51C362.85,-331.13 366.99,-328.36 370.56,-325.13 395.37,-302.75 382.87,-282.7 406.56,-259.13 409.31,-256.4 412.4,-253.88 415.67,-251.57"/>
+<polygon fill="#000000" stroke="#000000" points="417.25,-254.71 423.87,-246.43 413.54,-248.77 417.25,-254.71"/>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~join_path -->
+<g id="proc~~directory_files~~CallsGraph_edge33" class="edge">
+<title>proc~list_directory&#45;&gt;proc~join_path</title>
+<path fill="none" stroke="#000000" d="M332.55,-443.76C343.37,-455.44 359.2,-473.59 370.56,-491.13 390.43,-521.84 381.24,-538.74 406.56,-565.13 409.28,-567.97 412.37,-570.56 415.65,-572.92"/>
+<polygon fill="#000000" stroke="#000000" points="413.62,-575.78 423.95,-578.15 417.35,-569.86 413.62,-575.78"/>
+</g>
+<!-- interface~c_closedir -->
+<g id="proc~~directory_files~~CallsGraph_node23" class="node">
+<title>interface~c_closedir</title>
+<g id="a_proc~~directory_files~~CallsGraph_node23"><a xlink:href="../interface/c_closedir.html" xlink:title="c_closedir">
+<polygon fill="#a7506f" stroke="#a7506f" points="605.85,-444.27 541.08,-444.27 541.08,-420 605.85,-420 605.85,-444.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-428.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c_closedir</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;interface~c_closedir -->
+<g id="proc~~directory_files~~CallsGraph_edge25" class="edge">
+<title>proc~list_directory&#45;&gt;interface~c_closedir</title>
+<path fill="none" stroke="#000000" d="M359.08,-442.65C373.8,-446.48 390.82,-450.24 406.56,-452.13 450.03,-457.36 461.75,-458.43 505.08,-452.13 513.22,-450.95 521.74,-449.01 529.88,-446.78"/>
+<polygon fill="#000000" stroke="#000000" points="530.6,-450.22 539.22,-444.05 528.64,-443.5 530.6,-450.22"/>
+</g>
+<!-- interface~c_opendir -->
+<g id="proc~~directory_files~~CallsGraph_node25" class="node">
+<title>interface~c_opendir</title>
+<g id="a_proc~~directory_files~~CallsGraph_node25"><a xlink:href="../interface/c_opendir.html" xlink:title="c_opendir">
+<polygon fill="#a7506f" stroke="#a7506f" points="605.47,-486.27 541.45,-486.27 541.45,-462 605.47,-462 605.47,-486.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-470.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c_opendir</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;interface~c_opendir -->
+<g id="proc~~directory_files~~CallsGraph_edge26" class="edge">
+<title>proc~list_directory&#45;&gt;interface~c_opendir</title>
+<path fill="none" stroke="#000000" d="M330.95,-443.75C353.35,-470.57 403.96,-530.93 406.56,-532.13 446.32,-550.48 464.03,-547.37 505.08,-532.13 525.26,-524.65 543.45,-508.11 555.83,-494.6"/>
+<polygon fill="#000000" stroke="#000000" points="558.15,-497.26 562.09,-487.42 552.88,-492.65 558.15,-497.26"/>
+</g>
+<!-- interface~c_readdir -->
+<g id="proc~~directory_files~~CallsGraph_node26" class="node">
+<title>interface~c_readdir</title>
+<g id="a_proc~~directory_files~~CallsGraph_node26"><a xlink:href="../interface/c_readdir.html" xlink:title="c_readdir">
+<polygon fill="#a7506f" stroke="#a7506f" points="603.97,-360.27 542.95,-360.27 542.95,-336 603.97,-336 603.97,-360.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-344.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c_readdir</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;interface~c_readdir -->
+<g id="proc~~directory_files~~CallsGraph_edge27" class="edge">
+<title>proc~list_directory&#45;&gt;interface~c_readdir</title>
+<path fill="none" stroke="#000000" d="M356.19,-418.54C361.31,-415.88 366.28,-412.76 370.56,-409.13 392.86,-390.26 381.12,-368.49 406.56,-354.13 444.67,-332.63 495.94,-334.52 531.35,-339.63"/>
+<polygon fill="#000000" stroke="#000000" points="530.78,-343.08 541.21,-341.21 531.89,-336.17 530.78,-343.08"/>
+</g>
+<!-- proc~byte_at -->
+<g id="proc~~directory_files~~CallsGraph_node27" class="node">
+<title>proc~byte_at</title>
+<g id="a_proc~~directory_files~~CallsGraph_node27"><a xlink:href="../proc/byte_at.html" xlink:title="byte_at">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="600.46,-318.27 546.46,-318.27 546.46,-294 600.46,-294 600.46,-318.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-302.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">byte_at</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~byte_at -->
+<g id="proc~~directory_files~~CallsGraph_edge28" class="edge">
+<title>proc~list_directory&#45;&gt;proc~byte_at</title>
+<path fill="none" stroke="#000000" d="M357.44,-418.64C362.21,-416 366.75,-412.85 370.56,-409.13 397.59,-382.74 376.36,-354.83 406.56,-332.13 443.57,-304.32 498.51,-301.01 534.89,-302.5"/>
+<polygon fill="#000000" stroke="#000000" points="534.31,-305.98 544.49,-303.05 534.71,-298.99 534.31,-305.98"/>
+</g>
+<!-- proc~c_string -->
+<g id="proc~~directory_files~~CallsGraph_node28" class="node">
+<title>proc~c_string</title>
+<g id="a_proc~~directory_files~~CallsGraph_node28"><a xlink:href="../proc/c_string.html" xlink:title="c_string">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="600.46,-402.27 546.46,-402.27 546.46,-378 600.46,-378 600.46,-402.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-386.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">c_string</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~c_string -->
+<g id="proc~~directory_files~~CallsGraph_edge29" class="edge">
+<title>proc~list_directory&#45;&gt;proc~c_string</title>
+<path fill="none" stroke="#000000" d="M354.71,-418.51C360.24,-415.8 365.73,-412.67 370.56,-409.13 390.13,-394.81 384.47,-378.14 406.56,-368.13 448,-349.37 500.8,-361.79 535.57,-374.26"/>
+<polygon fill="#000000" stroke="#000000" points="534.18,-377.48 544.77,-377.74 536.66,-370.93 534.18,-377.48"/>
+</g>
+<!-- proc~entry_name -->
+<g id="proc~~directory_files~~CallsGraph_node30" class="node">
+<title>proc~entry_name</title>
+<g id="a_proc~~directory_files~~CallsGraph_node30"><a xlink:href="../proc/entry_name.html" xlink:title="entry_name">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="493.45,-523.27 418.18,-523.27 418.18,-499 493.45,-499 493.45,-523.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-507.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">entry_name</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~entry_name -->
+<g id="proc~~directory_files~~CallsGraph_edge30" class="edge">
+<title>proc~list_directory&#45;&gt;proc~entry_name</title>
+<path fill="none" stroke="#000000" d="M339.7,-443.73C357.01,-454.92 383.22,-471.55 406.56,-485.13 411.25,-487.86 416.24,-490.67 421.17,-493.37"/>
+<polygon fill="#000000" stroke="#000000" points="419.29,-496.34 429.75,-498.03 422.63,-490.18 419.29,-496.34"/>
+</g>
+<!-- proc~find_layout -->
+<g id="proc~~directory_files~~CallsGraph_node31" class="node">
+<title>proc~find_layout</title>
+<g id="a_proc~~directory_files~~CallsGraph_node31"><a xlink:href="../proc/find_layout.html" xlink:title="find_layout">
+<polygon fill="#d9534f" stroke="#d9534f" points="490.83,-401.27 420.81,-401.27 420.81,-377 490.83,-377 490.83,-401.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-385.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_layout</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~find_layout -->
+<g id="proc~~directory_files~~CallsGraph_edge31" class="edge">
+<title>proc~list_directory&#45;&gt;proc~find_layout</title>
+<path fill="none" stroke="#000000" d="M359.3,-418.99C375.04,-414.07 393.33,-408.35 409.66,-403.25"/>
+<polygon fill="#000000" stroke="#000000" points="410.66,-406.6 419.16,-400.28 408.57,-399.92 410.66,-406.6"/>
+</g>
+<!-- proc~is_directory -->
+<g id="proc~~directory_files~~CallsGraph_node32" class="node">
+<title>proc~is_directory</title>
+<g id="a_proc~~directory_files~~CallsGraph_node32"><a xlink:href="../proc/is_directory.html" xlink:title="is_directory">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="491.95,-443.27 419.68,-443.27 419.68,-419 491.95,-419 491.95,-443.27"/>
+<text xml:space="preserve" text-anchor="middle" x="455.82" y="-427.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_directory</text>
+</a>
+</g>
+</g>
+<!-- proc~list_directory&#45;&gt;proc~is_directory -->
+<g id="proc~~directory_files~~CallsGraph_edge32" class="edge">
+<title>proc~list_directory&#45;&gt;proc~is_directory</title>
+<path fill="none" stroke="#000000" d="M359.3,-431.13C374.52,-431.13 392.11,-431.13 408.02,-431.13"/>
+<polygon fill="#000000" stroke="#000000" points="407.74,-434.64 417.74,-431.14 407.74,-427.64 407.74,-434.64"/>
+</g>
+<!-- get -->
+<g id="proc~~directory_files~~CallsGraph_node19" class="node">
+<title>get</title>
+<polygon fill="#777777" stroke="#777777" points="600.46,-276.27 546.46,-276.27 546.46,-252 600.46,-252 600.46,-276.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-260.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get</text>
+</g>
+<!-- proc~load_config&#45;&gt;get -->
+<g id="proc~~directory_files~~CallsGraph_edge34" class="edge">
+<title>proc~load_config&#45;&gt;get</title>
+<path fill="none" stroke="#000000" d="M476.93,-192.67C485.75,-198.36 496.1,-205.34 505.08,-212.13 521.91,-224.88 524.27,-230.35 541.08,-243.13 541.9,-243.76 542.74,-244.39 543.59,-245.02"/>
+<polygon fill="#000000" stroke="#000000" points="541.53,-247.84 551.72,-250.74 545.56,-242.12 541.53,-247.84"/>
+</g>
+<!-- get_keys -->
+<g id="proc~~directory_files~~CallsGraph_node20" class="node">
+<title>get_keys</title>
+<polygon fill="#777777" stroke="#777777" points="602.47,-234.27 544.45,-234.27 544.45,-210 602.47,-210 602.47,-234.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-218.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_keys</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_keys -->
+<g id="proc~~directory_files~~CallsGraph_edge35" class="edge">
+<title>proc~load_config&#45;&gt;get_keys</title>
+<path fill="none" stroke="#000000" d="M491.52,-192.74C504.75,-197.54 519.91,-203.05 533.51,-207.99"/>
+<polygon fill="#000000" stroke="#000000" points="532,-211.16 542.59,-211.29 534.39,-204.58 532,-211.16"/>
+</g>
+<!-- get_type -->
+<g id="proc~~directory_files~~CallsGraph_node21" class="node">
+<title>get_type</title>
+<polygon fill="#777777" stroke="#777777" points="602.1,-192.27 544.83,-192.27 544.83,-168 602.1,-168 602.1,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_type</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_type -->
+<g id="proc~~directory_files~~CallsGraph_edge36" class="edge">
+<title>proc~load_config&#45;&gt;get_type</title>
+<path fill="none" stroke="#000000" d="M492.78,-180.13C505.7,-180.13 520.33,-180.13 533.5,-180.13"/>
+<polygon fill="#000000" stroke="#000000" points="533.1,-183.64 543.1,-180.14 533.1,-176.64 533.1,-183.64"/>
+</g>
+<!-- get_value -->
+<g id="proc~~directory_files~~CallsGraph_node22" class="node">
+<title>get_value</title>
+<polygon fill="#777777" stroke="#777777" points="605.1,-150.27 541.83,-150.27 541.83,-126 605.1,-126 605.1,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_value</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_value -->
+<g id="proc~~directory_files~~CallsGraph_edge37" class="edge">
+<title>proc~load_config&#45;&gt;get_value</title>
+<path fill="none" stroke="#000000" d="M491.52,-167.53C503.89,-163.04 517.95,-157.93 530.84,-153.25"/>
+<polygon fill="#000000" stroke="#000000" points="531.71,-156.66 539.91,-149.96 529.32,-150.08 531.71,-156.66"/>
+</g>
+<!-- proc~load_config&#45;&gt;proc~empty -->
+<g id="proc~~directory_files~~CallsGraph_edge38" class="edge">
+<title>proc~load_config&#45;&gt;proc~empty</title>
+<path fill="none" stroke="#000000" d="M488.58,-167.68C494.73,-164.08 500.64,-159.6 505.08,-154.13 540.49,-110.61 507.79,-78.3 541.08,-33.13 541.23,-32.94 541.37,-32.74 541.52,-32.55"/>
+<polygon fill="#000000" stroke="#000000" points="543.8,-35.22 548.47,-25.71 538.89,-30.23 543.8,-35.22"/>
+</g>
+<!-- proc~to_s -->
+<g id="proc~~directory_files~~CallsGraph_node34" class="node">
+<title>proc~to_s</title>
+<g id="a_proc~~directory_files~~CallsGraph_node34"><a xlink:href="../proc/to_s.html" xlink:title="to_s">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="600.46,-108.27 546.46,-108.27 546.46,-84 600.46,-84 600.46,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-92.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">to_s</text>
+</a>
+</g>
+</g>
+<!-- proc~load_config&#45;&gt;proc~to_s -->
+<g id="proc~~directory_files~~CallsGraph_edge39" class="edge">
+<title>proc~load_config&#45;&gt;proc~to_s</title>
+<path fill="none" stroke="#000000" d="M483.51,-167.62C490.78,-163.72 498.47,-159.12 505.08,-154.13 523.39,-140.31 523.45,-131.82 541.08,-117.13 541.85,-116.49 542.64,-115.85 543.45,-115.22"/>
+<polygon fill="#000000" stroke="#000000" points="545.21,-118.27 551.2,-109.53 541.07,-112.62 545.21,-118.27"/>
+</g>
+<!-- toml_load -->
+<g id="proc~~directory_files~~CallsGraph_node36" class="node">
+<title>toml_load</title>
+<polygon fill="#777777" stroke="#777777" points="605.47,-66.27 541.45,-66.27 541.45,-42 605.47,-42 605.47,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.46" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">toml_load</text>
+</g>
+<!-- proc~load_config&#45;&gt;toml_load -->
+<g id="proc~~directory_files~~CallsGraph_edge40" class="edge">
+<title>proc~load_config&#45;&gt;toml_load</title>
+<path fill="none" stroke="#000000" d="M487.27,-167.63C493.71,-163.97 500.07,-159.49 505.08,-154.13 531.44,-125.96 516.1,-104.54 541.08,-75.13 541.33,-74.84 541.58,-74.56 541.83,-74.27"/>
+<polygon fill="#000000" stroke="#000000" points="544.03,-77 549.12,-67.71 539.35,-71.8 544.03,-77"/>
+</g>
+<!-- proc~find_layout&#45;&gt;interface~c_closedir -->
+<g id="proc~~directory_files~~CallsGraph_edge41" class="edge">
+<title>proc~find_layout&#45;&gt;interface~c_closedir</title>
+<path fill="none" stroke="#000000" d="M490.58,-401.69C502.98,-406.3 517.17,-411.57 530.22,-416.43"/>
+<polygon fill="#000000" stroke="#000000" points="528.83,-419.65 539.43,-419.85 531.27,-413.08 528.83,-419.65"/>
+</g>
+<!-- proc~find_layout&#45;&gt;interface~c_opendir -->
+<g id="proc~~directory_files~~CallsGraph_edge42" class="edge">
+<title>proc~find_layout&#45;&gt;interface~c_opendir</title>
+<path fill="none" stroke="#000000" d="M491.15,-401.69C496.04,-404.15 500.84,-406.96 505.08,-410.13 525.04,-425.06 522.54,-436.48 541.08,-453.13 541.7,-453.69 542.34,-454.25 542.99,-454.8"/>
+<polygon fill="#000000" stroke="#000000" points="540.64,-457.41 550.71,-460.69 544.89,-451.84 540.64,-457.41"/>
+</g>
+<!-- proc~find_layout&#45;&gt;interface~c_readdir -->
+<g id="proc~~directory_files~~CallsGraph_edge43" class="edge">
+<title>proc~find_layout&#45;&gt;interface~c_readdir</title>
+<path fill="none" stroke="#000000" d="M491.2,-376.94C504,-372.41 518.64,-367.22 531.94,-362.5"/>
+<polygon fill="#000000" stroke="#000000" points="533.04,-365.83 541.29,-359.19 530.7,-359.23 533.04,-365.83"/>
+</g>
+<!-- proc~find_layout&#45;&gt;proc~byte_at -->
+<g id="proc~~directory_files~~CallsGraph_edge44" class="edge">
+<title>proc~find_layout&#45;&gt;proc~byte_at</title>
+<path fill="none" stroke="#000000" d="M473.45,-376.56C490.33,-363.88 517.3,-343.83 541.08,-327.13 542.07,-326.44 543.09,-325.73 544.11,-325.02"/>
+<polygon fill="#000000" stroke="#000000" points="545.91,-328.03 552.2,-319.51 541.97,-322.25 545.91,-328.03"/>
+</g>
+<!-- proc~find_layout&#45;&gt;proc~c_string -->
+<g id="proc~~directory_files~~CallsGraph_edge45" class="edge">
+<title>proc~find_layout&#45;&gt;proc~c_string</title>
+<path fill="none" stroke="#000000" d="M491.2,-389.43C504.94,-389.55 520.79,-389.69 534.83,-389.81"/>
+<polygon fill="#000000" stroke="#000000" points="534.57,-393.31 544.6,-389.89 534.63,-386.31 534.57,-393.31"/>
+</g>
+<!-- proc~is_directory&#45;&gt;interface~c_closedir -->
+<g id="proc~~directory_files~~CallsGraph_edge46" class="edge">
+<title>proc~is_directory&#45;&gt;interface~c_closedir</title>
+<path fill="none" stroke="#000000" d="M492.15,-431.44C503.92,-431.54 517.18,-431.66 529.47,-431.76"/>
+<polygon fill="#000000" stroke="#000000" points="529.34,-435.26 539.37,-431.85 529.41,-428.26 529.34,-435.26"/>
+</g>
+<!-- proc~is_directory&#45;&gt;interface~c_opendir -->
+<g id="proc~~directory_files~~CallsGraph_edge47" class="edge">
+<title>proc~is_directory&#45;&gt;interface~c_opendir</title>
+<path fill="none" stroke="#000000" d="M490.58,-443.69C503.08,-448.34 517.41,-453.66 530.55,-458.55"/>
+<polygon fill="#000000" stroke="#000000" points="529.22,-461.79 539.82,-462 531.66,-455.23 529.22,-461.79"/>
+</g>
+<!-- proc~is_directory&#45;&gt;proc~c_string -->
+<g id="proc~~directory_files~~CallsGraph_edge48" class="edge">
+<title>proc~is_directory&#45;&gt;proc~c_string</title>
+<path fill="none" stroke="#000000" d="M492.15,-418.61C505.88,-413.74 521.62,-408.16 535.5,-403.24"/>
+<polygon fill="#000000" stroke="#000000" points="536.48,-406.61 544.74,-399.97 534.14,-400.01 536.48,-406.61"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~directory_files~~CalledByGraph Pages: 1 -->
+<svg id="procdirectory_filesCalledByGraph" width="184pt" height="32pt"
+ viewBox="0.00 0.00 184.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~directory_files~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>proc~~directory_files~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 179.77,-28.27 179.77,4 -4,4"/>
+<!-- proc~directory_files -->
+<g id="proc~~directory_files~~CalledByGraph_node1" class="node">
+<title>proc~directory_files</title>
+<polygon fill="none" stroke="black" points="175.77,-24.27 90,-24.27 90,0 175.77,0 175.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="132.88" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">directory_files</text>
+</g>
+<!-- proc~run -->
+<g id="proc~~directory_files~~CalledByGraph_node2" class="node">
+<title>proc~run</title>
+<g id="a_proc~~directory_files~~CalledByGraph_node2"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~directory_files -->
+<g id="proc~~directory_files~~CalledByGraph_edge1" class="edge">
+<title>proc~run&#45;&gt;proc~directory_files</title>
+<path fill="none" stroke="#000000" d="M54.48,-12.13C61.84,-12.13 70.1,-12.13 78.42,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="78.19,-15.64 88.19,-12.14 78.19,-8.64 78.19,-15.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">directory_files</span><span class="p">(</span><span class="n">cli</span><span class="p">,</span><span class="w"> </span><span class="n">cache</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">files</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! The Fortran files under `dir`, selected with the `[files]` settings of its configuration and</span>
+<span class="w">    </span><span class="c">!! the command line.</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">cli_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cli</span><span class="w">                          </span><span class="c">!! the parsed command line</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">config_cache_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cache</span><span class="w">            </span><span class="c">!! configurations found so far</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dir</span><span class="w">                     </span><span class="c">!! the directory, as given on the command line</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">string_t</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">files</span><span class="p">(:)</span><span class="w">    </span><span class="c">!! paths of the files found</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">status</span><span class="w">                        </span><span class="c">!! exit status so far; set to `EXIT_ERROR` if the</span>
+<span class="w">                                                            </span><span class="c">!! configuration cannot be read</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">config_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cfg</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">string_t</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">extensions</span><span class="p">(:),</span><span class="w"> </span><span class="n">exclude</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">stat</span>
+<span class="nb">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">errmsg</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default_extensions</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default_exclude</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">config_for</span><span class="p">(</span><span class="n">cli</span><span class="p">,</span><span class="w"> </span><span class="n">cache</span><span class="p">,</span><span class="w"> </span><span class="n">absolute_path</span><span class="p">(</span><span class="n">dir</span><span class="p">),</span><span class="w"> </span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        write</span><span class="w"> </span><span class="p">(</span><span class="n">error_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;(a)&#39;</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;error: &#39;</span><span class="o">//</span><span class="n">errmsg</span><span class="w"></span>
+<span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EXIT_ERROR</span><span class="w"></span>
+<span class="w">        </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">files</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">    end if</span>
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cfg</span><span class="p">%</span><span class="n">extensions</span><span class="p">))</span><span class="w"> </span><span class="n">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cfg</span><span class="p">%</span><span class="n">extensions</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cfg</span><span class="p">%</span><span class="n">exclude</span><span class="p">))</span><span class="w"> </span><span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cfg</span><span class="p">%</span><span class="n">exclude</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cli</span><span class="p">%</span><span class="n">extensions</span><span class="p">))</span><span class="w"> </span><span class="n">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cli</span><span class="p">%</span><span class="n">extensions</span><span class="w"></span>
+<span class="w">    </span><span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">exclude</span><span class="p">,</span><span class="w"> </span><span class="n">cli</span><span class="p">%</span><span class="n">exclude</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">collect_files</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">extensions</span><span class="p">,</span><span class="w"> </span><span class="n">exclude</span><span class="p">,</span><span class="w"> </span><span class="n">files</span><span class="p">)</span><span class="w"></span>
+<span class="k">end subroutine </span><span class="n">directory_files</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

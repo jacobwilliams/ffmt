@@ -1,0 +1,538 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_options.f90 &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_options.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.1% of total for source files.">59 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_options.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">ffmt_options.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_options.html">ffmt_options</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/ffmt_options.f90.html#src">ffmt_options.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: sourcefile~~ffmt_options.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefileffmt_optionsf90AfferentGraph" width="634pt" height="216pt"
+ viewBox="0.00 0.00 634.00 216.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 212.29)">
+<title>sourcefile~~ffmt_options.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-212.29 630.1,-212.29 630.1,4 -4,4"/>
+<!-- sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~ffmt_options.f90</title>
+<polygon fill="none" stroke="black" points="97.77,-106.84 0,-106.84 0,-82.57 97.77,-82.57 97.77,-106.84"/>
+<text xml:space="preserve" text-anchor="middle" x="48.88" y="-91.11" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_options.f90</text>
+</g>
+<!-- sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~ffmt_case.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/ffmt_case.f90.html" xlink:title="ffmt_case.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="234.91,-166.84 151.39,-166.84 151.39,-142.57 234.91,-142.57 234.91,-166.84"/>
+<text xml:space="preserve" text-anchor="middle" x="193.15" y="-151.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M162.33,-142.13C141.37,-133.29 113.08,-121.36 90.13,-111.68"/>
+<polygon fill="#000000" stroke="#000000" points="91.64,-108.52 81.06,-107.86 88.92,-114.97 91.64,-108.52"/>
+</g>
+<!-- sourcefile~ffmt_cli.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node3" class="node">
+<title>sourcefile~ffmt_cli.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/ffmt_cli.f90.html" xlink:title="ffmt_cli.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="626.1,-106.84 555.33,-106.84 555.33,-82.57 626.1,-82.57 626.1,-106.84"/>
+<text xml:space="preserve" text-anchor="middle" x="590.71" y="-91.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge2" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M571.3,-107.27C557.5,-116.22 537.87,-127.99 519.33,-135.71 383.73,-192.16 336.89,-229.35 194.15,-194.71"/>
+</g>
+<!-- sourcefile~ffmt_format.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node4" class="node">
+<title>sourcefile~ffmt_format.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/ffmt_format.f90.html" xlink:title="ffmt_format.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="519.33,-126.84 424.56,-126.84 424.56,-102.57 519.33,-102.57 519.33,-126.84"/>
+<text xml:space="preserve" text-anchor="middle" x="471.94" y="-111.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge10" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M555,-100.65C547.32,-101.97 539,-103.39 530.68,-104.82"/>
+<polygon fill="#000000" stroke="#000000" points="530.18,-101.35 520.92,-106.49 531.36,-108.25 530.18,-101.35"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node7" class="node">
+<title>sourcefile~ffmt_settings.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node7"><a xlink:href="../sourcefile/ffmt_settings.f90.html" xlink:title="ffmt_settings.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="388.56,-46.84 288.54,-46.84 288.54,-22.57 388.56,-22.57 388.56,-46.84"/>
+<text xml:space="preserve" text-anchor="middle" x="338.55" y="-31.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_settings.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge13" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M554.89,-86.59C521.45,-78.78 469.52,-66.57 424.56,-55.71 416.64,-53.79 408.3,-51.76 400.08,-49.74"/>
+<polygon fill="#000000" stroke="#000000" points="400.99,-46.36 390.45,-47.37 399.32,-53.16 400.99,-46.36"/>
+</g>
+<!-- sourcefile~ffmt_config.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node9" class="node">
+<title>sourcefile~ffmt_config.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node9"><a xlink:href="../sourcefile/ffmt_config.f90.html" xlink:title="ffmt_config.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="517.83,-46.84 426.06,-46.84 426.06,-22.57 517.83,-22.57 517.83,-46.84"/>
+<text xml:space="preserve" text-anchor="middle" x="471.94" y="-31.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_config.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge17" class="edge">
+<title>sourcefile~ffmt_cli.f90&#45;&gt;sourcefile~ffmt_config.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M565.24,-82.13C548.5,-73.53 526.07,-62.01 507.52,-52.47"/>
+<polygon fill="#000000" stroke="#000000" points="509.23,-49.42 498.74,-47.96 506.03,-55.64 509.23,-49.42"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge3" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.55,-156.71C273.12,-170.72 258.23,-210.26 194.15,-194.71"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M192.15,-194.71C165.64,-188.27 157.16,-189.77 133.77,-175.71 107.32,-159.81 82.63,-134.13 66.98,-115.95"/>
+<polygon fill="#000000" stroke="#000000" points="69.74,-113.79 60.63,-108.38 64.37,-118.29 69.74,-113.79"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge8" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M437.67,-127.29C411.39,-136.75 373.6,-149.3 339.55,-156.71"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.55,-156.71C307.85,-163.16 273.88,-163.01 246.45,-161.08"/>
+<polygon fill="#000000" stroke="#000000" points="246.89,-157.6 236.64,-160.28 246.32,-164.58 246.89,-157.6"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node5" class="node">
+<title>sourcefile~ffmt_layout.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/ffmt_layout.f90.html" xlink:title="ffmt_layout.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="384.43,-126.84 292.66,-126.84 292.66,-102.57 384.43,-102.57 384.43,-126.84"/>
+<text xml:space="preserve" text-anchor="middle" x="338.55" y="-111.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge11" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M424.25,-114.71C415.13,-114.71 405.47,-114.71 396.06,-114.71"/>
+<polygon fill="#000000" stroke="#000000" points="396.29,-111.21 386.29,-114.71 396.29,-118.21 396.29,-111.21"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node6" class="node">
+<title>sourcefile~ffmt_relational.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/ffmt_relational.f90.html" xlink:title="ffmt_relational.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="247.66,-44.84 138.64,-44.84 138.64,-20.57 247.66,-20.57 247.66,-44.84"/>
+<text xml:space="preserve" text-anchor="middle" x="193.15" y="-29.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge12" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M435.1,-102.13C408.91,-93.36 372.38,-81.96 339.55,-74.71"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.55,-74.71C305.6,-67.65 270.33,-57.35 242.76,-48.72"/>
+<polygon fill="#000000" stroke="#000000" points="243.87,-45.4 233.28,-45.72 241.75,-52.07 243.87,-45.4"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_node8" class="node">
+<title>sourcefile~ffmt_whitespace.f90</title>
+<g id="a_sourcefile~~ffmt_options.f90~~AfferentGraph_node8"><a xlink:href="../sourcefile/ffmt_whitespace.f90.html" xlink:title="ffmt_whitespace.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="252.54,-86.84 133.77,-86.84 133.77,-62.57 252.54,-62.57 252.54,-86.84"/>
+<text xml:space="preserve" text-anchor="middle" x="193.15" y="-71.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge15" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.55,-74.71C314.05,-69.52 287.85,-68.25 264.33,-68.68"/>
+<polygon fill="#000000" stroke="#000000" points="264.44,-65.17 254.55,-68.97 264.65,-72.17 264.44,-65.17"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge4" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.29,-111.56C242.95,-108.13 163.8,-102.63 109.45,-98.85"/>
+<polygon fill="#000000" stroke="#000000" points="109.97,-95.38 99.76,-98.17 109.49,-102.36 109.97,-95.38"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge9" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.57,-127.25C277.77,-131.38 261.19,-136.01 245.92,-140.27"/>
+<polygon fill="#000000" stroke="#000000" points="245.23,-136.83 236.54,-142.88 247.11,-143.57 245.23,-136.83"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge16" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M292.57,-102.16C279.09,-98.4 264.14,-94.23 250.05,-90.3"/>
+<polygon fill="#000000" stroke="#000000" points="251,-86.93 240.43,-87.62 249.12,-93.67 251,-86.93"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge5" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M155.17,-45.32C148.01,-47.95 140.62,-50.81 133.77,-53.71 117.03,-60.78 98.86,-69.53 83.73,-77.12"/>
+<polygon fill="#000000" stroke="#000000" points="82.48,-73.83 75.14,-81.47 85.64,-80.07 82.48,-73.83"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge6" class="edge">
+<title>sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M306.56,-22.14C265.46,-7.46 191.4,11.98 133.77,-11.71 103.94,-23.97 79.08,-52.53 64.36,-72.71"/>
+<polygon fill="#000000" stroke="#000000" points="61.52,-70.66 58.65,-80.87 67.25,-74.68 61.52,-70.66"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_options.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge7" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_options.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M133.47,-82.96C125.46,-84.08 117.23,-85.24 109.2,-86.37"/>
+<polygon fill="#000000" stroke="#000000" points="108.96,-82.87 99.54,-87.73 109.93,-89.8 108.96,-82.87"/>
+</g>
+<!-- sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="sourcefile~~ffmt_options.f90~~AfferentGraph_edge14" class="edge">
+<title>sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M425.73,-34.71C417.56,-34.71 408.93,-34.71 400.4,-34.71"/>
+<polygon fill="#000000" stroke="#000000" points="400.41,-31.21 390.41,-34.71 400.41,-38.21 400.41,-31.21"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="200pt" height="32pt"
+ viewBox="0.00 0.00 200.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 195.52,-28.27 195.52,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="191.52,-24.27 87.75,-24.27 87.75,0 191.52,0 191.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">ffmt_options</span><span class="w"></span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="c">!! Formatting options: all the settings, with their defaults, and the modes they take. The modules</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="c">!! that apply them ([[ffmt_whitespace]], [[ffmt_case]], [[ffmt_relational]], [[ffmt_layout]]) use</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="c">!! this module, not the other way round, so it depends on nothing.</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="k">implicit none</span>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="k">private</span><span class="w"></span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="c">! layout of continuation lines (see [[ffmt_layout]])</span>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">CONT_ALIGN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">    </span><span class="c">!! align continuation lines with the first item after the</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">                                                </span><span class="c">!! innermost open bracket, or after the first `=`</span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">CONT_INDENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c">!! indent continuation lines by a fixed amount</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="c">! whitespace rule modes (see [[ffmt_whitespace]])</span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="c">!! leave the blanks as they are</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">      </span><span class="c">!! at least one blank on each side</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c">!! no blanks</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="c">! letter case modes (see [[ffmt_case]])</span>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="c">!! leave the case as it is</span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">CASE_LOWER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">    </span><span class="c">!! lowercase</span>
+<a id="ln-21" name="ln-21" href="#ln-21"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">CASE_UPPER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">    </span><span class="c">!! uppercase</span>
+<a id="ln-22" name="ln-22" href="#ln-22"></a>
+<a id="ln-23" name="ln-23" href="#ln-23"></a><span class="c">! spellings of relational operators (see [[ffmt_relational]])</span>
+<a id="ln-24" name="ln-24" href="#ln-24"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">REL_KEEP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">      </span><span class="c">!! leave the spelling as it is</span>
+<a id="ln-25" name="ln-25" href="#ln-25"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">REL_SYMBOLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="c">!! `.lt.` becomes `&lt;`, ...</span>
+<a id="ln-26" name="ln-26" href="#ln-26"></a><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">REL_LETTERS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c">!! `&lt;` becomes `.lt.`, ...</span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">whitespace_options_t</span><span class="w"></span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">    </span><span class="c">!! Modes of the whitespace rules. The defaults follow the most common style in practice where it is</span>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">    </span><span class="c">!! clear-cut, and keep the rest.</span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">assignment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w">     </span><span class="c">!! `=` outside brackets: assignments, initializations, `do i = 1, n`</span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">keyword_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w"> </span><span class="c">!! `=` inside brackets: `f(x=1)`, `intent=`, `len=*`</span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w">        </span><span class="c">!! `=&gt;`: pointer assignment, renames, `associate`</span>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">declarations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w">   </span><span class="c">!! `::`</span>
+<a id="ln-35" name="ln-35" href="#ln-35"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">relational</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w">    </span><span class="c">!! `== /= &lt; &lt;= &gt; &gt;=` and `.eq.` etc.</span>
+<a id="ln-36" name="ln-36" href="#ln-36"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="kt">logical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w">       </span><span class="c">!! `.and. .or. .eqv. .neqv.`</span>
+<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">plus_minus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w">    </span><span class="c">!! binary `+ -`</span>
+<a id="ln-38" name="ln-38" href="#ln-38"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mult_div</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w">      </span><span class="c">!! binary `* /`</span>
+<a id="ln-39" name="ln-39" href="#ln-39"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">power</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w">       </span><span class="c">!! `**`</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">concat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w">      </span><span class="c">!! `//`</span>
+<a id="ln-41" name="ln-41" href="#ln-41"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">comma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w">         </span><span class="c">!! `,`: with `WS_ADD`, no blank before and at least one after</span>
+<a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">slice_colon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w"> </span><span class="c">!! `:` inside brackets: `a(1:n)`</span>
+<a id="ln-43" name="ln-43" href="#ln-43"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_REMOVE</span><span class="w">     </span><span class="c">!! `%`</span>
+<a id="ln-44" name="ln-44" href="#ln-44"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">control_paren</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w">  </span><span class="c">!! between `if`, `while`, `select case`, `where`, ... and `(`, and</span>
+<a id="ln-45" name="ln-45" href="#ln-45"></a><span class="w">                                       </span><span class="c">!! between `)` and a final `then`</span>
+<a id="ln-46" name="ln-46" href="#ln-46"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">conditional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_ADD</span><span class="w">    </span><span class="c">!! `?` and `:` of a conditional expression `(c ? a : b)` (F2023)</span>
+<a id="ln-47" name="ln-47" href="#ln-47"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">defined_operators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WS_KEEP</span><span class="w"> </span><span class="c">!! binary user-defined operators: `a .plus. b`</span>
+<a id="ln-48" name="ln-48" href="#ln-48"></a><span class="k">end type </span><span class="n">whitespace_options_t</span><span class="w"></span>
+<a id="ln-49" name="ln-49" href="#ln-49"></a>
+<a id="ln-50" name="ln-50" href="#ln-50"></a><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">case_options_t</span><span class="w"></span>
+<a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">    </span><span class="c">!! Letter case of keywords, dot operators and logical constants, intrinsic procedures, the constants</span>
+<a id="ln-52" name="ln-52" href="#ln-52"></a><span class="w">    </span><span class="c">!! of the intrinsic modules, and kinds.</span>
+<a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w">    </span><span class="c">!! `if`, `end do`, `integer`, `intent(in)`, ...</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">operators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w">   </span><span class="c">!! `.and.`, `.eq.`, `.true.`, ...</span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">procedures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w">  </span><span class="c">!! intrinsic procedures where they are called: `size(a)`, `call cpu_time(t)`</span>
+<a id="ln-56" name="ln-56" href="#ln-56"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">constants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w">   </span><span class="c">!! constants and types of `iso_fortran_env` and `iso_c_binding`:</span>
+<a id="ln-57" name="ln-57" href="#ln-57"></a><span class="w">                                       </span><span class="c">!! `output_unit`, `int64`, `c_int`, `c_ptr`</span>
+<a id="ln-58" name="ln-58" href="#ln-58"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CASE_KEEP</span><span class="w">       </span><span class="c">!! kinds: `kind=` values and `real(dp)` in declarations, literal kind</span>
+<a id="ln-59" name="ln-59" href="#ln-59"></a><span class="w">                                       </span><span class="c">!! suffixes `2_int64` and prefixes `ck_&#39;a&#39;`, exponent letters `1.0e-3`</span>
+<a id="ln-60" name="ln-60" href="#ln-60"></a><span class="k">end type </span><span class="n">case_options_t</span><span class="w"></span>
+<a id="ln-61" name="ln-61" href="#ln-61"></a>
+<a id="ln-62" name="ln-62" href="#ln-62"></a><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">format_options_t</span><span class="w"></span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">    </span><span class="c">!! All options that control formatting. The defaults give 4-space indentation with the bodies</span>
+<a id="ln-64" name="ln-64" href="#ln-64"></a><span class="w">    </span><span class="c">!! of modules and programs not indented, and aligned continuation lines.</span>
+<a id="ln-65" name="ln-65" href="#ln-65"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w">                   </span><span class="c">!! spaces per indentation level</span>
+<a id="ln-66" name="ln-66" href="#ln-66"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">base_indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">              </span><span class="c">!! columns added to the indentation of every line, so that even</span>
+<a id="ln-67" name="ln-67" href="#ln-67"></a><span class="w">                                            </span><span class="c">!! program units are indented (4 for code that starts in column 5)</span>
+<a id="ln-68" name="ln-68" href="#ln-68"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">indent_units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">       </span><span class="c">!! indent the bodies of modules, submodules and main programs</span>
+<a id="ln-69" name="ln-69" href="#ln-69"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">indent_procedures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">   </span><span class="c">!! indent the bodies of subroutines and functions</span>
+<a id="ln-70" name="ln-70" href="#ln-70"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">indent_fypp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">        </span><span class="c">!! indent the code inside fypp blocks (`#:if`, `#:for`, `#:def`, ...),</span>
+<a id="ln-71" name="ln-71" href="#ln-71"></a><span class="w">                                            </span><span class="c">!! and the fypp directive lines with the code around them</span>
+<a id="ln-72" name="ln-72" href="#ln-72"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">continuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CONT_ALIGN</span><span class="w">    </span><span class="c">!! layout of continuation lines (`CONT_ALIGN` or `CONT_INDENT`)</span>
+<a id="ln-73" name="ln-73" href="#ln-73"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">continuation_indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w">      </span><span class="c">!! extra indentation of continuation lines, used with `CONT_INDENT`</span>
+<a id="ln-74" name="ln-74" href="#ln-74"></a><span class="w">                                            </span><span class="c">!! and when there is nothing to align with</span>
+<a id="ln-75" name="ln-75" href="#ln-75"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">indent_comments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">     </span><span class="c">!! re-indent comment lines like the code around them</span>
+<a id="ln-76" name="ln-76" href="#ln-76"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">keep_column1_comments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"> </span><span class="c">!! leave comment lines that start in column 1 there (with</span>
+<a id="ln-77" name="ln-77" href="#ln-77"></a><span class="w">                                            </span><span class="c">!! `indent_comments`)</span>
+<a id="ln-78" name="ln-78" href="#ln-78"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">line_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">132</span><span class="w">            </span><span class="c">!! maximum line length (0 for no limit). Alignment that would make a</span>
+<a id="ln-79" name="ln-79" href="#ln-79"></a><span class="w">                                            </span><span class="c">!! line longer falls back to a smaller indentation.</span>
+<a id="ln-80" name="ln-80" href="#ln-80"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">split_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">         </span><span class="c">!! split code lines that are longer than `line_length`</span>
+<a id="ln-81" name="ln-81" href="#ln-81"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">relational</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REL_KEEP</span><span class="w">        </span><span class="c">!! spelling of relational operators: `REL_KEEP`, `REL_SYMBOLS`</span>
+<a id="ln-82" name="ln-82" href="#ln-82"></a><span class="w">                                            </span><span class="c">!! (`.lt.` becomes `&lt;`) or `REL_LETTERS` (`&lt;` becomes `.lt.`)</span>
+<a id="ln-83" name="ln-83" href="#ln-83"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sort_use</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">           </span><span class="c">!! sort the `use` statements of each group by module name</span>
+<a id="ln-84" name="ln-84" href="#ln-84"></a><span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sort_use_only</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">      </span><span class="c">!! sort the names in `only:` lists</span>
+<a id="ln-85" name="ln-85" href="#ln-85"></a><span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">comment_spacing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w">         </span><span class="c">!! blanks before a trailing comment, or -1 to keep them; comments</span>
+<a id="ln-86" name="ln-86" href="#ln-86"></a><span class="w">                                            </span><span class="c">!! aligned with one on the line before or after are kept</span>
+<a id="ln-87" name="ln-87" href="#ln-87"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">whitespace_options_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">spaces</span><span class="w">    </span><span class="c">!! whitespace rules within lines</span>
+<a id="ln-88" name="ln-88" href="#ln-88"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">case_options_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">letter_case</span><span class="w">     </span><span class="c">!! letter case of keywords and operators</span>
+<a id="ln-89" name="ln-89" href="#ln-89"></a><span class="k">end type </span><span class="n">format_options_t</span><span class="w"></span>
+<a id="ln-90" name="ln-90" href="#ln-90"></a>
+<a id="ln-91" name="ln-91" href="#ln-91"></a><span class="k">end module </span><span class="n">ffmt_options</span><span class="w"></span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

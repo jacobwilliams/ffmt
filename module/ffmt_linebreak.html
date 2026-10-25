@@ -1,0 +1,1064 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_linebreak &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_linebreak
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 4.7% of total for modules and submodules.">253 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_linebreak.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_linebreak.f90.html'>ffmt_linebreak.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_linebreak</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#variable-max_continuations">MAX_CONTINUATIONS</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#proc-break_point">break_point</a>
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#proc-long_code_lines">long_code_lines</a>
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#proc-priority">priority</a>
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#proc-split_long_lines">split_long_lines</a>
+            <a class="list-group-item" href="../module/ffmt_linebreak.html#proc-stands_alone">stands_alone</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Splitting code lines that are longer than the line length.</p>
+<p>A line is split at a token boundary, preferring (in this order) after a comma, after an operator,
+<code>=</code> or <code>::</code>, after an opening bracket, and anywhere between two tokens. Within the best kind of
+break that fits, the rightmost is used. The first part ends with <code>&amp;</code> and the rest goes on a new
+line; the layout pass then aligns it. Only the code counts: a trailing comment may extend past
+the limit and moves with the last part. Lines are not split inside tokens (strings in particular),
+in protected code, in comment or preprocessor lines, or when a token spans lines.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_source.html'>ffmt_source</a></li>
+                  <li class="list-inline-item"><a href='ffmt_statements.html'>ffmt_statements</a></li>
+                  <li class="list-inline-item"><a href='ffmt_strings.html'>ffmt_strings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_tokens.html'>ffmt_tokens</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_linebreak~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_linebreakUsesGraph" width="641pt" height="168pt"
+ viewBox="0.00 0.00 641.00 168.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_linebreak~~UsesGraph" class="graph" transform="scale(0.936286 0.936286) rotate(0) translate(4 175.34)">
+<title>module~~ffmt_linebreak~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-175.34 680.62,-175.34 680.62,4 -4,4"/>
+<!-- module~ffmt_linebreak -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node1" class="node">
+<title>module~ffmt_linebreak</title>
+<polygon fill="none" stroke="black" points="676.62,-93.12 588.6,-93.12 588.6,-68.85 676.62,-68.85 676.62,-93.12"/>
+<text xml:space="preserve" text-anchor="middle" x="632.61" y="-77.39" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_linebreak</text>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node2" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node2"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="552.6,-93.12 478.83,-93.12 478.83,-68.85 552.6,-68.85 552.6,-93.12"/>
+<text xml:space="preserve" text-anchor="middle" x="515.71" y="-77.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M588.17,-80.99C580.4,-80.99 572.27,-80.99 564.39,-80.99"/>
+<polygon fill="#000000" stroke="#000000" points="564.6,-77.49 554.6,-80.99 564.6,-84.49 564.6,-77.49"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node3" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node3"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-131.12 219.54,-131.12 219.54,-106.85 317.31,-106.85 317.31,-131.12"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-115.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.79,-93.61C572.51,-117.25 481.44,-165.3 399.07,-158.99"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-158.99C364.3,-159.44 328.87,-147.24 303.67,-136.2"/>
+<polygon fill="#000000" stroke="#000000" points="305.13,-133.01 294.58,-132.04 302.22,-139.38 305.13,-133.01"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node4" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node4"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-91.12 0,-91.12 0,-66.85 73.77,-66.85 73.77,-91.12"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-75.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge3" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-158.99C286.23,-160.51 255.5,-184.64 147.65,-158.99"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node5" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node5"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-91.12 109.77,-91.12 109.77,-66.85 183.54,-66.85 183.54,-91.12"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-75.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge4" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605.65,-68.4C539.27,-38.02 358.81,33.14 219.54,-17.99 197.78,-25.98 178.1,-43.79 164.85,-58.12"/>
+<polygon fill="#000000" stroke="#000000" points="162.48,-55.52 158.48,-65.33 167.72,-60.16 162.48,-55.52"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge7" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M478.47,-93.01C467.16,-96.37 454.57,-99.72 442.83,-101.99 405.21,-109.26 362.36,-113.5 328.67,-115.92"/>
+<polygon fill="#000000" stroke="#000000" points="328.86,-112.4 319.12,-116.58 329.34,-119.39 328.86,-112.4"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge8" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-40.99C338.14,-35.38 328.48,-74.91 269.42,-78.99"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-78.99C243.69,-80.63 217.24,-80.8 195.25,-80.49"/>
+<polygon fill="#000000" stroke="#000000" points="195.44,-77 185.38,-80.31 195.31,-83.99 195.44,-77"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node6" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node6"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="442.83,-93.12 353.31,-93.12 353.31,-68.85 442.83,-68.85 442.83,-93.12"/>
+<text xml:space="preserve" text-anchor="middle" x="398.07" y="-77.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge5" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M478.44,-80.99C470.79,-80.99 462.55,-80.99 454.37,-80.99"/>
+<polygon fill="#000000" stroke="#000000" points="454.44,-77.49 444.44,-80.99 454.44,-84.49 454.44,-77.49"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~ffmt_linebreak~~UsesGraph_node7" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~ffmt_linebreak~~UsesGraph_node7"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-51.12 236.04,-51.12 236.04,-26.85 300.81,-26.85 300.81,-51.12"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-35.39" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge6" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M489.78,-68.47C466.87,-57.93 431.64,-44.09 399.07,-40.99"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M397.07,-40.99C368.98,-38.31 337.25,-37.81 312.45,-37.97"/>
+<polygon fill="#000000" stroke="#000000" points="312.71,-34.47 302.75,-38.08 312.79,-41.47 312.71,-34.47"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge9" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M240.78,-131.55C211.28,-144.8 165.52,-163.24 147.65,-158.99"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-158.99C108.93,-150.25 75.52,-120.53 55.94,-99.88"/>
+<polygon fill="#000000" stroke="#000000" points="58.55,-97.55 49.22,-92.53 53.38,-102.27 58.55,-97.55"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge10" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M229.86,-106.44C218.73,-102.73 206.41,-98.61 194.76,-94.72"/>
+<polygon fill="#000000" stroke="#000000" points="195.89,-91.41 185.3,-91.56 193.67,-98.05 195.89,-91.41"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge11" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-78.99C101.83,-78.99 93.65,-78.99 85.66,-78.99"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-75.49 75.67,-78.99 85.67,-82.49 85.67,-75.49"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge12" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M354.92,-93.54C344.46,-96.65 333.13,-100.02 322.23,-103.27"/>
+<polygon fill="#000000" stroke="#000000" points="321.57,-99.81 312.98,-106.02 323.56,-106.52 321.57,-99.81"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge13" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M353.01,-78.46C328.39,-77.51 297.17,-77.07 269.42,-78.99"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge14" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.77,-41.26C203.76,-43.93 152.98,-49.13 109.77,-57.99 101.71,-59.64 93.25,-61.76 85.07,-64.01"/>
+<polygon fill="#000000" stroke="#000000" points="84.27,-60.6 75.62,-66.71 86.2,-67.33 84.27,-60.6"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_linebreak~~UsesGraph_edge15" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.64,-49.6C223.07,-53.8 208.35,-58.72 194.59,-63.31"/>
+<polygon fill="#000000" stroke="#000000" points="193.63,-59.94 185.26,-66.43 195.85,-66.58 193.63,-59.94"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleffmt_linebreakUsesGraph = svgPanZoom('#moduleffmt_linebreakUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_linebreak~~UsedByGraph Pages: 1 -->
+<svg id="moduleffmt_linebreakUsedByGraph" width="297pt" height="32pt"
+ viewBox="0.00 0.00 297.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_linebreak~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>module~~ffmt_linebreak~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 292.54,-28.27 292.54,4 -4,4"/>
+<!-- module~ffmt_linebreak -->
+<g id="module~~ffmt_linebreak~~UsedByGraph_node1" class="node">
+<title>module~ffmt_linebreak</title>
+<polygon fill="none" stroke="black" points="88.02,-24.27 0,-24.27 0,0 88.02,0 88.02,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="44.01" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_linebreak</text>
+</g>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_linebreak~~UsedByGraph_node2" class="node">
+<title>module~ffmt_format</title>
+<g id="a_module~~ffmt_linebreak~~UsedByGraph_node2"><a xlink:href="../module/ffmt_format.html" xlink:title="ffmt_format">
+<polygon fill="#337ab7" stroke="#337ab7" points="198.54,-24.27 124.02,-24.27 124.02,0 198.54,0 198.54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="161.28" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_linebreak -->
+<g id="module~~ffmt_linebreak~~UsedByGraph_edge1" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_linebreak</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M123.81,-12.13C116.19,-12.13 107.99,-12.13 99.87,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="100.02,-8.64 90.02,-12.14 100.02,-15.64 100.02,-8.64"/>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_linebreak~~UsedByGraph_node3" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~ffmt_linebreak~~UsedByGraph_node3"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="288.54,-24.27 234.54,-24.27 234.54,0 288.54,0 288.54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="261.54" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~ffmt_linebreak~~UsedByGraph_edge2" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M234.21,-12.13C226.87,-12.13 218.65,-12.13 210.47,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="210.54,-8.64 200.54,-12.14 210.54,-15.64 210.54,-8.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_continuations"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>MAX_CONTINUATIONS</strong></td>
+<td> =</td>
+                <td>255</td>
+            <td>
+                <p>continuation lines a statement may have before
+Fortran 2023 (F2018 6.3.2.1); splitting stops there</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-break_point"></span> <h3>private  function <a href='../proc/break_point.html'>break_point</a>(tokens, src, a, lend, start_col, line_length) result(best)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The token after which to split tokens <code>a:lend</code> of a line that starts at token <code>a</code> in column
+<code>start_col</code>, or 0 if the code fits or cannot be split.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~4"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>the tokens of <code>src</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~19"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~4"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+<p>first token of the line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-start_col~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>start_col</strong></td>
+            <td>
+<p>column of token <code>a</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-line_length~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>line_length</strong></td>
+            <td>
+<p>maximum line width, in characters</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-long_code_lines"></span> <h3>public  function <a href='../proc/long_code_lines.html'>long_code_lines</a>(src, line_length) result(lines)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Line numbers of code lines whose code (without a trailing comment) is longer than <code>line_length</code>,
+outside protected code.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~20"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-line_length~4"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>line_length</strong></td>
+            <td>
+<p>maximum line width, in characters; 0 or less for no limit</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer, allocatable, (:)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-priority"></span> <h3>private pure function <a href='../proc/priority.html'>priority</a>(text, kind) result(prio)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>How good a place the end of a token with this text is for a line break (1 is best).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~6"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>lowercase text of the token</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-kind~7"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>kind</strong></td>
+            <td>
+<p>token kind (<code>TK_*</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-split_long_lines"></span> <h3>public  function <a href='../proc/split_long_lines.html'>split_long_lines</a>(src, line_length, indent, nsplit, changed) result(out)  
+</h3></div>
+    <div class="card-body">
+          
+  <p><code>src</code> with each code line longer than <code>line_length</code> split once. The new continuation lines are indented
+by <code>indent</code> more than the line they come from if it is the first line of a statement, and like
+it if it is a continuation line, which the layout pass will usually leave in place. <code>nsplit</code>
+returns the number of splits.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~18"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-line_length~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>line_length</strong></td>
+            <td>
+<p>maximum line width, in characters</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-indent~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>indent</strong></td>
+            <td>
+<p>indentation step, in blanks</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nsplit"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nsplit</strong></td>
+            <td>
+<p>number of lines split</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-changed"></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>changed</strong>(:,:)</td>
+            <td>
+<p>where the statements that were split
+are in <code>out</code>: bytes <code>changed(1, j):changed(2, j)</code>.
+Not allocated if one of them cannot be laid out
+again on its own (see <a href="../proc/stands_alone.html">stands_alone</a>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-stands_alone"></span> <h3>private pure function <a href='../proc/stands_alone.html'>stands_alone</a>(source, k)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>True if statement <code>k</code> of <code>source</code>, a code statement, can be laid out again on its own after
+one of its lines is split, giving what laying out the whole text would: it takes up whole
+lines (no <code>;</code> before or after it on its lines, no byte order mark), has no statement label
+(which stays at the start of the line), and is not followed by a comment line that may be
+lined up with a comment at the end of its last line.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-source~5"></span>
+              type(<a href='../type/source_t.html'>source_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>source</strong></td>
+            <td>
+<p>the source</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-k~18"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>k</strong></td>
+            <td>
+<p>index into <code>source%stmts</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

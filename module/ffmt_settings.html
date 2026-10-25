@@ -1,0 +1,702 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_settings &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_settings
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 3.8% of total for modules and submodules.">207 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_settings.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_settings.f90.html'>ffmt_settings.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_settings</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_settings.html#type-setting_t">setting_t</a>
+        </div>
+      </div>
+    </div>
+
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_settings.html#proc-apply_setting">apply_setting</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Named settings, as written in a config file or given on the command line, applied to the options.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>indent</code>, <code>base-indent</code>, <code>continuation-indent</code></td>
+<td>0 to 64</td>
+</tr>
+<tr>
+<td><code>indent-units</code>, <code>indent-procedures</code>, <code>indent-fypp</code>, <code>indent-comments</code>, <code>split</code>, <code>sort-use</code>, <code>sort-use-only</code></td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>continuation</code></td>
+<td><code>align</code>, <code>indent</code></td>
+</tr>
+<tr>
+<td><code>column1-comments</code></td>
+<td><code>indent</code> (like the code around them), <code>keep</code> (stay in column 1)</td>
+</tr>
+<tr>
+<td><code>line-length</code></td>
+<td>0 (no limit) to 100000</td>
+</tr>
+<tr>
+<td><code>relational</code></td>
+<td><code>symbols</code>, <code>letters</code>, <code>keep</code></td>
+</tr>
+<tr>
+<td><code>comment-spacing</code></td>
+<td>0 to 64, or <code>keep</code></td>
+</tr>
+<tr>
+<td><code>spaces.RULE</code> (or <code>spaces.all</code>)</td>
+<td><code>add</code>, <code>remove</code>, <code>keep</code></td>
+</tr>
+<tr>
+<td><code>case.WHAT</code>: <code>keywords</code>, <code>operators</code>, <code>procedures</code>, <code>constants</code>, <code>types</code> or <code>all</code></td>
+<td><code>lower</code>, <code>upper</code>, <code>keep</code></td>
+</tr>
+</tbody>
+</table>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_strings.html'>ffmt_strings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_options.html'>ffmt_options</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_settings~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_settingsUsesGraph" width="201pt" height="74pt"
+ viewBox="0.00 0.00 201.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_settings~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70.27)">
+<title>module~~ffmt_settings~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-70.27 197.29,-70.27 197.29,4 -4,4"/>
+<!-- module~ffmt_settings -->
+<g id="module~~ffmt_settings~~UsesGraph_node1" class="node">
+<title>module~ffmt_settings</title>
+<polygon fill="none" stroke="black" points="193.29,-45.27 113.52,-45.27 113.52,-21 193.29,-21 193.29,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="153.41" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_settings</text>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~ffmt_settings~~UsesGraph_node2" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~ffmt_settings~~UsesGraph_node2"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="77.52,-66.27 0,-66.27 0,-42 77.52,-42 77.52,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="38.76" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_settings~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M113.32,-40.42C105.55,-41.87 97.29,-43.41 89.22,-44.91"/>
+<polygon fill="#000000" stroke="#000000" points="88.69,-41.45 79.5,-46.73 89.97,-48.33 88.69,-41.45"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_settings~~UsesGraph_node3" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_settings~~UsesGraph_node3"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="75.64,-24.27 1.88,-24.27 1.88,0 75.64,0 75.64,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="38.76" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_settings~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M113.32,-25.85C104.93,-24.28 95.97,-22.61 87.29,-21"/>
+<polygon fill="#000000" stroke="#000000" points="88.08,-17.58 77.61,-19.19 86.8,-24.47 88.08,-17.58"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_settings~~UsedByGraph Pages: 1 -->
+<svg id="moduleffmt_settingsUsedByGraph" width="285pt" height="52pt"
+ viewBox="0.00 0.00 285.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_settings~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48.27)">
+<title>module~~ffmt_settings~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-48.27 281.29,-48.27 281.29,4 -4,4"/>
+<!-- module~ffmt_settings -->
+<g id="module~~ffmt_settings~~UsedByGraph_node1" class="node">
+<title>module~ffmt_settings</title>
+<polygon fill="none" stroke="black" points="79.77,-44.27 0,-44.27 0,-20 79.77,-20 79.77,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="39.88" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_settings</text>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_settings~~UsedByGraph_node2" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~ffmt_settings~~UsedByGraph_node2"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="277.29,-44.27 223.29,-44.27 223.29,-20 277.29,-20 277.29,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="250.29" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_settings -->
+<g id="module~~ffmt_settings~~UsedByGraph_edge1" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M223.05,-32.65C212.01,-32.85 199.02,-33.04 187.29,-33.13 155.5,-33.39 147.56,-33.35 115.77,-33.13 107.9,-33.08 99.58,-33 91.44,-32.9"/>
+<polygon fill="#000000" stroke="#000000" points="91.69,-29.41 81.65,-32.78 91.61,-36.4 91.69,-29.41"/>
+</g>
+<!-- module~ffmt_config -->
+<g id="module~~ffmt_settings~~UsedByGraph_node3" class="node">
+<title>module~ffmt_config</title>
+<g id="a_module~~ffmt_settings~~UsedByGraph_node3"><a xlink:href="../module/ffmt_config.html" xlink:title="ffmt_config">
+<polygon fill="#337ab7" stroke="#337ab7" points="187.29,-24.27 115.77,-24.27 115.77,0 187.29,0 187.29,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="151.53" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_config -->
+<g id="module~~ffmt_settings~~UsedByGraph_edge3" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_config</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M222.85,-26.67C215.39,-25.13 207.04,-23.4 198.78,-21.69"/>
+<polygon fill="#000000" stroke="#000000" points="199.63,-18.3 189.13,-19.7 198.22,-25.15 199.63,-18.3"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_settings -->
+<g id="module~~ffmt_settings~~UsedByGraph_edge2" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M115.54,-18.52C107.78,-19.93 99.41,-21.46 91.18,-22.96"/>
+<polygon fill="#000000" stroke="#000000" points="90.81,-19.47 81.6,-24.71 92.07,-26.36 90.81,-19.47"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-setting_t"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/setting_t.html'>setting_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>A named setting with its value as text.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-key~5"></span>
+              character(len=:),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>key</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>the name, e.g. <code>indent</code> or <code>spaces.comma</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-value"></span>
+              character(len=:),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>value</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>the value, e.g. <code>4</code>, <code>true</code> or <code>add</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-apply_setting"></span> <h3>public  subroutine <a href='../proc/apply_setting.html'>apply_setting</a>(opts, key, value, stat, errmsg)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Apply one setting to <code>opts</code>. <code>stat</code> is nonzero, with a message, for an unknown setting or a bad value.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~10"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the options to change</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-key~6"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>key</strong></td>
+            <td>
+<p>setting name, as in the table above</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-value~2"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>value</strong></td>
+            <td>
+<p>its value as text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~8"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+<p>0, or 1 for an unknown setting or a bad value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~6"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+<p>what is wrong, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

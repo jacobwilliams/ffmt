@@ -1,0 +1,798 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>is_preproc_start &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>is_preproc_start
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.3% of total for procedures.">14 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_lexer.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_lexer.f90.html'>ffmt_lexer.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_lexer.html'>ffmt_lexer</a></li>
+            <li class="breadcrumb-item active" aria-current="page">is_preproc_start</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/is_preproc_start.html#src">is_preproc_start</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  function is_preproc_start(src, i)  
+</h2>
+    
+
+    <p>True if a preprocessor line starts at <code>i</code> (the first non-blank of the line): cpp <code>#...</code>,
+fypp <code>#:</code>, <code>#!</code>, <code>$:</code> and <code>@:</code>. Inline fypp <code>#{</code> is not a directive line.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~11"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+                <p>source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-i~10"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>i</strong></td>
+            <td>
+                <p>first non-blank byte of the line</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-is_preproc_start"></span>
+          logical
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~is_preproc_start~~CallsGraph Pages: 1 -->
+<svg id="procis_preproc_startCallsGraph" width="193pt" height="32pt"
+ viewBox="0.00 0.00 193.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~is_preproc_start~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>proc~~is_preproc_start~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 188.77,-28.27 188.77,4 -4,4"/>
+<!-- proc~is_preproc_start -->
+<g id="proc~~is_preproc_start~~CallsGraph_node1" class="node">
+<title>proc~is_preproc_start</title>
+<polygon fill="none" stroke="black" points="94.77,-24.27 0,-24.27 0,0 94.77,0 94.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="47.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">is_preproc_start</text>
+</g>
+<!-- proc~peek -->
+<g id="proc~~is_preproc_start~~CallsGraph_node2" class="node">
+<title>proc~peek</title>
+<g id="a_proc~~is_preproc_start~~CallsGraph_node2"><a xlink:href="../proc/peek.html" xlink:title="peek">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="184.77,-24.27 130.77,-24.27 130.77,0 184.77,0 184.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="157.77" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">peek</text>
+</a>
+</g>
+</g>
+<!-- proc~is_preproc_start&#45;&gt;proc~peek -->
+<g id="proc~~is_preproc_start~~CallsGraph_edge1" class="edge">
+<title>proc~is_preproc_start&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M94.98,-12.13C103.06,-12.13 111.36,-12.13 119.16,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="119,-15.64 129,-12.14 119,-8.64 119,-15.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~is_preproc_start~~CalledByGraph Pages: 1 -->
+<svg id="procis_preproc_startCalledByGraph" width="641pt" height="233pt"
+ viewBox="0.00 0.00 641.00 233.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~is_preproc_start~~CalledByGraph" class="graph" transform="scale(0.631894 0.631894) rotate(0) translate(4 365.4)">
+<title>proc~~is_preproc_start~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-365.4 1010.41,-365.4 1010.41,4 -4,4"/>
+<!-- proc~is_preproc_start -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node1" class="node">
+<title>proc~is_preproc_start</title>
+<polygon fill="none" stroke="black" points="1006.41,-325.27 911.64,-325.27 911.64,-301 1006.41,-301 1006.41,-325.27"/>
+<text xml:space="preserve" text-anchor="middle" x="959.02" y="-309.53" font-family="Helvetica,sans-Serif" font-size="10.50">is_preproc_start</text>
+</g>
+<!-- proc~tokenize -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node2" class="node">
+<title>proc~tokenize</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node2"><a xlink:href="../proc/tokenize.html" xlink:title="tokenize">
+<polygon fill="#d9534f" stroke="#d9534f" points="875.64,-325.27 819.12,-325.27 819.12,-301 875.64,-301 875.64,-325.27"/>
+<text xml:space="preserve" text-anchor="middle" x="847.38" y="-309.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tokenize</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~is_preproc_start -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge1" class="edge">
+<title>proc~tokenize&#45;&gt;proc~is_preproc_start</title>
+<path fill="none" stroke="#000000" d="M876.05,-313.13C883.38,-313.13 891.57,-313.13 899.86,-313.13"/>
+<polygon fill="#000000" stroke="#000000" points="899.65,-316.64 909.65,-313.14 899.65,-309.64 899.65,-316.64"/>
+</g>
+<!-- proc~format_text -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node3" class="node">
+<title>proc~format_text</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node3"><a xlink:href="../proc/format_text.html" xlink:title="format_text">
+<polygon fill="#d9534f" stroke="#d9534f" points="393.81,-145.27 321.54,-145.27 321.54,-121 393.81,-121 393.81,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="357.67" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_text</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~tokenize -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge2" class="edge">
+<title>proc~format_text&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M359.17,-145.59C361.28,-179.54 372.29,-273.84 429.81,-314.13 546.11,-395.61 729.06,-351.52 808.01,-326.55"/>
+<polygon fill="#000000" stroke="#000000" points="809.01,-329.9 817.44,-323.48 806.85,-323.24 809.01,-329.9"/>
+</g>
+<!-- proc~convert_relational -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node7" class="node">
+<title>proc~convert_relational</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node7"><a xlink:href="../proc/convert_relational.html" xlink:title="convert_relational">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="665.1,-125.27 557.58,-125.27 557.58,-101 665.1,-101 665.1,-125.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-109.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">convert_relational</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~convert_relational -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge14" class="edge">
+<title>proc~format_text&#45;&gt;proc~convert_relational</title>
+<path fill="none" stroke="#000000" d="M394.2,-130.31C433.59,-127.18 497.92,-122.07 546.18,-118.23"/>
+<polygon fill="#000000" stroke="#000000" points="546.26,-121.74 555.95,-117.46 545.7,-114.76 546.26,-121.74"/>
+</g>
+<!-- proc~format_pass -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node8" class="node">
+<title>proc~format_pass</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node8"><a xlink:href="../proc/format_pass.html" xlink:title="format_pass">
+<polygon fill="#d9534f" stroke="#d9534f" points="649.72,-83.27 572.95,-83.27 572.95,-59 649.72,-59 649.72,-83.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-67.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_pass</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~format_pass -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge15" class="edge">
+<title>proc~format_text&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M365.12,-120.58C375.67,-101.58 398.61,-66.26 429.81,-52.14 474.1,-32.09 530.57,-43.1 568.46,-55.02"/>
+<polygon fill="#000000" stroke="#000000" points="567.07,-58.25 577.67,-58.07 569.27,-51.6 567.07,-58.25"/>
+</g>
+<!-- proc~limit_diagnostics -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node9" class="node">
+<title>proc~limit_diagnostics</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node9"><a xlink:href="../proc/limit_diagnostics.html" xlink:title="limit_diagnostics">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="661.35,-24.27 561.33,-24.27 561.33,0 661.35,0 661.35,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-8.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">limit_diagnostics</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~limit_diagnostics -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge17" class="edge">
+<title>proc~format_text&#45;&gt;proc~limit_diagnostics</title>
+<path fill="none" stroke="#000000" d="M363.97,-120.62C373.63,-99.48 396.27,-57.03 429.81,-37.14 465.82,-15.78 512.83,-9.82 549.85,-9.05"/>
+<polygon fill="#000000" stroke="#000000" points="549.51,-12.55 559.48,-8.97 549.46,-5.55 549.51,-12.55"/>
+</g>
+<!-- proc~long_code_lines -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node10" class="node">
+<title>proc~long_code_lines</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node10"><a xlink:href="../proc/long_code_lines.html" xlink:title="long_code_lines">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="659.47,-243.27 563.2,-243.27 563.2,-219 659.47,-219 659.47,-243.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-227.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">long_code_lines</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~long_code_lines -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge18" class="edge">
+<title>proc~format_text&#45;&gt;proc~long_code_lines</title>
+<path fill="none" stroke="#000000" d="M365.19,-145.68C375.82,-164.71 398.89,-200.33 429.81,-216.13 467.24,-235.27 514.8,-238.51 551.71,-237.24"/>
+<polygon fill="#000000" stroke="#000000" points="551.47,-240.76 561.29,-236.79 551.13,-233.76 551.47,-240.76"/>
+</g>
+<!-- proc~sort_use -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node12" class="node">
+<title>proc~sort_use</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node12"><a xlink:href="../proc/sort_use.html" xlink:title="sort_use">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="503.58,-165.27 447.81,-165.27 447.81,-141 503.58,-141 503.58,-165.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-149.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sort_use</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~sort_use -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge21" class="edge">
+<title>proc~format_text&#45;&gt;proc~sort_use</title>
+<path fill="none" stroke="#000000" d="M394.12,-139.24C407.55,-141.56 422.89,-144.2 436.56,-146.56"/>
+<polygon fill="#000000" stroke="#000000" points="435.63,-149.95 446.08,-148.2 436.82,-143.05 435.63,-149.95"/>
+</g>
+<!-- proc~split_long_lines -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node13" class="node">
+<title>proc~split_long_lines</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node13"><a xlink:href="../proc/split_long_lines.html" xlink:title="split_long_lines">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="521.58,-207.27 429.81,-207.27 429.81,-183 521.58,-183 521.58,-207.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-191.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">split_long_lines</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~split_long_lines -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge22" class="edge">
+<title>proc~format_text&#45;&gt;proc~split_long_lines</title>
+<path fill="none" stroke="#000000" d="M379.27,-145.63C393.34,-154.01 412.49,-165.11 429.81,-174.13 432.04,-175.3 434.35,-176.47 436.69,-177.63"/>
+<polygon fill="#000000" stroke="#000000" points="435.09,-180.75 445.62,-181.96 438.14,-174.45 435.09,-180.75"/>
+</g>
+<!-- proc~relayout -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node16" class="node">
+<title>proc~relayout</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node16"><a xlink:href="../proc/relayout.html" xlink:title="relayout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="503.2,-85.27 448.18,-85.27 448.18,-61 503.2,-61 503.2,-85.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-69.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">relayout</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~relayout -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge25" class="edge">
+<title>proc~format_text&#45;&gt;proc~relayout</title>
+<path fill="none" stroke="#000000" d="M383,-120.56C399.63,-111.96 421.91,-100.43 440.34,-90.9"/>
+<polygon fill="#000000" stroke="#000000" points="441.79,-94.09 449.06,-86.39 438.57,-87.88 441.79,-94.09"/>
+</g>
+<!-- proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node4" class="node">
+<title>proc~parse_source</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node4"><a xlink:href="../proc/parse_source.html" xlink:title="parse_source">
+<polygon fill="#d9534f" stroke="#d9534f" points="783.12,-184.27 701.1,-184.27 701.1,-160 783.12,-160 783.12,-184.27"/>
+<text xml:space="preserve" text-anchor="middle" x="742.11" y="-168.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">parse_source</text>
+</a>
+</g>
+</g>
+<!-- proc~parse_source&#45;&gt;proc~tokenize -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge3" class="edge">
+<title>proc~parse_source&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M752.27,-184.65C769.93,-208.75 808.82,-261.86 830.68,-291.7"/>
+<polygon fill="#000000" stroke="#000000" points="827.76,-293.63 836.49,-299.63 833.4,-289.49 827.76,-293.63"/>
+</g>
+<!-- proc~same_code -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node5" class="node">
+<title>proc~same_code</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node5"><a xlink:href="../proc/same_code.html" xlink:title="same_code">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="511.83,-305.27 439.56,-305.27 439.56,-281 511.83,-281 511.83,-305.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-289.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">same_code</text>
+</a>
+</g>
+</g>
+<!-- proc~same_code&#45;&gt;proc~tokenize -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge4" class="edge">
+<title>proc~same_code&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M512.14,-295.05C581.65,-298.81 735.32,-307.13 807.5,-311.03"/>
+<polygon fill="#000000" stroke="#000000" points="807.08,-314.51 817.26,-311.56 807.46,-307.52 807.08,-314.51"/>
+</g>
+<!-- proc~code_signature -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node6" class="node">
+<title>proc~code_signature</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node6"><a xlink:href="../proc/code_signature.html" xlink:title="code_signature">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="657.6,-285.27 565.08,-285.27 565.08,-261 657.6,-261 657.6,-285.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-269.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">code_signature</text>
+</a>
+</g>
+</g>
+<!-- proc~same_code&#45;&gt;proc~code_signature -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge13" class="edge">
+<title>proc~same_code&#45;&gt;proc~code_signature</title>
+<path fill="none" stroke="#000000" d="M512.16,-287.83C524.85,-285.93 539.49,-283.74 553.53,-281.64"/>
+<polygon fill="#000000" stroke="#000000" points="553.75,-285.14 563.12,-280.2 552.71,-278.22 553.75,-285.14"/>
+</g>
+<!-- proc~code_signature&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge6" class="edge">
+<title>proc~code_signature&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M649.98,-260.5C655.25,-258.07 660.45,-255.28 665.1,-252.13 688.93,-236.01 710.96,-211.27 725.1,-193.57"/>
+<polygon fill="#000000" stroke="#000000" points="727.8,-195.8 731.18,-185.76 722.28,-191.51 727.8,-195.8"/>
+</g>
+<!-- proc~convert_relational&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge7" class="edge">
+<title>proc~convert_relational&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M639.65,-125.65C658.26,-134.17 683.13,-145.57 703.6,-154.95"/>
+<polygon fill="#000000" stroke="#000000" points="701.92,-158.03 712.46,-159.01 704.83,-151.66 701.92,-158.03"/>
+</g>
+<!-- proc~format_pass&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge8" class="edge">
+<title>proc~format_pass&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M649.98,-83.77C655.25,-86.2 660.45,-88.99 665.1,-92.14 688.93,-108.26 710.96,-133 725.1,-150.7"/>
+<polygon fill="#000000" stroke="#000000" points="722.28,-152.76 731.18,-158.51 727.8,-148.47 722.28,-152.76"/>
+</g>
+<!-- proc~limit_diagnostics&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge9" class="edge">
+<title>proc~limit_diagnostics&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M633.61,-24.71C643.88,-31.42 655.92,-40.32 665.1,-50.14 693.61,-80.62 717.31,-123.34 730.32,-149.3"/>
+<polygon fill="#000000" stroke="#000000" points="727.17,-150.83 734.7,-158.27 733.45,-147.75 727.17,-150.83"/>
+</g>
+<!-- proc~long_code_lines&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge10" class="edge">
+<title>proc~long_code_lines&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M639.65,-218.62C658.26,-210.1 683.13,-198.7 703.6,-189.32"/>
+<polygon fill="#000000" stroke="#000000" points="704.83,-192.61 712.46,-185.26 701.92,-186.24 704.83,-192.61"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node11" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node11"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="285.54,-145.27 208.77,-145.27 208.77,-121 285.54,-121 285.54,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="247.15" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~format_text -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge5" class="edge">
+<title>proc~process_text&#45;&gt;proc~format_text</title>
+<path fill="none" stroke="#000000" d="M285.81,-133.13C293.54,-133.13 301.77,-133.13 309.78,-133.13"/>
+<polygon fill="#000000" stroke="#000000" points="309.77,-136.64 319.77,-133.14 309.77,-129.64 309.77,-136.64"/>
+</g>
+<!-- proc~sort_use&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge11" class="edge">
+<title>proc~sort_use&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M504,-155.1C547.6,-158.23 633.71,-164.42 689.28,-168.41"/>
+<polygon fill="#000000" stroke="#000000" points="688.91,-171.89 699.14,-169.12 689.42,-164.91 688.91,-171.89"/>
+</g>
+<!-- proc~split_long_lines&#45;&gt;proc~parse_source -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge12" class="edge">
+<title>proc~split_long_lines&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M521.85,-191.21C568.41,-187.16 640.91,-180.85 689.66,-176.61"/>
+<polygon fill="#000000" stroke="#000000" points="689.74,-180.12 699.4,-175.76 689.13,-173.14 689.74,-180.12"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node14" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node14"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-166.27 94.5,-166.27 94.5,-142 168.27,-142 168.27,-166.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-150.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge19" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.7,-147.43C177.86,-145.74 187.84,-143.9 197.5,-142.12"/>
+<polygon fill="#000000" stroke="#000000" points="197.94,-145.59 207.14,-140.34 196.67,-138.71 197.94,-145.59"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node15" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node15"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-124.27 90,-124.27 90,-100 172.77,-100 172.77,-124.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-108.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge20" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M173.14,-119.66C180.94,-121.1 189.18,-122.62 197.21,-124.1"/>
+<polygon fill="#000000" stroke="#000000" points="196.39,-127.51 206.85,-125.88 197.66,-120.62 196.39,-127.51"/>
+</g>
+<!-- proc~relayout&#45;&gt;proc~format_pass -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge16" class="edge">
+<title>proc~relayout&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M503.42,-72.74C519.9,-72.49 541.54,-72.16 561.04,-71.87"/>
+<polygon fill="#000000" stroke="#000000" points="561.07,-75.37 571.01,-71.72 560.96,-68.37 561.07,-75.37"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~is_preproc_start~~CalledByGraph_node17" class="node">
+<title>proc~run</title>
+<g id="a_proc~~is_preproc_start~~CalledByGraph_node17"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-145.27 0,-145.27 0,-121 54,-121 54,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge23" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-138.54C63.15,-140.34 73.22,-142.41 83.09,-144.43"/>
+<polygon fill="#000000" stroke="#000000" points="82.09,-147.8 92.59,-146.38 83.5,-140.95 82.09,-147.8"/>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~is_preproc_start~~CalledByGraph_edge24" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-127.73C61.86,-126.19 70.3,-124.46 78.75,-122.73"/>
+<polygon fill="#000000" stroke="#000000" points="79.22,-126.2 88.31,-120.76 77.81,-119.35 79.22,-126.2"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocis_preproc_startCalledByGraph = svgPanZoom('#procis_preproc_startCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="kt">logical </span><span class="k">function </span><span class="n">is_preproc_start</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! True if a preprocessor line starts at `i` (the first non-blank of the line): cpp `#...`,</span>
+<span class="w">    </span><span class="c">!! fypp `#:`, `#!`, `$:` and `@:`. Inline fypp `#{` is not a directive line.</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">src</span><span class="w">   </span><span class="c">!! source text</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w">              </span><span class="c">!! first non-blank byte of the line</span>
+<span class="w">    </span><span class="kt">character</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">is_preproc_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="s1">&#39;{&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="s1">&#39;}&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;@&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">is_preproc_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">        </span><span class="n">is_preproc_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="k">end select</span>
+<span class="k">end function </span><span class="n">is_preproc_start</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

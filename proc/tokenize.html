@@ -1,0 +1,1417 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>tokenize &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>tokenize
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.1% of total for procedures.">105 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_lexer.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_lexer.f90.html'>ffmt_lexer.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_lexer.html'>ffmt_lexer</a></li>
+            <li class="breadcrumb-item active" aria-current="page">tokenize</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/tokenize.html#src">tokenize</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine tokenize(src, tokens)  
+</h2>
+    
+
+    <p>Split <code>src</code> into tokens.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+                <p>source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+                <p>its tokens, covering every byte</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~tokenize~~CallsGraph Pages: 1 -->
+<svg id="proctokenizeCallsGraph" width="575pt" height="1054pt"
+ viewBox="0.00 0.00 575.00 1054.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~tokenize~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 1050.06)">
+<title>proc~~tokenize~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1050.06 570.85,-1050.06 570.85,4 -4,4"/>
+<!-- proc~tokenize -->
+<g id="proc~~tokenize~~CallsGraph_node1" class="node">
+<title>proc~tokenize</title>
+<polygon fill="none" stroke="black" points="56.52,-569.27 0,-569.27 0,-545 56.52,-545 56.52,-569.27"/>
+<text xml:space="preserve" text-anchor="middle" x="28.26" y="-553.53" font-family="Helvetica,sans-Serif" font-size="10.50">tokenize</text>
+</g>
+<!-- proc~add -->
+<g id="proc~~tokenize~~CallsGraph_node2" class="node">
+<title>proc~add</title>
+<g id="a_proc~~tokenize~~CallsGraph_node2"><a xlink:href="../proc/add.html" xlink:title="add">
+<polygon fill="#d9534f" stroke="#d9534f" points="305.92,-972.27 251.92,-972.27 251.92,-948 305.92,-948 305.92,-972.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-956.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">add</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~add -->
+<g id="proc~~tokenize~~CallsGraph_edge1" class="edge">
+<title>proc~tokenize&#45;&gt;proc~add</title>
+<path fill="none" stroke="#000000" d="M29.46,-569.69C30.66,-629.18 38.9,-881.94 92.52,-934.13 131.4,-971.98 198.4,-971.53 240.32,-966.63"/>
+<polygon fill="#000000" stroke="#000000" points="240.74,-970.1 250.19,-965.32 239.82,-963.16 240.74,-970.1"/>
+</g>
+<!-- proc~comment_kind -->
+<g id="proc~~tokenize~~CallsGraph_node3" class="node">
+<title>proc~comment_kind</title>
+<g id="a_proc~~tokenize~~CallsGraph_node3"><a xlink:href="../proc/comment_kind.html" xlink:title="comment_kind">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="185.04,-544.27 94.77,-544.27 94.77,-520 185.04,-520 185.04,-544.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-528.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">comment_kind</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~comment_kind -->
+<g id="proc~~tokenize~~CallsGraph_edge2" class="edge">
+<title>proc~tokenize&#45;&gt;proc~comment_kind</title>
+<path fill="none" stroke="#000000" d="M56.93,-550.83C65.05,-548.98 74.23,-546.88 83.43,-544.78"/>
+<polygon fill="#000000" stroke="#000000" points="84.16,-548.21 93.13,-542.57 82.6,-541.38 84.16,-548.21"/>
+</g>
+<!-- proc~dotop_at -->
+<g id="proc~~tokenize~~CallsGraph_node4" class="node">
+<title>proc~dotop_at</title>
+<g id="a_proc~~tokenize~~CallsGraph_node4"><a xlink:href="../proc/dotop_at.html" xlink:title="dotop_at">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="307.93,-340.27 249.91,-340.27 249.91,-316 307.93,-316 307.93,-340.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-324.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dotop_at</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~dotop_at -->
+<g id="proc~~tokenize~~CallsGraph_edge3" class="edge">
+<title>proc~tokenize&#45;&gt;proc~dotop_at</title>
+<path fill="none" stroke="#000000" d="M29.89,-544.68C32.23,-512.36 43.04,-425.13 92.52,-379.13 132.44,-342.03 196.85,-331.51 238.28,-328.76"/>
+<polygon fill="#000000" stroke="#000000" points="238.26,-332.26 248.06,-328.24 237.89,-325.27 238.26,-332.26"/>
+</g>
+<!-- proc~dotop_end -->
+<g id="proc~~tokenize~~CallsGraph_node5" class="node">
+<title>proc~dotop_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node5"><a xlink:href="../proc/dotop_end.html" xlink:title="dotop_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="173.79,-460.27 106.02,-460.27 106.02,-436 173.79,-436 173.79,-460.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-444.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dotop_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~dotop_end -->
+<g id="proc~~tokenize~~CallsGraph_edge4" class="edge">
+<title>proc~tokenize&#45;&gt;proc~dotop_end</title>
+<path fill="none" stroke="#000000" d="M41.84,-544.63C60.59,-525.99 96.08,-490.71 118.56,-468.36"/>
+<polygon fill="#000000" stroke="#000000" points="120.78,-471.09 125.4,-461.56 115.84,-466.13 120.78,-471.09"/>
+</g>
+<!-- proc~fypp_inline_end -->
+<g id="proc~~tokenize~~CallsGraph_node6" class="node">
+<title>proc~fypp_inline_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node6"><a xlink:href="../proc/fypp_inline_end.html" xlink:title="fypp_inline_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="326.31,-656.27 231.54,-656.27 231.54,-632 326.31,-632 326.31,-656.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-640.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fypp_inline_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~fypp_inline_end -->
+<g id="proc~~tokenize~~CallsGraph_edge5" class="edge">
+<title>proc~tokenize&#45;&gt;proc~fypp_inline_end</title>
+<path fill="none" stroke="#000000" d="M42.78,-569.55C54.93,-580.03 73.7,-594.66 92.52,-603.13 133.11,-621.42 182.46,-631.82 220.04,-637.57"/>
+<polygon fill="#000000" stroke="#000000" points="219.41,-641.01 229.81,-638.99 220.41,-634.09 219.41,-641.01"/>
+</g>
+<!-- proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_node7" class="node">
+<title>proc~is_blank</title>
+<g id="a_proc~~tokenize~~CallsGraph_node7"><a xlink:href="../proc/is_blank.html" xlink:title="is_blank">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="566.85,-976.27 512.58,-976.27 512.58,-952 566.85,-952 566.85,-976.27"/>
+<text xml:space="preserve" text-anchor="middle" x="539.71" y="-960.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_blank</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_edge6" class="edge">
+<title>proc~tokenize&#45;&gt;proc~is_blank</title>
+<path fill="none" stroke="#000000" d="M29.27,-569.47C29.61,-631.44 34.38,-908.23 92.52,-965.13 215.08,-1085.08 311.51,-1048.61 476.58,-1002.13 490,-998.36 503.38,-990.79 514.28,-983.39"/>
+<polygon fill="#000000" stroke="#000000" points="516.2,-986.32 522.28,-977.64 512.11,-980.63 516.2,-986.32"/>
+</g>
+<!-- proc~is_digit -->
+<g id="proc~~tokenize~~CallsGraph_node8" class="node">
+<title>proc~is_digit</title>
+<g id="a_proc~~tokenize~~CallsGraph_node8"><a xlink:href="../proc/is_digit.html" xlink:title="is_digit">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="566.71,-181.27 512.71,-181.27 512.71,-157 566.71,-157 566.71,-181.27"/>
+<text xml:space="preserve" text-anchor="middle" x="539.71" y="-165.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_digit</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~is_digit -->
+<g id="proc~~tokenize~~CallsGraph_edge7" class="edge">
+<title>proc~tokenize&#45;&gt;proc~is_digit</title>
+<path fill="none" stroke="#000000" d="M28.92,-544.57C28.28,-500.41 30.98,-349.46 92.52,-248.13 131.36,-184.19 152.86,-167.37 223.29,-142.13 329.27,-104.17 366.52,-117.48 476.58,-141.13 486.83,-143.34 497.44,-147.37 506.92,-151.71"/>
+<polygon fill="#000000" stroke="#000000" points="505.18,-154.75 515.7,-155.98 508.24,-148.46 505.18,-154.75"/>
+</g>
+<!-- proc~is_preproc_start -->
+<g id="proc~~tokenize~~CallsGraph_node9" class="node">
+<title>proc~is_preproc_start</title>
+<g id="a_proc~~tokenize~~CallsGraph_node9"><a xlink:href="../proc/is_preproc_start.html" xlink:title="is_preproc_start">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="187.29,-594.27 92.52,-594.27 92.52,-570 187.29,-570 187.29,-594.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-578.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_preproc_start</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~is_preproc_start -->
+<g id="proc~~tokenize~~CallsGraph_edge8" class="edge">
+<title>proc~tokenize&#45;&gt;proc~is_preproc_start</title>
+<path fill="none" stroke="#000000" d="M56.93,-563.44C64.34,-565.13 72.63,-567.02 81.03,-568.94"/>
+<polygon fill="#000000" stroke="#000000" points="80.04,-572.3 90.57,-571.11 81.6,-565.48 80.04,-572.3"/>
+</g>
+<!-- proc~is_quote -->
+<g id="proc~~tokenize~~CallsGraph_node10" class="node">
+<title>proc~is_quote</title>
+<g id="a_proc~~tokenize~~CallsGraph_node10"><a xlink:href="../proc/is_quote.html" xlink:title="is_quote">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="167.79,-66.27 112.02,-66.27 112.02,-42 167.79,-42 167.79,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_quote</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~is_quote -->
+<g id="proc~~tokenize~~CallsGraph_edge9" class="edge">
+<title>proc~tokenize&#45;&gt;proc~is_quote</title>
+<path fill="none" stroke="#000000" d="M29.44,-544.54C30.61,-477.13 38.95,-159.13 92.52,-80.13 95.07,-76.37 98.35,-73.1 102,-70.26"/>
+<polygon fill="#000000" stroke="#000000" points="103.8,-73.26 110.3,-64.9 100,-67.38 103.8,-73.26"/>
+</g>
+<!-- proc~lex_number -->
+<g id="proc~~tokenize~~CallsGraph_node11" class="node">
+<title>proc~lex_number</title>
+<g id="a_proc~~tokenize~~CallsGraph_node11"><a xlink:href="../proc/lex_number.html" xlink:title="lex_number">
+<polygon fill="#d9534f" stroke="#d9534f" points="176.79,-281.27 103.02,-281.27 103.02,-257 176.79,-257 176.79,-281.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-265.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lex_number</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~lex_number -->
+<g id="proc~~tokenize~~CallsGraph_edge10" class="edge">
+<title>proc~tokenize&#45;&gt;proc~lex_number</title>
+<path fill="none" stroke="#000000" d="M30.77,-544.64C35.51,-508.71 52.21,-402.75 92.52,-325.13 99.2,-312.27 109.22,-299.68 118.24,-289.7"/>
+<polygon fill="#000000" stroke="#000000" points="120.77,-292.12 125.08,-282.44 115.68,-287.32 120.77,-292.12"/>
+</g>
+<!-- proc~line_end -->
+<g id="proc~~tokenize~~CallsGraph_node12" class="node">
+<title>proc~line_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node12"><a xlink:href="../proc/line_end.html" xlink:title="line_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="451.83,-854.27 395.31,-854.27 395.31,-830 451.83,-830 451.83,-854.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-838.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~line_end -->
+<g id="proc~~tokenize~~CallsGraph_edge11" class="edge">
+<title>proc~tokenize&#45;&gt;proc~line_end</title>
+<path fill="none" stroke="#000000" d="M30.4,-569.76C35.02,-617.96 53.97,-789.55 92.52,-825.13 172.8,-899.23 316.23,-872.51 384.47,-853.95"/>
+<polygon fill="#000000" stroke="#000000" points="385.01,-857.44 393.69,-851.36 383.12,-850.7 385.01,-857.44"/>
+</g>
+<!-- proc~name_end -->
+<g id="proc~~tokenize~~CallsGraph_node13" class="node">
+<title>proc~name_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node13"><a xlink:href="../proc/name_end.html" xlink:title="name_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="312.81,-382.27 245.04,-382.27 245.04,-358 312.81,-358 312.81,-382.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-366.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">name_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~name_end -->
+<g id="proc~~tokenize~~CallsGraph_edge12" class="edge">
+<title>proc~tokenize&#45;&gt;proc~name_end</title>
+<path fill="none" stroke="#000000" d="M31.81,-544.73C37.75,-518.94 54.96,-459.29 92.52,-427.13 132.42,-392.97 192.52,-379.28 233.4,-373.8"/>
+<polygon fill="#000000" stroke="#000000" points="233.64,-377.29 243.14,-372.61 232.79,-370.34 233.64,-377.29"/>
+</g>
+<!-- proc~operator_end -->
+<g id="proc~~tokenize~~CallsGraph_node14" class="node">
+<title>proc~operator_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node14"><a xlink:href="../proc/operator_end.html" xlink:title="operator_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="181.66,-24.27 98.14,-24.27 98.14,0 181.66,0 181.66,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">operator_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~operator_end -->
+<g id="proc~~tokenize~~CallsGraph_edge13" class="edge">
+<title>proc~tokenize&#45;&gt;proc~operator_end</title>
+<path fill="none" stroke="#000000" d="M29.16,-544.65C28.8,-473.36 30.19,-118.1 92.52,-33.13 92.67,-32.93 92.82,-32.73 92.98,-32.53"/>
+<polygon fill="#000000" stroke="#000000" points="95.3,-35.14 100.22,-25.76 90.53,-30.03 95.3,-35.14"/>
+</g>
+<!-- proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_node15" class="node">
+<title>proc~peek</title>
+<g id="a_proc~~tokenize~~CallsGraph_node15"><a xlink:href="../proc/peek.html" xlink:title="peek">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="450.57,-598.27 396.57,-598.27 396.57,-574 450.57,-574 450.57,-598.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-582.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">peek</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge14" class="edge">
+<title>proc~tokenize&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M36.54,-569.68C46.86,-586.3 67.3,-615.36 92.52,-631.13 143.43,-662.98 163.72,-657.52 223.29,-665.13 272.34,-671.41 288.38,-682.82 334.56,-665.13 364.58,-653.64 390.79,-626.66 406.63,-607.43"/>
+<polygon fill="#000000" stroke="#000000" points="409.33,-609.66 412.8,-599.65 403.85,-605.31 409.33,-609.66"/>
+</g>
+<!-- proc~preproc_end -->
+<g id="proc~~tokenize~~CallsGraph_node16" class="node">
+<title>proc~preproc_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node16"><a xlink:href="../proc/preproc_end.html" xlink:title="preproc_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="317.68,-774.27 240.16,-774.27 240.16,-750 317.68,-750 317.68,-774.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-758.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">preproc_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~preproc_end -->
+<g id="proc~~tokenize~~CallsGraph_edge15" class="edge">
+<title>proc~tokenize&#45;&gt;proc~preproc_end</title>
+<path fill="none" stroke="#000000" d="M31.41,-569.63C36.75,-596.89 53.12,-662.11 92.52,-698.13 130.34,-732.72 187.77,-748.76 228.68,-756.11"/>
+<polygon fill="#000000" stroke="#000000" points="228.08,-759.55 238.52,-757.75 229.24,-752.65 228.08,-759.55"/>
+</g>
+<!-- proc~string_end -->
+<g id="proc~~tokenize~~CallsGraph_node17" class="node">
+<title>proc~string_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node17"><a xlink:href="../proc/string_end.html" xlink:title="string_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="173.41,-816.27 106.39,-816.27 106.39,-792 173.41,-792 173.41,-816.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.9" y="-800.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">string_end</text>
+</a>
+</g>
+</g>
+<!-- proc~tokenize&#45;&gt;proc~string_end -->
+<g id="proc~~tokenize~~CallsGraph_edge16" class="edge">
+<title>proc~tokenize&#45;&gt;proc~string_end</title>
+<path fill="none" stroke="#000000" d="M31.18,-569.6C36.61,-602.23 54.25,-692.01 92.52,-756.13 98.6,-766.33 107.24,-776.05 115.42,-784.04"/>
+<polygon fill="#000000" stroke="#000000" points="112.83,-786.42 122.54,-790.66 117.6,-781.29 112.83,-786.42"/>
+</g>
+<!-- proc~add&#45;&gt;proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_edge17" class="edge">
+<title>proc~add&#45;&gt;proc~is_blank</title>
+<path fill="none" stroke="#000000" d="M306.11,-969.37C324,-975.19 348.4,-982.13 370.56,-985.13 417.25,-991.46 430.08,-992.78 476.58,-985.13 484.85,-983.78 493.49,-981.46 501.62,-978.86"/>
+<polygon fill="#000000" stroke="#000000" points="502.54,-982.24 510.86,-975.68 500.26,-975.62 502.54,-982.24"/>
+</g>
+<!-- proc~add&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge19" class="edge">
+<title>proc~add&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M285.18,-947.53C295.08,-923.71 317.06,-870.42 334.56,-825.13 365,-746.34 399.02,-652.05 414.33,-609.27"/>
+<polygon fill="#000000" stroke="#000000" points="417.55,-610.65 417.62,-600.05 410.96,-608.29 417.55,-610.65"/>
+</g>
+<!-- proc~is_code_char -->
+<g id="proc~~tokenize~~CallsGraph_node19" class="node">
+<title>proc~is_code_char</title>
+<g id="a_proc~~tokenize~~CallsGraph_node19"><a xlink:href="../proc/is_code_char.html" xlink:title="is_code_char">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="463.83,-976.27 383.31,-976.27 383.31,-952 463.83,-952 463.83,-976.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-960.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_code_char</text>
+</a>
+</g>
+</g>
+<!-- proc~add&#45;&gt;proc~is_code_char -->
+<g id="proc~~tokenize~~CallsGraph_edge18" class="edge">
+<title>proc~add&#45;&gt;proc~is_code_char</title>
+<path fill="none" stroke="#000000" d="M306.42,-960.88C324.74,-961.39 349.69,-962.09 371.78,-962.71"/>
+<polygon fill="#000000" stroke="#000000" points="371.41,-966.2 381.5,-962.98 371.6,-959.2 371.41,-966.2"/>
+</g>
+<!-- proc~push -->
+<g id="proc~~tokenize~~CallsGraph_node26" class="node">
+<title>proc~push</title>
+<g id="a_proc~~tokenize~~CallsGraph_node26"><a xlink:href="../proc/push.html" xlink:title="token_list_t%push">
+<polygon fill="#d9534f" stroke="#d9534f" points="476.58,-934.27 370.56,-934.27 370.56,-910 476.58,-910 476.58,-934.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-918.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">token_list_t%push</text>
+</a>
+</g>
+</g>
+<!-- proc~add&#45;&gt;proc~push -->
+<g id="proc~~tokenize~~CallsGraph_edge20" class="edge">
+<title>proc~add&#45;&gt;proc~push</title>
+<path fill="none" stroke="#000000" d="M306.42,-953.08C322.67,-948.75 344.14,-943.03 364.19,-937.69"/>
+<polygon fill="#000000" stroke="#000000" points="364.92,-941.12 373.68,-935.16 363.12,-934.35 364.92,-941.12"/>
+</g>
+<!-- proc~comment_kind&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge23" class="edge">
+<title>proc~comment_kind&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M185.54,-540.69C240.65,-551.26 333.43,-569.05 385.05,-578.94"/>
+<polygon fill="#000000" stroke="#000000" points="384.36,-582.37 394.84,-580.82 385.68,-575.5 384.36,-582.37"/>
+</g>
+<!-- proc~is_letter -->
+<g id="proc~~tokenize~~CallsGraph_node20" class="node">
+<title>proc~is_letter</title>
+<g id="a_proc~~tokenize~~CallsGraph_node20"><a xlink:href="../proc/is_letter.html" xlink:title="is_letter">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="566.71,-351.27 512.71,-351.27 512.71,-327 566.71,-327 566.71,-351.27"/>
+<text xml:space="preserve" text-anchor="middle" x="539.71" y="-335.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_letter</text>
+</a>
+</g>
+</g>
+<!-- proc~comment_kind&#45;&gt;proc~is_letter -->
+<g id="proc~~tokenize~~CallsGraph_edge21" class="edge">
+<title>proc~comment_kind&#45;&gt;proc~is_letter</title>
+<path fill="none" stroke="#000000" d="M185.43,-533.9C225.92,-533.91 286.51,-529.81 334.56,-509.13 415.02,-474.52 488.45,-397.71 521.01,-360.36"/>
+<polygon fill="#000000" stroke="#000000" points="523.54,-362.78 527.4,-352.91 518.23,-358.22 523.54,-362.78"/>
+</g>
+<!-- proc~lowercase -->
+<g id="proc~~tokenize~~CallsGraph_node24" class="node">
+<title>proc~lowercase</title>
+<g id="a_proc~~tokenize~~CallsGraph_node24"><a xlink:href="../proc/lowercase.html" xlink:title="lowercase">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="311.31,-500.27 246.54,-500.27 246.54,-476 311.31,-476 311.31,-500.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-484.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lowercase</text>
+</a>
+</g>
+</g>
+<!-- proc~comment_kind&#45;&gt;proc~lowercase -->
+<g id="proc~~tokenize~~CallsGraph_edge22" class="edge">
+<title>proc~comment_kind&#45;&gt;proc~lowercase</title>
+<path fill="none" stroke="#000000" d="M180.17,-519.53C197.51,-513.96 217.92,-507.4 235.6,-501.73"/>
+<polygon fill="#000000" stroke="#000000" points="236.59,-505.09 245.04,-498.7 234.45,-498.42 236.59,-505.09"/>
+</g>
+<!-- proc~dotop_at&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge25" class="edge">
+<title>proc~dotop_at&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M308.39,-334.07C317.71,-337.22 327.49,-341.98 334.56,-349.13 394.63,-409.89 414.23,-515.28 420.18,-562.3"/>
+<polygon fill="#000000" stroke="#000000" points="416.69,-562.64 421.32,-572.17 423.65,-561.84 416.69,-562.64"/>
+</g>
+<!-- proc~dotop_at&#45;&gt;proc~is_letter -->
+<g id="proc~~tokenize~~CallsGraph_edge24" class="edge">
+<title>proc~dotop_at&#45;&gt;proc~is_letter</title>
+<path fill="none" stroke="#000000" d="M308.11,-329.33C354.9,-331.32 448.64,-335.31 501.05,-337.53"/>
+<polygon fill="#000000" stroke="#000000" points="500.85,-341.03 510.99,-337.96 501.14,-334.03 500.85,-341.03"/>
+</g>
+<!-- proc~dotop_end&#45;&gt;proc~name_end -->
+<g id="proc~~tokenize~~CallsGraph_edge28" class="edge">
+<title>proc~dotop_end&#45;&gt;proc~name_end</title>
+<path fill="none" stroke="#000000" d="M159.5,-435.5C175.95,-424.55 200.77,-408.54 223.29,-396.13 228.45,-393.29 233.97,-390.45 239.44,-387.74"/>
+<polygon fill="#000000" stroke="#000000" points="240.96,-390.89 248.45,-383.39 237.92,-384.59 240.96,-390.89"/>
+</g>
+<!-- proc~dotop_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge29" class="edge">
+<title>proc~dotop_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M174.16,-443.6C214.79,-439.73 284.31,-438.64 334.56,-467.13 373.06,-488.97 399.6,-535.3 412.84,-563.28"/>
+<polygon fill="#000000" stroke="#000000" points="409.61,-564.64 416.93,-572.3 415.99,-561.75 409.61,-564.64"/>
+</g>
+<!-- proc~is_name_char -->
+<g id="proc~~tokenize~~CallsGraph_node21" class="node">
+<title>proc~is_name_char</title>
+<g id="a_proc~~tokenize~~CallsGraph_node21"><a xlink:href="../proc/is_name_char.html" xlink:title="is_name_char">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="466.08,-269.27 381.06,-269.27 381.06,-245 466.08,-245 466.08,-269.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-253.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_name_char</text>
+</a>
+</g>
+</g>
+<!-- proc~dotop_end&#45;&gt;proc~is_name_char -->
+<g id="proc~~tokenize~~CallsGraph_edge26" class="edge">
+<title>proc~dotop_end&#45;&gt;proc~is_name_char</title>
+<path fill="none" stroke="#000000" d="M173.97,-442.27C223.01,-432.94 311.7,-413.5 334.56,-391.13 372.24,-354.28 334.72,-316.78 370.56,-278.13 371.04,-277.62 371.53,-277.12 372.03,-276.63"/>
+<polygon fill="#000000" stroke="#000000" points="374.09,-279.46 379.94,-270.63 369.86,-273.89 374.09,-279.46"/>
+</g>
+<!-- proc~dotop_end&#45;&gt;proc~lowercase -->
+<g id="proc~~tokenize~~CallsGraph_edge27" class="edge">
+<title>proc~dotop_end&#45;&gt;proc~lowercase</title>
+<path fill="none" stroke="#000000" d="M174.07,-457.82C192.57,-463.22 215.79,-470 235.58,-475.77"/>
+<polygon fill="#000000" stroke="#000000" points="234.44,-479.09 245.02,-478.53 236.4,-472.37 234.44,-479.09"/>
+</g>
+<!-- proc~fypp_inline_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge30" class="edge">
+<title>proc~fypp_inline_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M310.88,-631.55C332.95,-622.58 362.71,-610.48 385.96,-601.02"/>
+<polygon fill="#000000" stroke="#000000" points="387.11,-604.33 395.06,-597.32 384.47,-597.85 387.11,-604.33"/>
+</g>
+<!-- proc~is_preproc_start&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge31" class="edge">
+<title>proc~is_preproc_start&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M187.73,-582.8C243.05,-583.59 333.99,-584.88 384.95,-585.6"/>
+<polygon fill="#000000" stroke="#000000" points="384.83,-589.1 394.88,-585.74 384.93,-582.1 384.83,-589.1"/>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~dotop_at -->
+<g id="proc~~tokenize~~CallsGraph_edge33" class="edge">
+<title>proc~lex_number&#45;&gt;proc~dotop_at</title>
+<path fill="none" stroke="#000000" d="M169.96,-281.65C190.22,-290.37 217.45,-302.09 239.49,-311.59"/>
+<polygon fill="#000000" stroke="#000000" points="237.89,-314.71 248.46,-315.45 240.65,-308.28 237.89,-314.71"/>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~is_digit -->
+<g id="proc~~tokenize~~CallsGraph_edge34" class="edge">
+<title>proc~lex_number&#45;&gt;proc~is_digit</title>
+<path fill="none" stroke="#000000" d="M146.93,-256.67C158.31,-234.75 185.27,-189.94 223.29,-172.13 315.54,-128.92 440.26,-146.92 501.56,-160"/>
+<polygon fill="#000000" stroke="#000000" points="500.6,-163.37 511.12,-162.12 502.12,-156.53 500.6,-163.37"/>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~name_end -->
+<g id="proc~~tokenize~~CallsGraph_edge37" class="edge">
+<title>proc~lex_number&#45;&gt;proc~name_end</title>
+<path fill="none" stroke="#000000" d="M150.86,-281.57C165.24,-298.81 193.39,-330.02 223.29,-349.13 226.79,-351.37 230.57,-353.43 234.45,-355.31"/>
+<polygon fill="#000000" stroke="#000000" points="232.87,-358.44 243.43,-359.26 235.68,-352.03 232.87,-358.44"/>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge38" class="edge">
+<title>proc~lex_number&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M177.14,-271.87C226.61,-276.32 311.76,-286.75 334.56,-307.13 410.63,-375.14 421.51,-508.23 422.67,-562.37"/>
+<polygon fill="#000000" stroke="#000000" points="419.16,-562.32 422.77,-572.28 426.16,-562.25 419.16,-562.32"/>
+</g>
+<!-- proc~digits_end -->
+<g id="proc~~tokenize~~CallsGraph_node18" class="node">
+<title>proc~digits_end</title>
+<g id="a_proc~~tokenize~~CallsGraph_node18"><a xlink:href="../proc/digits_end.html" xlink:title="digits_end">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="311.68,-222.27 246.16,-222.27 246.16,-198 311.68,-198 311.68,-222.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-206.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">digits_end</text>
+</a>
+</g>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~digits_end -->
+<g id="proc~~tokenize~~CallsGraph_edge32" class="edge">
+<title>proc~lex_number&#45;&gt;proc~digits_end</title>
+<path fill="none" stroke="#000000" d="M169.96,-256.62C189.95,-248.02 216.72,-236.49 238.61,-227.06"/>
+<polygon fill="#000000" stroke="#000000" points="239.72,-230.4 247.52,-223.23 236.95,-223.97 239.72,-230.4"/>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~is_name_char -->
+<g id="proc~~tokenize~~CallsGraph_edge35" class="edge">
+<title>proc~lex_number&#45;&gt;proc~is_name_char</title>
+<path fill="none" stroke="#000000" d="M148.93,-256.68C161.91,-237.84 189.48,-202.85 223.29,-189.13 269.12,-170.55 287.76,-173.16 334.56,-189.13 361.95,-198.48 387.43,-220.19 403.86,-236.59"/>
+<polygon fill="#000000" stroke="#000000" points="401.06,-238.73 410.53,-243.49 406.1,-233.87 401.06,-238.73"/>
+</g>
+<!-- proc~lower_char -->
+<g id="proc~~tokenize~~CallsGraph_node23" class="node">
+<title>proc~lower_char</title>
+<g id="a_proc~~tokenize~~CallsGraph_node23"><a xlink:href="../proc/lower_char.html" xlink:title="lower_char">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="458.58,-311.27 388.56,-311.27 388.56,-287 458.58,-287 458.58,-311.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-295.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lower_char</text>
+</a>
+</g>
+</g>
+<!-- proc~lex_number&#45;&gt;proc~lower_char -->
+<g id="proc~~tokenize~~CallsGraph_edge36" class="edge">
+<title>proc~lex_number&#45;&gt;proc~lower_char</title>
+<path fill="none" stroke="#000000" d="M177.19,-267.38C216.28,-266.11 280.2,-265.85 334.56,-274.13 348.67,-276.29 363.71,-280.01 377.3,-283.93"/>
+<polygon fill="#000000" stroke="#000000" points="376.28,-287.28 386.87,-286.81 378.3,-280.58 376.28,-287.28"/>
+</g>
+<!-- proc~name_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge40" class="edge">
+<title>proc~name_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M291.52,-382.33C303.09,-394.82 321.06,-415.05 334.56,-434.13 365.62,-478.03 395.65,-533.58 411.33,-563.89"/>
+<polygon fill="#000000" stroke="#000000" points="408.07,-565.2 415.74,-572.51 414.3,-562.01 408.07,-565.2"/>
+</g>
+<!-- proc~name_end&#45;&gt;proc~is_name_char -->
+<g id="proc~~tokenize~~CallsGraph_edge39" class="edge">
+<title>proc~name_end&#45;&gt;proc~is_name_char</title>
+<path fill="none" stroke="#000000" d="M313.05,-361.84C320.74,-358.78 328.45,-354.65 334.56,-349.13 360.82,-325.43 344.5,-302.06 370.56,-278.13 371.46,-277.31 372.39,-276.52 373.35,-275.76"/>
+<polygon fill="#000000" stroke="#000000" points="374.98,-278.87 381.44,-270.48 371.15,-273.01 374.98,-278.87"/>
+</g>
+<!-- proc~preproc_end&#45;&gt;proc~line_end -->
+<g id="proc~~tokenize~~CallsGraph_edge42" class="edge">
+<title>proc~preproc_end&#45;&gt;proc~line_end</title>
+<path fill="none" stroke="#000000" d="M318.05,-774.25C323.8,-776.79 329.49,-779.74 334.56,-783.13 353.9,-796.07 351.33,-808.04 370.56,-821.13 374.96,-824.13 379.84,-826.8 384.81,-829.16"/>
+<polygon fill="#000000" stroke="#000000" points="383.04,-832.2 393.61,-832.94 385.8,-825.77 383.04,-832.2"/>
+</g>
+<!-- proc~preproc_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge43" class="edge">
+<title>proc~preproc_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M314.53,-749.51C321.66,-745.9 328.75,-741.46 334.56,-736.13 374.2,-699.78 401.28,-641.4 414.1,-609.24"/>
+<polygon fill="#000000" stroke="#000000" points="417.3,-610.67 417.62,-600.08 410.76,-608.16 417.3,-610.67"/>
+</g>
+<!-- proc~last_nonblank -->
+<g id="proc~~tokenize~~CallsGraph_node22" class="node">
+<title>proc~last_nonblank</title>
+<g id="a_proc~~tokenize~~CallsGraph_node22"><a xlink:href="../proc/last_nonblank.html" xlink:title="last_nonblank">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="466.08,-812.27 381.06,-812.27 381.06,-788 466.08,-788 466.08,-812.27"/>
+<text xml:space="preserve" text-anchor="middle" x="423.57" y="-796.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">last_nonblank</text>
+</a>
+</g>
+</g>
+<!-- proc~preproc_end&#45;&gt;proc~last_nonblank -->
+<g id="proc~~tokenize~~CallsGraph_edge41" class="edge">
+<title>proc~preproc_end&#45;&gt;proc~last_nonblank</title>
+<path fill="none" stroke="#000000" d="M318.15,-772.32C333.99,-776.54 352.63,-781.5 369.75,-786.06"/>
+<polygon fill="#000000" stroke="#000000" points="368.7,-789.41 379.26,-788.6 370.5,-782.64 368.7,-789.41"/>
+</g>
+<!-- proc~string_end&#45;&gt;proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_edge44" class="edge">
+<title>proc~string_end&#45;&gt;proc~is_blank</title>
+<path fill="none" stroke="#000000" d="M162.3,-816.6C178.57,-825.62 201.75,-837.52 223.29,-845.13 331.99,-883.55 375.68,-845.36 476.58,-901.13 495.04,-911.34 511.57,-928.72 522.94,-942.65"/>
+<polygon fill="#000000" stroke="#000000" points="520.09,-944.69 529,-950.41 525.6,-940.38 520.09,-944.69"/>
+</g>
+<!-- proc~string_end&#45;&gt;proc~line_end -->
+<g id="proc~~tokenize~~CallsGraph_edge45" class="edge">
+<title>proc~string_end&#45;&gt;proc~line_end</title>
+<path fill="none" stroke="#000000" d="M173.91,-813.87C188.86,-817.94 206.84,-822.36 223.29,-825.13 278.48,-834.46 343.19,-838.78 383.54,-840.7"/>
+<polygon fill="#000000" stroke="#000000" points="383.33,-844.2 393.48,-841.15 383.64,-837.2 383.33,-844.2"/>
+</g>
+<!-- proc~string_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge47" class="edge">
+<title>proc~string_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M154.62,-791.67C170.32,-777.9 197.22,-755.75 223.29,-741.13 269.54,-715.22 291.93,-729.66 334.56,-698.13 367.79,-673.56 395.14,-633.34 410.13,-608.37"/>
+<polygon fill="#000000" stroke="#000000" points="412.99,-610.41 415.01,-600.01 406.95,-606.88 412.99,-610.41"/>
+</g>
+<!-- proc~only_blanks_to_eol -->
+<g id="proc~~tokenize~~CallsGraph_node25" class="node">
+<title>proc~only_blanks_to_eol</title>
+<g id="a_proc~~tokenize~~CallsGraph_node25"><a xlink:href="../proc/only_blanks_to_eol.html" xlink:title="only_blanks_to_eol">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="334.56,-816.27 223.29,-816.27 223.29,-792 334.56,-792 334.56,-816.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278.92" y="-800.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">only_blanks_to_eol</text>
+</a>
+</g>
+</g>
+<!-- proc~string_end&#45;&gt;proc~only_blanks_to_eol -->
+<g id="proc~~tokenize~~CallsGraph_edge46" class="edge">
+<title>proc~string_end&#45;&gt;proc~only_blanks_to_eol</title>
+<path fill="none" stroke="#000000" d="M173.72,-804.13C185.11,-804.13 198.33,-804.13 211.45,-804.13"/>
+<polygon fill="#000000" stroke="#000000" points="211.38,-807.64 221.38,-804.14 211.38,-800.64 211.38,-807.64"/>
+</g>
+<!-- proc~digits_end&#45;&gt;proc~is_digit -->
+<g id="proc~~tokenize~~CallsGraph_edge48" class="edge">
+<title>proc~digits_end&#45;&gt;proc~is_digit</title>
+<path fill="none" stroke="#000000" d="M312.18,-205.03C360.2,-197.42 450.28,-183.15 501.18,-175.08"/>
+<polygon fill="#000000" stroke="#000000" points="501.5,-178.57 510.83,-173.55 500.41,-171.66 501.5,-178.57"/>
+</g>
+<!-- proc~digits_end&#45;&gt;proc~peek -->
+<g id="proc~~tokenize~~CallsGraph_edge49" class="edge">
+<title>proc~digits_end&#45;&gt;proc~peek</title>
+<path fill="none" stroke="#000000" d="M293.5,-222.6C305.88,-234.67 323.82,-254.03 334.56,-274.13 387.72,-373.6 411.58,-508.52 419.44,-562.45"/>
+<polygon fill="#000000" stroke="#000000" points="415.93,-562.6 420.78,-572.02 422.86,-561.63 415.93,-562.6"/>
+</g>
+<!-- proc~is_code_char&#45;&gt;proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_edge50" class="edge">
+<title>proc~is_code_char&#45;&gt;proc~is_blank</title>
+<path fill="none" stroke="#000000" d="M464.17,-964.13C476.05,-964.13 489.05,-964.13 500.82,-964.13"/>
+<polygon fill="#000000" stroke="#000000" points="500.57,-967.64 510.57,-964.14 500.57,-960.64 500.57,-967.64"/>
+</g>
+<!-- proc~is_name_char&#45;&gt;proc~is_digit -->
+<g id="proc~~tokenize~~CallsGraph_edge51" class="edge">
+<title>proc~is_name_char&#45;&gt;proc~is_digit</title>
+<path fill="none" stroke="#000000" d="M440.92,-244.53C459.91,-229.89 491.44,-205.58 513.56,-188.53"/>
+<polygon fill="#000000" stroke="#000000" points="515.41,-191.52 521.19,-182.64 511.14,-185.98 515.41,-191.52"/>
+</g>
+<!-- proc~is_name_char&#45;&gt;proc~is_letter -->
+<g id="proc~~tokenize~~CallsGraph_edge52" class="edge">
+<title>proc~is_name_char&#45;&gt;proc~is_letter</title>
+<path fill="none" stroke="#000000" d="M461.03,-269.71C466.42,-272.17 471.77,-274.99 476.58,-278.13 493.63,-289.31 509.97,-305.64 521.6,-318.59"/>
+<polygon fill="#000000" stroke="#000000" points="518.65,-320.54 527.86,-325.78 523.93,-315.94 518.65,-320.54"/>
+</g>
+<!-- proc~last_nonblank&#45;&gt;proc~is_blank -->
+<g id="proc~~tokenize~~CallsGraph_edge53" class="edge">
+<title>proc~last_nonblank&#45;&gt;proc~is_blank</title>
+<path fill="none" stroke="#000000" d="M465.15,-812.74C469.31,-815.1 473.23,-817.87 476.58,-821.13 510.64,-854.32 527.22,-909.3 534.26,-940.54"/>
+<polygon fill="#000000" stroke="#000000" points="530.8,-941.06 536.27,-950.13 537.65,-939.63 530.8,-941.06"/>
+</g>
+<!-- proc~lowercase&#45;&gt;proc~lower_char -->
+<g id="proc~~tokenize~~CallsGraph_edge54" class="edge">
+<title>proc~lowercase&#45;&gt;proc~lower_char</title>
+<path fill="none" stroke="#000000" d="M291.17,-475.67C302.47,-462.98 320.23,-442.6 334.56,-424.13 361.88,-388.94 391.21,-346.15 408.17,-320.86"/>
+<polygon fill="#000000" stroke="#000000" points="410.96,-322.99 413.6,-312.73 405.14,-319.11 410.96,-322.99"/>
+</g>
+<!-- proc~only_blanks_to_eol&#45;&gt;proc~line_end -->
+<g id="proc~~tokenize~~CallsGraph_edge56" class="edge">
+<title>proc~only_blanks_to_eol&#45;&gt;proc~line_end</title>
+<path fill="none" stroke="#000000" d="M327.03,-816.68C345.53,-821.61 366.51,-827.2 384.08,-831.88"/>
+<polygon fill="#000000" stroke="#000000" points="383.05,-835.23 393.62,-834.42 384.85,-828.47 383.05,-835.23"/>
+</g>
+<!-- proc~only_blanks_to_eol&#45;&gt;proc~last_nonblank -->
+<g id="proc~~tokenize~~CallsGraph_edge55" class="edge">
+<title>proc~only_blanks_to_eol&#45;&gt;proc~last_nonblank</title>
+<path fill="none" stroke="#000000" d="M334.67,-802.6C345.98,-802.28 357.88,-801.95 369.15,-801.63"/>
+<polygon fill="#000000" stroke="#000000" points="369.19,-805.13 379.09,-801.35 369,-798.14 369.19,-805.13"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~tokenize~~CalledByGraph Pages: 1 -->
+<svg id="proctokenizeCalledByGraph" width="641pt" height="268pt"
+ viewBox="0.00 0.00 641.00 268.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~tokenize~~CalledByGraph" class="graph" transform="scale(0.725409 0.725409) rotate(0) translate(4 365.4)">
+<title>proc~~tokenize~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-365.4 879.64,-365.4 879.64,4 -4,4"/>
+<!-- proc~tokenize -->
+<g id="proc~~tokenize~~CalledByGraph_node1" class="node">
+<title>proc~tokenize</title>
+<polygon fill="none" stroke="black" points="875.64,-325.27 819.12,-325.27 819.12,-301 875.64,-301 875.64,-325.27"/>
+<text xml:space="preserve" text-anchor="middle" x="847.38" y="-309.53" font-family="Helvetica,sans-Serif" font-size="10.50">tokenize</text>
+</g>
+<!-- proc~format_text -->
+<g id="proc~~tokenize~~CalledByGraph_node2" class="node">
+<title>proc~format_text</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node2"><a xlink:href="../proc/format_text.html" xlink:title="format_text">
+<polygon fill="#d9534f" stroke="#d9534f" points="393.81,-145.27 321.54,-145.27 321.54,-121 393.81,-121 393.81,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="357.67" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_text</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~tokenize -->
+<g id="proc~~tokenize~~CalledByGraph_edge1" class="edge">
+<title>proc~format_text&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M359.17,-145.59C361.28,-179.54 372.29,-273.84 429.81,-314.13 546.11,-395.61 729.06,-351.52 808.01,-326.55"/>
+<polygon fill="#000000" stroke="#000000" points="809.01,-329.9 817.44,-323.48 806.85,-323.24 809.01,-329.9"/>
+</g>
+<!-- proc~convert_relational -->
+<g id="proc~~tokenize~~CalledByGraph_node6" class="node">
+<title>proc~convert_relational</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node6"><a xlink:href="../proc/convert_relational.html" xlink:title="convert_relational">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="665.1,-125.27 557.58,-125.27 557.58,-101 665.1,-101 665.1,-125.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-109.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">convert_relational</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~convert_relational -->
+<g id="proc~~tokenize~~CalledByGraph_edge13" class="edge">
+<title>proc~format_text&#45;&gt;proc~convert_relational</title>
+<path fill="none" stroke="#000000" d="M394.2,-130.31C433.59,-127.18 497.92,-122.07 546.18,-118.23"/>
+<polygon fill="#000000" stroke="#000000" points="546.26,-121.74 555.95,-117.46 545.7,-114.76 546.26,-121.74"/>
+</g>
+<!-- proc~format_pass -->
+<g id="proc~~tokenize~~CalledByGraph_node7" class="node">
+<title>proc~format_pass</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node7"><a xlink:href="../proc/format_pass.html" xlink:title="format_pass">
+<polygon fill="#d9534f" stroke="#d9534f" points="649.72,-83.27 572.95,-83.27 572.95,-59 649.72,-59 649.72,-83.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-67.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_pass</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~format_pass -->
+<g id="proc~~tokenize~~CalledByGraph_edge14" class="edge">
+<title>proc~format_text&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M365.12,-120.58C375.67,-101.58 398.61,-66.26 429.81,-52.14 474.1,-32.09 530.57,-43.1 568.46,-55.02"/>
+<polygon fill="#000000" stroke="#000000" points="567.07,-58.25 577.67,-58.07 569.27,-51.6 567.07,-58.25"/>
+</g>
+<!-- proc~limit_diagnostics -->
+<g id="proc~~tokenize~~CalledByGraph_node8" class="node">
+<title>proc~limit_diagnostics</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node8"><a xlink:href="../proc/limit_diagnostics.html" xlink:title="limit_diagnostics">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="661.35,-24.27 561.33,-24.27 561.33,0 661.35,0 661.35,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-8.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">limit_diagnostics</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~limit_diagnostics -->
+<g id="proc~~tokenize~~CalledByGraph_edge16" class="edge">
+<title>proc~format_text&#45;&gt;proc~limit_diagnostics</title>
+<path fill="none" stroke="#000000" d="M363.97,-120.62C373.63,-99.48 396.27,-57.03 429.81,-37.14 465.82,-15.78 512.83,-9.82 549.85,-9.05"/>
+<polygon fill="#000000" stroke="#000000" points="549.51,-12.55 559.48,-8.97 549.46,-5.55 549.51,-12.55"/>
+</g>
+<!-- proc~long_code_lines -->
+<g id="proc~~tokenize~~CalledByGraph_node9" class="node">
+<title>proc~long_code_lines</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node9"><a xlink:href="../proc/long_code_lines.html" xlink:title="long_code_lines">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="659.47,-243.27 563.2,-243.27 563.2,-219 659.47,-219 659.47,-243.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-227.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">long_code_lines</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~long_code_lines -->
+<g id="proc~~tokenize~~CalledByGraph_edge17" class="edge">
+<title>proc~format_text&#45;&gt;proc~long_code_lines</title>
+<path fill="none" stroke="#000000" d="M365.19,-145.68C375.82,-164.71 398.89,-200.33 429.81,-216.13 467.24,-235.27 514.8,-238.51 551.71,-237.24"/>
+<polygon fill="#000000" stroke="#000000" points="551.47,-240.76 561.29,-236.79 551.13,-233.76 551.47,-240.76"/>
+</g>
+<!-- proc~sort_use -->
+<g id="proc~~tokenize~~CalledByGraph_node11" class="node">
+<title>proc~sort_use</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node11"><a xlink:href="../proc/sort_use.html" xlink:title="sort_use">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="503.58,-165.27 447.81,-165.27 447.81,-141 503.58,-141 503.58,-165.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-149.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sort_use</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~sort_use -->
+<g id="proc~~tokenize~~CalledByGraph_edge20" class="edge">
+<title>proc~format_text&#45;&gt;proc~sort_use</title>
+<path fill="none" stroke="#000000" d="M394.12,-139.24C407.55,-141.56 422.89,-144.2 436.56,-146.56"/>
+<polygon fill="#000000" stroke="#000000" points="435.63,-149.95 446.08,-148.2 436.82,-143.05 435.63,-149.95"/>
+</g>
+<!-- proc~split_long_lines -->
+<g id="proc~~tokenize~~CalledByGraph_node12" class="node">
+<title>proc~split_long_lines</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node12"><a xlink:href="../proc/split_long_lines.html" xlink:title="split_long_lines">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="521.58,-207.27 429.81,-207.27 429.81,-183 521.58,-183 521.58,-207.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-191.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">split_long_lines</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~split_long_lines -->
+<g id="proc~~tokenize~~CalledByGraph_edge21" class="edge">
+<title>proc~format_text&#45;&gt;proc~split_long_lines</title>
+<path fill="none" stroke="#000000" d="M379.27,-145.63C393.34,-154.01 412.49,-165.11 429.81,-174.13 432.04,-175.3 434.35,-176.47 436.69,-177.63"/>
+<polygon fill="#000000" stroke="#000000" points="435.09,-180.75 445.62,-181.96 438.14,-174.45 435.09,-180.75"/>
+</g>
+<!-- proc~relayout -->
+<g id="proc~~tokenize~~CalledByGraph_node15" class="node">
+<title>proc~relayout</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node15"><a xlink:href="../proc/relayout.html" xlink:title="relayout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="503.2,-85.27 448.18,-85.27 448.18,-61 503.2,-61 503.2,-85.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-69.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">relayout</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~relayout -->
+<g id="proc~~tokenize~~CalledByGraph_edge24" class="edge">
+<title>proc~format_text&#45;&gt;proc~relayout</title>
+<path fill="none" stroke="#000000" d="M383,-120.56C399.63,-111.96 421.91,-100.43 440.34,-90.9"/>
+<polygon fill="#000000" stroke="#000000" points="441.79,-94.09 449.06,-86.39 438.57,-87.88 441.79,-94.09"/>
+</g>
+<!-- proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_node3" class="node">
+<title>proc~parse_source</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node3"><a xlink:href="../proc/parse_source.html" xlink:title="parse_source">
+<polygon fill="#d9534f" stroke="#d9534f" points="783.12,-184.27 701.1,-184.27 701.1,-160 783.12,-160 783.12,-184.27"/>
+<text xml:space="preserve" text-anchor="middle" x="742.11" y="-168.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">parse_source</text>
+</a>
+</g>
+</g>
+<!-- proc~parse_source&#45;&gt;proc~tokenize -->
+<g id="proc~~tokenize~~CalledByGraph_edge2" class="edge">
+<title>proc~parse_source&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M752.27,-184.65C769.93,-208.75 808.82,-261.86 830.68,-291.7"/>
+<polygon fill="#000000" stroke="#000000" points="827.76,-293.63 836.49,-299.63 833.4,-289.49 827.76,-293.63"/>
+</g>
+<!-- proc~same_code -->
+<g id="proc~~tokenize~~CalledByGraph_node4" class="node">
+<title>proc~same_code</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node4"><a xlink:href="../proc/same_code.html" xlink:title="same_code">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="511.83,-305.27 439.56,-305.27 439.56,-281 511.83,-281 511.83,-305.27"/>
+<text xml:space="preserve" text-anchor="middle" x="475.69" y="-289.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">same_code</text>
+</a>
+</g>
+</g>
+<!-- proc~same_code&#45;&gt;proc~tokenize -->
+<g id="proc~~tokenize~~CalledByGraph_edge3" class="edge">
+<title>proc~same_code&#45;&gt;proc~tokenize</title>
+<path fill="none" stroke="#000000" d="M512.14,-295.05C581.65,-298.81 735.32,-307.13 807.5,-311.03"/>
+<polygon fill="#000000" stroke="#000000" points="807.08,-314.51 817.26,-311.56 807.46,-307.52 807.08,-314.51"/>
+</g>
+<!-- proc~code_signature -->
+<g id="proc~~tokenize~~CalledByGraph_node5" class="node">
+<title>proc~code_signature</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node5"><a xlink:href="../proc/code_signature.html" xlink:title="code_signature">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="657.6,-285.27 565.08,-285.27 565.08,-261 657.6,-261 657.6,-285.27"/>
+<text xml:space="preserve" text-anchor="middle" x="611.34" y="-269.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">code_signature</text>
+</a>
+</g>
+</g>
+<!-- proc~same_code&#45;&gt;proc~code_signature -->
+<g id="proc~~tokenize~~CalledByGraph_edge12" class="edge">
+<title>proc~same_code&#45;&gt;proc~code_signature</title>
+<path fill="none" stroke="#000000" d="M512.16,-287.83C524.85,-285.93 539.49,-283.74 553.53,-281.64"/>
+<polygon fill="#000000" stroke="#000000" points="553.75,-285.14 563.12,-280.2 552.71,-278.22 553.75,-285.14"/>
+</g>
+<!-- proc~code_signature&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge5" class="edge">
+<title>proc~code_signature&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M649.98,-260.5C655.25,-258.07 660.45,-255.28 665.1,-252.13 688.93,-236.01 710.96,-211.27 725.1,-193.57"/>
+<polygon fill="#000000" stroke="#000000" points="727.8,-195.8 731.18,-185.76 722.28,-191.51 727.8,-195.8"/>
+</g>
+<!-- proc~convert_relational&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge6" class="edge">
+<title>proc~convert_relational&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M639.65,-125.65C658.26,-134.17 683.13,-145.57 703.6,-154.95"/>
+<polygon fill="#000000" stroke="#000000" points="701.92,-158.03 712.46,-159.01 704.83,-151.66 701.92,-158.03"/>
+</g>
+<!-- proc~format_pass&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge7" class="edge">
+<title>proc~format_pass&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M649.98,-83.77C655.25,-86.2 660.45,-88.99 665.1,-92.14 688.93,-108.26 710.96,-133 725.1,-150.7"/>
+<polygon fill="#000000" stroke="#000000" points="722.28,-152.76 731.18,-158.51 727.8,-148.47 722.28,-152.76"/>
+</g>
+<!-- proc~limit_diagnostics&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge8" class="edge">
+<title>proc~limit_diagnostics&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M633.61,-24.71C643.88,-31.42 655.92,-40.32 665.1,-50.14 693.61,-80.62 717.31,-123.34 730.32,-149.3"/>
+<polygon fill="#000000" stroke="#000000" points="727.17,-150.83 734.7,-158.27 733.45,-147.75 727.17,-150.83"/>
+</g>
+<!-- proc~long_code_lines&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge9" class="edge">
+<title>proc~long_code_lines&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M639.65,-218.62C658.26,-210.1 683.13,-198.7 703.6,-189.32"/>
+<polygon fill="#000000" stroke="#000000" points="704.83,-192.61 712.46,-185.26 701.92,-186.24 704.83,-192.61"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~tokenize~~CalledByGraph_node10" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node10"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="285.54,-145.27 208.77,-145.27 208.77,-121 285.54,-121 285.54,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="247.15" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~format_text -->
+<g id="proc~~tokenize~~CalledByGraph_edge4" class="edge">
+<title>proc~process_text&#45;&gt;proc~format_text</title>
+<path fill="none" stroke="#000000" d="M285.81,-133.13C293.54,-133.13 301.77,-133.13 309.78,-133.13"/>
+<polygon fill="#000000" stroke="#000000" points="309.77,-136.64 319.77,-133.14 309.77,-129.64 309.77,-136.64"/>
+</g>
+<!-- proc~sort_use&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge10" class="edge">
+<title>proc~sort_use&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M504,-155.1C547.6,-158.23 633.71,-164.42 689.28,-168.41"/>
+<polygon fill="#000000" stroke="#000000" points="688.91,-171.89 699.14,-169.12 689.42,-164.91 688.91,-171.89"/>
+</g>
+<!-- proc~split_long_lines&#45;&gt;proc~parse_source -->
+<g id="proc~~tokenize~~CalledByGraph_edge11" class="edge">
+<title>proc~split_long_lines&#45;&gt;proc~parse_source</title>
+<path fill="none" stroke="#000000" d="M521.85,-191.21C568.41,-187.16 640.91,-180.85 689.66,-176.61"/>
+<polygon fill="#000000" stroke="#000000" points="689.74,-180.12 699.4,-175.76 689.13,-173.14 689.74,-180.12"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~tokenize~~CalledByGraph_node13" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node13"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-166.27 94.5,-166.27 94.5,-142 168.27,-142 168.27,-166.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-150.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~tokenize~~CalledByGraph_edge18" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.7,-147.43C177.86,-145.74 187.84,-143.9 197.5,-142.12"/>
+<polygon fill="#000000" stroke="#000000" points="197.94,-145.59 207.14,-140.34 196.67,-138.71 197.94,-145.59"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~tokenize~~CalledByGraph_node14" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node14"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-124.27 90,-124.27 90,-100 172.77,-100 172.77,-124.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-108.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~tokenize~~CalledByGraph_edge19" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M173.14,-119.66C180.94,-121.1 189.18,-122.62 197.21,-124.1"/>
+<polygon fill="#000000" stroke="#000000" points="196.39,-127.51 206.85,-125.88 197.66,-120.62 196.39,-127.51"/>
+</g>
+<!-- proc~relayout&#45;&gt;proc~format_pass -->
+<g id="proc~~tokenize~~CalledByGraph_edge15" class="edge">
+<title>proc~relayout&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M503.42,-72.74C519.9,-72.49 541.54,-72.16 561.04,-71.87"/>
+<polygon fill="#000000" stroke="#000000" points="561.07,-75.37 571.01,-71.72 560.96,-68.37 561.07,-75.37"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~tokenize~~CalledByGraph_node16" class="node">
+<title>proc~run</title>
+<g id="a_proc~~tokenize~~CalledByGraph_node16"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-145.27 0,-145.27 0,-121 54,-121 54,-145.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-129.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~tokenize~~CalledByGraph_edge22" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-138.54C63.15,-140.34 73.22,-142.41 83.09,-144.43"/>
+<polygon fill="#000000" stroke="#000000" points="82.09,-147.8 92.59,-146.38 83.5,-140.95 82.09,-147.8"/>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~tokenize~~CalledByGraph_edge23" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-127.73C61.86,-126.19 70.3,-124.46 78.75,-122.73"/>
+<polygon fill="#000000" stroke="#000000" points="79.22,-126.2 88.31,-120.76 77.81,-119.35 79.22,-126.2"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panproctokenizeCalledByGraph = svgPanZoom('#proctokenizeCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">tokenize</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! Split `src` into tokens.</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">src</span><span class="w">          </span><span class="c">!! source text</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">token_list_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tokens</span><span class="w">    </span><span class="c">!! its tokens, covering every byte</span>
+
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">lexer_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lx</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"></span>
+<span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">at_start</span><span class="w"></span>
+<span class="w">    </span><span class="kt">character</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">achar</span><span class="p">(</span><span class="mi">239</span><span class="p">)</span><span class="o">//</span><span class="nb">achar</span><span class="p">(</span><span class="mi">187</span><span class="p">)</span><span class="o">//</span><span class="nb">achar</span><span class="p">(</span><span class="mi">191</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_BOM</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">    end if</span>
+<span class="k">    do while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">src</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LF</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CR</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CR</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LF</span><span class="p">)</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_NEWLINE</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">lx</span><span class="p">%</span><span class="n">line_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">cycle</span>
+<span class="k">        end if</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">TAB</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">is_blank</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_SPACE</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">cycle</span>
+<span class="k">        end if</span>
+
+<span class="k">        </span><span class="n">at_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lx</span><span class="p">%</span><span class="n">line_start</span><span class="w"></span>
+<span class="w">        </span><span class="n">lx</span><span class="p">%</span><span class="n">line_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">at_start</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">is_preproc_start</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_PREPROC</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">preproc_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">tokens</span><span class="p">%</span><span class="n">n</span><span class="p">)%</span><span class="n">last</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">cycle</span>
+<span class="k">        end if</span>
+
+<span class="k">        select case</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_COMMENT</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">comment_kind</span><span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">at_start</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CT_LEADING</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CT_TRAILING</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_CONT</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">string_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_STRING</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">:</span><span class="s1">&#39;9&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">lex_number</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">is_quote</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                </span><span class="c">! kind parameter prefix of a string: 1_&#39;abc&#39;</span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">string_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TK_STRING</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_digit</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                call </span><span class="n">lex_number</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">dotop_at</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dotop_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_DOTOP</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_OTHER</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">        case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="w">   </span><span class="c">! a leading `_` is not standard, but appears in generated code</span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TK_NAME</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_quote</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">index</span><span class="p">(</span><span class="s1">&#39;bozBOZ&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TK_BOZ</span><span class="w"></span>
+<span class="w">                    </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">string_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="nb">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TK_STRING</span><span class="w"></span>
+<span class="w">                    </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">string_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end if</span>
+<span class="k">            call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fypp_inline_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_FYPP</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">else</span>
+<span class="k">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">operator_end</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_OP</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span>
+<span class="k">                    </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                    </span><span class="k">call </span><span class="n">add</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">lx</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">TK_OTHER</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end if</span>
+<span class="k">        end select</span>
+<span class="k">        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">end subroutine </span><span class="n">tokenize</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

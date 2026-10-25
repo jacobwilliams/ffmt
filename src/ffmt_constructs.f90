@@ -1,0 +1,470 @@
+module ffmt_constructs
+!! Classifies statements by their role in the block structure: opening a construct or program
+!! unit, continuing one (`else`, `case`, `contains`, ...), or closing one.
+!!
+!! Classification looks only at a statement's code tokens. Keywords are not reserved in Fortran,
+!! so a keyword followed by `=`, `=>` or `%` is treated as a variable (`end = 1`).
+use ffmt_tokens
+use ffmt_statements, only: statement_view_t
+use ffmt_strings, only: string_t
+implicit none
+private
+
+public :: classify_statement, construct_label, closed_construct
+
+! roles
+integer, parameter, public :: ROLE_NONE = 0
+integer, parameter, public :: ROLE_OPEN = 1
+integer, parameter, public :: ROLE_MIDDLE = 2
+integer, parameter, public :: ROLE_CLOSE = 3
+
+! constructs
+integer, parameter, public :: C_NONE = 0         !! no construct
+integer, parameter, public :: C_ANY = 1          !! a bare `end`
+integer, parameter, public :: C_PROGRAM = 2
+integer, parameter, public :: C_MODULE = 3
+integer, parameter, public :: C_SUBMODULE = 4
+integer, parameter, public :: C_SUBROUTINE = 5
+integer, parameter, public :: C_FUNCTION = 6
+integer, parameter, public :: C_PROCEDURE = 7    !! separate module procedure (`module procedure name` in a submodule)
+integer, parameter, public :: C_BLOCK_DATA = 8
+integer, parameter, public :: C_INTERFACE = 9
+integer, parameter, public :: C_TYPE = 10
+integer, parameter, public :: C_ENUM = 11
+integer, parameter, public :: C_IF = 12
+integer, parameter, public :: C_DO = 13
+integer, parameter, public :: C_SELECT = 14
+integer, parameter, public :: C_ASSOCIATE = 15
+integer, parameter, public :: C_BLOCK = 16
+integer, parameter, public :: C_CRITICAL = 17
+integer, parameter, public :: C_TEAM = 18
+integer, parameter, public :: C_WHERE = 19
+integer, parameter, public :: C_FORALL = 20
+integer, parameter, public :: C_CONTAINS = 21    !! `contains` (a middle statement of program units and types)
+integer, parameter, public :: C_ENUMERATION = 22 !! `enumeration type` (F2023)
+
+integer, parameter :: NCONSTRUCTS = 22
+character(len=*), parameter :: LABELS(0:NCONSTRUCTS) = [character(len=16) :: &
+                                                        'none', 'end', 'program', 'module', 'submodule', 'subroutine', 'function', &
+                                                        'procedure', &
+                                                        'block data', 'interface', 'type', 'enum', 'if', 'do', 'select', &
+                                                        'associate', 'block', &
+                                                        'critical', 'change team', 'where', 'forall', 'contains', &
+                                                        'enumeration type']
+
+type, public :: stmt_info_t
+    !! What a statement does to the block structure, as found by `classify_statement`.
+    integer :: role = ROLE_NONE      !! `ROLE_OPEN`, `ROLE_MIDDLE`, `ROLE_CLOSE`, or `ROLE_NONE` for other statements
+    integer :: construct = C_NONE    !! the construct opened, continued or closed: one of the `C_*` constants
+    integer :: label = 0         !! statement label, or 0
+    integer :: do_label = 0      !! for `do 10 ...`: the label of the statement that ends the loop
+    character(len=:), allocatable :: name  !! construct name, as in `outer: do`
+end type stmt_info_t
+
+type :: words_t
+    !! The words of a statement, with combined keywords such as `endif` split into `end`, `if`.
+    type(string_t), allocatable :: w(:)  !! the words of the first token; the others are its code tokens
+    integer, allocatable :: tok(:)     !! index into the code token list for each word
+    integer :: n = 0                   !! number of words
+end type words_t
+
+contains
+
+pure function construct_label(construct) result(label)
+    !! Name of a construct for messages (`'if'`, `'select'`, `'end'` for a bare `end`), or `'?'`.
+    integer, intent(in) :: construct   !! one of the `C_*` constants
+    character(len=:), allocatable :: label
+    if (construct < 0 .or. construct > NCONSTRUCTS) then
+        label = '?'
+    else
+        label = trim(LABELS(construct))
+    end if
+end function construct_label
+
+function classify_statement(src, tokens, v, in_interface) result(info)
+    !! Classify a code statement. `in_interface` is true directly inside an interface block,
+    !! where `module procedure` lists procedures instead of starting one.
+    character(len=*), intent(in) :: src           !! source text
+    type(token_list_t), intent(in) :: tokens      !! tokens of `src`
+    type(statement_view_t), intent(in) :: v       !! the statement
+    logical, intent(in) :: in_interface           !! the innermost open construct is an interface block
+    type(stmt_info_t) :: info
+
+    type(words_t) :: wd
+    integer :: k, j, ios
+
+    if (v%n == 0) return
+    k = v%first
+    if (k == 2) read (v%low(v%lo(1):v%hi(1)), *, iostat=ios) info%label
+    ! construct name, possibly partly generated by fypp: `outer: do`, `get_${x}$: if (...) then`
+    j = k
+    do while (j < v%n)
+        if (.not. is_name(j)) exit
+        j = j + 1
+    end do
+    if (j > k .and. j < v%n .and. v%is(j, ':')) then
+        info%name = src(tokens%tok(v%code(k))%first:tokens%tok(v%code(j - 1))%last)
+        k = j + 1
+    end if
+    if (.not. is_name(k)) return
+    ! an assignment to a variable named like a keyword, or to an element of one (`rank (1) = n`)
+    j = k + 1
+    if (v%is(j, '(')) then
+        if (v%closing(j) > 0) j = v%closing(j) + 1
+    end if
+    if (v%is(j, '=') .or. v%is(j, '=>') .or. v%is(j, '%')) return
+    call split_words()
+    call classify_words()
+
+contains
+
+    logical function is_name(j)
+        !! True if code token `j` is a name, or inline fypp that generates one (`${name}$`).
+        integer, intent(in) :: j   !! index into `v%code(:)`
+        is_name = v%kind_of(j) == TK_NAME .or. v%kind_of(j) == TK_FYPP
+    end function is_name
+
+    function word(j) result(t)
+        !! Lowercase word `j`, or '' past the end.
+        integer, intent(in) :: j   !! index into the words `wd`
+        character(len=:), allocatable :: t
+        if (j > wd%n) then
+            t = ''
+        else if (j <= size(wd%w)) then
+            t = wd%w(j)%s
+        else
+            t = v%word(wd%tok(j))
+        end if
+    end function word
+
+    integer function after_parens(j) result(next)
+        !! Index of the code token after the parenthesis that opens at word `j`, or 0 if word `j`
+        !! is not `(` or the parenthesis is not closed.
+        integer, intent(in) :: j   !! index into the words `wd`
+        next = 0
+        if (j > wd%n) return
+        next = v%closing(wd%tok(j))
+        if (next > 0) next = next + 1
+    end function after_parens
+
+    logical function is_name_word(j)
+        !! True if word `j` is a name, or inline fypp that generates one (`${name}$`).
+        integer, intent(in) :: j   !! index into the words `wd`
+        is_name_word = .false.
+        if (j > wd%n) return
+        is_name_word = is_name(wd%tok(j))
+    end function is_name_word
+
+    logical function has_attribute(attr)
+        !! True if `attr` appears among the words before `::`.
+        character(len=*), intent(in) :: attr   !! the attribute, in lowercase
+        integer :: j
+        has_attribute = .false.
+        do j = 2, wd%n
+            if (word(j) == '::') return
+            if (word(j) == attr) then
+                has_attribute = .true.
+                return
+            end if
+        end do
+    end function has_attribute
+
+    integer function word_at(c) result(j)
+        !! Index of the first word at or after code token `c`, or `wd%n + 1` if there is none.
+        integer, intent(in) :: c   !! index into `v%code(:)`
+        do j = 1, wd%n
+            if (wd%tok(j) >= c) return
+        end do
+        j = wd%n + 1
+    end function word_at
+
+    subroutine split_words()
+        !! Fill `wd` with the words of the statement from code token `k` on, splitting the first
+        !! one with `expand_keyword`.
+        type(string_t), allocatable :: parts(:)
+        integer :: j, np
+
+        ! only `end...`, `else...`, `select...`, `block...`, `change...` and `double...` can be
+        ! combined keywords; other first words are read from the view, like the rest (see `word`)
+        associate (first => v%low(v%lo(k):v%hi(k)))
+            if (index(first, 'end') == 1 .or. index(first, 'else') == 1 .or. index(first, 'select') == 1 .or. &
+                index(first, 'block') == 1 .or. index(first, 'change') == 1 .or. index(first, 'double') == 1) then
+                parts = expand_keyword(first)
+                if (size(parts) > 1) call move_alloc(parts, wd%w)
+            end if
+        end associate
+        if (.not. allocated(wd%w)) allocate (wd%w(0))
+        np = max(1, size(wd%w))
+        allocate (wd%tok(np + v%n - k))
+        wd%tok(1:np) = k
+        wd%n = np
+        do j = k + 1, v%n
+            wd%n = wd%n + 1
+            wd%tok(wd%n) = j
+        end do
+    end subroutine split_words
+
+    subroutine classify_words()
+        !! Set `info` from the words in `wd`, by the first word.
+        integer :: c
+        character(len=:), allocatable :: label_text
+
+        select case (word(1))
+        case ('end')
+            c = closed_construct(word(2), word(3))
+            if (c /= C_NONE) call set(info, ROLE_CLOSE, c)
+        case ('else')
+            select case (word(2))
+            case ('', 'if')
+                call set(info, ROLE_MIDDLE, C_IF)
+            case ('where')
+                call set(info, ROLE_MIDDLE, C_WHERE)
+            case default
+                if (wd%n == 2) call set(info, ROLE_MIDDLE, C_IF)   ! else construct-name
+            end select
+        case ('if')
+            c = after_parens(2)
+            if (c > 0 .and. c == v%n) then
+                if (v%is(c, 'then')) call set(info, ROLE_OPEN, C_IF)
+            end if
+        case ('do')
+            call set(info, ROLE_OPEN, C_DO)
+            if (wd%n >= 2) then
+                if (v%kind_of(wd%tok(2)) == TK_INT) then
+                    label_text = word(2)
+                    read (label_text, *, iostat=ios) info%do_label
+                end if
+            end if
+        case ('select')
+            select case (word(2))
+            case ('case', 'type', 'rank')
+                call set(info, ROLE_OPEN, C_SELECT)
+            end select
+        case ('case', 'rank')
+            if (word(2) == '(' .or. word(2) == 'default') call set(info, ROLE_MIDDLE, C_SELECT)
+        case ('type')
+            if (word(2) == 'is' .and. word(3) == '(') then
+                call set(info, ROLE_MIDDLE, C_SELECT)
+            else if (word(2) == '(') then
+                call check_procedure(1)
+            else if (wd%n >= 2 .and. .not. has_attribute('deferred')) then
+                ! `type, deferred :: T` declares a type parameter of a template (F202Y)
+                call set(info, ROLE_OPEN, C_TYPE)
+            end if
+        case ('class')
+            if ((word(2) == 'is' .and. word(3) == '(') .or. (word(2) == 'default' .and. wd%n == 2)) then
+                call set(info, ROLE_MIDDLE, C_SELECT)
+            else
+                call check_procedure(1)
+            end if
+        case ('module')
+            if (word(2) == 'procedure') then
+                if (.not. in_interface) call set(info, ROLE_OPEN, C_PROCEDURE)
+            else
+                call check_procedure(1)
+                if (info%role == ROLE_NONE .and. is_name_word(2)) call set(info, ROLE_OPEN, C_MODULE)
+            end if
+        case ('submodule')
+            if (word(2) == '(') call set(info, ROLE_OPEN, C_SUBMODULE)
+        case ('program')
+            call set(info, ROLE_OPEN, C_PROGRAM)
+        case ('block')
+            if (wd%n == 1) then
+                call set(info, ROLE_OPEN, C_BLOCK)
+            else if (word(2) == 'data') then
+                call set(info, ROLE_OPEN, C_BLOCK_DATA)
+            end if
+        case ('interface')
+            call set(info, ROLE_OPEN, C_INTERFACE)
+        case ('abstract')
+            if (word(2) == 'interface') call set(info, ROLE_OPEN, C_INTERFACE)
+        case ('enum')
+            call set(info, ROLE_OPEN, C_ENUM)
+        case ('enumeration')
+            if (word(2) == 'type') call set(info, ROLE_OPEN, C_ENUMERATION)
+        case ('associate')
+            if (word(2) == '(') call set(info, ROLE_OPEN, C_ASSOCIATE)
+        case ('critical')
+            call set(info, ROLE_OPEN, C_CRITICAL)
+        case ('change')
+            if (word(2) == 'team') call set(info, ROLE_OPEN, C_TEAM)
+        case ('where')
+            if (after_parens(2) == v%n + 1) call set(info, ROLE_OPEN, C_WHERE)
+        case ('forall')
+            if (after_parens(2) == v%n + 1) call set(info, ROLE_OPEN, C_FORALL)
+        case ('contains')
+            if (wd%n == 1) call set(info, ROLE_MIDDLE, C_CONTAINS)
+        case default
+            call check_procedure(1)
+        end select
+    end subroutine classify_words
+
+    subroutine check_procedure(j0)
+        !! `[prefixes] [type-spec] function name` or `[prefixes] subroutine name`, starting at word `j0`:
+        !! if the words match, set `info` to open a function or subroutine.
+        integer, intent(in) :: j0   !! index of the first word to look at
+        integer :: j, c
+
+        j = j0
+        do while (j <= wd%n)
+            if (v%kind_of(wd%tok(j)) == TK_FYPP) then
+                j = j + 1   ! a type or prefix generated by fypp, e.g. `${t}$ function f()`
+                cycle
+            end if
+            select case (word(j))
+            case ('pure', 'impure', 'elemental', 'recursive', 'non_recursive', 'module', 'simple')
+                j = j + 1
+            case ('integer', 'real', 'complex', 'logical', 'character', 'doubleprecision', 'doublecomplex')
+                j = j + 1
+                call skip_selector(j)
+            case ('double')
+                j = j + 1
+                if (word(j) == 'precision' .or. word(j) == 'complex') j = j + 1
+            case ('type', 'class')
+                c = after_parens(j + 1)
+                if (c == 0) return
+                j = word_at(c)
+            case ('function', 'subroutine')
+                if (j + 1 > wd%n) return
+                if (.not. is_name_word(j + 1)) return
+                call set(info, ROLE_OPEN, merge(C_FUNCTION, C_SUBROUTINE, word(j) == 'function'))
+                return
+            case default
+                ! a prefix made by a cpp macro: `PURE_IF_NO_DEBUG FUNCTION f(x)`
+                if (.not. is_name_word(j)) return
+                if (word(j + 1) /= 'function' .and. word(j + 1) /= 'subroutine') return
+                j = j + 1
+            end select
+        end do
+    end subroutine check_procedure
+
+    subroutine skip_selector(j)
+        !! Skip a kind or length selector after an intrinsic type: `(kind=8)`, `(len=*)`, `*8`, `*(*)`.
+        integer, intent(inout) :: j   !! word index: the word after the type name, then the word after the selector
+        integer :: c
+        if (word(j) == '(') then
+            c = after_parens(j)
+            if (c > 0) j = word_at(c)
+        else if (word(j) == '*') then
+            j = j + 1
+            if (word(j) == '(') then
+                c = after_parens(j)
+                if (c > 0) j = word_at(c)
+            else
+                j = j + 1
+            end if
+        end if
+    end subroutine skip_selector
+
+end function classify_statement
+
+pure integer function closed_construct(second, third) result(construct)
+    !! The construct that `end second third` closes (`C_ANY` for a bare `end`), or `C_NONE` if
+    !! `second` names no construct, so that the `end` is not a closing statement.
+    character(len=*), intent(in) :: second   !! the word after `end`, in lowercase, or `''`
+    character(len=*), intent(in) :: third    !! the word after that, or `''` (`data` in `end block data`)
+    select case (second)
+    case ('')
+        construct = C_ANY
+    case ('if')
+        construct = C_IF
+    case ('do')
+        construct = C_DO
+    case ('select')
+        construct = C_SELECT
+    case ('associate')
+        construct = C_ASSOCIATE
+    case ('block')
+        construct = merge(C_BLOCK_DATA, C_BLOCK, third == 'data')
+    case ('blockdata')
+        construct = C_BLOCK_DATA
+    case ('critical')
+        construct = C_CRITICAL
+    case ('team')
+        construct = C_TEAM
+    case ('where')
+        construct = C_WHERE
+    case ('forall')
+        construct = C_FORALL
+    case ('enum')
+        construct = C_ENUM
+    case ('enumeration')
+        construct = merge(C_ENUMERATION, C_NONE, third == 'type')
+    case ('interface')
+        construct = C_INTERFACE
+    case ('type')
+        construct = C_TYPE
+    case ('function')
+        construct = C_FUNCTION
+    case ('subroutine')
+        construct = C_SUBROUTINE
+    case ('procedure')
+        construct = C_PROCEDURE
+    case ('module')
+        construct = C_MODULE
+    case ('submodule')
+        construct = C_SUBMODULE
+    case ('program')
+        construct = C_PROGRAM
+    case default
+        construct = C_NONE
+    end select
+end function closed_construct
+
+pure subroutine set(info, role, construct)
+    !! Set the role and construct of `info`.
+    type(stmt_info_t), intent(inout) :: info   !! the classification to update
+    integer, intent(in) :: role                !! one of the `ROLE_*` constants
+    integer, intent(in) :: construct           !! one of the `C_*` constants
+    info%role = role
+    info%construct = construct
+end subroutine set
+
+pure function expand_keyword(w) result(parts)
+    !! Split a keyword that may be written as one word (`endif`, `elseif`, `selectcase`,
+    !! `endblockdata`, ...) into its parts. Other words are returned unchanged.
+    character(len=*), intent(in) :: w   !! the word, in lowercase
+    type(string_t), allocatable :: parts(:)
+    character(len=*), parameter :: ends(*) = [character(len=11) :: &
+                                              'associate', 'blockdata', 'block', 'critical', 'do', 'enum', 'forall', 'function', &
+                                              'if', &
+                                              'interface', 'module', 'procedure', 'program', 'select', 'submodule', 'subroutine', &
+                                              'team', &
+                                              'type', 'where']
+    integer :: k
+
+    if (len(w) > 3 .and. w(1:min(3, len(w))) == 'end') then
+        do k = 1, size(ends)
+            if (w(4:) == trim(ends(k))) then
+                if (w(4:) == 'blockdata') then
+                    parts = [string_t('end'), string_t('block'), string_t('data')]
+                else
+                    parts = [string_t('end'), string_t(w(4:))]
+                end if
+                return
+            end if
+        end do
+    end if
+    select case (w)
+    case ('elseif')
+        parts = [string_t('else'), string_t('if')]
+    case ('elsewhere')
+        parts = [string_t('else'), string_t('where')]
+    case ('selectcase')
+        parts = [string_t('select'), string_t('case')]
+    case ('selecttype')
+        parts = [string_t('select'), string_t('type')]
+    case ('selectrank')
+        parts = [string_t('select'), string_t('rank')]
+    case ('blockdata')
+        parts = [string_t('block'), string_t('data')]
+    case ('changeteam')
+        parts = [string_t('change'), string_t('team')]
+    case ('doubleprecision')
+        parts = [string_t('double'), string_t('precision')]
+    case default
+        parts = [string_t(w)]
+    end select
+end function expand_keyword
+
+end module ffmt_constructs

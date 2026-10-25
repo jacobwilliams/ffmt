@@ -1,0 +1,809 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>unified_diff &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>unified_diff
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.9% of total for procedures.">92 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_diff.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_diff.f90.html'>ffmt_diff.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_diff.html'>ffmt_diff</a></li>
+            <li class="breadcrumb-item active" aria-current="page">unified_diff</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/unified_diff.html#src">unified_diff</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function unified_diff(a, b, name, context) result(diff)  
+</h2>
+    
+
+    <p>The changes from <code>a</code> to <code>b</code> as a unified diff with <code>context</code> lines of context (default 3),
+with <code>name</code> in the headers. Empty if the texts are equal.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~8"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+                <p>the old text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~5"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong></td>
+            <td>
+                <p>the new text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-name~9"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>name</strong></td>
+            <td>
+                <p>file name for the <code>---</code> and <code>+++</code> headers</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-context"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>context</strong></td>
+            <td>
+                <p>number of unchanged lines shown around each change</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-diff"></span>
+          character(len=:), allocatable
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~unified_diff~~CallsGraph Pages: 1 -->
+<svg id="procunified_diffCallsGraph" width="407pt" height="260pt"
+ viewBox="0.00 0.00 407.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~unified_diff~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 256.27)">
+<title>proc~~unified_diff~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-256.27 403.06,-256.27 403.06,4 -4,4"/>
+<!-- proc~unified_diff -->
+<g id="proc~~unified_diff~~CallsGraph_node1" class="node">
+<title>proc~unified_diff</title>
+<polygon fill="none" stroke="black" points="70.77,-129.27 0,-129.27 0,-105 70.77,-105 70.77,-129.27"/>
+<text xml:space="preserve" text-anchor="middle" x="35.38" y="-113.54" font-family="Helvetica,sans-Serif" font-size="10.50">unified_diff</text>
+</g>
+<!-- proc~builder_append -->
+<g id="proc~~unified_diff~~CallsGraph_node2" class="node">
+<title>proc~builder_append</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node2"><a xlink:href="../proc/builder_append.html" xlink:title="string_builder_t%builder_append">
+<polygon fill="#d9534f" stroke="#d9534f" points="293.04,-252.27 106.77,-252.27 106.77,-228 293.04,-228 293.04,-252.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-236.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">string_builder_t%builder_append</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~builder_append -->
+<g id="proc~~unified_diff~~CallsGraph_edge1" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~builder_append</title>
+<path fill="none" stroke="#000000" d="M41.41,-129.75C50.78,-151.6 73.1,-196.33 106.77,-219.13 108.6,-220.38 110.5,-221.55 112.45,-222.65"/>
+<polygon fill="#000000" stroke="#000000" points="110.68,-225.68 121.2,-226.94 113.76,-219.39 110.68,-225.68"/>
+</g>
+<!-- proc~builder_get -->
+<g id="proc~~unified_diff~~CallsGraph_node3" class="node">
+<title>proc~builder_get</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node3"><a xlink:href="../proc/builder_get.html" xlink:title="string_builder_t%builder_get">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="281.42,-210.27 118.39,-210.27 118.39,-186 281.42,-186 281.42,-210.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-194.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">string_builder_t%builder_get</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~builder_get -->
+<g id="proc~~unified_diff~~CallsGraph_edge2" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~builder_get</title>
+<path fill="none" stroke="#000000" d="M47.53,-129.74C60.42,-143.5 82.95,-165.18 106.77,-177.13 110.07,-178.79 113.5,-180.32 117.01,-181.72"/>
+<polygon fill="#000000" stroke="#000000" points="115.74,-184.99 126.33,-185.09 118.12,-178.4 115.74,-184.99"/>
+</g>
+<!-- proc~lcs -->
+<g id="proc~~unified_diff~~CallsGraph_node4" class="node">
+<title>proc~lcs</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node4"><a xlink:href="../proc/lcs.html" xlink:title="lcs">
+<polygon fill="#d9534f" stroke="#d9534f" points="226.91,-150.27 172.91,-150.27 172.91,-126 226.91,-126 226.91,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lcs</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~lcs -->
+<g id="proc~~unified_diff~~CallsGraph_edge3" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~lcs</title>
+<path fill="none" stroke="#000000" d="M71.25,-121.64C97.74,-125.06 134.11,-129.76 161.26,-133.27"/>
+<polygon fill="#000000" stroke="#000000" points="160.78,-136.74 171.14,-134.55 161.67,-129.79 160.78,-136.74"/>
+</g>
+<!-- proc~line_ids -->
+<g id="proc~~unified_diff~~CallsGraph_node5" class="node">
+<title>proc~line_ids</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node5"><a xlink:href="../proc/line_ids.html" xlink:title="line_ids">
+<polygon fill="#d9534f" stroke="#d9534f" points="226.91,-108.27 172.91,-108.27 172.91,-84 226.91,-84 226.91,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-92.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_ids</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~line_ids -->
+<g id="proc~~unified_diff~~CallsGraph_edge4" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~line_ids</title>
+<path fill="none" stroke="#000000" d="M71.25,-112.63C97.74,-109.21 134.11,-104.51 161.26,-101"/>
+<polygon fill="#000000" stroke="#000000" points="161.67,-104.48 171.14,-99.72 160.78,-97.53 161.67,-104.48"/>
+</g>
+<!-- proc~range_text -->
+<g id="proc~~unified_diff~~CallsGraph_node6" class="node">
+<title>proc~range_text</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node6"><a xlink:href="../proc/range_text.html" xlink:title="range_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="233.79,-66.27 166.02,-66.27 166.02,-42 233.79,-42 233.79,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">range_text</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~range_text -->
+<g id="proc~~unified_diff~~CallsGraph_edge5" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~range_text</title>
+<path fill="none" stroke="#000000" d="M53.81,-104.62C67.58,-95.26 87.62,-82.81 106.77,-75.14 121.97,-69.05 139.31,-64.51 154.83,-61.25"/>
+<polygon fill="#000000" stroke="#000000" points="155.12,-64.76 164.26,-59.39 153.77,-57.89 155.12,-64.76"/>
+</g>
+<!-- proc~split_lines -->
+<g id="proc~~unified_diff~~CallsGraph_node7" class="node">
+<title>proc~split_lines</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node7"><a xlink:href="../proc/split_lines.html" xlink:title="split_lines">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="231.54,-24.27 168.27,-24.27 168.27,0 231.54,0 231.54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="199.91" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">split_lines</text>
+</a>
+</g>
+</g>
+<!-- proc~unified_diff&#45;&gt;proc~split_lines -->
+<g id="proc~~unified_diff~~CallsGraph_edge6" class="edge">
+<title>proc~unified_diff&#45;&gt;proc~split_lines</title>
+<path fill="none" stroke="#000000" d="M43.22,-104.66C54.12,-86.03 77.23,-51.2 106.77,-33.13 121.78,-23.96 140.39,-18.78 156.94,-15.87"/>
+<polygon fill="#000000" stroke="#000000" points="157.14,-19.38 166.5,-14.42 156.09,-12.46 157.14,-19.38"/>
+</g>
+<!-- proc~lcs&#45;&gt;proc~lcs -->
+<g id="proc~~unified_diff~~CallsGraph_edge7" class="edge">
+<title>proc~lcs&#45;&gt;proc~lcs</title>
+<path fill="none" stroke="#000000" d="M172.44,-150.52C163.5,-159.41 172.65,-168.27 199.91,-168.27 214.81,-168.27 224.3,-165.62 228.38,-161.76"/>
+<polygon fill="#000000" stroke="#000000" points="231.88,-161.67 227.5,-152.02 224.91,-162.3 231.88,-161.67"/>
+</g>
+<!-- proc~lcs_lengths -->
+<g id="proc~~unified_diff~~CallsGraph_node9" class="node">
+<title>proc~lcs_lengths</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node9"><a xlink:href="../proc/lcs_lengths.html" xlink:title="lcs_lengths">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="399.06,-150.27 329.04,-150.27 329.04,-126 399.06,-126 399.06,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="364.05" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lcs_lengths</text>
+</a>
+</g>
+</g>
+<!-- proc~lcs&#45;&gt;proc~lcs_lengths -->
+<g id="proc~~unified_diff~~CallsGraph_edge8" class="edge">
+<title>proc~lcs&#45;&gt;proc~lcs_lengths</title>
+<path fill="none" stroke="#000000" d="M227.32,-138.13C251.72,-138.13 288.48,-138.13 317.6,-138.13"/>
+<polygon fill="#000000" stroke="#000000" points="317.23,-141.64 327.23,-138.14 317.23,-134.64 317.23,-141.64"/>
+</g>
+<!-- proc~hash -->
+<g id="proc~~unified_diff~~CallsGraph_node8" class="node">
+<title>proc~hash</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node8"><a xlink:href="../proc/hash.html" xlink:title="hash">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="391.05,-108.27 337.05,-108.27 337.05,-84 391.05,-84 391.05,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="364.05" y="-92.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">hash</text>
+</a>
+</g>
+</g>
+<!-- proc~line_ids&#45;&gt;proc~hash -->
+<g id="proc~~unified_diff~~CallsGraph_edge9" class="edge">
+<title>proc~line_ids&#45;&gt;proc~hash</title>
+<path fill="none" stroke="#000000" d="M227.32,-96.14C253.94,-96.14 295.27,-96.14 325.33,-96.14"/>
+<polygon fill="#000000" stroke="#000000" points="325.14,-99.64 335.14,-96.14 325.14,-92.64 325.14,-99.64"/>
+</g>
+<!-- proc~to_s -->
+<g id="proc~~unified_diff~~CallsGraph_node10" class="node">
+<title>proc~to_s</title>
+<g id="a_proc~~unified_diff~~CallsGraph_node10"><a xlink:href="../proc/to_s.html" xlink:title="to_s">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="391.05,-66.27 337.05,-66.27 337.05,-42 391.05,-42 391.05,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="364.05" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">to_s</text>
+</a>
+</g>
+</g>
+<!-- proc~range_text&#45;&gt;proc~to_s -->
+<g id="proc~~unified_diff~~CallsGraph_edge10" class="edge">
+<title>proc~range_text&#45;&gt;proc~to_s</title>
+<path fill="none" stroke="#000000" d="M234.11,-54.13C260.62,-54.13 297.77,-54.13 325.39,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="325.07,-57.64 335.07,-54.14 325.07,-50.64 325.07,-57.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~unified_diff~~CalledByGraph Pages: 1 -->
+<svg id="procunified_diffCalledByGraph" width="400pt" height="74pt"
+ viewBox="0.00 0.00 400.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~unified_diff~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70.27)">
+<title>proc~~unified_diff~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-70.27 396.31,-70.27 396.31,4 -4,4"/>
+<!-- proc~unified_diff -->
+<g id="proc~~unified_diff~~CalledByGraph_node1" class="node">
+<title>proc~unified_diff</title>
+<polygon fill="none" stroke="black" points="392.31,-45.27 321.54,-45.27 321.54,-21 392.31,-21 392.31,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="356.92" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50">unified_diff</text>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~unified_diff~~CalledByGraph_node2" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~unified_diff~~CalledByGraph_node2"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="285.54,-45.27 208.77,-45.27 208.77,-21 285.54,-21 285.54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="247.15" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~unified_diff -->
+<g id="proc~~unified_diff~~CalledByGraph_edge1" class="edge">
+<title>proc~process_text&#45;&gt;proc~unified_diff</title>
+<path fill="none" stroke="#000000" d="M285.85,-33.13C293.6,-33.13 301.84,-33.13 309.84,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="309.81,-36.64 319.81,-33.14 309.81,-29.64 309.81,-36.64"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~unified_diff~~CalledByGraph_node3" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~unified_diff~~CalledByGraph_node3"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-66.27 94.5,-66.27 94.5,-42 168.27,-42 168.27,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~unified_diff~~CalledByGraph_edge2" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.7,-47.43C177.86,-45.74 187.84,-43.9 197.5,-42.12"/>
+<polygon fill="#000000" stroke="#000000" points="197.94,-45.59 207.14,-40.34 196.67,-38.71 197.94,-45.59"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~unified_diff~~CalledByGraph_node4" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~unified_diff~~CalledByGraph_node4"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-24.27 90,-24.27 90,0 172.77,0 172.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~unified_diff~~CalledByGraph_edge3" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M173.14,-19.66C180.94,-21.1 189.18,-22.62 197.21,-24.1"/>
+<polygon fill="#000000" stroke="#000000" points="196.39,-27.51 206.85,-25.88 197.66,-20.62 196.39,-27.51"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~unified_diff~~CalledByGraph_node5" class="node">
+<title>proc~run</title>
+<g id="a_proc~~unified_diff~~CalledByGraph_node5"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-45.27 0,-45.27 0,-21 54,-21 54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~unified_diff~~CalledByGraph_edge4" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-38.54C63.15,-40.34 73.22,-42.41 83.09,-44.43"/>
+<polygon fill="#000000" stroke="#000000" points="82.09,-47.8 92.59,-46.38 83.5,-40.95 82.09,-47.8"/>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~unified_diff~~CalledByGraph_edge5" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-27.73C61.86,-26.19 70.3,-24.46 78.75,-22.73"/>
+<polygon fill="#000000" stroke="#000000" points="79.22,-26.2 88.31,-20.76 77.81,-19.35 79.22,-26.2"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">function </span><span class="n">unified_diff</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! The changes from `a` to `b` as a unified diff with `context` lines of context (default 3),</span>
+<span class="w">    </span><span class="c">!! with `name` in the headers. Empty if the texts are equal.</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">a</span><span class="w">       </span><span class="c">!! the old text</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">b</span><span class="w">       </span><span class="c">!! the new text</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">name</span><span class="w">    </span><span class="c">!! file name for the `---` and `+++` headers</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">context</span><span class="w">   </span><span class="c">!! number of unchanged lines shown around each change</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">diff</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">string_t</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">la</span><span class="p">(:),</span><span class="w"> </span><span class="n">lb</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ia</span><span class="p">(:),</span><span class="w"> </span><span class="n">ib</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">edit_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">string_builder_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">buf</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">ka</span><span class="p">,</span><span class="w"> </span><span class="n">kb</span><span class="p">,</span><span class="w"> </span><span class="n">na</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="p">,</span><span class="w"> </span><span class="n">start_a</span><span class="p">,</span><span class="w"> </span><span class="n">start_b</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span><span class="w"> </span><span class="k">return</span>
+<span class="k">    </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">context</span><span class="p">))</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="w"></span>
+<span class="w">    </span><span class="n">la</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split_lines</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">lb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split_lines</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">line_ids</span><span class="p">(</span><span class="n">la</span><span class="p">,</span><span class="w"> </span><span class="n">lb</span><span class="p">,</span><span class="w"> </span><span class="n">ia</span><span class="p">,</span><span class="w"> </span><span class="n">ib</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">ia</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">ib</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">lcs</span><span class="p">(</span><span class="n">ia</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">ia</span><span class="p">),</span><span class="w"> </span><span class="n">ib</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">ib</span><span class="p">),</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">call </span><span class="n">buf</span><span class="p">%</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--- &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;+++ &#39;</span><span class="o">//</span><span class="n">name</span><span class="o">//</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="c">! hunks: runs of edits with at most 2*ctx equal lines between them, plus context around</span>
+<span class="w">    </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">           </span><span class="c">! next line of a</span>
+<span class="w">    </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">           </span><span class="c">! next line of b</span>
+<span class="w">    </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">e</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OP_EQUAL</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">cycle</span>
+<span class="k">        end if</span>
+<span class="k">        </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">last</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w">          </span><span class="c">! extend over changes separated by short runs of equal lines</span>
+<span class="w">            </span><span class="n">ka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">ka</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">e</span><span class="p">%</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">ka</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">OP_EQUAL</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">                </span><span class="n">ka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ka</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">ka</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">ka</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">ctx</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">            </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ka</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span><span class="w"></span>
+<span class="w">        </span><span class="c">! the hunk covers edits first-ctx .. last+ctx (equal lines at both ends)</span>
+<span class="w">        </span><span class="n">ka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first</span><span class="w"></span>
+<span class="w">        </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">ka</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ctx</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">ka</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">OP_EQUAL</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">            </span><span class="n">ka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ka</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">        </span><span class="n">start_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nb</span><span class="w"></span>
+<span class="w">        </span><span class="n">start_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nb</span><span class="w"></span>
+<span class="w">        </span><span class="n">kb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="w"></span>
+<span class="w">        </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">kb</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">%</span><span class="n">n</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ctx</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">kb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">OP_EQUAL</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">            </span><span class="n">kb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">        </span><span class="n">na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">count</span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">ka</span><span class="p">:</span><span class="n">kb</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">OP_INSERT</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">count</span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">ka</span><span class="p">:</span><span class="n">kb</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">OP_DELETE</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">call </span><span class="n">buf</span><span class="p">%</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;@@ -&#39;</span><span class="o">//</span><span class="n">range_text</span><span class="p">(</span><span class="n">start_a</span><span class="p">,</span><span class="w"> </span><span class="n">na</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39; +&#39;</span><span class="o">//</span><span class="n">range_text</span><span class="p">(</span><span class="n">start_b</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39; @@&#39;</span><span class="o">//</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_a</span><span class="w"></span>
+<span class="w">        </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_b</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ka</span><span class="p">,</span><span class="w"> </span><span class="n">kb</span><span class="w"></span>
+<span class="w">            </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">%</span><span class="n">op</span><span class="p">(</span><span class="n">k</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">OP_EQUAL</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">la</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">OP_DELETE</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">la</span><span class="p">(</span><span class="n">i</span><span class="p">)%</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">OP_INSERT</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">lb</span><span class="p">(</span><span class="n">j</span><span class="p">)%</span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">end select</span>
+<span class="k">        end do</span>
+<span class="k">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kb</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span>
+<span class="k">    </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf</span><span class="p">%</span><span class="n">get</span><span class="p">()</span><span class="w"></span>
+
+<span class="k">contains</span>
+
+<span class="k">    subroutine </span><span class="n">add_line</span><span class="p">(</span><span class="n">mark</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! Append `line` to the diff after `mark`, with a &quot;No newline&quot; note if it has no line ending.</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mark</span><span class="w">           </span><span class="c">!! ` ` for context, `-` for a deleted line, `+` for an inserted one</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span><span class="w">    </span><span class="c">!! the line, with its line ending</span>
+<span class="w">        </span><span class="k">call </span><span class="n">buf</span><span class="p">%</span><span class="n">append</span><span class="p">(</span><span class="n">mark</span><span class="o">//</span><span class="n">line</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">buf</span><span class="p">%</span><span class="n">append</span><span class="p">(</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;\ No newline at end of file&#39;</span><span class="o">//</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">):</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="nb">achar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">buf</span><span class="p">%</span><span class="n">append</span><span class="p">(</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">//</span><span class="s1">&#39;\ No newline at end of file&#39;</span><span class="o">//</span><span class="nb">new_line</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">    end subroutine </span><span class="n">add_line</span><span class="w"></span>
+
+<span class="k">end function </span><span class="n">unified_diff</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

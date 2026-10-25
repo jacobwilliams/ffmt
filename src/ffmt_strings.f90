@@ -1,0 +1,123 @@
+module ffmt_strings
+!! String helpers.
+implicit none
+private
+
+public :: utf8_width, to_s, lower_char, lowercase, make_lowercase
+
+type, public :: string_t
+    !! A variable-length string, for arrays of strings of different lengths.
+    character(len=:), allocatable :: s      !! the string
+end type string_t
+
+type, public :: string_builder_t
+    !! Builds a string by appending pieces in amortized constant time.
+    private
+    character(len=:), allocatable :: buf    !! storage; only `buf(1:n)` is in use
+    integer :: n = 0                        !! length of the string so far
+contains
+    procedure :: append => builder_append
+    procedure :: get => builder_get
+    procedure :: length => builder_length
+end type string_builder_t
+
+contains
+
+pure integer function utf8_width(text) result(w)
+    !! Number of characters (code points) in UTF-8 `text`: bytes that are not continuation bytes.
+    character(len=*), intent(in) :: text   !! UTF-8 bytes
+    integer :: k, c
+    w = 0
+    do k = 1, len(text)
+        c = iand(ichar(text(k:k)), 255)
+        if (c < 128 .or. c >= 192) w = w + 1
+    end do
+end function utf8_width
+
+pure function to_s(i) result(s)
+    !! Integer to string, without padding. Digits are built by hand: an internal `write` costs
+    !! far more, and this is called for every token by the safety check.
+    integer, intent(in) :: i            !! the number
+    character(len=:), allocatable :: s
+    character(len=12) :: buf
+    integer :: k, n
+
+    n = i                                   ! not abs(i), which overflows for -huge(i) - 1
+    k = len(buf) + 1
+    do
+        k = k - 1
+        buf(k:k) = achar(iachar('0') + abs(mod(n, 10)))
+        n = n/10
+        if (n == 0) exit
+    end do
+    if (i < 0) then
+        k = k - 1
+        buf(k:k) = '-'
+    end if
+    s = buf(k:)
+end function to_s
+
+elemental character function lower_char(c)
+    !! `c` in lowercase (ASCII letters only; other bytes, including UTF-8, are unchanged).
+    character, intent(in) :: c   !! the character
+    if (c >= 'A' .and. c <= 'Z') then
+        lower_char = achar(iachar(c) + 32)
+    else
+        lower_char = c
+    end if
+end function lower_char
+
+pure function lowercase(s) result(l)
+    !! `s` in lowercase (see [[lower_char]]).
+    character(len=*), intent(in) :: s   !! the text
+    character(len=len(s)) :: l
+    integer :: k
+    do k = 1, len(s)
+        l(k:k) = lower_char(s(k:k))
+    end do
+end function lowercase
+
+pure subroutine make_lowercase(s)
+    !! Turn `s` into lowercase in place, without a temporary copy (see [[lower_char]]).
+    character(len=*), intent(inout) :: s   !! the text
+    integer :: k
+    do k = 1, len(s)
+        if (s(k:k) >= 'A' .and. s(k:k) <= 'Z') s(k:k) = achar(iachar(s(k:k)) + 32)
+    end do
+end subroutine make_lowercase
+
+pure subroutine builder_append(self, str)
+    !! Append `str` to the string, doubling the storage when it is full.
+    class(string_builder_t), intent(inout) :: self   !! the builder
+    character(len=*), intent(in) :: str   !! the piece to append
+    character(len=:), allocatable :: tmp
+
+    if (len(str) == 0) return
+    if (.not. allocated(self%buf)) allocate (character(len=max(256, len(str))) :: self%buf)
+    if (self%n + len(str) > len(self%buf)) then
+        allocate (character(len=max(2*len(self%buf), self%n + len(str))) :: tmp)
+        tmp(1:self%n) = self%buf(1:self%n)
+        call move_alloc(tmp, self%buf)
+    end if
+    self%buf(self%n + 1:self%n + len(str)) = str
+    self%n = self%n + len(str)
+end subroutine builder_append
+
+pure function builder_get(self) result(str)
+    !! The string built so far.
+    class(string_builder_t), intent(in) :: self   !! the builder
+    character(len=:), allocatable :: str
+    if (allocated(self%buf)) then
+        str = self%buf(1:self%n)
+    else
+        str = ''
+    end if
+end function builder_get
+
+pure integer function builder_length(self) result(n)
+    !! Length of the string built so far.
+    class(string_builder_t), intent(in) :: self   !! the builder
+    n = self%n
+end function builder_length
+
+end module ffmt_strings

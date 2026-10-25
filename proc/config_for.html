@@ -1,0 +1,836 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>config_for &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>config_for
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.7% of total for procedures.">34 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_cli.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_cli.f90.html'>ffmt_cli.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_cli.html'>ffmt_cli</a></li>
+            <li class="breadcrumb-item active" aria-current="page">config_for</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/config_for.html#src">config_for</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  subroutine config_for(cli, cache, dir, cfg, stat, errmsg)  
+</h2>
+    
+
+    <p>The configuration that applies in directory <code>dir</code> (absolute).</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~4"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+                <p>the parsed command line (<code>--config</code>, <code>--no-config</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~3"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+                <p>configurations found so far; <code>cfg</code> is added</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~12"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+                <p>absolute path of the directory</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cfg~5"></span>
+              type(<a href='../type/config_t.html'>config_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cfg</strong></td>
+            <td>
+                <p>the configuration; <code>cfg%path</code> is <code>''</code> if there is none</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~11"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+                <p>nonzero if a configuration file cannot be read</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~9"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+                <p>what is wrong, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~config_for~~CallsGraph Pages: 1 -->
+<svg id="procconfig_forCallsGraph" width="413pt" height="301pt"
+ viewBox="0.00 0.00 413.00 301.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~config_for~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 297.27)">
+<title>proc~~config_for~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-297.27 409.33,-297.27 409.33,4 -4,4"/>
+<!-- proc~config_for -->
+<g id="proc~~config_for~~CallsGraph_node1" class="node">
+<title>proc~config_for</title>
+<polygon fill="none" stroke="black" points="64.77,-146.27 0,-146.27 0,-122 64.77,-122 64.77,-146.27"/>
+<text xml:space="preserve" text-anchor="middle" x="32.38" y="-130.53" font-family="Helvetica,sans-Serif" font-size="10.50">config_for</text>
+</g>
+<!-- proc~ends_with -->
+<g id="proc~~config_for~~CallsGraph_node2" class="node">
+<title>proc~ends_with</title>
+<g id="a_proc~~config_for~~CallsGraph_node2"><a xlink:href="../proc/ends_with.html" xlink:title="ends_with">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="167.79,-186.27 103.77,-186.27 103.77,-162 167.79,-162 167.79,-186.27"/>
+<text xml:space="preserve" text-anchor="middle" x="135.78" y="-170.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ends_with</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~ends_with -->
+<g id="proc~~config_for~~CallsGraph_edge1" class="edge">
+<title>proc~config_for&#45;&gt;proc~ends_with</title>
+<path fill="none" stroke="#000000" d="M65.19,-146.68C73.95,-150.14 83.6,-153.94 92.85,-157.59"/>
+<polygon fill="#000000" stroke="#000000" points="91.44,-160.8 102.03,-161.21 94.01,-154.29 91.44,-160.8"/>
+</g>
+<!-- proc~find_config -->
+<g id="proc~~config_for~~CallsGraph_node3" class="node">
+<title>proc~find_config</title>
+<g id="a_proc~~config_for~~CallsGraph_node3"><a xlink:href="../proc/find_config.html" xlink:title="find_config">
+<polygon fill="#d9534f" stroke="#d9534f" points="170.79,-106.27 100.77,-106.27 100.77,-82 170.79,-82 170.79,-106.27"/>
+<text xml:space="preserve" text-anchor="middle" x="135.78" y="-90.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_config</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~find_config -->
+<g id="proc~~config_for~~CallsGraph_edge2" class="edge">
+<title>proc~config_for&#45;&gt;proc~find_config</title>
+<path fill="none" stroke="#000000" d="M65.19,-121.59C73.87,-118.16 83.42,-114.4 92.58,-110.78"/>
+<polygon fill="#000000" stroke="#000000" points="93.66,-114.12 101.68,-107.19 91.09,-107.61 93.66,-114.12"/>
+</g>
+<!-- proc~load_config -->
+<g id="proc~~config_for~~CallsGraph_node4" class="node">
+<title>proc~load_config</title>
+<g id="a_proc~~config_for~~CallsGraph_node4"><a xlink:href="../proc/load_config.html" xlink:title="load_config">
+<polygon fill="#d9534f" stroke="#d9534f" points="292.56,-146.27 219.54,-146.27 219.54,-122 292.56,-122 292.56,-146.27"/>
+<text xml:space="preserve" text-anchor="middle" x="256.05" y="-130.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">load_config</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~load_config -->
+<g id="proc~~config_for~~CallsGraph_edge3" class="edge">
+<title>proc~config_for&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M65.14,-134.13C102.54,-134.13 164.99,-134.13 208,-134.13"/>
+<polygon fill="#000000" stroke="#000000" points="207.8,-137.64 217.8,-134.14 207.8,-130.64 207.8,-137.64"/>
+</g>
+<!-- proc~find_config&#45;&gt;proc~load_config -->
+<g id="proc~~config_for~~CallsGraph_edge6" class="edge">
+<title>proc~find_config&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M170.99,-105.7C182.7,-109.67 196.01,-114.17 208.53,-118.4"/>
+<polygon fill="#000000" stroke="#000000" points="207.24,-121.66 217.84,-121.55 209.49,-115.03 207.24,-121.66"/>
+</g>
+<!-- proc~empty -->
+<g id="proc~~config_for~~CallsGraph_node9" class="node">
+<title>proc~empty</title>
+<g id="a_proc~~config_for~~CallsGraph_node9"><a xlink:href="../proc/empty.html" xlink:title="empty">
+<polygon fill="#d9534f" stroke="#d9534f" points="400.32,-41.27 346.32,-41.27 346.32,-17 400.32,-17 400.32,-41.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-25.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">empty</text>
+</a>
+</g>
+</g>
+<!-- proc~find_config&#45;&gt;proc~empty -->
+<g id="proc~~config_for~~CallsGraph_edge4" class="edge">
+<title>proc~find_config&#45;&gt;proc~empty</title>
+<path fill="none" stroke="#000000" d="M171.17,-95.12C206.06,-95.01 261.08,-91.77 305.31,-75.14 323.54,-68.28 325.25,-61.15 341.31,-50.14 342.3,-49.45 343.31,-48.76 344.33,-48.07"/>
+<polygon fill="#000000" stroke="#000000" points="346.05,-51.13 352.35,-42.61 342.11,-45.34 346.05,-51.13"/>
+</g>
+<!-- proc~join_path -->
+<g id="proc~~config_for~~CallsGraph_node10" class="node">
+<title>proc~join_path</title>
+<g id="a_proc~~config_for~~CallsGraph_node10"><a xlink:href="../proc/join_path.html" xlink:title="join_path">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="286.18,-66.27 225.91,-66.27 225.91,-42 286.18,-42 286.18,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="256.05" y="-50.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">join_path</text>
+</a>
+</g>
+</g>
+<!-- proc~find_config&#45;&gt;proc~join_path -->
+<g id="proc~~config_for~~CallsGraph_edge5" class="edge">
+<title>proc~find_config&#45;&gt;proc~join_path</title>
+<path fill="none" stroke="#000000" d="M170.99,-82.57C184.8,-77.9 200.83,-72.47 215.16,-67.63"/>
+<polygon fill="#000000" stroke="#000000" points="215.94,-71.06 224.29,-64.54 213.7,-64.43 215.94,-71.06"/>
+</g>
+<!-- proc~parent_directory -->
+<g id="proc~~config_for~~CallsGraph_node11" class="node">
+<title>proc~parent_directory</title>
+<g id="a_proc~~config_for~~CallsGraph_node11"><a xlink:href="../proc/parent_directory.html" xlink:title="parent_directory">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="305.31,-24.27 206.79,-24.27 206.79,0 305.31,0 305.31,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="256.05" y="-8.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">parent_directory</text>
+</a>
+</g>
+</g>
+<!-- proc~find_config&#45;&gt;proc~parent_directory -->
+<g id="proc~~config_for~~CallsGraph_edge7" class="edge">
+<title>proc~find_config&#45;&gt;proc~parent_directory</title>
+<path fill="none" stroke="#000000" d="M148.75,-81.64C161.99,-68.32 184.44,-47.26 206.79,-33.14 208.61,-31.98 210.51,-30.86 212.46,-29.78"/>
+<polygon fill="#000000" stroke="#000000" points="213.75,-33.05 221.07,-25.39 210.57,-26.81 213.75,-33.05"/>
+</g>
+<!-- get -->
+<g id="proc~~config_for~~CallsGraph_node5" class="node">
+<title>get</title>
+<polygon fill="#777777" stroke="#777777" points="400.32,-293.27 346.32,-293.27 346.32,-269 400.32,-269 400.32,-293.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-277.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get</text>
+</g>
+<!-- proc~load_config&#45;&gt;get -->
+<g id="proc~~config_for~~CallsGraph_edge8" class="edge">
+<title>proc~load_config&#45;&gt;get</title>
+<path fill="none" stroke="#000000" d="M263.34,-146.73C275.79,-170.79 305.5,-224.12 341.31,-260.13 341.78,-260.61 342.27,-261.08 342.76,-261.55"/>
+<polygon fill="#000000" stroke="#000000" points="340.3,-264.06 350.26,-267.67 344.73,-258.64 340.3,-264.06"/>
+</g>
+<!-- get_keys -->
+<g id="proc~~config_for~~CallsGraph_node6" class="node">
+<title>get_keys</title>
+<polygon fill="#777777" stroke="#777777" points="402.33,-251.27 344.31,-251.27 344.31,-227 402.33,-227 402.33,-251.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-235.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_keys</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_keys -->
+<g id="proc~~config_for~~CallsGraph_edge9" class="edge">
+<title>proc~load_config&#45;&gt;get_keys</title>
+<path fill="none" stroke="#000000" d="M268.11,-146.55C283.62,-163.62 313.1,-194.88 341.31,-218.13 341.97,-218.68 342.64,-219.22 343.32,-219.76"/>
+<polygon fill="#000000" stroke="#000000" points="341.22,-222.55 351.34,-225.67 345.37,-216.92 341.22,-222.55"/>
+</g>
+<!-- get_type -->
+<g id="proc~~config_for~~CallsGraph_node7" class="node">
+<title>get_type</title>
+<polygon fill="#777777" stroke="#777777" points="401.95,-209.27 344.68,-209.27 344.68,-185 401.95,-185 401.95,-209.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-193.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_type</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_type -->
+<g id="proc~~config_for~~CallsGraph_edge10" class="edge">
+<title>proc~load_config&#45;&gt;get_type</title>
+<path fill="none" stroke="#000000" d="M280.1,-146.73C297.06,-156 320.37,-168.74 339.31,-179.09"/>
+<polygon fill="#000000" stroke="#000000" points="337.53,-182.11 347.98,-183.83 340.89,-175.97 337.53,-182.11"/>
+</g>
+<!-- get_value -->
+<g id="proc~~config_for~~CallsGraph_node8" class="node">
+<title>get_value</title>
+<polygon fill="#777777" stroke="#777777" points="404.95,-167.27 341.68,-167.27 341.68,-143 404.95,-143 404.95,-167.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-151.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_value</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_value -->
+<g id="proc~~config_for~~CallsGraph_edge11" class="edge">
+<title>proc~load_config&#45;&gt;get_value</title>
+<path fill="none" stroke="#000000" d="M292.89,-140.66C304.83,-142.84 318.24,-145.28 330.59,-147.53"/>
+<polygon fill="#000000" stroke="#000000" points="329.6,-150.91 340.07,-149.26 330.86,-144.02 329.6,-150.91"/>
+</g>
+<!-- proc~load_config&#45;&gt;proc~empty -->
+<g id="proc~~config_for~~CallsGraph_edge12" class="edge">
+<title>proc~load_config&#45;&gt;proc~empty</title>
+<path fill="none" stroke="#000000" d="M286.25,-121.56C292.97,-117.85 299.76,-113.35 305.31,-108.14 327.41,-87.35 320.29,-72.01 341.31,-50.14 341.77,-49.65 342.25,-49.17 342.74,-48.7"/>
+<polygon fill="#000000" stroke="#000000" points="344.72,-51.6 350.18,-42.52 340.25,-46.22 344.72,-51.6"/>
+</g>
+<!-- proc~to_s -->
+<g id="proc~~config_for~~CallsGraph_node12" class="node">
+<title>proc~to_s</title>
+<g id="a_proc~~config_for~~CallsGraph_node12"><a xlink:href="../proc/to_s.html" xlink:title="to_s">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="400.32,-125.27 346.32,-125.27 346.32,-101 400.32,-101 400.32,-125.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-109.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">to_s</text>
+</a>
+</g>
+</g>
+<!-- proc~load_config&#45;&gt;proc~to_s -->
+<g id="proc~~config_for~~CallsGraph_edge13" class="edge">
+<title>proc~load_config&#45;&gt;proc~to_s</title>
+<path fill="none" stroke="#000000" d="M292.89,-127.61C306.18,-125.18 321.28,-122.43 334.73,-119.98"/>
+<polygon fill="#000000" stroke="#000000" points="335.32,-123.43 344.53,-118.2 334.07,-116.55 335.32,-123.43"/>
+</g>
+<!-- toml_load -->
+<g id="proc~~config_for~~CallsGraph_node13" class="node">
+<title>toml_load</title>
+<polygon fill="#777777" stroke="#777777" points="405.33,-83.27 341.31,-83.27 341.31,-59 405.33,-59 405.33,-83.27"/>
+<text xml:space="preserve" text-anchor="middle" x="373.32" y="-67.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">toml_load</text>
+</g>
+<!-- proc~load_config&#45;&gt;toml_load -->
+<g id="proc~~config_for~~CallsGraph_edge14" class="edge">
+<title>proc~load_config&#45;&gt;toml_load</title>
+<path fill="none" stroke="#000000" d="M280.15,-121.75C288.13,-117.46 297.12,-112.6 305.31,-108.14 316.54,-102.01 328.8,-95.26 339.72,-89.22"/>
+<polygon fill="#000000" stroke="#000000" points="341.33,-92.33 348.38,-84.43 337.94,-86.21 341.33,-92.33"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~config_for~~CalledByGraph Pages: 1 -->
+<svg id="procconfig_forCalledByGraph" width="510pt" height="114pt"
+ viewBox="0.00 0.00 510.00 114.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~config_for~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 110.27)">
+<title>proc~~config_for~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-110.27 506.08,-110.27 506.08,4 -4,4"/>
+<!-- proc~config_for -->
+<g id="proc~~config_for~~CalledByGraph_node1" class="node">
+<title>proc~config_for</title>
+<polygon fill="none" stroke="black" points="502.08,-85.27 437.31,-85.27 437.31,-61 502.08,-61 502.08,-85.27"/>
+<text xml:space="preserve" text-anchor="middle" x="469.69" y="-69.54" font-family="Helvetica,sans-Serif" font-size="10.50">config_for</text>
+</g>
+<!-- proc~directory_files -->
+<g id="proc~~config_for~~CalledByGraph_node2" class="node">
+<title>proc~directory_files</title>
+<g id="a_proc~~config_for~~CalledByGraph_node2"><a xlink:href="../proc/directory_files.html" xlink:title="directory_files">
+<polygon fill="#d9534f" stroke="#d9534f" points="294.54,-106.27 208.77,-106.27 208.77,-82 294.54,-82 294.54,-106.27"/>
+<text xml:space="preserve" text-anchor="middle" x="251.65" y="-90.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">directory_files</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~config_for -->
+<g id="proc~~config_for~~CalledByGraph_edge1" class="edge">
+<title>proc~directory_files&#45;&gt;proc~config_for</title>
+<path fill="none" stroke="#000000" d="M294.82,-90.04C332.55,-86.37 387.6,-81.02 425.61,-77.32"/>
+<polygon fill="#000000" stroke="#000000" points="425.69,-80.83 435.31,-76.38 425.02,-73.86 425.69,-80.83"/>
+</g>
+<!-- proc~options_for -->
+<g id="proc~~config_for~~CalledByGraph_node3" class="node">
+<title>proc~options_for</title>
+<g id="a_proc~~config_for~~CalledByGraph_node3"><a xlink:href="../proc/options_for.html" xlink:title="options_for">
+<polygon fill="#d9534f" stroke="#d9534f" points="401.31,-65.27 330.54,-65.27 330.54,-41 401.31,-41 401.31,-65.27"/>
+<text xml:space="preserve" text-anchor="middle" x="365.92" y="-49.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">options_for</text>
+</a>
+</g>
+</g>
+<!-- proc~options_for&#45;&gt;proc~config_for -->
+<g id="proc~~config_for~~CalledByGraph_edge2" class="edge">
+<title>proc~options_for&#45;&gt;proc~config_for</title>
+<path fill="none" stroke="#000000" d="M401.66,-59.96C409.41,-61.48 417.72,-63.12 425.76,-64.7"/>
+<polygon fill="#000000" stroke="#000000" points="424.88,-68.09 435.36,-66.58 426.23,-61.22 424.88,-68.09"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~config_for~~CalledByGraph_node4" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~config_for~~CalledByGraph_node4"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="290.04,-64.27 213.27,-64.27 213.27,-40 290.04,-40 290.04,-64.27"/>
+<text xml:space="preserve" text-anchor="middle" x="251.65" y="-48.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~options_for -->
+<g id="proc~~config_for~~CalledByGraph_edge4" class="edge">
+<title>proc~process_text&#45;&gt;proc~options_for</title>
+<path fill="none" stroke="#000000" d="M290.35,-52.47C299.5,-52.55 309.38,-52.64 318.87,-52.72"/>
+<polygon fill="#000000" stroke="#000000" points="318.62,-56.22 328.65,-52.81 318.69,-49.22 318.62,-56.22"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~config_for~~CalledByGraph_node5" class="node">
+<title>proc~run</title>
+<g id="a_proc~~config_for~~CalledByGraph_node5"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-66.27 0,-66.27 0,-42 54,-42 54,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~directory_files -->
+<g id="proc~~config_for~~CalledByGraph_edge3" class="edge">
+<title>proc~run&#45;&gt;proc~directory_files</title>
+<path fill="none" stroke="#000000" d="M54.2,-64.36C65.12,-68.27 78.03,-72.43 90,-75.14 125.26,-83.1 165.67,-87.86 197.14,-90.62"/>
+<polygon fill="#000000" stroke="#000000" points="196.54,-94.08 206.79,-91.42 197.12,-87.11 196.54,-94.08"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~config_for~~CalledByGraph_node6" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~config_for~~CalledByGraph_node6"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-66.27 94.5,-66.27 94.5,-42 168.27,-42 168.27,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~config_for~~CalledByGraph_edge7" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-54.13C63.05,-54.13 73,-54.13 82.77,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="82.56,-57.64 92.56,-54.14 82.56,-50.64 82.56,-57.64"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~config_for~~CalledByGraph_node7" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~config_for~~CalledByGraph_node7"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-24.27 90,-24.27 90,0 172.77,0 172.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~config_for~~CalledByGraph_edge8" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-43.32C64.98,-38.96 77.48,-33.84 89.23,-29.02"/>
+<polygon fill="#000000" stroke="#000000" points="90.43,-32.31 98.35,-25.28 87.77,-25.83 90.43,-32.31"/>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~config_for~~CalledByGraph_edge5" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.51,-53.52C179,-53.35 190.63,-53.15 201.76,-52.96"/>
+<polygon fill="#000000" stroke="#000000" points="201.66,-56.46 211.6,-52.8 201.54,-49.47 201.66,-56.46"/>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~config_for~~CalledByGraph_edge6" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M169.48,-24.68C180.05,-28.26 191.71,-32.2 202.82,-35.96"/>
+<polygon fill="#000000" stroke="#000000" points="201.66,-39.26 212.26,-39.15 203.9,-32.63 201.66,-39.26"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">config_for</span><span class="p">(</span><span class="n">cli</span><span class="p">,</span><span class="w"> </span><span class="n">cache</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! The configuration that applies in directory `dir` (absolute).</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">cli_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cli</span><span class="w">                          </span><span class="c">!! the parsed command line (`--config`, `--no-config`)</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">config_cache_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cache</span><span class="w">            </span><span class="c">!! configurations found so far; `cfg` is added</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dir</span><span class="w">   </span><span class="c">!! absolute path of the directory</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">config_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cfg</span><span class="w">                      </span><span class="c">!! the configuration; `cfg%path` is `&#39;&#39;` if there is none</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">stat</span><span class="w">                            </span><span class="c">!! nonzero if a configuration file cannot be read</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">errmsg</span><span class="w">    </span><span class="c">!! what is wrong, if `stat` is nonzero</span>
+<span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">found</span><span class="w"></span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+
+<span class="w">    </span><span class="nb">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cli</span><span class="p">%</span><span class="n">no_config</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">cfg</span><span class="p">%</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">cfg</span><span class="p">%</span><span class="n">settings</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">    end if</span>
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cli</span><span class="p">%</span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        call </span><span class="n">load_config</span><span class="p">(</span><span class="n">cli</span><span class="p">%</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="n">ends_with</span><span class="p">(</span><span class="n">cli</span><span class="p">%</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;fpm.toml&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">found</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="nb">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">errmsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cli</span><span class="p">%</span><span class="n">config</span><span class="o">//</span><span class="s1">&#39;: no [extra.fformat] table&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        return</span>
+<span class="k">    end if</span>
+<span class="k">    do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">cache</span><span class="p">%</span><span class="n">dirs</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cache</span><span class="p">%</span><span class="n">dirs</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">cache</span><span class="p">%</span><span class="n">dirs</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">dir</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">cfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cache</span><span class="p">%</span><span class="n">configs</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">        end if</span>
+<span class="k">    end do</span>
+<span class="k">    call </span><span class="n">find_config</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">    </span><span class="n">cache</span><span class="p">%</span><span class="n">dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">cache</span><span class="p">%</span><span class="n">dirs</span><span class="p">,</span><span class="w"> </span><span class="n">string_t</span><span class="p">(</span><span class="n">dir</span><span class="p">)]</span><span class="w"></span>
+<span class="w">    </span><span class="n">cache</span><span class="p">%</span><span class="n">configs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">cache</span><span class="p">%</span><span class="n">configs</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">]</span><span class="w"></span>
+<span class="k">end subroutine </span><span class="n">config_for</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,2306 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_cli &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_cli
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 7.6% of total for modules and submodules.">411 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_cli.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_cli.f90.html'>ffmt_cli.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_cli</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_cli.html#variable-exit_changed">EXIT_CHANGED</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#variable-exit_error">EXIT_ERROR</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#variable-exit_ok">EXIT_OK</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#variable-version">VERSION</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_cli.html#type-cli_t">cli_t</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#type-config_cache_t">config_cache_t</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-ends_with">ends_with</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-process_file">process_file</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-process_stdin">process_stdin</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-process_text">process_text</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-run">run</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-usage">usage</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-config_for">config_for</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-directory_files">directory_files</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-options_for">options_for</a>
+            <a class="list-group-item" href="../module/ffmt_cli.html#proc-parse_args">parse_args</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Command-line interface: argument parsing and processing of files and directories.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_diff.html'>ffmt_diff</a></li>
+                  <li class="list-inline-item"><a href='ffmt_settings.html'>ffmt_settings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_format.html'>ffmt_format</a></li>
+                  <li class="list-inline-item"><a href='ffmt_io.html'>ffmt_io</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
+                  <li class="list-inline-item"><a href='ffmt_config.html'>ffmt_config</a></li>
+                  <li class="list-inline-item"><a href='ffmt_walk.html'>ffmt_walk</a></li>
+                  <li class="list-inline-item"><a href='ffmt_fs.html'>ffmt_fs</a></li>
+                  <li class="list-inline-item"><a href='ffmt_strings.html'>ffmt_strings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_options.html'>ffmt_options</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_cli~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_cliUsesGraph" width="641pt" height="641pt"
+ viewBox="0.00 0.00 641.00 641.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_cli~~UsesGraph" class="graph" transform="scale(0.619527 0.619527) rotate(0) translate(4 1030.27)">
+<title>module~~ffmt_cli~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1030.27 1030.66,-1030.27 1030.66,4 -4,4"/>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_cli~~UsesGraph_node1" class="node">
+<title>module~ffmt_cli</title>
+<polygon fill="none" stroke="black" points="1026.66,-820.27 972.66,-820.27 972.66,-796 1026.66,-796 1026.66,-820.27"/>
+<text xml:space="preserve" text-anchor="middle" x="999.66" y="-804.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_cli</text>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~ffmt_cli~~UsesGraph_node2" class="node">
+<title>iso_fortran_env</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="825.01,-1026.27 731.74,-1026.27 731.74,-1002 825.01,-1002 825.01,-1026.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-1010.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;iso_fortran_env -->
+<g id="module~~ffmt_cli~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_cli&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.75,-820.64C998.24,-854.8 991.73,-950.1 936.66,-995.13 909.14,-1017.64 869.31,-1022.26 836.62,-1021.32"/>
+<polygon fill="#000000" stroke="#000000" points="837.06,-1017.84 826.9,-1020.85 836.72,-1024.83 837.06,-1017.84"/>
+</g>
+<!-- module~ffmt_config -->
+<g id="module~~ffmt_cli~~UsesGraph_node3" class="node">
+<title>module~ffmt_config</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node3"><a xlink:href="../module/ffmt_config.html" xlink:title="ffmt_config">
+<polygon fill="#337ab7" stroke="#337ab7" points="935.16,-903.27 863.64,-903.27 863.64,-879 935.16,-879 935.16,-903.27"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-887.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_config -->
+<g id="module~~ffmt_cli~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_config</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M985.1,-820.64C972.7,-831.97 953.73,-849 936.66,-863.13 933.34,-865.88 929.8,-868.72 926.29,-871.49"/>
+<polygon fill="#000000" stroke="#000000" points="924.15,-868.72 918.39,-877.62 928.44,-874.25 924.15,-868.72"/>
+</g>
+<!-- module~ffmt_diff -->
+<g id="module~~ffmt_cli~~UsesGraph_node4" class="node">
+<title>module~ffmt_diff</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node4"><a xlink:href="../module/ffmt_diff.html" xlink:title="ffmt_diff">
+<polygon fill="#337ab7" stroke="#337ab7" points="927.28,-986.27 871.51,-986.27 871.51,-962 927.28,-962 927.28,-986.27"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-970.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_diff</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_diff -->
+<g id="module~~ffmt_cli~~UsesGraph_edge3" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_diff</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M991.27,-820.61C974.77,-848.49 934.71,-916.17 913.72,-951.62"/>
+<polygon fill="#000000" stroke="#000000" points="910.72,-949.82 908.64,-960.21 916.75,-953.39 910.72,-949.82"/>
+</g>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_cli~~UsesGraph_node5" class="node">
+<title>module~ffmt_format</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node5"><a xlink:href="../module/ffmt_format.html" xlink:title="ffmt_format">
+<polygon fill="#337ab7" stroke="#337ab7" points="936.66,-673.27 862.14,-673.27 862.14,-649 936.66,-649 936.66,-673.27"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-657.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~ffmt_cli~~UsesGraph_edge4" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M990.28,-795.6C973.6,-770.65 936.06,-714.48 915.15,-683.21"/>
+<polygon fill="#000000" stroke="#000000" points="918.06,-681.26 909.6,-674.89 912.24,-685.15 918.06,-681.26"/>
+</g>
+<!-- module~ffmt_fs -->
+<g id="module~~ffmt_cli~~UsesGraph_node6" class="node">
+<title>module~ffmt_fs</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node6"><a xlink:href="../module/ffmt_fs.html" xlink:title="ffmt_fs">
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-862.27 751.38,-862.27 751.38,-838 805.38,-838 805.38,-862.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-846.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_fs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_fs -->
+<g id="module~~ffmt_cli~~UsesGraph_edge5" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M898.4,-849.13C871.17,-852.2 840.22,-852.36 816.71,-851.8"/>
+<polygon fill="#000000" stroke="#000000" points="817.09,-848.31 806.99,-851.51 816.88,-855.31 817.09,-848.31"/>
+</g>
+<!-- module~ffmt_io -->
+<g id="module~~ffmt_cli~~UsesGraph_node7" class="node">
+<title>module~ffmt_io</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node7"><a xlink:href="../module/ffmt_io.html" xlink:title="ffmt_io">
+<polygon fill="#337ab7" stroke="#337ab7" points="926.4,-820.27 872.4,-820.27 872.4,-796 926.4,-796 926.4,-820.27"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-804.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_io</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_io -->
+<g id="module~~ffmt_cli~~UsesGraph_edge6" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_io</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M972.33,-808.13C961.86,-808.13 949.63,-808.13 938.25,-808.13"/>
+<polygon fill="#000000" stroke="#000000" points="938.32,-804.64 928.32,-808.14 938.32,-811.64 938.32,-804.64"/>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_node8" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node8"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="560.1,-834.27 482.58,-834.27 482.58,-810 560.1,-810 560.1,-834.27"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-818.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge7" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M972.29,-797.08C961.46,-793.1 948.66,-789.11 936.66,-787.13 809.35,-766.16 770.49,-752.93 646.36,-788.13"/>
+</g>
+<!-- module~ffmt_settings -->
+<g id="module~~ffmt_cli~~UsesGraph_node9" class="node">
+<title>module~ffmt_settings</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node9"><a xlink:href="../module/ffmt_settings.html" xlink:title="ffmt_settings">
+<polygon fill="#337ab7" stroke="#337ab7" points="818.26,-820.27 738.49,-820.27 738.49,-796 818.26,-796 818.26,-820.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-804.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_settings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_settings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge8" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M978.14,-820.75C958.89,-831.57 928.87,-845.93 900.4,-849.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M898.4,-849.13C882.51,-850.93 845.91,-837.28 817.46,-825.25"/>
+<polygon fill="#000000" stroke="#000000" points="818.97,-822.09 808.4,-821.36 816.21,-828.52 818.97,-822.09"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_node10" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node10"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-430.27 0,-430.27 0,-406 73.77,-406 73.77,-430.27"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-414.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge9" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M997.84,-795.56C991,-695.24 939.49,-29.04 779.38,-52.13"/>
+</g>
+<!-- module~ffmt_walk -->
+<g id="module~~ffmt_cli~~UsesGraph_node11" class="node">
+<title>module~ffmt_walk</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node11"><a xlink:href="../module/ffmt_walk.html" xlink:title="ffmt_walk">
+<polygon fill="#337ab7" stroke="#337ab7" points="930.66,-24.27 868.14,-24.27 868.14,0 930.66,0 930.66,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_walk</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_walk -->
+<g id="module~~ffmt_cli~~UsesGraph_edge10" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_walk</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.29,-795.74C995.39,-702.02 975.56,-106.94 936.66,-38.13 935.54,-36.16 934.21,-34.3 932.72,-32.55"/>
+<polygon fill="#000000" stroke="#000000" points="935.12,-30 925.41,-25.77 930.36,-35.13 935.12,-30"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_fs -->
+<g id="module~~ffmt_cli~~UsesGraph_edge11" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.33,-879.06C848.44,-873.92 831.06,-867.94 816,-862.75"/>
+<polygon fill="#000000" stroke="#000000" points="817.53,-859.58 806.94,-859.63 815.25,-866.19 817.53,-859.58"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_settings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge12" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M881.52,-878.65C875.32,-873.92 868.31,-868.41 862.14,-863.13 845.41,-848.84 844.43,-841.37 826.14,-829.13 824.56,-828.08 822.93,-827.06 821.25,-826.06"/>
+<polygon fill="#000000" stroke="#000000" points="823.14,-823.11 812.67,-821.47 819.83,-829.28 823.14,-823.11"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge13" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M888.86,-903.68C870.49,-926.31 827.69,-971.86 779.38,-974.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-974.13C693.78,-978.08 670.24,-961.98 596.1,-923.13 558.42,-903.39 564.88,-861.73 522.34,-862.13"/>
+</g>
+<!-- tomlf -->
+<g id="module~~ffmt_cli~~UsesGraph_node25" class="node">
+<title>tomlf</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-946.27 751.38,-946.27 751.38,-922 805.38,-922 805.38,-946.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-930.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tomlf</text>
+</g>
+<!-- module~ffmt_config&#45;&gt;tomlf -->
+<g id="module~~ffmt_cli~~UsesGraph_edge14" class="edge">
+<title>module~ffmt_config&#45;&gt;tomlf</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.65,-903.69C848.75,-909.07 831.32,-915.37 816.19,-920.84"/>
+<polygon fill="#000000" stroke="#000000" points="815.29,-917.44 807.07,-924.13 817.67,-924.02 815.29,-917.44"/>
+</g>
+<!-- tomlf_constants -->
+<g id="module~~ffmt_cli~~UsesGraph_node26" class="node">
+<title>tomlf_constants</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="826.14,-904.27 730.62,-904.27 730.62,-880 826.14,-880 826.14,-904.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-888.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tomlf_constants</text>
+</g>
+<!-- module~ffmt_config&#45;&gt;tomlf_constants -->
+<g id="module~~ffmt_cli~~UsesGraph_edge15" class="edge">
+<title>module~ffmt_config&#45;&gt;tomlf_constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.33,-891.43C855.32,-891.5 846.6,-891.57 837.9,-891.64"/>
+<polygon fill="#000000" stroke="#000000" points="838.03,-888.14 828.06,-891.73 838.09,-895.14 838.03,-888.14"/>
+</g>
+<!-- module~ffmt_diff&#45;&gt;iso_fortran_env -->
+<g id="module~~ffmt_cli~~UsesGraph_edge16" class="edge">
+<title>module~ffmt_diff&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.09,-983.31C858.17,-987.65 842.35,-992.97 827.51,-997.96"/>
+<polygon fill="#000000" stroke="#000000" points="826.73,-994.53 818.36,-1001.03 828.96,-1001.16 826.73,-994.53"/>
+</g>
+<!-- module~ffmt_diff&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge17" class="edge">
+<title>module~ffmt_diff&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.43,-973.24C847.29,-972.65 810.94,-972.29 779.38,-974.13"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge22" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-730.13C715.36,-744.59 707.62,-770.76 646.36,-788.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-788.13C620.38,-794.94 593.71,-802.38 571.44,-808.57"/>
+<polygon fill="#000000" stroke="#000000" points="570.72,-805.13 562.02,-811.18 572.59,-811.88 570.72,-805.13"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge26" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M896.28,-648.59C888.57,-606.64 858.16,-469.63 779.38,-394.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C682.14,-302.88 783.48,-206.61 694.62,-109.13 679.09,-92.1 666.28,-101.73 646.36,-90.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-90.13C597.49,-62.85 576.57,-90.28 522.34,-90.13"/>
+</g>
+<!-- module~ffmt_case -->
+<g id="module~~ffmt_cli~~UsesGraph_node14" class="node">
+<title>module~ffmt_case</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node14"><a xlink:href="../module/ffmt_case.html" xlink:title="ffmt_case">
+<polygon fill="#337ab7" stroke="#337ab7" points="676.99,-566.27 613.72,-566.27 613.72,-542 676.99,-542 676.99,-566.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-550.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_cli~~UsesGraph_edge18" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C774.1,-391.14 697.54,-488.46 663,-532.74"/>
+<polygon fill="#000000" stroke="#000000" points="660.43,-530.33 657.05,-540.37 665.96,-534.64 660.43,-530.33"/>
+</g>
+<!-- module~ffmt_layout -->
+<g id="module~~ffmt_cli~~UsesGraph_node15" class="node">
+<title>module~ffmt_layout</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node15"><a xlink:href="../module/ffmt_layout.html" xlink:title="ffmt_layout">
+<polygon fill="#337ab7" stroke="#337ab7" points="814.14,-606.27 742.62,-606.27 742.62,-582 814.14,-582 814.14,-606.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-590.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_layout -->
+<g id="module~~ffmt_cli~~UsesGraph_edge19" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_layout</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M876.01,-648.53C857.81,-638.29 831.89,-623.69 811.48,-612.2"/>
+<polygon fill="#000000" stroke="#000000" points="813.42,-609.28 802.99,-607.42 809.98,-615.38 813.42,-609.28"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~ffmt_cli~~UsesGraph_node16" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node16"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-294.27 236.04,-294.27 236.04,-270 300.81,-270 300.81,-294.27"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-278.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_cli~~UsesGraph_edge20" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-90.13C637.08,-86.13 359.54,-154.63 353.31,-160.13 319.17,-190.32 347.22,-221.76 317.31,-256.13 315.02,-258.76 312.41,-261.17 309.6,-263.37"/>
+<polygon fill="#000000" stroke="#000000" points="307.77,-260.38 301.41,-268.85 311.67,-266.2 307.77,-260.38"/>
+</g>
+<!-- module~ffmt_linebreak -->
+<g id="module~~ffmt_cli~~UsesGraph_node17" class="node">
+<title>module~ffmt_linebreak</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node17"><a xlink:href="../module/ffmt_linebreak.html" xlink:title="ffmt_linebreak">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.37,-142.27 601.35,-142.27 601.35,-118 689.37,-118 689.37,-142.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-126.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_linebreak</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_linebreak -->
+<g id="module~~ffmt_cli~~UsesGraph_edge21" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_linebreak</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C702.33,-325.6 664.87,-204.49 651.84,-153.65"/>
+<polygon fill="#000000" stroke="#000000" points="655.27,-152.91 649.48,-144.04 648.47,-154.59 655.27,-152.91"/>
+</g>
+<!-- module~ffmt_relational -->
+<g id="module~~ffmt_cli~~UsesGraph_node18" class="node">
+<title>module~ffmt_relational</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node18"><a xlink:href="../module/ffmt_relational.html" xlink:title="ffmt_relational">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.74,-680.27 600.97,-680.27 600.97,-656 689.74,-656 689.74,-680.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-664.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_relational -->
+<g id="module~~ffmt_cli~~UsesGraph_edge23" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_relational</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M883.52,-673.76C862.15,-690.89 820.78,-720.48 779.38,-730.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-730.13C737.4,-739.46 731.84,-706.44 694.62,-689.13 691.88,-687.86 689.04,-686.57 686.18,-685.28"/>
+<polygon fill="#000000" stroke="#000000" points="687.76,-682.15 677.2,-681.29 684.92,-688.55 687.76,-682.15"/>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_node19" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node19"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="558.22,-507.27 484.45,-507.27 484.45,-483 558.22,-483 558.22,-507.27"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-491.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge24" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C743.24,-362.96 734.9,-434.45 694.62,-457.13 674.53,-468.45 666.99,-465.85 646.36,-476.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-476.13C621.46,-487.55 593.4,-492.45 569.96,-494.43"/>
+<polygon fill="#000000" stroke="#000000" points="569.77,-490.94 560.03,-495.1 570.24,-497.92 569.77,-490.94"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_node20" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node20"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-546.27 219.54,-546.27 219.54,-522 317.31,-522 317.31,-546.27"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-530.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge25" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-476.13C586.76,-504.86 586.62,-550.86 522.34,-554.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-554.13C467.34,-556.83 453.96,-551.81 400.94,-554.13"/>
+</g>
+<!-- module~ffmt_structure -->
+<g id="module~~ffmt_cli~~UsesGraph_node21" class="node">
+<title>module~ffmt_structure</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node21"><a xlink:href="../module/ffmt_structure.html" xlink:title="ffmt_structure">
+<polygon fill="#337ab7" stroke="#337ab7" points="688.24,-448.27 602.47,-448.27 602.47,-424 688.24,-424 688.24,-448.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-432.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_structure -->
+<g id="module~~ffmt_cli~~UsesGraph_edge27" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C770.44,-387.79 722.47,-405.14 686.57,-419.44"/>
+<polygon fill="#000000" stroke="#000000" points="685.71,-416.01 677.75,-422.99 688.33,-422.5 685.71,-416.01"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_node22" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node22"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-430.27 109.77,-430.27 109.77,-406 183.54,-406 183.54,-430.27"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-414.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge28" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C635.75,-264.8 527.09,-232.98 353.31,-314.13 330.73,-324.68 334.84,-339.41 317.31,-357.13 297.61,-377.06 297.05,-393.45 269.42,-398.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-398.13C243.43,-400.78 216.93,-405.06 194.97,-408.99"/>
+<polygon fill="#000000" stroke="#000000" points="194.64,-405.49 185.43,-410.73 195.89,-412.38 194.64,-405.49"/>
+</g>
+<!-- module~ffmt_use_sort -->
+<g id="module~~ffmt_cli~~UsesGraph_node23" class="node">
+<title>module~ffmt_use_sort</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node23"><a xlink:href="../module/ffmt_use_sort.html" xlink:title="ffmt_use_sort">
+<polygon fill="#337ab7" stroke="#337ab7" points="686.74,-406.27 603.97,-406.27 603.97,-382 686.74,-382 686.74,-406.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-390.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_use_sort</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_use_sort -->
+<g id="module~~ffmt_cli~~UsesGraph_edge29" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_use_sort</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-394.13C756.05,-374.65 723.64,-374.5 696.39,-379.3"/>
+<polygon fill="#000000" stroke="#000000" points="696.04,-375.79 686.94,-381.22 697.44,-382.65 696.04,-375.79"/>
+</g>
+<!-- module~ffmt_whitespace -->
+<g id="module~~ffmt_cli~~UsesGraph_node24" class="node">
+<title>module~ffmt_whitespace</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node24"><a xlink:href="../module/ffmt_whitespace.html" xlink:title="ffmt_whitespace">
+<polygon fill="#337ab7" stroke="#337ab7" points="694.62,-722.27 596.1,-722.27 596.1,-698 694.62,-698 694.62,-722.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-706.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~ffmt_cli~~UsesGraph_edge30" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-730.13C749.59,-736.61 717.98,-732.12 692.77,-725.77"/>
+<polygon fill="#000000" stroke="#000000" points="693.7,-722.4 683.14,-723.15 691.87,-729.15 693.7,-722.4"/>
+</g>
+<!-- iso_c_binding -->
+<g id="module~~ffmt_cli~~UsesGraph_node13" class="node">
+<title>iso_c_binding</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node13"><a xlink:href="http://fortranwiki.org/fortran/show/iso_c_binding" xlink:title="iso_c_binding">
+<polygon fill="#337ab7" stroke="#337ab7" points="686.74,-914.27 603.97,-914.27 603.97,-890 686.74,-890 686.74,-914.27"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-898.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_c_binding</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_fs&#45;&gt;iso_c_binding -->
+<g id="module~~ffmt_cli~~UsesGraph_edge31" class="edge">
+<title>module~ffmt_fs&#45;&gt;iso_c_binding</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.18,-860.53C733.33,-867.62 709.3,-877.16 688.75,-885.31"/>
+<polygon fill="#000000" stroke="#000000" points="687.47,-882.05 679.47,-888.99 690.06,-888.56 687.47,-882.05"/>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge32" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M749.24,-820.7C714.03,-836.28 657.02,-860.93 646.36,-862.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-862.13C611.94,-865.81 576.71,-852.21 552.48,-839.89"/>
+<polygon fill="#000000" stroke="#000000" points="554.3,-836.89 543.83,-835.27 551,-843.07 554.3,-836.89"/>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge33" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-862.13C590.47,-868.24 576.57,-861.61 522.34,-862.13"/>
+</g>
+<!-- module~ffmt_walk&#45;&gt;module~ffmt_fs -->
+<g id="module~~ffmt_cli~~UsesGraph_edge35" class="edge">
+<title>module~ffmt_walk&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M897.65,-24.72C891.62,-125.22 850.57,-794.8 826.14,-829.13 823.35,-833.05 819.66,-836.25 815.57,-838.86"/>
+<polygon fill="#000000" stroke="#000000" points="814.23,-835.61 806.89,-843.25 817.39,-841.86 814.23,-835.61"/>
+</g>
+<!-- module~ffmt_walk&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge36" class="edge">
+<title>module~ffmt_walk&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M873.17,-24.61C849.58,-35.29 813.06,-49.37 779.38,-52.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-52.13C696.38,-58.78 676.34,-63.22 596.1,-76.13 563.16,-81.44 555.71,-90.22 522.34,-90.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-90.13C467.29,-88.82 452.52,-77.66 400.94,-90.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-90.13C372.44,-96.54 371.76,-111.06 353.31,-131.13 311.48,-176.67 321.33,-208.52 269.42,-242.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-242.13C248.21,-254.58 238.37,-248.11 219.54,-261.13 180.5,-288.14 188.68,-316.26 147.65,-340.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-340.13C115.36,-357.76 83.11,-381.9 61.87,-398.64"/>
+<polygon fill="#000000" stroke="#000000" points="59.76,-395.85 54.12,-404.81 64.12,-401.32 59.76,-395.85"/>
+</g>
+<!-- fregex -->
+<g id="module~~ffmt_cli~~UsesGraph_node12" class="node">
+<title>fregex</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-24.27 751.38,-24.27 751.38,0 805.38,0 805.38,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fregex</text>
+</g>
+<!-- module~ffmt_walk&#45;&gt;fregex -->
+<g id="module~~ffmt_cli~~UsesGraph_edge34" class="edge">
+<title>module~ffmt_walk&#45;&gt;fregex</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M867.75,-12.13C852.23,-12.13 833.26,-12.13 816.87,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="817,-8.64 807,-12.14 817,-15.64 817,-8.64"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge37" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.38,-566.18C606.96,-569.85 600.74,-574.47 596.1,-580.13 581.87,-597.5 543.32,-741.49 528.38,-798.77"/>
+<polygon fill="#000000" stroke="#000000" points="525.07,-797.57 525.94,-808.13 531.85,-799.33 525.07,-797.57"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge38" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M618.48,-541.62C601.01,-533.17 577.71,-521.91 558.42,-512.58"/>
+<polygon fill="#000000" stroke="#000000" points="560.07,-509.49 549.54,-508.29 557.02,-515.79 560.07,-509.49"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge39" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.24,-553.26C588.57,-552.78 553.23,-552.56 522.34,-554.13"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge40" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.26,-565.92C534.38,-594.95 328.61,-665.18 269.42,-631.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-631.13C199.2,-585.3 165.64,-486.85 153.36,-441.67"/>
+<polygon fill="#000000" stroke="#000000" points="156.78,-440.94 150.88,-432.13 150.01,-442.69 156.78,-440.94"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge42" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M773.03,-606.58C763.18,-633.1 736.66,-695.64 694.62,-731.13 677.01,-746.01 663.2,-734.4 646.36,-750.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-750.13C626.86,-766.49 616.9,-762.25 596.1,-774.13 580.41,-783.1 563.47,-794.03 549.79,-803.19"/>
+<polygon fill="#000000" stroke="#000000" points="548.04,-800.15 541.72,-808.65 551.96,-805.95 548.04,-800.15"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge45" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-750.13C590.57,-800.39 595.89,-865.28 522.34,-862.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-862.13C351.08,-854.9 302.78,-850.23 147.65,-782.13"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_cli~~UsesGraph_edge41" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M742.27,-583.42C725.45,-578.28 705.19,-572.09 687.63,-566.73"/>
+<polygon fill="#000000" stroke="#000000" points="689.14,-563.54 678.55,-563.96 687.09,-570.23 689.14,-563.54"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge43" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M764.17,-581.61C748.71,-567.66 721.76,-545.46 694.62,-533.13 654.61,-514.97 605.33,-505.23 569.74,-500.18"/>
+<polygon fill="#000000" stroke="#000000" points="570.58,-496.76 560.2,-498.9 569.65,-503.7 570.58,-496.76"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge44" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M742.3,-592.84C715.89,-592.18 678.81,-591.92 646.36,-594.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-594.13C587.42,-598.02 579.34,-551.23 522.34,-554.13"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_structure -->
+<g id="module~~ffmt_cli~~UsesGraph_edge46" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M772.25,-581.75C761.27,-556.5 733.32,-498.37 694.62,-462.13 691.75,-459.45 688.56,-456.96 685.21,-454.66"/>
+<polygon fill="#000000" stroke="#000000" points="687.19,-451.77 676.84,-449.52 683.53,-457.73 687.19,-451.77"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge47" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-594.13C581.08,-598.45 585.1,-658.97 522.34,-668.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-668.13C408.8,-684.42 362.99,-694 269.42,-631.13"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~ffmt_cli~~UsesGraph_edge48" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M769.35,-606.49C755.95,-626.26 727.26,-665.22 694.62,-689.13 693.28,-690.11 691.9,-691.06 690.47,-691.97"/>
+<polygon fill="#000000" stroke="#000000" points="688.96,-688.81 681.96,-696.76 692.39,-694.91 688.96,-688.81"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge49" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M240.03,-294.71C215.57,-306.1 178.89,-323.59 147.65,-340.13"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge50" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M239.04,-294.55C232.21,-298.32 225.24,-302.88 219.54,-308.13 204.89,-321.64 176.76,-367.93 160.37,-395.98"/>
+<polygon fill="#000000" stroke="#000000" points="157.47,-394.01 155.48,-404.42 163.52,-397.52 157.47,-394.01"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge53" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M620.8,-117.52C596.76,-105.83 558.01,-90.23 522.34,-90.13"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge51" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M643.05,-142.75C638.01,-187.18 617.29,-339.69 560.1,-450.13 555.62,-458.8 549.21,-467.26 542.95,-474.48"/>
+<polygon fill="#000000" stroke="#000000" points="540.46,-472.01 536.27,-481.75 545.62,-476.75 540.46,-472.01"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge52" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M643.13,-142.5C638.03,-186.3 614.3,-334.56 522.34,-394.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-394.13C473.13,-424.72 452.63,-413.93 400.94,-436.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-436.13C355.53,-454.79 313.45,-491.02 289.56,-513.82"/>
+<polygon fill="#000000" stroke="#000000" points="287.14,-511.29 282.42,-520.78 292.02,-516.31 287.14,-511.29"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge54" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M601.14,-136.59C524.62,-148.37 371.62,-173.65 353.31,-190.13 314.13,-225.4 348.86,-260.91 317.31,-303.13 283.43,-348.47 226.17,-381.86 187.65,-400.65"/>
+<polygon fill="#000000" stroke="#000000" points="186.21,-397.46 178.68,-404.91 189.22,-403.78 186.21,-397.46"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge55" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M607.89,-680.72C603.63,-683.11 599.58,-685.9 596.1,-689.13 570.8,-712.72 576.89,-727.9 560.1,-758.13 552.25,-772.27 543.04,-787.9 535.68,-800.17"/>
+<polygon fill="#000000" stroke="#000000" points="532.72,-798.31 530.55,-808.68 538.71,-801.92 532.72,-798.31"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge58" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M600.82,-678.48C480.67,-706.98 152.97,-784.4 147.65,-782.13"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge56" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M633.27,-655.8C622.98,-644.02 607.57,-625.55 596.1,-608.13 577.3,-579.57 579.2,-568.5 560.1,-540.13 554.57,-531.93 547.81,-523.48 541.55,-516.15"/>
+<polygon fill="#000000" stroke="#000000" points="544.23,-513.9 535,-508.7 538.97,-518.52 544.23,-513.9"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge57" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M605.52,-655.53C549.49,-637.19 442.88,-601.65 353.31,-568.13 339.03,-562.79 323.52,-556.61 309.76,-551"/>
+<polygon fill="#000000" stroke="#000000" points="311.15,-547.78 300.57,-547.22 308.49,-554.26 311.15,-547.78"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge59" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M600.65,-665.09C577.3,-664.22 548.12,-664.37 522.34,-668.13"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_cli~~UsesGraph_edge61" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M507.64,-482.75C499.51,-474.23 489.27,-462.29 482.58,-450.13 457.16,-403.96 483.99,-374.27 446.58,-337.13 410.7,-301.52 352.19,-288.9 312.31,-284.47"/>
+<polygon fill="#000000" stroke="#000000" points="312.89,-281.01 302.59,-283.53 312.21,-287.97 312.89,-281.01"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge62" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M505.29,-507.73C483.72,-524.51 442.06,-552.34 400.94,-554.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-554.13C375.91,-555.14 350.82,-552.22 328.9,-548.32"/>
+<polygon fill="#000000" stroke="#000000" points="329.73,-544.91 319.25,-546.49 328.42,-551.79 329.73,-544.91"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge63" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M496.99,-482.6C444.02,-454.76 315.78,-390.75 269.42,-398.13"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~ffmt_cli~~UsesGraph_node28" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node28"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="444.7,-526.27 355.18,-526.27 355.18,-502 444.7,-502 444.7,-526.27"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-510.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~ffmt_cli~~UsesGraph_edge60" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.19,-500.89C475.31,-502.3 465.61,-503.85 456.06,-505.36"/>
+<polygon fill="#000000" stroke="#000000" points="455.8,-501.86 446.47,-506.89 456.9,-508.77 455.8,-501.86"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge64" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M264.41,-546.48C251.18,-599.35 196.69,-803.07 147.65,-782.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-782.13C80.77,-754.44 49.04,-518.51 40.39,-441.99"/>
+<polygon fill="#000000" stroke="#000000" points="43.89,-441.82 39.32,-432.26 36.93,-442.58 43.89,-441.82"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge65" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M254.61,-521.72C233.99,-501.75 193.25,-462.3 168.44,-438.26"/>
+<polygon fill="#000000" stroke="#000000" points="171.09,-435.96 161.47,-431.51 166.22,-440.98 171.09,-435.96"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge69" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.07,-423.55C605.89,-421.06 600.73,-418.24 596.1,-415.13 577.57,-402.7 577.61,-393.97 560.1,-380.13 544.5,-367.81 539.77,-365.71 522.34,-356.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-356.13C481,-334.51 485.97,-308.67 446.58,-287.13 375.3,-248.16 336.43,-196.21 269.42,-242.13"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge67" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M618.48,-448.65C601.01,-457.1 577.71,-468.36 558.42,-477.69"/>
+<polygon fill="#000000" stroke="#000000" points="557.02,-474.48 549.54,-481.98 560.07,-480.78 557.02,-474.48"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge68" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-436.13C467.44,-432.02 449.7,-415.19 400.94,-436.13"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge70" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M602.23,-437.74C578.69,-438.24 548.85,-438.2 522.34,-436.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-436.13C487.07,-433.55 479.52,-427.49 446.58,-422.13 368.15,-409.39 347.58,-383.81 269.42,-398.13"/>
+</g>
+<!-- module~ffmt_constructs -->
+<g id="module~~ffmt_cli~~UsesGraph_node27" class="node">
+<title>module~ffmt_constructs</title>
+<g id="a_module~~ffmt_cli~~UsesGraph_node27"><a xlink:href="../module/ffmt_constructs.html" xlink:title="ffmt_constructs">
+<polygon fill="#337ab7" stroke="#337ab7" points="446.58,-370.27 353.31,-370.27 353.31,-346 446.58,-346 446.58,-370.27"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-354.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_constructs -->
+<g id="module~~ffmt_cli~~UsesGraph_edge66" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_constructs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-356.13C501.72,-345.9 478.86,-344.18 458.15,-345.8"/>
+<polygon fill="#000000" stroke="#000000" points="457.98,-342.3 448.41,-346.85 458.73,-349.26 457.98,-342.3"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge71" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-418.13C101.83,-418.13 93.65,-418.13 85.66,-418.13"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-414.64 75.67,-418.14 85.67,-421.64 85.67,-414.64"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge74" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M637.99,-381.54C607.58,-322.24 475.51,-74.3 400.94,-90.13"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge72" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.41,-406.75C605.42,-409.21 600.49,-412.01 596.1,-415.13 583.68,-423.97 557.63,-453.43 540.06,-474.02"/>
+<polygon fill="#000000" stroke="#000000" points="537.43,-471.7 533.64,-481.59 542.77,-476.23 537.43,-471.7"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge73" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M603.58,-383.57C578.24,-379.42 546.08,-378.76 522.34,-394.13"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge75" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M619.45,-381.52C611.84,-377.45 603.52,-372.78 596.1,-368.13 579.38,-357.65 578.74,-348.62 560.1,-342.13 473.27,-311.93 440.74,-308.71 353.31,-337.13 309.47,-351.39 314.83,-390.17 269.42,-398.13"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_cli~~UsesGraph_edge76" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M615.1,-722.65C608.38,-726.37 601.61,-730.88 596.1,-736.13 573.61,-757.61 581.39,-773.47 560.1,-796.13 557.98,-798.4 555.62,-800.57 553.16,-802.63"/>
+<polygon fill="#000000" stroke="#000000" points="551.06,-799.84 545.19,-808.65 555.28,-805.42 551.06,-799.84"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge79" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-782.13C222.87,-753.01 196.4,-803.53 147.65,-782.13"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_cli~~UsesGraph_edge77" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M606.14,-697.72C602.38,-695.33 598.92,-692.49 596.1,-689.13 552.28,-636.97 590.81,-600.95 560.1,-540.13 555.77,-531.56 549.51,-523.2 543.33,-516.06"/>
+<polygon fill="#000000" stroke="#000000" points="546.06,-513.86 536.72,-508.86 540.9,-518.59 546.06,-513.86"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge78" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M600.48,-697.55C541.96,-679.82 436.14,-644.42 353.31,-598.13 330.99,-585.66 308.06,-567.76 291.84,-554.06"/>
+<polygon fill="#000000" stroke="#000000" points="294.12,-551.41 284.26,-547.54 289.55,-556.71 294.12,-551.41"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge80" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M620.65,-722.58C612.79,-726.79 604.02,-731.58 596.1,-736.13 579.84,-745.47 577.93,-752.32 560.1,-758.13 436.87,-798.35 383.77,-843.21 269.42,-782.13"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-782.13C207.95,-743.26 164.34,-515.83 151.53,-441.57"/>
+<polygon fill="#000000" stroke="#000000" points="155.05,-441.42 149.93,-432.15 148.15,-442.59 155.05,-441.42"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_cli~~UsesGraph_edge82" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M366.96,-345.58C316.94,-328.11 218.58,-302.57 147.65,-340.13"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge81" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M389.84,-370.51C368.06,-400.1 312.75,-475.26 285.33,-512.52"/>
+<polygon fill="#000000" stroke="#000000" points="282.7,-510.19 279.59,-520.32 288.34,-514.34 282.7,-510.19"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge83" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M367.08,-370.75C341.22,-380.31 303.59,-392.69 269.42,-398.13"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_cli~~UsesGraph_edge84" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M354.73,-520.96C346.38,-522.25 337.51,-523.62 328.78,-524.97"/>
+<polygon fill="#000000" stroke="#000000" points="328.27,-521.51 318.92,-526.49 329.34,-528.42 328.27,-521.51"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_cli~~UsesGraph_edge85" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M373.91,-501.67C366.96,-497.74 359.6,-493.11 353.31,-488.13 310.42,-454.21 323.42,-389.53 269.42,-398.13"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleffmt_cliUsesGraph = svgPanZoom('#moduleffmt_cliUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exit_changed"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>EXIT_CHANGED</strong></td>
+<td> =</td>
+                <td>1</td>
+            <td>
+                <p>with <code>--check</code>: some files are not formatted</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exit_error"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>EXIT_ERROR</strong></td>
+<td> =</td>
+                <td>2</td>
+            <td>
+                <p>bad arguments, unreadable files or internal errors</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exit_ok"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>EXIT_OK</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>success</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-version"></span>
+              character(len=*),
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>VERSION</strong></td>
+<td> =</td>
+                <td>&#39;1.0.1&#39;</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-cli_t"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/cli_t.html'>cli_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>Parsed command line.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-check"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>check</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>report files that would change; write nothing</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-config"></span>
+              character(len=:),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>config</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p><code>--config</code> file, or <code>''</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-diff~2"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>diff</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>write a diff of the changes; write nothing else</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-exclude~3"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>exclude</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p><code>--exclude</code> patterns, added to the configured ones</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-extensions~3"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>extensions</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p><code>--extensions</code>; not allocated if not given</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-help"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>help</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>show the <code>--help</code> text and do nothing else</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-no_config"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>no_config</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>ignore configuration files</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-paths"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>paths</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>files, directories, or <code>-</code> for standard input</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-quiet"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>quiet</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>do not report warnings</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-settings~2"></span>
+              type(<a href='../type/setting_t.html'>setting_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>settings</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>formatting settings given on the command line, in order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stdout"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stdout</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>write results to standard output</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-version"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>version</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>show the version and do nothing else</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-config_cache_t"></span>
+      <h3>
+        type, private&nbsp;::&nbsp;
+        <a href='../type/config_cache_t.html'>config_cache_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>Configurations already found, by directory.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-configs"></span>
+              type(<a href='../type/config_t.html'>config_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>configs</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>the configuration that applies in each of <code>dirs</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dirs"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>dirs</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>absolute paths of the directories looked up</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-ends_with"></span> <h3>private pure function <a href='../proc/ends_with.html'>ends_with</a>(s, suffix)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>True if string <code>s</code> ends with <code>suffix</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~19"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>the string, and the ending to look for</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-suffix"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>suffix</strong></td>
+            <td>
+<p>the string, and the ending to look for</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-process_file"></span> <h3>private  function <a href='../proc/process_file.html'>process_file</a>(cli, cache, path) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Format file <code>path</code> in place (or write it to standard output, or report it with <code>--check</code> /
+<code>--diff</code>), with the configuration of its directory, and return the exit status.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~7"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~6"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-path~15"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>path</strong></td>
+            <td>
+<p>the file, as given on the command line or found in a directory</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-process_stdin"></span> <h3>private  function <a href='../proc/process_stdin.html'>process_stdin</a>(cli, cache) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Format standard input to standard output (or report it with <code>--check</code> / <code>--diff</code>), with
+the configuration of the current directory, and return the exit status.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~6"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~5"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-process_text"></span> <h3>private  function <a href='../proc/process_text.html'>process_text</a>(cli, cache, name, dir, text, to_stdout) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Format <code>text</code> from file <code>name</code> in directory <code>dir</code>, and write or report the result.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~8"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~7"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-name~10"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>name</strong></td>
+            <td>
+<p>the file, for messages and diff headers and to write
+the result to; <code>&lt;stdin&gt;</code> for standard input</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~15"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+<p>the directory whose configuration applies</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~36"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the source as read</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-to_stdout"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>to_stdout</strong></td>
+            <td>
+<p>write the result to standard output instead of to <code>name</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-run"></span> <h3>public  function <a href='../proc/run.html'>run</a>(cli) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Format the paths of <code>cli</code> and return the exit status.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~2"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-usage"></span> <h3>public  function <a href='../proc/usage.html'>usage</a>() result(text)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The <code>--help</code> text.</p>
+
+  <h4>Arguments</h4>
+    <em>None</em>
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-config_for"></span> <h3>private  subroutine <a href='../proc/config_for.html'>config_for</a>(cli, cache, dir, cfg, stat, errmsg)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The configuration that applies in directory <code>dir</code> (absolute).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~4"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line (<code>--config</code>, <code>--no-config</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~3"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far; <code>cfg</code> is added</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~12"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+<p>absolute path of the directory</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cfg~5"></span>
+              type(<a href='../type/config_t.html'>config_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cfg</strong></td>
+            <td>
+<p>the configuration; <code>cfg%path</code> is <code>''</code> if there is none</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~11"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+<p>nonzero if a configuration file cannot be read</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~9"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+<p>what is wrong, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-directory_files"></span> <h3>private  subroutine <a href='../proc/directory_files.html'>directory_files</a>(cli, cache, dir, files, status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The Fortran files under <code>dir</code>, selected with the <code>[files]</code> settings of its configuration and
+the command line.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~3"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~2"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~11"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+<p>the directory, as given on the command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-files~3"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>files</strong>(:)</td>
+            <td>
+<p>paths of the files found</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-status~6"></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>status</strong></td>
+            <td>
+<p>exit status so far; set to <code>EXIT_ERROR</code> if the
+configuration cannot be read</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-options_for"></span> <h3>private  subroutine <a href='../proc/options_for.html'>options_for</a>(cli, cache, dir, opts, stat, errmsg)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The options for a file in directory <code>dir</code>: defaults, then configuration, then command line.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli~5"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cache~4"></span>
+              type(<a href='../type/config_cache_t.html'>config_cache_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cache</strong></td>
+            <td>
+<p>configurations found so far</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dir~13"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>dir</strong></td>
+            <td>
+<p>the file's directory, relative or absolute</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~11"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the options</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~12"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+<p>nonzero for an unreadable configuration or a bad setting</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~10"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+<p>what is wrong, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-parse_args"></span> <h3>public  subroutine <a href='../proc/parse_args.html'>parse_args</a>(args, cli, stat, errmsg)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Parse command-line arguments (without the program name).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-args"></span>
+              type(<a href='../type/string_t.html'>string_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>args</strong>(:)</td>
+            <td>
+<p>the arguments, in order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cli"></span>
+              type(<a href='../type/cli_t.html'>cli_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cli</strong></td>
+            <td>
+<p>the parsed command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~9"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+<p>0, or <code>EXIT_ERROR</code> for a bad command line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~7"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+<p>what is wrong, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

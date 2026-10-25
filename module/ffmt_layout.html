@@ -1,0 +1,3266 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_layout &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_layout
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="11.5% of total for modules and submodules.">623 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_layout.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_layout.f90.html'>ffmt_layout.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_layout</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_layout.html#variable-anchor_assign">ANCHOR_ASSIGN</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#variable-anchor_decl">ANCHOR_DECL</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#variable-anchor_only">ANCHOR_ONLY</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_layout.html#type-piece_t">piece_t</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#type-writer_t">writer_t</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-comment_column">comment_column</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-continuation_target">continuation_target</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-first_non_blank">first_non_blank</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-first_piece_width">first_piece_width</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-fitting_column">fitting_column</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-input_column">input_column</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-layout">layout</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-line_width">line_width</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-to_case">to_case</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-trim_blanks">trim_blanks</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_blank">emit_blank</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_body">emit_body</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_comment_line">emit_comment_line</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_continuation">emit_continuation</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_fypp_line">emit_fypp_line</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_range">emit_range</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-emit_statement">emit_statement</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-line_pieces">line_pieces</a>
+            <a class="list-group-item" href="../module/ffmt_layout.html#proc-put">put</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Writes the formatted text of a tokenized file: statements indented by their nesting depth,
+continuation lines aligned or indented by a fixed amount, comment lines indented like the code
+around them, and within each line the blanks and letter case that <a href="../proc/compute_gaps.html">compute_gaps</a> and
+<a href="../proc/compute_case.html">compute_case</a> ask for. Trailing blanks are removed.</p>
+<p>Items protected by formatter directives (see <a href="../module/ffmt_directives.html">ffmt_directives</a>) are written as they are.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_structure.html'>ffmt_structure</a></li>
+                  <li class="list-inline-item"><a href='ffmt_tokens.html'>ffmt_tokens</a></li>
+                  <li class="list-inline-item"><a href='ffmt_statements.html'>ffmt_statements</a></li>
+                  <li class="list-inline-item"><a href='ffmt_whitespace.html'>ffmt_whitespace</a></li>
+                  <li class="list-inline-item"><a href='ffmt_source.html'>ffmt_source</a></li>
+                  <li class="list-inline-item"><a href='ffmt_case.html'>ffmt_case</a></li>
+                  <li class="list-inline-item"><a href='ffmt_strings.html'>ffmt_strings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_options.html'>ffmt_options</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_layout~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_layoutUsesGraph" width="641pt" height="330pt"
+ viewBox="0.00 0.00 641.00 330.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_layout~~UsesGraph" class="graph" transform="scale(0.791221 0.791221) rotate(0) translate(4 413.34)">
+<title>module~~ffmt_layout~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-413.34 806.14,-413.34 806.14,4 -4,4"/>
+<!-- module~ffmt_layout -->
+<g id="module~~ffmt_layout~~UsesGraph_node1" class="node">
+<title>module~ffmt_layout</title>
+<polygon fill="none" stroke="black" points="802.14,-233.63 730.62,-233.63 730.62,-209.36 802.14,-209.36 802.14,-233.63"/>
+<text xml:space="preserve" text-anchor="middle" x="766.38" y="-217.89" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_layout</text>
+</g>
+<!-- module~ffmt_case -->
+<g id="module~~ffmt_layout~~UsesGraph_node2" class="node">
+<title>module~ffmt_case</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node2"><a xlink:href="../module/ffmt_case.html" xlink:title="ffmt_case">
+<polygon fill="#337ab7" stroke="#337ab7" points="676.99,-271.63 613.72,-271.63 613.72,-247.36 676.99,-247.36 676.99,-271.63"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-255.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_layout~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M730.31,-232.69C717,-236.94 701.72,-241.82 687.87,-246.24"/>
+<polygon fill="#000000" stroke="#000000" points="687.04,-242.83 678.58,-249.21 689.17,-249.5 687.04,-242.83"/>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~ffmt_layout~~UsesGraph_node3" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node3"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="560.1,-351.63 482.58,-351.63 482.58,-327.36 560.1,-327.36 560.1,-351.63"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-335.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_layout~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M753.39,-233.89C740.09,-247.03 717.48,-267.63 694.62,-280.49 673.2,-292.54 614.26,-311.72 571.27,-324.92"/>
+<polygon fill="#000000" stroke="#000000" points="570.43,-321.51 561.89,-327.78 572.47,-328.21 570.43,-321.51"/>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~ffmt_layout~~UsesGraph_node4" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node4"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="558.22,-271.63 484.45,-271.63 484.45,-247.36 558.22,-247.36 558.22,-271.63"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-255.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_layout~~UsesGraph_edge3" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-184.49C602.65,-184.2 563.22,-216.49 540.98,-238.79"/>
+<polygon fill="#000000" stroke="#000000" points="538.51,-236.31 534.12,-245.95 543.56,-241.15 538.51,-236.31"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_node5" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node5"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-195.63 219.54,-195.63 219.54,-171.36 317.31,-171.36 317.31,-195.63"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-179.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge4" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-104.49C537.55,-30.69 474.2,-82.14 353.31,-129.49 334.44,-136.89 334.27,-146.4 317.31,-157.49 313.1,-160.25 308.57,-162.98 304.04,-165.58"/>
+<polygon fill="#000000" stroke="#000000" points="302.6,-162.37 295.56,-170.28 306,-168.49 302.6,-162.37"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_node6" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node6"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-166.63 0,-166.63 0,-142.36 73.77,-142.36 73.77,-166.63"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-150.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge5" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M759.32,-208.89C748.83,-188.32 725.45,-147.43 694.62,-123.49 676.41,-109.35 664.63,-118.54 646.36,-104.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-104.49C600.14,-70.5 611.09,-34.1 560.1,-11.49 495.19,17.29 471.45,-17.04 400.94,-25.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-25.49C283.4,-35 261.12,-71.67 147.65,-95.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-95.49C114.3,-101.14 82.85,-120.28 62.09,-135.25"/>
+<polygon fill="#000000" stroke="#000000" points="60.21,-132.28 54.29,-141.07 64.39,-137.89 60.21,-132.28"/>
+</g>
+<!-- module~ffmt_structure -->
+<g id="module~~ffmt_layout~~UsesGraph_node7" class="node">
+<title>module~ffmt_structure</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node7"><a xlink:href="../module/ffmt_structure.html" xlink:title="ffmt_structure">
+<polygon fill="#337ab7" stroke="#337ab7" points="688.24,-156.63 602.47,-156.63 602.47,-132.36 688.24,-132.36 688.24,-156.63"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-140.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_structure -->
+<g id="module~~ffmt_layout~~UsesGraph_edge6" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M749.21,-208.91C735.14,-198.19 714,-182.63 694.62,-170.49 690.33,-167.81 685.74,-165.11 681.16,-162.53"/>
+<polygon fill="#000000" stroke="#000000" points="683.04,-159.58 672.59,-157.84 679.68,-165.71 683.04,-159.58"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_node8" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node8"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-166.63 109.77,-166.63 109.77,-142.36 183.54,-142.36 183.54,-166.63"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-150.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge7" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M740.08,-208.87C716.46,-198.24 679.9,-184.73 646.36,-184.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-184.49C514.45,-183.57 482.14,-174.2 353.31,-157.49 315.83,-152.63 307.21,-144.5 269.42,-143.49"/>
+</g>
+<!-- module~ffmt_whitespace -->
+<g id="module~~ffmt_layout~~UsesGraph_node9" class="node">
+<title>module~ffmt_whitespace</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node9"><a xlink:href="../module/ffmt_whitespace.html" xlink:title="ffmt_whitespace">
+<polygon fill="#337ab7" stroke="#337ab7" points="694.62,-351.63 596.1,-351.63 596.1,-327.36 694.62,-327.36 694.62,-351.63"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-335.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~ffmt_layout~~UsesGraph_edge8" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M758.25,-233.84C746.8,-252.86 722.71,-289.61 694.62,-313.49 691.42,-316.21 687.9,-318.76 684.25,-321.13"/>
+<polygon fill="#000000" stroke="#000000" points="682.57,-318.05 675.75,-326.16 686.14,-324.08 682.57,-318.05"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_layout~~UsesGraph_edge9" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M619.35,-271.95C611.73,-276.01 603.44,-280.71 596.1,-285.49 579.12,-296.56 576.45,-301.52 560.1,-313.49 556.92,-315.82 553.56,-318.22 550.21,-320.58"/>
+<polygon fill="#000000" stroke="#000000" points="548.4,-317.57 542.17,-326.15 552.38,-323.32 548.4,-317.57"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_layout~~UsesGraph_edge10" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.25,-259.49C600.1,-259.49 584.49,-259.49 569.95,-259.49"/>
+<polygon fill="#000000" stroke="#000000" points="570.1,-255.99 560.1,-259.49 570.1,-262.99 570.1,-255.99"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge11" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.35,-250.77C597.52,-246.58 577.89,-241.76 560.1,-238.49 490.03,-225.63 466.98,-246.23 400.94,-219.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-219.49C376.71,-210.04 351.28,-202.35 328.88,-196.54"/>
+<polygon fill="#000000" stroke="#000000" points="329.83,-193.17 319.28,-194.12 328.12,-199.95 329.83,-193.17"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge12" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.47,-268.98C567.48,-282.1 478.13,-303.72 400.94,-299.49"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge15" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.13,-248.64C460.24,-241.16 428.4,-230.61 400.94,-219.49"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge16" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M499.03,-272.04C475.67,-284.48 436.74,-301.45 400.94,-299.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-299.49C341.47,-296.35 323.29,-319.81 269.42,-299.49"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~ffmt_layout~~UsesGraph_node11" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node11"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="444.7,-271.63 355.18,-271.63 355.18,-247.36 444.7,-247.36 444.7,-271.63"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-255.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~ffmt_layout~~UsesGraph_edge13" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.19,-259.49C475.41,-259.49 465.82,-259.49 456.37,-259.49"/>
+<polygon fill="#000000" stroke="#000000" points="456.49,-255.99 446.49,-259.49 456.49,-262.99 456.49,-255.99"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~ffmt_layout~~UsesGraph_node12" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node12"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-351.63 236.04,-351.63 236.04,-327.36 300.81,-327.36 300.81,-351.63"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-335.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_layout~~UsesGraph_edge14" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M507.43,-272.04C493.59,-284.71 470.37,-303.75 446.58,-313.49 403.1,-331.3 349.21,-337.15 312.36,-338.94"/>
+<polygon fill="#000000" stroke="#000000" points="312.39,-335.44 302.54,-339.34 312.67,-342.43 312.39,-335.44"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge17" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M259.99,-171.18C242.85,-144.56 198.16,-84.89 147.65,-95.49"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge18" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.06,-171.78C211.02,-169.84 202.71,-167.82 194.71,-165.89"/>
+<polygon fill="#000000" stroke="#000000" points="195.69,-162.52 185.15,-163.57 194.04,-169.33 195.69,-162.52"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_layout~~UsesGraph_edge20" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M616.65,-157.07C609.61,-160.88 602.28,-165.43 596.1,-170.49 572.17,-190.1 550.32,-218.36 536.72,-237.74"/>
+<polygon fill="#000000" stroke="#000000" points="534.01,-235.5 531.24,-245.73 539.78,-239.46 534.01,-235.5"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge21" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-143.49C367.36,-145.88 333.19,-156.81 307.88,-166.65"/>
+<polygon fill="#000000" stroke="#000000" points="306.64,-163.37 298.67,-170.34 309.25,-169.87 306.64,-163.37"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge22" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M616.33,-131.87C609.36,-128.08 602.16,-123.56 596.1,-118.49 555.66,-84.62 572.73,-41.12 522.34,-25.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-25.49C469.66,-9.77 453.63,-19.17 400.94,-25.49"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge23" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M602.07,-142.28C553.46,-140.22 471.32,-138.17 400.94,-143.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-143.49C341.6,-148.55 326.97,-145.03 269.42,-143.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-143.49C243.63,-142.86 217.27,-144.97 195.36,-147.51"/>
+<polygon fill="#000000" stroke="#000000" points="195.01,-144.02 185.51,-148.72 195.87,-150.97 195.01,-144.02"/>
+</g>
+<!-- module~ffmt_constructs -->
+<g id="module~~ffmt_layout~~UsesGraph_node10" class="node">
+<title>module~ffmt_constructs</title>
+<g id="a_module~~ffmt_layout~~UsesGraph_node10"><a xlink:href="../module/ffmt_constructs.html" xlink:title="ffmt_constructs">
+<polygon fill="#337ab7" stroke="#337ab7" points="446.58,-77.63 353.31,-77.63 353.31,-53.36 446.58,-53.36 446.58,-77.63"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-61.89" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_constructs -->
+<g id="module~~ffmt_layout~~UsesGraph_edge19" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_constructs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-25.49C504.63,-20.62 466.12,-35.3 437.05,-48.23"/>
+<polygon fill="#000000" stroke="#000000" points="435.86,-44.93 428.21,-52.25 438.76,-51.3 435.86,-44.93"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge24" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-154.49C101.83,-154.49 93.65,-154.49 85.66,-154.49"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-150.99 75.67,-154.49 85.67,-157.99 85.67,-150.99"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_layout~~UsesGraph_edge25" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M595.78,-339.49C587.84,-339.49 579.59,-339.49 571.63,-339.49"/>
+<polygon fill="#000000" stroke="#000000" points="571.74,-335.99 561.74,-339.49 571.74,-342.99 571.74,-335.99"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_layout~~UsesGraph_edge26" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M625.29,-326.99C605.33,-313.9 573.74,-293.19 550.81,-278.16"/>
+<polygon fill="#000000" stroke="#000000" points="552.82,-275.29 542.54,-272.73 548.98,-281.14 552.82,-275.29"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge27" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M624.6,-351.97C600.89,-365.52 559.67,-384.58 522.34,-379.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-379.49C501.72,-376.96 494.62,-374.91 482.58,-360.49 446.34,-317.1 484.35,-280.56 446.58,-238.49 431.9,-222.14 421.16,-228.09 400.94,-219.49"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge28" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-379.49C356.22,-357.14 294.8,-455.55 147.65,-379.49"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge29" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-379.49C457.05,-370.87 464.77,-302.09 400.94,-299.49"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge30" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M371.14,-78.08C364.79,-81.8 358.42,-86.29 353.31,-91.49 329.9,-115.34 340.96,-133.89 317.31,-157.49 314.55,-160.25 311.43,-162.79 308.15,-165.12"/>
+<polygon fill="#000000" stroke="#000000" points="306.5,-162.02 299.89,-170.3 310.22,-167.95 306.5,-162.02"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge31" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M353.07,-76.04C328.29,-81.76 297.17,-88.97 269.42,-95.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-95.49C215.61,-107.68 199.75,-84.55 147.65,-95.49"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge32" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-95.49C234.01,-103.35 199.18,-121.86 175.75,-136.07"/>
+<polygon fill="#000000" stroke="#000000" points="174.07,-132.99 167.42,-141.25 177.76,-138.94 174.07,-132.99"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_layout~~UsesGraph_edge33" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M376.61,-246.88C369.18,-242.66 360.87,-237.9 353.31,-233.49 335.53,-223.13 315.74,-211.35 299.86,-201.83"/>
+<polygon fill="#000000" stroke="#000000" points="301.71,-198.86 291.34,-196.71 298.11,-204.86 301.71,-198.86"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge34" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M372.1,-272.02C340.02,-286.24 288.31,-306.61 269.42,-299.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-299.49C211.19,-278.28 173.9,-212.6 157.39,-177.37"/>
+<polygon fill="#000000" stroke="#000000" points="160.68,-176.16 153.38,-168.48 154.3,-179.04 160.68,-176.16"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_layout~~UsesGraph_edge35" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M243.13,-352.13C213.27,-366.87 164.5,-388.2 147.65,-379.49"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-379.49C69.73,-340.25 46.82,-227.83 40.31,-178.35"/>
+<polygon fill="#000000" stroke="#000000" points="43.79,-177.97 39.13,-168.45 36.84,-178.8 43.79,-177.97"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_layout~~UsesGraph_edge36" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M237.45,-327.1C230.97,-323.42 224.56,-318.9 219.54,-313.49 182.43,-273.58 161.98,-211.24 153.1,-177.71"/>
+<polygon fill="#000000" stroke="#000000" points="156.54,-177.06 150.71,-168.22 149.76,-178.77 156.54,-177.06"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleffmt_layoutUsesGraph = svgPanZoom('#moduleffmt_layoutUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_layout~~UsedByGraph Pages: 1 -->
+<svg id="moduleffmt_layoutUsedByGraph" width="280pt" height="32pt"
+ viewBox="0.00 0.00 280.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_layout~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>module~~ffmt_layout~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 276.04,-28.27 276.04,4 -4,4"/>
+<!-- module~ffmt_layout -->
+<g id="module~~ffmt_layout~~UsedByGraph_node1" class="node">
+<title>module~ffmt_layout</title>
+<polygon fill="none" stroke="black" points="71.52,-24.27 0,-24.27 0,0 71.52,0 71.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="35.76" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_layout</text>
+</g>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_layout~~UsedByGraph_node2" class="node">
+<title>module~ffmt_format</title>
+<g id="a_module~~ffmt_layout~~UsedByGraph_node2"><a xlink:href="../module/ffmt_format.html" xlink:title="ffmt_format">
+<polygon fill="#337ab7" stroke="#337ab7" points="182.04,-24.27 107.52,-24.27 107.52,0 182.04,0 182.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="144.78" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_layout -->
+<g id="module~~ffmt_layout~~UsedByGraph_edge1" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_layout</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M107.25,-12.13C99.43,-12.13 91.07,-12.13 82.94,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="83.19,-8.64 73.19,-12.14 83.19,-15.64 83.19,-8.64"/>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_layout~~UsedByGraph_node3" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~ffmt_layout~~UsedByGraph_node3"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="272.04,-24.27 218.04,-24.27 218.04,0 272.04,0 272.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="245.04" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~ffmt_layout~~UsedByGraph_edge2" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M217.71,-12.13C210.37,-12.13 202.15,-12.13 193.97,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="194.04,-8.64 184.04,-12.14 194.04,-15.64 194.04,-8.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-anchor_assign"></span>
+              integer,
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>ANCHOR_ASSIGN</strong></td>
+<td> =</td>
+                <td>1</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-anchor_decl"></span>
+              integer,
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>ANCHOR_DECL</strong></td>
+<td> =</td>
+                <td>3</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-anchor_only"></span>
+              integer,
+            </td>
+              <td>private,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>ANCHOR_ONLY</strong></td>
+<td> =</td>
+                <td>2</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-piece_t"></span>
+      <h3>
+        type, private&nbsp;::&nbsp;
+        <a href='../type/piece_t.html'>piece_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>A piece of an output line: a token, or the blanks before one. Its text is <code>src(first:last)</code>
+(with the token's letter case applied), or <code>blanks</code> blanks if that is positive; it is not
+copied, so that measuring a line allocates nothing.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-blanks"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>blanks</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>if positive, the piece is this many blanks instead</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~5"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+<td> =</td>
+                <td>1</td>
+            <td>
+<p>first byte of the text in the source</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-last~4"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>last</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>last byte of the text in the source</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tok~2"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tok</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>token index, or 0 for blanks</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-writer_t"></span>
+      <h3>
+        type, private&nbsp;::&nbsp;
+        <a href='../type/writer_t.html'>writer_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>Output being built, and the alignment state of the current statement.</p>
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-anchor_col"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>anchor_col</strong>(3)</td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+<p>column of the first item after an assignment <code>=</code> / <code>=&gt;</code>,
+a <code>use</code> statement's <code>only:</code> and a declaration's <code>::</code>, or -1</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bracket_first"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>bracket_first</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>column of the first item after each open bracket, or -1;
+only <code>bracket_first(1:nbrackets)</code> is in use</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-buf~5"></span>
+              type(<a href='../type/string_builder_t.html'>string_builder_t</a>),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>buf</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>the output text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cases"></span>
+              type(<a href='../type/case_marks_t.html'>case_marks_t</a>),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cases</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+<p>letter case wanted for each token (see <a href="../proc/compute_case.html">compute_case</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-col~3"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>col</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>output column: characters since the last line break</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-comment_in"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>comment_in</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+<p>input column of the comment on the previous line, or -1</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-comment_out"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>comment_out</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+<p>output column of that comment</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-declaration"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>declaration</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>a top-level <code>::</code> has been seen in the current statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gap~4"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>gap</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>blanks wanted before each token (see <a href="../proc/compute_gaps.html">compute_gaps</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-generic"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>generic</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>the current statement is a <code>generic</code> binding</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-keep_original"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>keep_original</strong></td>
+<td> =</td>
+                <td>.true.</td>
+            <td>
+<p>fall back to a code line's original indentation when the
+new one would make it too long (when lines are not split)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-line_comment"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>line_comment</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>a comment has been written on the current line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-line_length~5"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>line_length</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>maximum line length, or 0</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-long_lines~2"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>long_lines</strong>(:)</td>
+                <td></td>
+                <td></td>
+            <td>
+<p>input lines that kept their indentation to stay within the line length</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nbrackets"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nbrackets</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>open brackets in the current statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pending_anchor"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pending_anchor</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>the next code token is the first item after this anchor</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pending_bracket"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pending_bracket</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>the next code token is the first item after a bracket</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-prev"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>prev</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+<p>the previous code token of the statement (index into the
+token list), or 0</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-separated"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>separated</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+<p>a top-level <code>,</code> or <code>:</code> has been seen in the statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stmt_in"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stmt_in</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+<p>input column of the last statement, while comment lines
+directly follow it, or -1</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stmt_out"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stmt_out</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+<p>output column of that statement</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-comment_column"></span> <h3>private  function <a href='../proc/comment_column.html'>comment_column</a>(w, src, tokens, j, default) result(col)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Output column for the comment-only line with comment token <code>j</code>: lined up with the comment on
+the line above if it was lined up with it in the input, otherwise <code>default</code>. Records the
+comment for the next line.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~15"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~33"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~15"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-j~55"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>j</strong></td>
+            <td>
+<p>the comment token</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-default"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>default</strong></td>
+            <td>
+<p>column to use if it is not lined up with the comment above</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-continuation_target"></span> <h3>private pure function <a href='../proc/continuation_target.html'>continuation_target</a>(w, ind, opts) result(target)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Column for the code of a continuation line: the first item after the innermost open
+bracket; outside brackets, the first item after an assignment, a <code>use</code> statement's <code>only:</code>
+or a declaration's <code>::</code>; otherwise a fixed indent.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~17"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ind~5"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ind</strong></td>
+            <td>
+<p>indentation of the statement, in blanks</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~9"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the formatting options</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-first_non_blank"></span> <h3>private pure function <a href='../proc/first_non_blank.html'>first_non_blank</a>(tokens, first, last) result(f)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>First token in <code>first:last</code> that is not a blank, or <code>last + 1</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~19"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>the token list</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~11"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>the token range to search</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-last~7"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>last</strong></td>
+            <td>
+<p>the token range to search</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-first_piece_width"></span> <h3>private  function <a href='../proc/first_piece_width.html'>first_piece_width</a>(w, src, tokens, first, lend) result(width)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Width of tokens <code>first:lend</code> up to the end of the first code token that has another code token
+after it on the line (the shortest first part of a split), or a huge value if there is none.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~7"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~26"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~8"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~6"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>first token of the part of the line to measure</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~4"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-fitting_column"></span> <h3>private  function <a href='../proc/fitting_column.html'>fitting_column</a>(w, src, tokens, f, lend, candidates, from, prefix, always_original) result(col)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The first of the <code>candidates</code> columns at which the output line fits within the line length, or
+the smallest if none fits. The last candidate is the line's original column: if only that one
+fits, the line is recorded in <code>long_lines</code>. When lines are split (<code>w%keep_original</code> false), the
+original column is not a candidate for code, since splitting will make the line fit; it is
+still used if <code>always_original</code> is true (for comments, which are not split). Also when lines are
+split, a candidate other than the last is accepted if the line can be split to fit there: if
+its first piece up to a possible break fits.</p><a href="../proc/fitting_column.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~6"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~25"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~7"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+<p>first non-blank token of the input line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-candidates"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>candidates</strong>(:)</td>
+            <td>
+<p>columns to try, best first; negative ones are skipped</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-from"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>from</strong></td>
+            <td>
+<p>first token written after the prefix; requires <code>prefix</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-prefix~2"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>prefix</strong></td>
+            <td>
+<p>width of the text written before token <code>from</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-always_original"></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>always_original</strong></td>
+            <td>
+<p>try the original column even when lines are split</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-input_column"></span> <h3>private pure function <a href='../proc/input_column.html'>input_column</a>(src, t) result(col)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Column of token <code>t</code> in the input (characters before it on its line).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~34"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~18"></span>
+              type(<a href='../type/token_t.html'>token_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+            <td>
+<p>a token of <code>src</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-layout"></span> <h3>public  function <a href='../proc/layout.html'>layout</a>(source, st, gap, cases, opts, long_lines) result(out)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The formatted text of <code>source</code>, from its structure (<a href="../proc/analyze_structure.html">analyze_structure</a>), the gaps
+(<a href="../proc/compute_gaps.html">compute_gaps</a>) and the letter case (<a href="../proc/compute_case.html">compute_case</a>) wanted.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-source~12"></span>
+              type(<a href='../type/source_t.html'>source_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>source</strong></td>
+            <td>
+<p>the source</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-st~3"></span>
+              type(<a href='../type/structure_t.html'>structure_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>st</strong></td>
+            <td>
+<p>its block structure</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-gap~5"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>gap</strong>(:)</td>
+            <td>
+<p>blanks wanted before each token</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cases~2"></span>
+              type(<a href='../type/case_marks_t.html'>case_marks_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cases</strong></td>
+            <td>
+<p>letter case wanted for each token</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~6"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the formatting options</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-long_lines~3"></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>long_lines</strong>(:)</td>
+            <td>
+<p>input lines that kept their indentation
+because the new one would make them longer
+than <code>opts%line_length</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-line_width"></span> <h3>private  function <a href='../proc/line_width.html'>line_width</a>(w, src, tokens, first, lend) result(width)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Width of tokens <code>first:lend</code> as they will be written on one line, without the line break and
+without a trailing comment (compilers only limit the length of the code). A comment on a line
+of its own counts.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~8"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~27"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~9"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~7"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>first token of the part of the line to measure</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~5"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-to_case"></span> <h3>private pure function <a href='../proc/to_case.html'>to_case</a>(text, upper) result(t)  
+</h3></div>
+    <div class="card-body">
+          
+  <p><code>text</code> in ASCII upper or lower case.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~20"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the text to convert</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-upper"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>upper</strong></td>
+            <td>
+<p>true for upper case, false for lower case</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=len)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-trim_blanks"></span> <h3>private pure function <a href='../proc/trim_blanks.html'>trim_blanks</a>(text) result(t)  
+</h3></div>
+    <div class="card-body">
+          
+  <p><code>text</code> without trailing blanks and tabs.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~21"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the text to trim</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_blank"></span> <h3>private  subroutine <a href='../proc/emit_blank.html'>emit_blank</a>(w, src, tokens, s)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>A blank line: only its line break (and a byte order mark) is kept.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~13"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~31"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~13"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~5"></span>
+              type(<a href='../type/statement_t.html'>statement_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>the blank line item</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_body"></span> <h3>private  subroutine <a href='../proc/emit_body.html'>emit_body</a>(w, src, tokens, first, lend)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Tokens <code>first:lend</code> of a line (see <a href="../proc/line_pieces.html">line_pieces</a>), while tracking open brackets and the
+anchors for aligning continuation lines.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~19"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~37"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~18"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~10"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>first token to write</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~9"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_comment_line"></span> <h3>private  subroutine <a href='../proc/emit_comment_line.html'>emit_comment_line</a>(w, src, tokens, s, ind, opts)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>A comment line, re-indented to <code>ind</code>. A comment that lines up with the comment on the line
+above (a continued trailing comment) stays lined up with it. Comment lines directly after a
+statement that are indented more than it keep their extra indentation. With <code>keep_column1_comments</code>, a
+comment that starts in column 1 stays there.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~14"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~32"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~14"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~6"></span>
+              type(<a href='../type/statement_t.html'>statement_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>the comment line item</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ind~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ind</strong></td>
+            <td>
+<p>indentation of the code around it, in blanks</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~7"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the formatting options</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_continuation"></span> <h3>private  subroutine <a href='../proc/emit_continuation.html'>emit_continuation</a>(w, src, tokens, f, lend, aligned, indented)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>A continuation line whose first non-blank token is <code>f</code>, with its code starting at the column
+<code>aligned</code>, or at <code>indented</code> or its original column if that would make the line too long.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~18"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~36"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~17"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f~6"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+<p>first non-blank token of the line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~8"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-aligned"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>aligned</strong></td>
+            <td>
+<p>preferred column for the code (see <a href="../proc/continuation_target.html">continuation_target</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-indented"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>indented</strong></td>
+            <td>
+<p>column for the code with a fixed continuation indent</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_fypp_line"></span> <h3>private  subroutine <a href='../proc/emit_fypp_line.html'>emit_fypp_line</a>(w, src, tokens, s, ind)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>A preprocessor line: a fypp directive (<code>#:</code>, <code>#!</code>, <code>$:</code>, <code>@:</code>) is indented by <code>ind</code>; a cpp line
+is written as it is. Continuation lines of the directive are not changed.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~12"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~30"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~12"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~4"></span>
+              type(<a href='../type/statement_t.html'>statement_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>the line, a preprocessor item</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ind~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ind</strong></td>
+            <td>
+<p>indentation, in blanks</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_range"></span> <h3>private  subroutine <a href='../proc/emit_range.html'>emit_range</a>(w, src, tokens, first, last)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Append tokens unchanged.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~11"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~29"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~11"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~9"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>the tokens <code>first:last</code> to append</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-last~6"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>last</strong></td>
+            <td>
+<p>the tokens <code>first:last</code> to append</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-emit_statement"></span> <h3>private  subroutine <a href='../proc/emit_statement.html'>emit_statement</a>(w, src, tokens, s, labeled, ind, opts)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>A code statement, with its continuation lines and the comment, blank and preprocessor lines
+between them. The first line is indented to <code>ind</code>; a statement label stays at the start of
+the line.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~16"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~35"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~16"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~7"></span>
+              type(<a href='../type/statement_t.html'>statement_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>the code statement</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-labeled"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>labeled</strong></td>
+            <td>
+<p>the statement has a statement label</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ind~4"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ind</strong></td>
+            <td>
+<p>indentation of the statement, in blanks</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~8"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the formatting options</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-line_pieces"></span> <h3>private  subroutine <a href='../proc/line_pieces.html'>line_pieces</a>(w, src, tokens, first, lend, pieces)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The pieces of output for tokens <code>first:lend</code> of a line: the tokens, with the blanks between them
+adjusted by the whitespace rules and trailing blanks removed.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~9"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~28"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~10"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+<p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-first~8"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>first</strong></td>
+            <td>
+<p>first token of the part of the line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~6"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+<p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pieces~3"></span>
+              type(<a href='../type/piece_t.html'>piece_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>pieces</strong>(:)</td>
+            <td>
+<p>the pieces, in order</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-put"></span> <h3>private  subroutine <a href='../proc/put.html'>put</a>(w, text)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Append <code>text</code> and track the output column.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~10"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+<p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~17"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>text to append; it may contain line breaks</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

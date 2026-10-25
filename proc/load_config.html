@@ -1,0 +1,906 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>load_config &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>load_config
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.7% of total for procedures.">134 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_config.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_config.f90.html'>ffmt_config.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_config.html'>ffmt_config</a></li>
+            <li class="breadcrumb-item active" aria-current="page">load_config</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/load_config.html#src">load_config</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine load_config(path, fpm, cfg, found, stat, errmsg)  
+</h2>
+    
+
+    <p>Read the configuration in file <code>path</code>: the whole file, or with <code>fpm</code> its
+<code>[extra.fformat]</code> table. <code>found</code> is false if an <code>fpm.toml</code> has no such table.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-path~4"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>path</strong></td>
+            <td>
+                <p>the TOML file</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fpm"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fpm</strong></td>
+            <td>
+                <p><code>path</code> is an <code>fpm.toml</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cfg~2"></span>
+              type(<a href='../type/config_t.html'>config_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>cfg</strong></td>
+            <td>
+                <p>the configuration; empty if not <code>found</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-found~2"></span>
+              logical,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>found</strong></td>
+            <td>
+                <p>the file has a configuration</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~5"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+                <p>nonzero for bad TOML, an unknown key or a bad value</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~5"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+                <p>what is wrong, with the file name, if <code>stat</code> is nonzero</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~load_config~~CallsGraph Pages: 1 -->
+<svg id="procload_configCallsGraph" width="181pt" height="284pt"
+ viewBox="0.00 0.00 181.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~load_config~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 280.27)">
+<title>proc~~load_config~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-280.27 177.04,-280.27 177.04,4 -4,4"/>
+<!-- proc~load_config -->
+<g id="proc~~load_config~~CallsGraph_node1" class="node">
+<title>proc~load_config</title>
+<polygon fill="none" stroke="black" points="73.02,-150.27 0,-150.27 0,-126 73.02,-126 73.02,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="36.51" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50">load_config</text>
+</g>
+<!-- get -->
+<g id="proc~~load_config~~CallsGraph_node2" class="node">
+<title>get</title>
+<polygon fill="#777777" stroke="#777777" points="168.03,-276.27 114.03,-276.27 114.03,-252 168.03,-252 168.03,-276.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-260.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get</text>
+</g>
+<!-- proc~load_config&#45;&gt;get -->
+<g id="proc~~load_config~~CallsGraph_edge1" class="edge">
+<title>proc~load_config&#45;&gt;get</title>
+<path fill="none" stroke="#000000" d="M43.93,-150.56C55.12,-171.41 79.82,-214.01 109.02,-243.13 109.49,-243.61 109.98,-244.08 110.48,-244.54"/>
+<polygon fill="#000000" stroke="#000000" points="108.02,-247.06 117.99,-250.66 112.44,-241.63 108.02,-247.06"/>
+</g>
+<!-- get_keys -->
+<g id="proc~~load_config~~CallsGraph_node3" class="node">
+<title>get_keys</title>
+<polygon fill="#777777" stroke="#777777" points="170.04,-234.27 112.02,-234.27 112.02,-210 170.04,-210 170.04,-234.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-218.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_keys</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_keys -->
+<g id="proc~~load_config~~CallsGraph_edge2" class="edge">
+<title>proc~load_config&#45;&gt;get_keys</title>
+<path fill="none" stroke="#000000" d="M50.78,-150.74C64.82,-163.86 87.82,-184.73 109.02,-201.13 109.83,-201.76 110.66,-202.39 111.5,-203.02"/>
+<polygon fill="#000000" stroke="#000000" points="109.33,-205.78 119.51,-208.74 113.41,-200.08 109.33,-205.78"/>
+</g>
+<!-- get_type -->
+<g id="proc~~load_config~~CallsGraph_node4" class="node">
+<title>get_type</title>
+<polygon fill="#777777" stroke="#777777" points="169.66,-192.27 112.4,-192.27 112.4,-168 169.66,-168 169.66,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_type</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_type -->
+<g id="proc~~load_config~~CallsGraph_edge3" class="edge">
+<title>proc~load_config&#45;&gt;get_type</title>
+<path fill="none" stroke="#000000" d="M68.27,-150.74C78.71,-155.01 90.51,-159.85 101.48,-164.34"/>
+<polygon fill="#000000" stroke="#000000" points="100.11,-167.56 110.69,-168.11 102.76,-161.08 100.11,-167.56"/>
+</g>
+<!-- get_value -->
+<g id="proc~~load_config~~CallsGraph_node5" class="node">
+<title>get_value</title>
+<polygon fill="#777777" stroke="#777777" points="172.66,-150.27 109.39,-150.27 109.39,-126 172.66,-126 172.66,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_value</text>
+</g>
+<!-- proc~load_config&#45;&gt;get_value -->
+<g id="proc~~load_config~~CallsGraph_edge4" class="edge">
+<title>proc~load_config&#45;&gt;get_value</title>
+<path fill="none" stroke="#000000" d="M73.37,-138.13C81.2,-138.13 89.57,-138.13 97.63,-138.13"/>
+<polygon fill="#000000" stroke="#000000" points="97.62,-141.64 107.62,-138.14 97.62,-134.64 97.62,-141.64"/>
+</g>
+<!-- proc~empty -->
+<g id="proc~~load_config~~CallsGraph_node6" class="node">
+<title>proc~empty</title>
+<g id="a_proc~~load_config~~CallsGraph_node6"><a xlink:href="../proc/empty.html" xlink:title="empty">
+<polygon fill="#d9534f" stroke="#d9534f" points="168.03,-108.27 114.03,-108.27 114.03,-84 168.03,-84 168.03,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-92.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">empty</text>
+</a>
+</g>
+</g>
+<!-- proc~load_config&#45;&gt;proc~empty -->
+<g id="proc~~load_config~~CallsGraph_edge5" class="edge">
+<title>proc~load_config&#45;&gt;proc~empty</title>
+<path fill="none" stroke="#000000" d="M68.27,-125.53C79.26,-121.03 91.77,-115.91 103.22,-111.22"/>
+<polygon fill="#000000" stroke="#000000" points="104.47,-114.49 112.4,-107.46 101.82,-108.01 104.47,-114.49"/>
+</g>
+<!-- proc~to_s -->
+<g id="proc~~load_config~~CallsGraph_node7" class="node">
+<title>proc~to_s</title>
+<g id="a_proc~~load_config~~CallsGraph_node7"><a xlink:href="../proc/to_s.html" xlink:title="to_s">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.03,-66.27 114.03,-66.27 114.03,-42 168.03,-42 168.03,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">to_s</text>
+</a>
+</g>
+</g>
+<!-- proc~load_config&#45;&gt;proc~to_s -->
+<g id="proc~~load_config~~CallsGraph_edge6" class="edge">
+<title>proc~load_config&#45;&gt;proc~to_s</title>
+<path fill="none" stroke="#000000" d="M50.78,-125.53C64.82,-112.41 87.82,-91.54 109.02,-75.14 109.83,-74.51 110.66,-73.88 111.5,-73.25"/>
+<polygon fill="#000000" stroke="#000000" points="113.41,-76.19 119.51,-67.53 109.33,-70.49 113.41,-76.19"/>
+</g>
+<!-- toml_load -->
+<g id="proc~~load_config~~CallsGraph_node8" class="node">
+<title>toml_load</title>
+<polygon fill="#777777" stroke="#777777" points="173.04,-24.27 109.02,-24.27 109.02,0 173.04,0 173.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="141.03" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">toml_load</text>
+</g>
+<!-- proc~load_config&#45;&gt;toml_load -->
+<g id="proc~~load_config~~CallsGraph_edge7" class="edge">
+<title>proc~load_config&#45;&gt;toml_load</title>
+<path fill="none" stroke="#000000" d="M43.93,-125.71C55.12,-104.86 79.82,-62.26 109.02,-33.13 109.49,-32.66 109.98,-32.19 110.48,-31.73"/>
+<polygon fill="#000000" stroke="#000000" points="112.44,-34.64 117.99,-25.61 108.02,-29.21 112.44,-34.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~load_config~~CalledByGraph Pages: 1 -->
+<svg id="procload_configCalledByGraph" width="641pt" height="101pt"
+ viewBox="0.00 0.00 641.00 101.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~load_config~~CalledByGraph" class="graph" transform="scale(0.883992 0.883992) rotate(0) translate(4 110.27)">
+<title>proc~~load_config~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-110.27 721.12,-110.27 721.12,4 -4,4"/>
+<!-- proc~load_config -->
+<g id="proc~~load_config~~CalledByGraph_node1" class="node">
+<title>proc~load_config</title>
+<polygon fill="none" stroke="black" points="717.12,-85.27 644.1,-85.27 644.1,-61 717.12,-61 717.12,-85.27"/>
+<text xml:space="preserve" text-anchor="middle" x="680.61" y="-69.54" font-family="Helvetica,sans-Serif" font-size="10.50">load_config</text>
+</g>
+<!-- proc~config_for -->
+<g id="proc~~load_config~~CalledByGraph_node2" class="node">
+<title>proc~config_for</title>
+<g id="a_proc~~load_config~~CalledByGraph_node2"><a xlink:href="../proc/config_for.html" xlink:title="config_for">
+<polygon fill="#d9534f" stroke="#d9534f" points="502.08,-85.27 437.31,-85.27 437.31,-61 502.08,-61 502.08,-85.27"/>
+<text xml:space="preserve" text-anchor="middle" x="469.69" y="-69.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">config_for</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~load_config -->
+<g id="proc~~load_config~~CalledByGraph_edge1" class="edge">
+<title>proc~config_for&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M502.57,-73.71C513.8,-73.88 526.5,-74.05 538.08,-74.14 569.2,-74.37 576.98,-74.35 608.1,-74.14 616.03,-74.08 624.46,-73.99 632.64,-73.89"/>
+<polygon fill="#000000" stroke="#000000" points="632.5,-77.39 642.45,-73.75 632.4,-70.39 632.5,-77.39"/>
+</g>
+<!-- proc~find_config -->
+<g id="proc~~load_config~~CalledByGraph_node3" class="node">
+<title>proc~find_config</title>
+<g id="a_proc~~load_config~~CalledByGraph_node3"><a xlink:href="../proc/find_config.html" xlink:title="find_config">
+<polygon fill="#d9534f" stroke="#d9534f" points="608.1,-65.27 538.08,-65.27 538.08,-41 608.1,-41 608.1,-65.27"/>
+<text xml:space="preserve" text-anchor="middle" x="573.09" y="-49.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_config</text>
+</a>
+</g>
+</g>
+<!-- proc~config_for&#45;&gt;proc~find_config -->
+<g id="proc~~load_config~~CalledByGraph_edge5" class="edge">
+<title>proc~config_for&#45;&gt;proc~find_config</title>
+<path fill="none" stroke="#000000" d="M502.5,-66.86C510.08,-65.37 518.31,-63.74 526.38,-62.15"/>
+<polygon fill="#000000" stroke="#000000" points="526.97,-65.6 536.1,-60.23 525.61,-58.74 526.97,-65.6"/>
+</g>
+<!-- proc~find_config&#45;&gt;proc~load_config -->
+<g id="proc~~load_config~~CalledByGraph_edge2" class="edge">
+<title>proc~find_config&#45;&gt;proc~load_config</title>
+<path fill="none" stroke="#000000" d="M608.35,-59.63C616.04,-61.09 624.33,-62.66 632.44,-64.19"/>
+<polygon fill="#000000" stroke="#000000" points="631.74,-67.62 642.22,-66.05 633.05,-60.75 631.74,-67.62"/>
+</g>
+<!-- proc~directory_files -->
+<g id="proc~~load_config~~CalledByGraph_node4" class="node">
+<title>proc~directory_files</title>
+<g id="a_proc~~load_config~~CalledByGraph_node4"><a xlink:href="../proc/directory_files.html" xlink:title="directory_files">
+<polygon fill="#d9534f" stroke="#d9534f" points="294.54,-106.27 208.77,-106.27 208.77,-82 294.54,-82 294.54,-106.27"/>
+<text xml:space="preserve" text-anchor="middle" x="251.65" y="-90.54" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">directory_files</text>
+</a>
+</g>
+</g>
+<!-- proc~directory_files&#45;&gt;proc~config_for -->
+<g id="proc~~load_config~~CalledByGraph_edge3" class="edge">
+<title>proc~directory_files&#45;&gt;proc~config_for</title>
+<path fill="none" stroke="#000000" d="M294.82,-90.04C332.55,-86.37 387.6,-81.02 425.61,-77.32"/>
+<polygon fill="#000000" stroke="#000000" points="425.69,-80.83 435.31,-76.38 425.02,-73.86 425.69,-80.83"/>
+</g>
+<!-- proc~options_for -->
+<g id="proc~~load_config~~CalledByGraph_node5" class="node">
+<title>proc~options_for</title>
+<g id="a_proc~~load_config~~CalledByGraph_node5"><a xlink:href="../proc/options_for.html" xlink:title="options_for">
+<polygon fill="#d9534f" stroke="#d9534f" points="401.31,-65.27 330.54,-65.27 330.54,-41 401.31,-41 401.31,-65.27"/>
+<text xml:space="preserve" text-anchor="middle" x="365.92" y="-49.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">options_for</text>
+</a>
+</g>
+</g>
+<!-- proc~options_for&#45;&gt;proc~config_for -->
+<g id="proc~~load_config~~CalledByGraph_edge4" class="edge">
+<title>proc~options_for&#45;&gt;proc~config_for</title>
+<path fill="none" stroke="#000000" d="M401.66,-59.96C409.41,-61.48 417.72,-63.12 425.76,-64.7"/>
+<polygon fill="#000000" stroke="#000000" points="424.88,-68.09 435.36,-66.58 426.23,-61.22 424.88,-68.09"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~load_config~~CalledByGraph_node6" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~load_config~~CalledByGraph_node6"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="290.04,-64.27 213.27,-64.27 213.27,-40 290.04,-40 290.04,-64.27"/>
+<text xml:space="preserve" text-anchor="middle" x="251.65" y="-48.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~options_for -->
+<g id="proc~~load_config~~CalledByGraph_edge7" class="edge">
+<title>proc~process_text&#45;&gt;proc~options_for</title>
+<path fill="none" stroke="#000000" d="M290.35,-52.47C299.5,-52.55 309.38,-52.64 318.87,-52.72"/>
+<polygon fill="#000000" stroke="#000000" points="318.62,-56.22 328.65,-52.81 318.69,-49.22 318.62,-56.22"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~load_config~~CalledByGraph_node7" class="node">
+<title>proc~run</title>
+<g id="a_proc~~load_config~~CalledByGraph_node7"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-66.27 0,-66.27 0,-42 54,-42 54,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~directory_files -->
+<g id="proc~~load_config~~CalledByGraph_edge6" class="edge">
+<title>proc~run&#45;&gt;proc~directory_files</title>
+<path fill="none" stroke="#000000" d="M54.2,-64.36C65.12,-68.27 78.03,-72.43 90,-75.14 125.26,-83.1 165.67,-87.86 197.14,-90.62"/>
+<polygon fill="#000000" stroke="#000000" points="196.54,-94.08 206.79,-91.42 197.12,-87.11 196.54,-94.08"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~load_config~~CalledByGraph_node8" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~load_config~~CalledByGraph_node8"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-66.27 94.5,-66.27 94.5,-42 168.27,-42 168.27,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~load_config~~CalledByGraph_edge10" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-54.13C63.05,-54.13 73,-54.13 82.77,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="82.56,-57.64 92.56,-54.14 82.56,-50.64 82.56,-57.64"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~load_config~~CalledByGraph_node9" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~load_config~~CalledByGraph_node9"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-24.27 90,-24.27 90,0 172.77,0 172.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~load_config~~CalledByGraph_edge11" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-43.32C64.98,-38.96 77.48,-33.84 89.23,-29.02"/>
+<polygon fill="#000000" stroke="#000000" points="90.43,-32.31 98.35,-25.28 87.77,-25.83 90.43,-32.31"/>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~load_config~~CalledByGraph_edge8" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.51,-53.52C179,-53.35 190.63,-53.15 201.76,-52.96"/>
+<polygon fill="#000000" stroke="#000000" points="201.66,-56.46 211.6,-52.8 201.54,-49.47 201.66,-56.46"/>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~load_config~~CalledByGraph_edge9" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M169.48,-24.68C180.05,-28.26 191.71,-32.2 202.82,-35.96"/>
+<polygon fill="#000000" stroke="#000000" points="201.66,-39.26 212.26,-39.15 203.9,-32.63 201.66,-39.26"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocload_configCalledByGraph = svgPanZoom('#procload_configCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="k">subroutine </span><span class="n">load_config</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">fpm</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="n">found</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="p">,</span><span class="w"> </span><span class="n">errmsg</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! Read the configuration in file `path`: the whole file, or with `fpm` its</span>
+<span class="w">    </span><span class="c">!! `[extra.fformat]` table. `found` is false if an `fpm.toml` has no such table.</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">path</span><span class="w">                    </span><span class="c">!! the TOML file</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fpm</span><span class="w">                              </span><span class="c">!! `path` is an `fpm.toml`</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">config_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">cfg</span><span class="w">                      </span><span class="c">!! the configuration; empty if not `found`</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">found</span><span class="w">                           </span><span class="c">!! the file has a configuration</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">stat</span><span class="w">                            </span><span class="c">!! nonzero for bad TOML, an unknown key or a bad value</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">errmsg</span><span class="w">    </span><span class="c">!! what is wrong, with the file name, if `stat` is nonzero</span>
+
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">target</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">top</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="w"></span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">toml_error</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">error</span><span class="w"></span>
+
+<span class="w">    </span><span class="nb">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">empty</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">toml_load</span><span class="p">(</span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">error</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="nb">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">errmsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">//</span><span class="s1">&#39;: &#39;</span><span class="o">//</span><span class="n">error</span><span class="p">%</span><span class="n">message</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span>
+<span class="k">    end if</span>
+<span class="k">    if</span><span class="w"> </span><span class="p">(</span><span class="n">fpm</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        call </span><span class="n">get_value</span><span class="p">(</span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;extra&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">requested</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">extra</span><span class="p">))</span><span class="w"> </span><span class="k">return</span>
+<span class="k">        call </span><span class="n">get_value</span><span class="p">(</span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;fformat&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="n">requested</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">table</span><span class="p">))</span><span class="w"> </span><span class="k">return</span>
+<span class="k">    else</span>
+<span class="k">        </span><span class="n">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">top</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
+<span class="k">    </span><span class="n">found</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w"></span>
+<span class="w">    </span><span class="n">cfg</span><span class="p">%</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="w"></span>
+<span class="w">    </span><span class="k">call </span><span class="n">read_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">contains</span>
+
+<span class="k">    recursive subroutine </span><span class="n">read_table</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">prefix</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! Add the settings in table `t`, with keys prefixed by `prefix`.</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w">   </span><span class="c">!! the table to read</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">prefix</span><span class="w">  </span><span class="c">!! `&#39;&#39;` for the top level, or `spaces.` / `case.`</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_key</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">keys</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">        </span><span class="k">class</span><span class="p">(</span><span class="n">toml_value</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sub</span><span class="w"></span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="w"></span>
+<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">call </span><span class="n">t</span><span class="p">%</span><span class="n">get_keys</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keys</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">key</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">t</span><span class="p">%</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">select type</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">type is</span><span class="w"> </span><span class="p">(</span><span class="n">toml_table</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">sub</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;files&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    call </span><span class="n">read_files</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;spaces&#39;</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;case&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    call </span><span class="n">read_table</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span>
+<span class="k">                    call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;unknown table &quot;&#39;</span><span class="o">//</span><span class="n">prefix</span><span class="o">//</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            type is</span><span class="w"> </span><span class="p">(</span><span class="n">toml_keyval</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value_text</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">%</span><span class="n">get_type</span><span class="p">())</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
+<span class="w">                </span><span class="c">! `all` comes first, so that the other entries of the table override it</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="n">cfg</span><span class="p">%</span><span class="n">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">setting_t</span><span class="p">(</span><span class="n">prefix</span><span class="o">//</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="p">),</span><span class="w"> </span><span class="n">cfg</span><span class="p">%</span><span class="n">settings</span><span class="p">]</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span>
+<span class="k">                    </span><span class="n">cfg</span><span class="p">%</span><span class="n">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">cfg</span><span class="p">%</span><span class="n">settings</span><span class="p">,</span><span class="w"> </span><span class="n">setting_t</span><span class="p">(</span><span class="n">prefix</span><span class="o">//</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="p">)]</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            class </span><span class="n">default</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;unexpected value for &quot;&#39;</span><span class="o">//</span><span class="n">prefix</span><span class="o">//</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end select</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">        end do</span>
+<span class="k">    end subroutine </span><span class="n">read_table</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">function </span><span class="n">value_text</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="nb">kind</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! A string, integer or boolean value as text.</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w">    </span><span class="c">!! the table holding the value</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">key</span><span class="w">     </span><span class="c">!! the value&#39;s key in `t`</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">kind</span><span class="w">             </span><span class="c">!! the value&#39;s type, a `toml_type` member</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">text</span><span class="w"></span>
+<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flag</span><span class="w"></span>
+<span class="w">        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">kind</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">toml_type</span><span class="p">%</span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">get_value</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="nb">kind</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">toml_type</span><span class="p">%</span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">get_value</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to_s</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="nb">kind</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">toml_type</span><span class="p">%</span><span class="n">boolean</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">get_value</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">merge</span><span class="p">(</span><span class="s1">&#39;true &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;false&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span>
+<span class="k">            call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;expected a string, number or true/false for &quot;&#39;</span><span class="o">//</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">    end function </span><span class="n">value_text</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">subroutine </span><span class="n">read_files</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! Read the `[files]` table `t` into `cfg%extensions` and `cfg%exclude`.</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w">   </span><span class="c">!! the `[files]` table</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_key</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">keys</span><span class="p">(:)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="k">call </span><span class="n">t</span><span class="p">%</span><span class="n">get_keys</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">select case</span><span class="w"> </span><span class="p">(</span><span class="n">keys</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">key</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">read_list</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;extensions&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">%</span><span class="n">extensions</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;exclude&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">read_list</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;exclude&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">%</span><span class="n">exclude</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">case </span><span class="n">default</span><span class="w"></span>
+<span class="w">                </span><span class="k">call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;unknown setting &quot;files.&#39;</span><span class="o">//</span><span class="n">keys</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end select</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">stat</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">        end do</span>
+<span class="k">    end subroutine </span><span class="n">read_files</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">subroutine </span><span class="n">read_list</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! An array of strings.</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_table</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">t</span><span class="w">                    </span><span class="c">!! the `[files]` table</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">key</span><span class="w">                     </span><span class="c">!! the array&#39;s key in `t`</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">string_t</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">list</span><span class="p">(:)</span><span class="w">   </span><span class="c">!! the strings, replacing any earlier list</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">toml_array</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">arr</span><span class="w"></span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">item</span><span class="w"></span>
+<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">ios</span><span class="w"></span>
+<span class="w">        </span><span class="k">call </span><span class="n">get_value</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">requested</span><span class="o">=</span><span class="p">.</span><span class="n">false</span><span class="p">.)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">associated</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;expected a list of strings for &quot;files.&#39;</span><span class="o">//</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">        end if</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">list</span><span class="p">))</span><span class="w"> </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">list</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">call </span><span class="n">get_value</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="nb">stat</span><span class="o">=</span><span class="n">ios</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ios</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="nb">allocated</span><span class="p">(</span><span class="n">item</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                call </span><span class="n">bad</span><span class="p">(</span><span class="s1">&#39;expected a list of strings for &quot;files.&#39;</span><span class="o">//</span><span class="n">key</span><span class="o">//</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span>
+<span class="k">            end if</span>
+<span class="k">            </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">list</span><span class="p">,</span><span class="w"> </span><span class="n">string_t</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">    end subroutine </span><span class="n">read_list</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">subroutine </span><span class="n">bad</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! Make loading fail with message `msg`, prefixed with the file name.</span>
+<span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">msg</span><span class="w">   </span><span class="c">!! what is wrong</span>
+<span class="w">        </span><span class="nb">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">errmsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="o">//</span><span class="s1">&#39;: &#39;</span><span class="o">//</span><span class="n">msg</span><span class="w"></span>
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">bad</span><span class="w"></span>
+
+<span class="k">end subroutine </span><span class="n">load_config</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

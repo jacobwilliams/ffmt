@@ -1,0 +1,965 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Files &ndash; fformat
+</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row" id='text'>
+        <div class="col-lg-12">
+			 <h1>Source Files</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>File</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_case.f90.html'>ffmt_case.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_cli.f90.html'>ffmt_cli.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_config.f90.html'>ffmt_config.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_constructs.f90.html'>ffmt_constructs.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_diff.f90.html'>ffmt_diff.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_directives.f90.html'>ffmt_directives.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_format.f90.html'>ffmt_format.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_fs.f90.html'>ffmt_fs.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_io.f90.html'>ffmt_io.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_layout.f90.html'>ffmt_layout.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_lexer.f90.html'>ffmt_lexer.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_linebreak.f90.html'>ffmt_linebreak.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_options.f90.html'>ffmt_options.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_relational.f90.html'>ffmt_relational.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_settings.f90.html'>ffmt_settings.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_source.f90.html'>ffmt_source.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_statements.f90.html'>ffmt_statements.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_strings.f90.html'>ffmt_strings.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_structure.f90.html'>ffmt_structure.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_tokens.f90.html'>ffmt_tokens.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_use_sort.f90.html'>ffmt_use_sort.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_walk.f90.html'>ffmt_walk.f90</a></td>
+                 <td></td>
+               </tr>
+			   <tr>
+                 <td><a href='../sourcefile/ffmt_whitespace.f90.html'>ffmt_whitespace.f90</a></td>
+                 <td></td>
+               </tr>
+			 </tbody></table>
+			 <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: file~~graph~~FileGraph Pages: 1 -->
+<svg id="filegraphFileGraph" width="641pt" height="491pt"
+ viewBox="0.00 0.00 641.00 491.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="file~~graph~~FileGraph" class="graph" transform="scale(0.538914 0.538914) rotate(0) translate(4 906.41)">
+<title>file~~graph~~FileGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-906.41 1185.43,-906.41 1185.43,4 -4,4"/>
+<!-- sourcefile~ffmt_case.f90 -->
+<g id="file~~graph~~FileGraph_node1" class="node">
+<title>sourcefile~ffmt_case.f90</title>
+<g id="a_file~~graph~~FileGraph_node1"><a xlink:href="../sourcefile/ffmt_case.f90.html" xlink:title="ffmt_case.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="466.45,-337.85 382.93,-337.85 382.93,-313.58 466.45,-313.58 466.45,-337.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-322.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_node7" class="node">
+<title>sourcefile~ffmt_format.f90</title>
+<g id="a_file~~graph~~FileGraph_node7"><a xlink:href="../sourcefile/ffmt_format.f90.html" xlink:title="ffmt_format.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="201.54,-514.85 106.77,-514.85 106.77,-490.58 201.54,-490.58 201.54,-514.85"/>
+<text xml:space="preserve" text-anchor="middle" x="154.16" y="-499.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge23" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M410.64,-313.28C377.35,-281.75 291.45,-201.45 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_node10" class="node">
+<title>sourcefile~ffmt_layout.f90</title>
+<g id="a_file~~graph~~FileGraph_node10"><a xlink:href="../sourcefile/ffmt_layout.f90.html" xlink:title="ffmt_layout.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="329.31,-434.85 237.54,-434.85 237.54,-410.58 329.31,-410.58 329.31,-434.85"/>
+<text xml:space="preserve" text-anchor="middle" x="283.42" y="-419.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge37" class="edge">
+<title>sourcefile~ffmt_case.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M390.67,-338.34C382.14,-342.16 373.16,-346.68 365.31,-351.71 342.61,-366.25 319.8,-386.96 304.22,-402.26"/>
+<polygon fill="#000000" stroke="#000000" points="302.02,-399.51 297.43,-409.06 306.97,-404.46 302.02,-399.51"/>
+</g>
+<!-- sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_node2" class="node">
+<title>sourcefile~ffmt_cli.f90</title>
+<g id="a_file~~graph~~FileGraph_node2"><a xlink:href="../sourcefile/ffmt_cli.f90.html" xlink:title="ffmt_cli.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70.77,-728.85 0,-728.85 0,-704.58 70.77,-704.58 70.77,-728.85"/>
+<text xml:space="preserve" text-anchor="middle" x="35.38" y="-713.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_config.f90 -->
+<g id="file~~graph~~FileGraph_node3" class="node">
+<title>sourcefile~ffmt_config.f90</title>
+<g id="a_file~~graph~~FileGraph_node3"><a xlink:href="../sourcefile/ffmt_config.f90.html" xlink:title="ffmt_config.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="329.31,-787.85 237.54,-787.85 237.54,-763.58 329.31,-763.58 329.31,-787.85"/>
+<text xml:space="preserve" text-anchor="middle" x="283.42" y="-772.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge5" class="edge">
+<title>sourcefile~ffmt_config.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M260.35,-788.3C226.74,-807.14 165.53,-840.02 155.16,-835.71"/>
+<path fill="none" stroke="#000000" d="M153.16,-835.71C106.25,-816.25 68.79,-767.57 49.86,-738.86"/>
+<polygon fill="#000000" stroke="#000000" points="52.89,-737.1 44.55,-730.56 46.99,-740.87 52.89,-737.1"/>
+</g>
+<!-- sourcefile~ffmt_constructs.f90 -->
+<g id="file~~graph~~FileGraph_node4" class="node">
+<title>sourcefile~ffmt_constructs.f90</title>
+<g id="a_file~~graph~~FileGraph_node4"><a xlink:href="../sourcefile/ffmt_constructs.f90.html" xlink:title="ffmt_constructs.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="767.37,-610.85 653.85,-610.85 653.85,-586.58 767.37,-586.58 767.37,-610.85"/>
+<text xml:space="preserve" text-anchor="middle" x="710.61" y="-595.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_node19" class="node">
+<title>sourcefile~ffmt_structure.f90</title>
+<g id="a_file~~graph~~FileGraph_node19"><a xlink:href="../sourcefile/ffmt_structure.f90.html" xlink:title="ffmt_structure.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="477.7,-535.85 371.68,-535.85 371.68,-511.58 477.7,-511.58 477.7,-535.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-520.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_edge64" class="edge">
+<title>sourcefile~ffmt_constructs.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" d="M678.09,-586.23C660.54,-579.57 638.19,-571.56 617.85,-565.71 575.29,-553.46 526.53,-542.85 488.78,-535.35"/>
+<polygon fill="#000000" stroke="#000000" points="489.91,-532.01 479.43,-533.51 488.56,-538.87 489.91,-532.01"/>
+</g>
+<!-- sourcefile~ffmt_diff.f90 -->
+<g id="file~~graph~~FileGraph_node5" class="node">
+<title>sourcefile~ffmt_diff.f90</title>
+<g id="a_file~~graph~~FileGraph_node5"><a xlink:href="../sourcefile/ffmt_diff.f90.html" xlink:title="ffmt_diff.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="192.16,-748.85 116.15,-748.85 116.15,-724.58 192.16,-724.58 192.16,-748.85"/>
+<text xml:space="preserve" text-anchor="middle" x="154.16" y="-733.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_diff.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_diff.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge6" class="edge">
+<title>sourcefile~ffmt_diff.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M115.89,-730.33C105.19,-728.5 93.39,-726.48 82.24,-724.57"/>
+<polygon fill="#000000" stroke="#000000" points="82.86,-721.12 72.41,-722.88 81.68,-728.02 82.86,-721.12"/>
+</g>
+<!-- sourcefile~ffmt_directives.f90 -->
+<g id="file~~graph~~FileGraph_node6" class="node">
+<title>sourcefile~ffmt_directives.f90</title>
+<g id="a_file~~graph~~FileGraph_node6"><a xlink:href="../sourcefile/ffmt_directives.f90.html" xlink:title="ffmt_directives.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="765.49,-395.85 655.72,-395.85 655.72,-371.58 765.49,-371.58 765.49,-395.85"/>
+<text xml:space="preserve" text-anchor="middle" x="710.61" y="-380.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_source.f90 -->
+<g id="file~~graph~~FileGraph_node16" class="node">
+<title>sourcefile~ffmt_source.f90</title>
+<g id="a_file~~graph~~FileGraph_node16"><a xlink:href="../sourcefile/ffmt_source.f90.html" xlink:title="ffmt_source.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="615.97,-319.85 521.95,-319.85 521.95,-295.58 615.97,-295.58 615.97,-319.85"/>
+<text xml:space="preserve" text-anchor="middle" x="568.96" y="-304.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="file~~graph~~FileGraph_edge58" class="edge">
+<title>sourcefile~ffmt_directives.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" d="M680.54,-371.17C671.82,-367.14 662.32,-362.48 653.85,-357.71 637.09,-348.29 634.32,-343.64 617.85,-333.71 613.45,-331.06 608.76,-328.36 604.1,-325.75"/>
+<polygon fill="#000000" stroke="#000000" points="605.85,-322.72 595.4,-320.98 602.49,-328.86 605.85,-322.72"/>
+</g>
+<!-- sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge7" class="edge">
+<title>sourcefile~ffmt_format.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M146.37,-515.14C127.31,-550.08 73.04,-649.54 48.59,-694.35"/>
+<polygon fill="#000000" stroke="#000000" points="45.63,-692.46 43.91,-702.92 51.77,-695.82 45.63,-692.46"/>
+</g>
+<!-- sourcefile~ffmt_fs.f90 -->
+<g id="file~~graph~~FileGraph_node8" class="node">
+<title>sourcefile~ffmt_fs.f90</title>
+<g id="a_file~~graph~~FileGraph_node8"><a xlink:href="../sourcefile/ffmt_fs.f90.html" xlink:title="ffmt_fs.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="458.58,-827.85 390.81,-827.85 390.81,-803.58 458.58,-803.58 458.58,-827.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-812.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_fs.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge8" class="edge">
+<title>sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M390.5,-818.98C321.03,-825.72 165.86,-840.15 155.15,-835.71"/>
+</g>
+<!-- sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_config.f90 -->
+<g id="file~~graph~~FileGraph_edge14" class="edge">
+<title>sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_config.f90</title>
+<path fill="none" stroke="#000000" d="M390.34,-806.13C374.94,-801.71 356.27,-796.35 338.91,-791.36"/>
+<polygon fill="#000000" stroke="#000000" points="340.35,-788.13 329.77,-788.74 338.42,-794.86 340.35,-788.13"/>
+</g>
+<!-- sourcefile~ffmt_walk.f90 -->
+<g id="file~~graph~~FileGraph_node22" class="node">
+<title>sourcefile~ffmt_walk.f90</title>
+<g id="a_file~~graph~~FileGraph_node22"><a xlink:href="../sourcefile/ffmt_walk.f90.html" xlink:title="ffmt_walk.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="324.81,-867.85 242.04,-867.85 242.04,-843.58 324.81,-843.58 324.81,-867.85"/>
+<text xml:space="preserve" text-anchor="middle" x="283.42" y="-852.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_walk.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_walk.f90 -->
+<g id="file~~graph~~FileGraph_edge74" class="edge">
+<title>sourcefile~ffmt_fs.f90&#45;&gt;sourcefile~ffmt_walk.f90</title>
+<path fill="none" stroke="#000000" d="M390.34,-825.29C374.14,-829.94 354.32,-835.64 336.22,-840.84"/>
+<polygon fill="#000000" stroke="#000000" points="335.32,-837.45 326.67,-843.58 337.25,-844.18 335.32,-837.45"/>
+</g>
+<!-- sourcefile~ffmt_io.f90 -->
+<g id="file~~graph~~FileGraph_node9" class="node">
+<title>sourcefile~ffmt_io.f90</title>
+<g id="a_file~~graph~~FileGraph_node9"><a xlink:href="../sourcefile/ffmt_io.f90.html" xlink:title="ffmt_io.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1038.28,-708.85 970.51,-708.85 970.51,-684.58 1038.28,-684.58 1038.28,-708.85"/>
+<text xml:space="preserve" text-anchor="middle" x="1004.4" y="-693.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_io.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_io.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge9" class="edge">
+<title>sourcefile~ffmt_io.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M970.14,-696.9C915.98,-697.19 805.33,-697.71 711.61,-697.71 711.61,-697.71 711.61,-697.71 567.96,-697.71 441.95,-697.71 410.16,-689.34 284.42,-697.71"/>
+</g>
+<!-- sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge24" class="edge">
+<title>sourcefile~ffmt_layout.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M262.54,-435.21C241.62,-448.36 208.47,-469.2 184.53,-484.25"/>
+<polygon fill="#000000" stroke="#000000" points="182.79,-481.21 176.18,-489.49 186.51,-487.14 182.79,-481.21"/>
+</g>
+<!-- sourcefile~ffmt_lexer.f90 -->
+<g id="file~~graph~~FileGraph_node11" class="node">
+<title>sourcefile~ffmt_lexer.f90</title>
+<g id="a_file~~graph~~FileGraph_node11"><a xlink:href="../sourcefile/ffmt_lexer.f90.html" xlink:title="ffmt_lexer.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="904.14,-167.85 820.62,-167.85 820.62,-143.58 904.14,-143.58 904.14,-167.85"/>
+<text xml:space="preserve" text-anchor="middle" x="862.38" y="-152.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge25" class="edge">
+<title>sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M820.73,-143.17C715.8,-111.03 442.8,-28.95 425.69,-39.71"/>
+</g>
+<!-- sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="file~~graph~~FileGraph_edge59" class="edge">
+<title>sourcefile~ffmt_lexer.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" d="M857.74,-168.13C845.23,-207.88 799.87,-330.12 711.61,-343.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-343.71C673.35,-349.3 632.84,-336.69 604.83,-324.89"/>
+<polygon fill="#000000" stroke="#000000" points="606.32,-321.72 595.76,-320.89 603.5,-328.13 606.32,-321.72"/>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90 -->
+<g id="file~~graph~~FileGraph_node12" class="node">
+<title>sourcefile~ffmt_linebreak.f90</title>
+<g id="a_file~~graph~~FileGraph_node12"><a xlink:href="../sourcefile/ffmt_linebreak.f90.html" xlink:title="ffmt_linebreak.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="478.83,-177.85 370.56,-177.85 370.56,-153.58 478.83,-153.58 478.83,-177.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-162.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_linebreak.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge26" class="edge">
+<title>sourcefile~ffmt_linebreak.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M370.07,-174.19C342.99,-180.14 310.46,-189.94 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_options.f90 -->
+<g id="file~~graph~~FileGraph_node13" class="node">
+<title>sourcefile~ffmt_options.f90</title>
+<g id="a_file~~graph~~FileGraph_node13"><a xlink:href="../sourcefile/ffmt_options.f90.html" xlink:title="ffmt_options.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="617.85,-437.85 520.08,-437.85 520.08,-413.58 617.85,-413.58 617.85,-437.85"/>
+<text xml:space="preserve" text-anchor="middle" x="568.96" y="-422.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="file~~graph~~FileGraph_edge1" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" d="M543.14,-413.25C535.58,-409.19 527.35,-404.49 520.08,-399.71 494.62,-382.99 467.44,-361.22 448.82,-345.62"/>
+<polygon fill="#000000" stroke="#000000" points="451.21,-343.06 441.31,-339.28 446.69,-348.41 451.21,-343.06"/>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge10" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M423.69,-403.71C387.71,-399.19 388.24,-432.61 365.31,-460.71 346.6,-483.64 347.69,-493.52 329.31,-516.71 260.17,-603.96 259.59,-658.18 155.16,-696.71"/>
+<path fill="none" stroke="#000000" d="M153.16,-696.71C130.28,-703.6 104.13,-708.35 82.39,-711.49"/>
+<polygon fill="#000000" stroke="#000000" points="82.06,-708 72.63,-712.83 83.01,-714.94 82.06,-708"/>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge27" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M519.66,-417.55C492.17,-413.07 457.06,-407.66 425.69,-403.71"/>
+<path fill="none" stroke="#000000" d="M423.69,-403.71C316.95,-390.29 376.44,-149.95 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge38" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M423.69,-403.71C396.4,-400.28 366.14,-403.56 340.81,-408.3"/>
+<polygon fill="#000000" stroke="#000000" points="340.15,-404.86 331.04,-410.26 341.53,-411.72 340.15,-404.86"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_node14" class="node">
+<title>sourcefile~ffmt_relational.f90</title>
+<g id="a_file~~graph~~FileGraph_node14"><a xlink:href="../sourcefile/ffmt_relational.f90.html" xlink:title="ffmt_relational.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="479.2,-257.85 370.18,-257.85 370.18,-233.58 479.2,-233.58 479.2,-257.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-242.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_edge51" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" d="M537.25,-413.26C530.95,-409.62 524.81,-405.13 520.08,-399.71 490.38,-365.7 508.49,-342.7 484.08,-304.71 474.77,-290.22 461.42,-276.4 449.84,-265.78"/>
+<polygon fill="#000000" stroke="#000000" points="452.36,-263.34 442.56,-259.33 447.72,-268.58 452.36,-263.34"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90 -->
+<g id="file~~graph~~FileGraph_node15" class="node">
+<title>sourcefile~ffmt_settings.f90</title>
+<g id="a_file~~graph~~FileGraph_node15"><a xlink:href="../sourcefile/ffmt_settings.f90.html" xlink:title="ffmt_settings.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="474.7,-669.85 374.68,-669.85 374.68,-645.58 474.7,-645.58 474.7,-669.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-654.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_settings.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="file~~graph~~FileGraph_edge56" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" d="M537.28,-438.19C530.98,-441.83 524.83,-446.31 520.08,-451.71 490.81,-484.99 502.28,-504.3 484.08,-544.71 469.59,-576.9 450.43,-612.94 438.08,-635.48"/>
+<polygon fill="#000000" stroke="#000000" points="435.12,-633.61 433.35,-644.06 441.25,-637 435.12,-633.61"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_node23" class="node">
+<title>sourcefile~ffmt_whitespace.f90</title>
+<g id="a_file~~graph~~FileGraph_node23"><a xlink:href="../sourcefile/ffmt_whitespace.f90.html" xlink:title="ffmt_whitespace.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="484.08,-493.85 365.31,-493.85 365.31,-469.58 484.08,-469.58 484.08,-493.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-478.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_edge76" class="edge">
+<title>sourcefile~ffmt_options.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" d="M536.04,-438.28C515.99,-446.17 489.91,-456.44 468.13,-465.01"/>
+<polygon fill="#000000" stroke="#000000" points="466.95,-461.71 458.92,-468.63 469.51,-468.23 466.95,-461.71"/>
+</g>
+<!-- sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge28" class="edge">
+<title>sourcefile~ffmt_relational.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M397.24,-233.21C362.42,-217.58 303.41,-194.21 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge11" class="edge">
+<title>sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M393.93,-670.27C366.18,-681.01 323.33,-695.12 284.42,-697.71"/>
+<path fill="none" stroke="#000000" d="M282.42,-697.71C225.98,-701.47 208.22,-677.13 155.16,-696.71"/>
+</g>
+<!-- sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_config.f90 -->
+<g id="file~~graph~~FileGraph_edge15" class="edge">
+<title>sourcefile~ffmt_settings.f90&#45;&gt;sourcefile~ffmt_config.f90</title>
+<path fill="none" stroke="#000000" d="M408.79,-670.34C384.6,-690.83 336.62,-731.49 307.84,-755.88"/>
+<polygon fill="#000000" stroke="#000000" points="305.74,-753.06 300.38,-762.2 310.27,-758.4 305.74,-753.06"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="file~~graph~~FileGraph_edge2" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" d="M521.77,-313.56C507.82,-315.32 492.39,-317.27 478.06,-319.09"/>
+<polygon fill="#000000" stroke="#000000" points="477.84,-315.59 468.36,-320.31 478.72,-322.53 477.84,-315.59"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge29" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M559.68,-295.19C546.31,-276.18 518.04,-240.6 484.08,-224.71 443.71,-205.83 322.54,-182.61 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge39" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M522.41,-295.16C479.33,-285.92 414.18,-278.96 365.31,-304.71 327.26,-324.76 303.68,-371.67 292.4,-399.93"/>
+<polygon fill="#000000" stroke="#000000" points="289.23,-398.42 288.97,-409.02 295.78,-400.9 289.23,-398.42"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_linebreak.f90 -->
+<g id="file~~graph~~FileGraph_edge47" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_linebreak.f90</title>
+<path fill="none" stroke="#000000" d="M558.65,-295.54C548.9,-282.74 533.21,-261.96 520.08,-243.71 503.66,-220.9 505.72,-209.65 484.08,-191.71 480.43,-188.68 476.37,-185.94 472.14,-183.48"/>
+<polygon fill="#000000" stroke="#000000" points="473.89,-180.45 463.41,-178.92 470.65,-186.65 473.89,-180.45"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_edge52" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" d="M539.17,-295.17C517.77,-285.84 488.32,-273 464.79,-262.75"/>
+<polygon fill="#000000" stroke="#000000" points="466.4,-259.63 455.83,-258.84 463.6,-266.05 466.4,-259.63"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_edge65" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" d="M535.63,-320.24C529.73,-323.81 524.16,-328.26 520.08,-333.71 474.12,-395.24 534.59,-444.86 484.08,-502.71 483.63,-503.23 483.16,-503.74 482.68,-504.23"/>
+<polygon fill="#000000" stroke="#000000" points="480.76,-501.29 475.11,-510.25 485.11,-506.77 480.76,-501.29"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90 -->
+<g id="file~~graph~~FileGraph_node21" class="node">
+<title>sourcefile~ffmt_use_sort.f90</title>
+<g id="a_file~~graph~~FileGraph_node21"><a xlink:href="../sourcefile/ffmt_use_sort.f90.html" xlink:title="ffmt_use_sort.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="476.2,-135.85 373.18,-135.85 373.18,-111.58 476.2,-111.58 476.2,-135.85"/>
+<text xml:space="preserve" text-anchor="middle" x="424.69" y="-120.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_use_sort.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_use_sort.f90 -->
+<g id="file~~graph~~FileGraph_edge70" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_use_sort.f90</title>
+<path fill="none" stroke="#000000" d="M564.91,-295.13C556.93,-264.85 532.64,-187.33 484.08,-144.71 483.15,-143.89 482.18,-143.11 481.19,-142.35"/>
+<polygon fill="#000000" stroke="#000000" points="483.2,-139.48 472.87,-137.13 479.47,-145.41 483.2,-139.48"/>
+</g>
+<!-- sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_edge77" class="edge">
+<title>sourcefile~ffmt_source.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" d="M537.42,-320.32C531.11,-323.95 524.92,-328.4 520.08,-333.71 492.72,-363.73 506.07,-383.56 484.08,-417.71 473.73,-433.79 459.26,-449.68 447.31,-461.61"/>
+<polygon fill="#000000" stroke="#000000" points="444.97,-459 440.24,-468.48 449.85,-464.02 444.97,-459"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90 -->
+<g id="file~~graph~~FileGraph_node17" class="node">
+<title>sourcefile~ffmt_statements.f90</title>
+<g id="a_file~~graph~~FileGraph_node17"><a xlink:href="../sourcefile/ffmt_statements.f90.html" xlink:title="ffmt_statements.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="921.39,-434.85 803.37,-434.85 803.37,-410.58 921.39,-410.58 921.39,-434.85"/>
+<text xml:space="preserve" text-anchor="middle" x="862.38" y="-419.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="file~~graph~~FileGraph_edge3" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-385.71C550.72,-375.15 504.37,-356.2 469.23,-342.41"/>
+<polygon fill="#000000" stroke="#000000" points="470.72,-339.24 460.13,-338.86 468.18,-345.76 470.72,-339.24"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_constructs.f90 -->
+<g id="file~~graph~~FileGraph_edge17" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_constructs.f90</title>
+<path fill="none" stroke="#000000" d="M848.55,-435.12C835.86,-447.91 816.48,-468.87 803.37,-489.71 781.96,-523.75 795.41,-543.9 767.37,-572.71 764.64,-575.51 761.56,-578.05 758.27,-580.33"/>
+<polygon fill="#000000" stroke="#000000" points="756.68,-577.2 749.89,-585.34 760.27,-583.21 756.68,-577.2"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_directives.f90 -->
+<g id="file~~graph~~FileGraph_edge21" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_directives.f90</title>
+<path fill="none" stroke="#000000" d="M813.17,-410.16C799.74,-406.66 785,-402.82 771.01,-399.18"/>
+<polygon fill="#000000" stroke="#000000" points="772.01,-395.82 761.45,-396.69 770.25,-402.6 772.01,-395.82"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge30" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M842.7,-435.29C824.26,-447.2 794.9,-464.84 767.37,-475.71 598.74,-542.31 545.73,-562.56 365.31,-544.71 313.25,-539.56 254.98,-527.4 213.02,-517.48"/>
+<polygon fill="#000000" stroke="#000000" points="213.93,-514.1 203.39,-515.17 212.29,-520.9 213.93,-514.1"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge40" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M709.61,-461.71C647.96,-454.36 631.9,-461.27 569.96,-465.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-465.71C524.98,-468.8 410.47,-448.05 340.83,-434.29"/>
+<polygon fill="#000000" stroke="#000000" points="341.61,-430.87 331.12,-432.35 340.25,-437.74 341.61,-430.87"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_linebreak.f90 -->
+<g id="file~~graph~~FileGraph_edge48" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_linebreak.f90</title>
+<path fill="none" stroke="#000000" d="M851.12,-410.33C834.85,-391.24 801.45,-354.27 767.37,-329.71 687.58,-272.21 664.61,-256.46 569.96,-229.71"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_edge53" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" d="M709.61,-461.71C682.82,-458.52 676.5,-452.37 653.85,-437.71 635.63,-425.92 636.24,-416.24 617.85,-404.71 598.45,-392.55 589.49,-397.67 569.96,-385.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-385.71C547.66,-373.28 537.72,-377.69 520.08,-361.71 497.87,-341.6 502.73,-328.17 484.08,-304.71 473.07,-290.87 459.2,-276.74 447.74,-265.78"/>
+<polygon fill="#000000" stroke="#000000" points="450.33,-263.4 440.64,-259.11 445.53,-268.51 450.33,-263.4"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="file~~graph~~FileGraph_edge60" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" d="M836.34,-435.26C806.93,-448.59 756.43,-467.05 711.61,-461.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-461.71C640.11,-453.43 666.64,-383.9 617.85,-333.71 615.28,-331.07 612.38,-328.62 609.31,-326.38"/>
+<polygon fill="#000000" stroke="#000000" points="611.35,-323.53 601.04,-321.08 607.57,-329.43 611.35,-323.53"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_edge66" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-465.71C527.32,-468.63 521.92,-487.58 484.08,-502.71 480.31,-504.22 476.38,-505.74 472.42,-507.24"/>
+<polygon fill="#000000" stroke="#000000" points="471.55,-503.83 463.39,-510.58 473.98,-510.39 471.55,-503.83"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_use_sort.f90 -->
+<g id="file~~graph~~FileGraph_edge71" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_use_sort.f90</title>
+<path fill="none" stroke="#000000" d="M847.72,-410.48C834.76,-398.24 815.5,-378.3 803.37,-357.71 778.75,-315.93 801.07,-289.58 767.37,-254.71 756.56,-243.53 562.35,-172.8 471.65,-140.17"/>
+<polygon fill="#000000" stroke="#000000" points="472.89,-136.89 462.29,-136.8 470.52,-143.48 472.89,-136.89"/>
+</g>
+<!-- sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_edge78" class="edge">
+<title>sourcefile~ffmt_statements.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-465.71C544.42,-467.4 518.77,-470.04 495.81,-472.69"/>
+<polygon fill="#000000" stroke="#000000" points="495.46,-469.21 485.94,-473.85 496.28,-476.16 495.46,-469.21"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90 -->
+<g id="file~~graph~~FileGraph_node18" class="node">
+<title>sourcefile~ffmt_strings.f90</title>
+<g id="a_file~~graph~~FileGraph_node18"><a xlink:href="../sourcefile/ffmt_strings.f90.html" xlink:title="ffmt_strings.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1181.43,-667.85 1087.41,-667.85 1087.41,-643.58 1181.43,-643.58 1181.43,-667.85"/>
+<text xml:space="preserve" text-anchor="middle" x="1134.42" y="-652.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge12" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M423.69,-895.71C340.74,-889.87 317.43,-899.83 237.54,-876.71 198.25,-865.34 192.73,-851.86 155.16,-835.71"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_config.f90 -->
+<g id="file~~graph~~FileGraph_edge16" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_config.f90</title>
+<path fill="none" stroke="#000000" d="M423.69,-775.71C398.09,-764.36 367.13,-763.28 340.92,-765.51"/>
+<polygon fill="#000000" stroke="#000000" points="340.71,-762.01 331.13,-766.53 341.44,-768.97 340.71,-762.01"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_constructs.f90 -->
+<g id="file~~graph~~FileGraph_edge18" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_constructs.f90</title>
+<path fill="none" stroke="#000000" d="M1003.4,-655.71C944.8,-634.75 925.34,-661.48 863.38,-655.71"/>
+<path fill="none" stroke="#000000" d="M861.38,-655.71C818.45,-651.72 772.61,-631.67 743.12,-616.47"/>
+<polygon fill="#000000" stroke="#000000" points="744.84,-613.42 734.37,-611.84 741.57,-619.61 744.84,-613.42"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_diff.f90 -->
+<g id="file~~graph~~FileGraph_edge20" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_diff.f90</title>
+<path fill="none" stroke="#000000" d="M1120.16,-668.21C1059.75,-723.62 803.53,-942.34 569.96,-895.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-895.71C510.59,-885.09 532.37,-827.47 484.08,-794.71 461.5,-779.39 450.64,-786.77 425.69,-775.71"/>
+<path fill="none" stroke="#000000" d="M423.69,-775.71C351.72,-743.81 259.28,-736.94 203.77,-736.01"/>
+<polygon fill="#000000" stroke="#000000" points="204.05,-732.52 194.01,-735.92 203.98,-739.52 204.05,-732.52"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge31" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M1132.38,-643.38C1125.93,-569.78 1088.8,-189.39 1005.4,-115.71"/>
+<path fill="none" stroke="#000000" d="M1003.4,-115.71C950.34,-68.83 933,-52.63 863.38,-39.71"/>
+<path fill="none" stroke="#000000" d="M861.38,-39.71C795.93,-27.57 774.29,-62.11 711.61,-39.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-39.71C590.78,2.74 535.69,22.12 425.69,-39.71"/>
+<path fill="none" stroke="#000000" d="M423.69,-39.71C389.18,-56.03 390.09,-73.68 365.31,-102.71 327.52,-146.98 334.29,-175.69 284.42,-205.71"/>
+<path fill="none" stroke="#000000" d="M282.42,-205.71C183.94,-265.01 161.58,-419.69 156.57,-479.04"/>
+<polygon fill="#000000" stroke="#000000" points="153.11,-478.45 155.86,-488.69 160.09,-478.97 153.11,-478.45"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_io.f90 -->
+<g id="file~~graph~~FileGraph_edge36" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_io.f90</title>
+<path fill="none" stroke="#000000" d="M1094.31,-668.24C1080.13,-672.78 1064.02,-677.94 1049.45,-682.61"/>
+<polygon fill="#000000" stroke="#000000" points="1048.55,-679.22 1040.1,-685.6 1050.69,-685.88 1048.55,-679.22"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge41" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-579.71C484.4,-542.68 441.5,-595.2 365.31,-544.71 340.65,-528.37 345.63,-513.39 329.31,-488.71 319.54,-473.94 308.34,-457.46 299.57,-444.67"/>
+<polygon fill="#000000" stroke="#000000" points="302.53,-442.81 293.98,-436.55 296.76,-446.77 302.53,-442.81"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_lexer.f90 -->
+<g id="file~~graph~~FileGraph_edge45" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_lexer.f90</title>
+<path fill="none" stroke="#000000" d="M1003.4,-115.71C995.9,-109.28 945.36,-125.61 907.14,-139.31"/>
+<polygon fill="#000000" stroke="#000000" points="906.36,-135.87 898.15,-142.57 908.74,-142.45 906.36,-135.87"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_linebreak.f90 -->
+<g id="file~~graph~~FileGraph_edge49" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_linebreak.f90</title>
+<path fill="none" stroke="#000000" d="M709.61,-77.71C685.73,-79.05 547.55,-124.6 473.14,-149.62"/>
+<polygon fill="#000000" stroke="#000000" points="472.43,-146.17 464.08,-152.68 474.67,-152.8 472.43,-146.17"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_edge54" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" d="M1003.4,-115.71C921.03,-45 581.41,-179.43 465.03,-228.66"/>
+<polygon fill="#000000" stroke="#000000" points="463.71,-225.42 455.88,-232.55 466.45,-231.86 463.71,-225.42"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_settings.f90 -->
+<g id="file~~graph~~FileGraph_edge57" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_settings.f90</title>
+<path fill="none" stroke="#000000" d="M709.61,-655.71C633.26,-645.65 544.35,-648.61 486.66,-652.45"/>
+<polygon fill="#000000" stroke="#000000" points="486.43,-648.96 476.7,-653.15 486.92,-655.94 486.43,-648.96"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="file~~graph~~FileGraph_edge62" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" d="M1087.11,-663.12C1062.2,-665.28 1031.35,-664.99 1005.4,-655.71"/>
+<path fill="none" stroke="#000000" d="M1003.4,-655.71C925.92,-628 966.92,-558.26 921.39,-489.71 910.32,-473.05 895.54,-456.03 883.66,-443.32"/>
+<polygon fill="#000000" stroke="#000000" points="886.46,-441.18 877.03,-436.36 881.39,-446.01 886.46,-441.18"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_edge67" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-579.71C547.69,-570.73 540.9,-573.35 520.08,-565.71 500.42,-558.5 479.06,-549.13 461.64,-541.07"/>
+<polygon fill="#000000" stroke="#000000" points="463.26,-537.97 452.72,-536.89 460.29,-544.3 463.26,-537.97"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90 -->
+<g id="file~~graph~~FileGraph_node20" class="node">
+<title>sourcefile~ffmt_tokens.f90</title>
+<g id="a_file~~graph~~FileGraph_node20"><a xlink:href="../sourcefile/ffmt_tokens.f90.html" xlink:title="ffmt_tokens.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1051.41,-375.85 957.39,-375.85 957.39,-351.58 1051.41,-351.58 1051.41,-375.85"/>
+<text xml:space="preserve" text-anchor="middle" x="1004.4" y="-360.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_tokens.f90 -->
+<g id="file~~graph~~FileGraph_edge69" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_tokens.f90</title>
+<path fill="none" stroke="#000000" d="M1127.92,-643.17C1108.22,-598.24 1041.03,-444.97 1015.42,-386.57"/>
+<polygon fill="#000000" stroke="#000000" points="1018.71,-385.35 1011.49,-377.6 1012.3,-388.16 1018.71,-385.35"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_use_sort.f90 -->
+<g id="file~~graph~~FileGraph_edge72" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_use_sort.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-39.71C793.86,-27.19 780.16,-73.52 711.61,-77.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-77.71C632.51,-82.43 544.93,-98.24 487.67,-110.02"/>
+<polygon fill="#000000" stroke="#000000" points="487.2,-106.54 478.12,-112 488.63,-113.39 487.2,-106.54"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_walk.f90 -->
+<g id="file~~graph~~FileGraph_edge75" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_walk.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-895.71C505.96,-883.33 488.77,-900.15 425.69,-895.71"/>
+<path fill="none" stroke="#000000" d="M423.69,-895.71C389.62,-893.31 352.51,-882.2 325.17,-872.3"/>
+<polygon fill="#000000" stroke="#000000" points="326.47,-869.05 315.88,-868.83 324.02,-875.61 326.47,-869.05"/>
+</g>
+<!-- sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_edge79" class="edge">
+<title>sourcefile~ffmt_strings.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-655.71C795.1,-649.54 777.51,-665.06 711.61,-655.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-655.71C639.65,-645.79 634.57,-608.34 569.96,-579.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-579.71C521.7,-559.21 527.38,-528.9 484.08,-502.71 481.95,-501.42 479.72,-500.19 477.44,-499.02"/>
+<polygon fill="#000000" stroke="#000000" points="479.08,-495.93 468.54,-494.93 476.16,-502.29 479.08,-495.93"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge32" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M371.4,-512.05C345.39,-507.21 313.4,-502.71 284.42,-502.71"/>
+</g>
+<!-- sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge42" class="edge">
+<title>sourcefile~ffmt_structure.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M381.81,-511.18C376.08,-508.74 370.41,-505.93 365.31,-502.71 339.99,-486.74 316.29,-461.64 301.18,-443.81"/>
+<polygon fill="#000000" stroke="#000000" points="304.13,-441.89 295.06,-436.41 298.73,-446.35 304.13,-441.89"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_case.f90 -->
+<g id="file~~graph~~FileGraph_edge4" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_case.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-343.71C812.06,-336.73 815.13,-390.57 767.37,-404.71 718.99,-419.03 700.87,-423 653.85,-404.71 633.62,-396.84 635.72,-384.03 617.85,-371.71 598.25,-358.21 593.01,-353.67 569.96,-347.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-347.71C538.38,-341.2 504.93,-335.93 477.89,-332.17"/>
+<polygon fill="#000000" stroke="#000000" points="478.61,-328.74 468.23,-330.86 477.67,-335.68 478.61,-328.74"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_constructs.f90 -->
+<g id="file~~graph~~FileGraph_edge19" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_constructs.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-503.71C816.95,-530.39 811.96,-546.3 767.37,-572.71 762.39,-575.66 757.01,-578.53 751.63,-581.22"/>
+<polygon fill="#000000" stroke="#000000" points="750.26,-578 742.76,-585.48 753.29,-584.31 750.26,-578"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_directives.f90 -->
+<g id="file~~graph~~FileGraph_edge22" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_directives.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-343.71C841.4,-340.88 793.42,-355.1 757.11,-367.36"/>
+<polygon fill="#000000" stroke="#000000" points="756.02,-364.03 747.69,-370.59 758.29,-370.65 756.02,-364.03"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge33" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M1002.31,-351.31C998.41,-313.85 981.93,-200.38 921.39,-134.71 852.02,-59.46 809.13,-70.79 711.61,-39.71"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge43" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-347.71C523.05,-337.83 409.3,-376.3 365.31,-389.71 350.89,-394.11 335.47,-400.07 322,-405.71"/>
+<polygon fill="#000000" stroke="#000000" points="320.88,-402.38 313.07,-409.54 323.64,-408.82 320.88,-402.38"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_lexer.f90 -->
+<g id="file~~graph~~FileGraph_edge46" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_lexer.f90</title>
+<path fill="none" stroke="#000000" d="M995.06,-351.32C972.06,-317.16 907.49,-221.24 878.18,-177.7"/>
+<polygon fill="#000000" stroke="#000000" points="881.19,-175.89 872.7,-169.55 875.38,-179.8 881.19,-175.89"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_linebreak.f90 -->
+<g id="file~~graph~~FileGraph_edge50" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_linebreak.f90</title>
+<path fill="none" stroke="#000000" d="M709.61,-191.71C653.92,-159.52 632.21,-245.94 569.96,-229.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-229.71C557.16,-226.89 501.19,-201.12 462.76,-183.16"/>
+<polygon fill="#000000" stroke="#000000" points="464.34,-180.04 453.8,-178.97 461.38,-186.38 464.34,-180.04"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_relational.f90 -->
+<g id="file~~graph~~FileGraph_edge55" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_relational.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-343.71C751.45,-327.22 726.33,-310.98 617.85,-286.71 575.62,-277.26 528.05,-267.11 490.8,-259.27"/>
+<polygon fill="#000000" stroke="#000000" points="491.58,-255.86 481.08,-257.23 490.14,-262.71 491.58,-255.86"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_source.f90 -->
+<g id="file~~graph~~FileGraph_edge61" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_source.f90</title>
+<path fill="none" stroke="#000000" d="M861.38,-343.71C795.47,-334.38 777.4,-333.58 711.61,-343.71"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_statements.f90 -->
+<g id="file~~graph~~FileGraph_edge63" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_statements.f90</title>
+<path fill="none" stroke="#000000" d="M973.71,-376.22C953.29,-384.83 925.92,-396.36 903.56,-405.78"/>
+<polygon fill="#000000" stroke="#000000" points="902.28,-402.52 894.43,-409.63 905,-408.97 902.28,-402.52"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_structure.f90 -->
+<g id="file~~graph~~FileGraph_edge68" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_structure.f90</title>
+<path fill="none" stroke="#000000" d="M567.96,-503.71C541.76,-501.78 513.02,-504.83 488.28,-509.08"/>
+<polygon fill="#000000" stroke="#000000" points="487.91,-505.59 478.7,-510.84 489.17,-512.48 487.91,-505.59"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_use_sort.f90 -->
+<g id="file~~graph~~FileGraph_edge73" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_use_sort.f90</title>
+<path fill="none" stroke="#000000" d="M957.11,-356.61C929.86,-352.55 894.7,-347.53 863.38,-343.71"/>
+<path fill="none" stroke="#000000" d="M861.38,-343.71C787.71,-334.73 828.22,-248.19 767.37,-205.71 746.42,-191.09 733.73,-204.5 711.61,-191.71"/>
+<path fill="none" stroke="#000000" d="M709.61,-191.71C700.09,-186.21 628.44,-157.66 617.85,-154.71 575.22,-142.84 525.92,-135 487.93,-130.18"/>
+<polygon fill="#000000" stroke="#000000" points="488.38,-126.71 478.03,-128.96 487.53,-133.65 488.38,-126.71"/>
+</g>
+<!-- sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_whitespace.f90 -->
+<g id="file~~graph~~FileGraph_edge80" class="edge">
+<title>sourcefile~ffmt_tokens.f90&#45;&gt;sourcefile~ffmt_whitespace.f90</title>
+<path fill="none" stroke="#000000" d="M994.39,-376.21C974.1,-403.43 922.03,-468.5 863.38,-503.71"/>
+<path fill="none" stroke="#000000" d="M861.38,-503.71C750.34,-570.39 699.48,-504.16 569.96,-503.71"/>
+<path fill="none" stroke="#000000" d="M567.96,-503.71C544.19,-501.96 518.38,-498.46 495.35,-494.76"/>
+<polygon fill="#000000" stroke="#000000" points="496.22,-491.35 485.78,-493.18 495.08,-498.26 496.22,-491.35"/>
+</g>
+<!-- sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge34" class="edge">
+<title>sourcefile~ffmt_use_sort.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M383.74,-136.26C377.43,-138.76 371.09,-141.59 365.31,-144.71 325.7,-166.13 322.93,-182.38 284.42,-205.71"/>
+</g>
+<!-- sourcefile~ffmt_walk.f90&#45;&gt;sourcefile~ffmt_cli.f90 -->
+<g id="file~~graph~~FileGraph_edge13" class="edge">
+<title>sourcefile~ffmt_walk.f90&#45;&gt;sourcefile~ffmt_cli.f90</title>
+<path fill="none" stroke="#000000" d="M241.55,-854.19C215.91,-852.06 182.63,-847.11 155.16,-835.71"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_format.f90 -->
+<g id="file~~graph~~FileGraph_edge35" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_format.f90</title>
+<path fill="none" stroke="#000000" d="M366.39,-494.29C341.35,-498.76 311.57,-502.71 284.42,-502.71"/>
+<path fill="none" stroke="#000000" d="M282.42,-502.71C259.86,-502.71 235.04,-502.71 213.35,-502.71"/>
+<polygon fill="#000000" stroke="#000000" points="213.51,-499.21 203.51,-502.71 213.51,-506.21 213.51,-499.21"/>
+</g>
+<!-- sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_layout.f90 -->
+<g id="file~~graph~~FileGraph_edge44" class="edge">
+<title>sourcefile~ffmt_whitespace.f90&#45;&gt;sourcefile~ffmt_layout.f90</title>
+<path fill="none" stroke="#000000" d="M394.16,-469.2C373.85,-460.6 346.63,-449.07 324.39,-439.64"/>
+<polygon fill="#000000" stroke="#000000" points="325.88,-436.47 315.31,-435.8 323.15,-442.92 325.88,-436.47"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panfilegraphFileGraph = svgPanZoom('#filegraphFileGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#FileGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="FileGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="200pt" height="32pt"
+ viewBox="0.00 0.00 200.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 195.52,-28.27 195.52,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="191.52,-24.27 87.75,-24.27 87.75,0 191.52,0 191.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="139.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

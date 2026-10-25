@@ -1,0 +1,926 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>fitting_column &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>fitting_column
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.0% of total for procedures.">47 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_layout.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_layout.f90.html'>ffmt_layout.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/ffmt_layout.html'>ffmt_layout</a></li>
+            <li class="breadcrumb-item active" aria-current="page">fitting_column</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/fitting_column.html#src">fitting_column</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  function fitting_column(w, src, tokens, f, lend, candidates, from, prefix, always_original) result(col)  
+</h2>
+    
+
+    <p>The first of the <code>candidates</code> columns at which the output line fits within the line length, or
+the smallest if none fits. The last candidate is the line's original column: if only that one
+fits, the line is recorded in <code>long_lines</code>. When lines are split (<code>w%keep_original</code> false), the
+original column is not a candidate for code, since splitting will make the line fit; it is
+still used if <code>always_original</code> is true (for comments, which are not split). Also when lines are
+split, a candidate other than the last is accepted if the line can be split to fit there: if
+its first piece up to a possible break fits.</p>
+<p>The input line starts with token <code>f</code>. The output line is <code>prefix</code> characters (e.g. <code>&amp;</code> for a
+leading continuation marker) followed by tokens <code>from:lend</code> (default <code>f:lend</code>).</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~6"></span>
+              type(<a href='../type/writer_t.html'>writer_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong></td>
+            <td>
+                <p>the output and the alignment state</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~25"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+                <p>the source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-tokens~7"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>tokens</strong></td>
+            <td>
+                <p>its tokens</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-f~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>f</strong></td>
+            <td>
+                <p>first non-blank token of the input line</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lend~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>lend</strong></td>
+            <td>
+                <p>last token of the line, its line break if it has one</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-candidates"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>candidates</strong>(:)</td>
+            <td>
+                <p>columns to try, best first; negative ones are skipped</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-from"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>from</strong></td>
+            <td>
+                <p>first token written after the prefix; requires <code>prefix</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-prefix~2"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>prefix</strong></td>
+            <td>
+                <p>width of the text written before token <code>from</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-always_original"></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>always_original</strong></td>
+            <td>
+                <p>try the original column even when lines are split</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-col~4"></span>
+          integer
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~fitting_column~~CallsGraph Pages: 1 -->
+<svg id="procfitting_columnCallsGraph" width="338pt" height="74pt"
+ viewBox="0.00 0.00 338.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~fitting_column~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70.27)">
+<title>proc~~fitting_column~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-70.27 334.06,-70.27 334.06,4 -4,4"/>
+<!-- proc~fitting_column -->
+<g id="proc~~fitting_column~~CallsGraph_node1" class="node">
+<title>proc~fitting_column</title>
+<polygon fill="none" stroke="black" points="87.27,-45.27 0,-45.27 0,-21 87.27,-21 87.27,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="43.63" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50">fitting_column</text>
+</g>
+<!-- proc~first_piece_width -->
+<g id="proc~~fitting_column~~CallsGraph_node2" class="node">
+<title>proc~first_piece_width</title>
+<g id="a_proc~~fitting_column~~CallsGraph_node2"><a xlink:href="../proc/first_piece_width.html" xlink:title="first_piece_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="223.29,-66.27 123.27,-66.27 123.27,-42 223.29,-42 223.29,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="173.28" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">first_piece_width</text>
+</a>
+</g>
+</g>
+<!-- proc~fitting_column&#45;&gt;proc~first_piece_width -->
+<g id="proc~~fitting_column~~CallsGraph_edge1" class="edge">
+<title>proc~fitting_column&#45;&gt;proc~first_piece_width</title>
+<path fill="none" stroke="#000000" d="M87.49,-40.19C95.36,-41.48 103.71,-42.85 111.97,-44.21"/>
+<polygon fill="#000000" stroke="#000000" points="111.22,-47.64 121.65,-45.81 112.35,-40.73 111.22,-47.64"/>
+</g>
+<!-- proc~line_width -->
+<g id="proc~~fitting_column~~CallsGraph_node3" class="node">
+<title>proc~line_width</title>
+<g id="a_proc~~fitting_column~~CallsGraph_node3"><a xlink:href="../proc/line_width.html" xlink:title="line_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="205.66,-24.27 140.89,-24.27 140.89,0 205.66,0 205.66,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="173.28" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_width</text>
+</a>
+</g>
+</g>
+<!-- proc~fitting_column&#45;&gt;proc~line_width -->
+<g id="proc~~fitting_column~~CallsGraph_edge2" class="edge">
+<title>proc~fitting_column&#45;&gt;proc~line_width</title>
+<path fill="none" stroke="#000000" d="M87.49,-26.08C101.07,-23.85 116.08,-21.38 129.64,-19.15"/>
+<polygon fill="#000000" stroke="#000000" points="129.84,-22.66 139.14,-17.59 128.71,-15.76 129.84,-22.66"/>
+</g>
+<!-- proc~line_pieces -->
+<g id="proc~~fitting_column~~CallsGraph_node4" class="node">
+<title>proc~line_pieces</title>
+<g id="a_proc~~fitting_column~~CallsGraph_node4"><a xlink:href="../proc/line_pieces.html" xlink:title="line_pieces">
+<polygon fill="#d9534f" stroke="#d9534f" points="330.06,-66.27 259.29,-66.27 259.29,-42 330.06,-42 330.06,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="294.67" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">line_pieces</text>
+</a>
+</g>
+</g>
+<!-- proc~first_piece_width&#45;&gt;proc~line_pieces -->
+<g id="proc~~fitting_column~~CallsGraph_edge3" class="edge">
+<title>proc~first_piece_width&#45;&gt;proc~line_pieces</title>
+<path fill="none" stroke="#000000" d="M223.53,-54.13C231.56,-54.13 239.85,-54.13 247.79,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="247.59,-57.64 257.59,-54.14 247.59,-50.64 247.59,-57.64"/>
+</g>
+<!-- proc~utf8_width -->
+<g id="proc~~fitting_column~~CallsGraph_node5" class="node">
+<title>proc~utf8_width</title>
+<g id="a_proc~~fitting_column~~CallsGraph_node5"><a xlink:href="../proc/utf8_width.html" xlink:title="utf8_width">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="327.81,-24.27 261.54,-24.27 261.54,0 327.81,0 327.81,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="294.67" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">utf8_width</text>
+</a>
+</g>
+</g>
+<!-- proc~first_piece_width&#45;&gt;proc~utf8_width -->
+<g id="proc~~fitting_column~~CallsGraph_edge4" class="edge">
+<title>proc~first_piece_width&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M210.1,-41.53C222.77,-37.08 237.15,-32.02 250.37,-27.37"/>
+<polygon fill="#000000" stroke="#000000" points="251.43,-30.7 259.71,-24.08 249.11,-24.1 251.43,-30.7"/>
+</g>
+<!-- proc~line_width&#45;&gt;proc~line_pieces -->
+<g id="proc~~fitting_column~~CallsGraph_edge5" class="edge">
+<title>proc~line_width&#45;&gt;proc~line_pieces</title>
+<path fill="none" stroke="#000000" d="M205.96,-23.28C218.95,-27.85 234.24,-33.23 248.37,-38.2"/>
+<polygon fill="#000000" stroke="#000000" points="246.88,-41.38 257.48,-41.4 249.2,-34.78 246.88,-41.38"/>
+</g>
+<!-- proc~line_width&#45;&gt;proc~utf8_width -->
+<g id="proc~~fitting_column~~CallsGraph_edge6" class="edge">
+<title>proc~line_width&#45;&gt;proc~utf8_width</title>
+<path fill="none" stroke="#000000" d="M205.96,-12.13C219.48,-12.13 235.48,-12.13 250.09,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="249.92,-15.64 259.92,-12.14 249.92,-8.64 249.92,-15.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~fitting_column~~CalledByGraph Pages: 1 -->
+<svg id="procfitting_columnCalledByGraph" width="641pt" height="50pt"
+ viewBox="0.00 0.00 641.00 50.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~fitting_column~~CalledByGraph" class="graph" transform="scale(0.574934 0.574934) rotate(0) translate(4 83.56)">
+<title>proc~~fitting_column~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-83.56 1110.91,-83.56 1110.91,4 -4,4"/>
+<!-- proc~fitting_column -->
+<g id="proc~~fitting_column~~CalledByGraph_node1" class="node">
+<title>proc~fitting_column</title>
+<polygon fill="none" stroke="black" points="1106.91,-66.27 1019.64,-66.27 1019.64,-42 1106.91,-42 1106.91,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="1063.27" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50">fitting_column</text>
+</g>
+<!-- proc~comment_column -->
+<g id="proc~~fitting_column~~CalledByGraph_node2" class="node">
+<title>proc~comment_column</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node2"><a xlink:href="../proc/comment_column.html" xlink:title="comment_column">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="983.64,-24.27 876.12,-24.27 876.12,0 983.64,0 983.64,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="929.88" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">comment_column</text>
+</a>
+</g>
+</g>
+<!-- proc~comment_column&#45;&gt;proc~fitting_column -->
+<g id="proc~~fitting_column~~CalledByGraph_edge1" class="edge">
+<title>proc~comment_column&#45;&gt;proc~fitting_column</title>
+<path fill="none" stroke="#000000" d="M970.3,-24.74C983.43,-28.93 998.22,-33.66 1012.05,-38.08"/>
+<polygon fill="#000000" stroke="#000000" points="1010.85,-41.37 1021.44,-41.08 1012.98,-34.7 1010.85,-41.37"/>
+</g>
+<!-- proc~emit_continuation -->
+<g id="proc~~fitting_column~~CalledByGraph_node3" class="node">
+<title>proc~emit_continuation</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node3"><a xlink:href="../proc/emit_continuation.html" xlink:title="emit_continuation">
+<polygon fill="#d9534f" stroke="#d9534f" points="983.64,-66.27 876.12,-66.27 876.12,-42 983.64,-42 983.64,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="929.88" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">emit_continuation</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_continuation&#45;&gt;proc~fitting_column -->
+<g id="proc~~fitting_column~~CalledByGraph_edge2" class="edge">
+<title>proc~emit_continuation&#45;&gt;proc~fitting_column</title>
+<path fill="none" stroke="#000000" d="M983.94,-54.13C991.89,-54.13 1000.09,-54.13 1008.06,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="1007.99,-57.64 1017.99,-54.14 1007.99,-50.64 1007.99,-57.64"/>
+</g>
+<!-- proc~emit_statement -->
+<g id="proc~~fitting_column~~CalledByGraph_node4" class="node">
+<title>proc~emit_statement</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node4"><a xlink:href="../proc/emit_statement.html" xlink:title="emit_statement">
+<polygon fill="#d9534f" stroke="#d9534f" points="829.24,-66.27 734.47,-66.27 734.47,-42 829.24,-42 829.24,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="781.86" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">emit_statement</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_statement&#45;&gt;proc~fitting_column -->
+<g id="proc~~fitting_column~~CalledByGraph_edge3" class="edge">
+<title>proc~emit_statement&#45;&gt;proc~fitting_column</title>
+<path fill="none" stroke="#000000" d="M829.48,-66.76C844.28,-70.19 860.78,-73.43 876.12,-75.14 923.61,-80.42 936.26,-81.35 983.64,-75.14 992.9,-73.92 1002.63,-71.93 1011.96,-69.65"/>
+<polygon fill="#000000" stroke="#000000" points="1012.82,-73.04 1021.62,-67.14 1011.06,-66.27 1012.82,-73.04"/>
+</g>
+<!-- proc~emit_statement&#45;&gt;proc~comment_column -->
+<g id="proc~~fitting_column~~CalledByGraph_edge5" class="edge">
+<title>proc~emit_statement&#45;&gt;proc~comment_column</title>
+<path fill="none" stroke="#000000" d="M826.67,-41.53C841.69,-37.21 858.68,-32.33 874.43,-27.8"/>
+<polygon fill="#000000" stroke="#000000" points="875,-31.27 883.65,-25.15 873.07,-24.55 875,-31.27"/>
+</g>
+<!-- proc~emit_statement&#45;&gt;proc~emit_continuation -->
+<g id="proc~~fitting_column~~CalledByGraph_edge6" class="edge">
+<title>proc~emit_statement&#45;&gt;proc~emit_continuation</title>
+<path fill="none" stroke="#000000" d="M829.46,-54.13C840.66,-54.13 852.81,-54.13 864.65,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="864.35,-57.64 874.35,-54.14 864.35,-50.64 864.35,-57.64"/>
+</g>
+<!-- proc~emit_comment_line -->
+<g id="proc~~fitting_column~~CalledByGraph_node5" class="node">
+<title>proc~emit_comment_line</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node5"><a xlink:href="../proc/emit_comment_line.html" xlink:title="emit_comment_line">
+<polygon fill="#d9534f" stroke="#d9534f" points="840.12,-24.27 723.6,-24.27 723.6,0 840.12,0 840.12,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="781.86" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">emit_comment_line</text>
+</a>
+</g>
+</g>
+<!-- proc~emit_comment_line&#45;&gt;proc~comment_column -->
+<g id="proc~~fitting_column~~CalledByGraph_edge4" class="edge">
+<title>proc~emit_comment_line&#45;&gt;proc~comment_column</title>
+<path fill="none" stroke="#000000" d="M840.57,-12.13C848.39,-12.13 856.46,-12.13 864.38,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="864.35,-15.64 874.35,-12.14 864.35,-8.64 864.35,-15.64"/>
+</g>
+<!-- proc~layout -->
+<g id="proc~~fitting_column~~CalledByGraph_node6" class="node">
+<title>proc~layout</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node6"><a xlink:href="../proc/layout.html" xlink:title="layout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="687.6,-45.27 633.6,-45.27 633.6,-21 687.6,-21 687.6,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="660.6" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">layout</text>
+</a>
+</g>
+</g>
+<!-- proc~layout&#45;&gt;proc~emit_statement -->
+<g id="proc~~fitting_column~~CalledByGraph_edge7" class="edge">
+<title>proc~layout&#45;&gt;proc~emit_statement</title>
+<path fill="none" stroke="#000000" d="M688.07,-37.8C698.47,-39.63 710.85,-41.81 723.12,-43.97"/>
+<polygon fill="#000000" stroke="#000000" points="722.35,-47.39 732.81,-45.67 723.57,-40.49 722.35,-47.39"/>
+</g>
+<!-- proc~layout&#45;&gt;proc~emit_comment_line -->
+<g id="proc~~fitting_column~~CalledByGraph_edge8" class="edge">
+<title>proc~layout&#45;&gt;proc~emit_comment_line</title>
+<path fill="none" stroke="#000000" d="M688.07,-28.47C695.32,-27.2 703.53,-25.75 712,-24.26"/>
+<polygon fill="#000000" stroke="#000000" points="712.48,-27.73 721.73,-22.55 711.27,-20.83 712.48,-27.73"/>
+</g>
+<!-- proc~format_pass -->
+<g id="proc~~fitting_column~~CalledByGraph_node7" class="node">
+<title>proc~format_pass</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node7"><a xlink:href="../proc/format_pass.html" xlink:title="format_pass">
+<polygon fill="#d9534f" stroke="#d9534f" points="597.6,-45.27 520.83,-45.27 520.83,-21 597.6,-21 597.6,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="559.21" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_pass</text>
+</a>
+</g>
+</g>
+<!-- proc~format_pass&#45;&gt;proc~layout -->
+<g id="proc~~fitting_column~~CalledByGraph_edge9" class="edge">
+<title>proc~format_pass&#45;&gt;proc~layout</title>
+<path fill="none" stroke="#000000" d="M598.07,-33.13C605.87,-33.13 614.08,-33.13 621.87,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="621.75,-36.64 631.75,-33.14 621.75,-29.64 621.75,-36.64"/>
+</g>
+<!-- proc~format_text -->
+<g id="proc~~fitting_column~~CalledByGraph_node8" class="node">
+<title>proc~format_text</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node8"><a xlink:href="../proc/format_text.html" xlink:title="format_text">
+<polygon fill="#d9534f" stroke="#d9534f" points="393.81,-45.27 321.54,-45.27 321.54,-21 393.81,-21 393.81,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="357.67" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">format_text</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~format_pass -->
+<g id="proc~~fitting_column~~CalledByGraph_edge10" class="edge">
+<title>proc~format_text&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M394.13,-33.73C405.53,-33.9 418.2,-34.05 429.81,-34.13 454.26,-34.31 460.38,-34.3 484.83,-34.13 492.71,-34.08 501.07,-34 509.21,-33.9"/>
+<polygon fill="#000000" stroke="#000000" points="509.04,-37.4 518.99,-33.77 508.95,-30.4 509.04,-37.4"/>
+</g>
+<!-- proc~relayout -->
+<g id="proc~~fitting_column~~CalledByGraph_node9" class="node">
+<title>proc~relayout</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node9"><a xlink:href="../proc/relayout.html" xlink:title="relayout">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="484.83,-25.27 429.81,-25.27 429.81,-1 484.83,-1 484.83,-25.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.32" y="-9.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">relayout</text>
+</a>
+</g>
+</g>
+<!-- proc~format_text&#45;&gt;proc~relayout -->
+<g id="proc~~fitting_column~~CalledByGraph_edge13" class="edge">
+<title>proc~format_text&#45;&gt;proc~relayout</title>
+<path fill="none" stroke="#000000" d="M394.2,-25.86C402.04,-24.25 410.38,-22.54 418.31,-20.92"/>
+<polygon fill="#000000" stroke="#000000" points="418.97,-24.36 428.06,-18.92 417.56,-17.5 418.97,-24.36"/>
+</g>
+<!-- proc~relayout&#45;&gt;proc~format_pass -->
+<g id="proc~~fitting_column~~CalledByGraph_edge11" class="edge">
+<title>proc~relayout&#45;&gt;proc~format_pass</title>
+<path fill="none" stroke="#000000" d="M485.09,-18.49C492.56,-19.99 500.92,-21.66 509.24,-23.33"/>
+<polygon fill="#000000" stroke="#000000" points="508.5,-26.75 519,-25.28 509.88,-19.89 508.5,-26.75"/>
+</g>
+<!-- proc~process_text -->
+<g id="proc~~fitting_column~~CalledByGraph_node10" class="node">
+<title>proc~process_text</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node10"><a xlink:href="../proc/process_text.html" xlink:title="process_text">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="285.54,-45.27 208.77,-45.27 208.77,-21 285.54,-21 285.54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="247.15" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_text</text>
+</a>
+</g>
+</g>
+<!-- proc~process_text&#45;&gt;proc~format_text -->
+<g id="proc~~fitting_column~~CalledByGraph_edge12" class="edge">
+<title>proc~process_text&#45;&gt;proc~format_text</title>
+<path fill="none" stroke="#000000" d="M285.81,-33.13C293.54,-33.13 301.77,-33.13 309.78,-33.13"/>
+<polygon fill="#000000" stroke="#000000" points="309.77,-36.64 319.77,-33.14 309.77,-29.64 309.77,-36.64"/>
+</g>
+<!-- proc~process_file -->
+<g id="proc~~fitting_column~~CalledByGraph_node11" class="node">
+<title>proc~process_file</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node11"><a xlink:href="../proc/process_file.html" xlink:title="process_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="168.27,-66.27 94.5,-66.27 94.5,-42 168.27,-42 168.27,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_file</text>
+</a>
+</g>
+</g>
+<!-- proc~process_file&#45;&gt;proc~process_text -->
+<g id="proc~~fitting_column~~CalledByGraph_edge14" class="edge">
+<title>proc~process_file&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M168.7,-47.43C177.86,-45.74 187.84,-43.9 197.5,-42.12"/>
+<polygon fill="#000000" stroke="#000000" points="197.94,-45.59 207.14,-40.34 196.67,-38.71 197.94,-45.59"/>
+</g>
+<!-- proc~process_stdin -->
+<g id="proc~~fitting_column~~CalledByGraph_node12" class="node">
+<title>proc~process_stdin</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node12"><a xlink:href="../proc/process_stdin.html" xlink:title="process_stdin">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="172.77,-24.27 90,-24.27 90,0 172.77,0 172.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="131.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">process_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~process_stdin&#45;&gt;proc~process_text -->
+<g id="proc~~fitting_column~~CalledByGraph_edge15" class="edge">
+<title>proc~process_stdin&#45;&gt;proc~process_text</title>
+<path fill="none" stroke="#000000" d="M173.14,-19.66C180.94,-21.1 189.18,-22.62 197.21,-24.1"/>
+<polygon fill="#000000" stroke="#000000" points="196.39,-27.51 206.85,-25.88 197.66,-20.62 196.39,-27.51"/>
+</g>
+<!-- proc~run -->
+<g id="proc~~fitting_column~~CalledByGraph_node13" class="node">
+<title>proc~run</title>
+<g id="a_proc~~fitting_column~~CalledByGraph_node13"><a xlink:href="../proc/run.html" xlink:title="run">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="54,-45.27 0,-45.27 0,-21 54,-21 54,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">run</text>
+</a>
+</g>
+</g>
+<!-- proc~run&#45;&gt;proc~process_file -->
+<g id="proc~~fitting_column~~CalledByGraph_edge16" class="edge">
+<title>proc~run&#45;&gt;proc~process_file</title>
+<path fill="none" stroke="#000000" d="M54.37,-38.54C63.15,-40.34 73.22,-42.41 83.09,-44.43"/>
+<polygon fill="#000000" stroke="#000000" points="82.09,-47.8 92.59,-46.38 83.5,-40.95 82.09,-47.8"/>
+</g>
+<!-- proc~run&#45;&gt;proc~process_stdin -->
+<g id="proc~~fitting_column~~CalledByGraph_edge17" class="edge">
+<title>proc~run&#45;&gt;proc~process_stdin</title>
+<path fill="none" stroke="#000000" d="M54.37,-27.73C61.86,-26.19 70.3,-24.46 78.75,-22.73"/>
+<polygon fill="#000000" stroke="#000000" points="79.22,-26.2 88.31,-20.76 77.81,-19.35 79.22,-26.2"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocfitting_columnCalledByGraph = svgPanZoom('#procfitting_columnCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="kt">integer </span><span class="k">function </span><span class="n">fitting_column</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">lend</span><span class="p">,</span><span class="w"> </span><span class="n">candidates</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">prefix</span><span class="p">,</span><span class="w"> </span><span class="n">always_original</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">!! The first of the `candidates` columns at which the output line fits within the line length, or</span>
+<span class="w">    </span><span class="c">!! the smallest if none fits. The last candidate is the line&#39;s original column: if only that one</span>
+<span class="w">    </span><span class="c">!! fits, the line is recorded in `long_lines`. When lines are split (`w%keep_original` false), the</span>
+<span class="w">    </span><span class="c">!! original column is not a candidate for code, since splitting will make the line fit; it is</span>
+<span class="w">    </span><span class="c">!! still used if `always_original` is true (for comments, which are not split). Also when lines are</span>
+<span class="w">    </span><span class="c">!! split, a candidate other than the last is accepted if the line can be split to fit there: if</span>
+<span class="w">    </span><span class="c">!! its first piece up to a possible break fits.</span>
+<span class="w">    </span><span class="c">!!</span>
+<span class="w">    </span><span class="c">!! The input line starts with token `f`. The output line is `prefix` characters (e.g. `&amp; ` for a</span>
+<span class="w">    </span><span class="c">!! leading continuation marker) followed by tokens `from:lend` (default `f:lend`).</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">writer_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="w">                 </span><span class="c">!! the output and the alignment state</span>
+<span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">src</span><span class="w">                </span><span class="c">!! the source text</span>
+<span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">token_list_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tokens</span><span class="w">           </span><span class="c">!! its tokens</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">f</span><span class="w">                           </span><span class="c">!! first non-blank token of the input line</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lend</span><span class="w">                        </span><span class="c">!! last token of the line, its line break if it has one</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">candidates</span><span class="p">(:)</span><span class="w">               </span><span class="c">!! columns to try, best first; negative ones are skipped</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">from</span><span class="w">              </span><span class="c">!! first token written after the prefix; requires `prefix`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">prefix</span><span class="w">            </span><span class="c">!! width of the text written before token `from`</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">always_original</span><span class="w">   </span><span class="c">!! try the original column even when lines are split</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">ncand</span><span class="p">,</span><span class="w"> </span><span class="n">first_piece</span><span class="w"></span>
+<span class="w">    </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">original</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">candidates</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="p">%</span><span class="n">line_length</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="k">    </span><span class="n">original</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">keep_original</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">always_original</span><span class="p">))</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="n">always_original</span><span class="w"></span>
+<span class="w">    </span><span class="n">ncand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">ncand</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">ncand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncand</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">from</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">        </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">line_width</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">lend</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span>
+<span class="k">        </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line_width</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">lend</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end if</span>
+<span class="k">    </span><span class="n">first_piece</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ncand</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">cycle</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ncand</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">line_length</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">first_piece</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">from</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="n">first_piece</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">first_piece_width</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">lend</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span>
+<span class="k">                    </span><span class="n">first_piece</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first_piece_width</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">lend</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end if</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">first_piece</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">line_length</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">   </span><span class="c">! ` &amp;` after the first piece</span>
+<span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span>
+<span class="k">            end if</span>
+<span class="k">        end if</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">w</span><span class="p">%</span><span class="n">line_length</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">candidates</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">original</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">candidates</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="n">w</span><span class="p">%</span><span class="n">long_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">w</span><span class="p">%</span><span class="n">long_lines</span><span class="p">,</span><span class="w"> </span><span class="n">tokens</span><span class="p">%</span><span class="n">tok</span><span class="p">(</span><span class="n">f</span><span class="p">)%</span><span class="n">line</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span>
+<span class="k">        end if</span>
+<span class="k">    end do</span>
+<span class="k">    </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">minval</span><span class="p">(</span><span class="n">candidates</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ncand</span><span class="p">)))</span><span class="w">     </span><span class="c">! too long: it is split later, or was too long already</span>
+<span class="k">end function </span><span class="n">fitting_column</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1825 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>ffmt_format &ndash; fformat</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>ffmt_format
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 7.8% of total for modules and submodules.">420 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/ffmt_format.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/ffmt_format.f90.html'>ffmt_format.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ffmt_format</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_format.html#variable-fmt_err_internal">FMT_ERR_INTERNAL</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#variable-fmt_ok">FMT_OK</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-code_signature">code_signature</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-folded_length">folded_length</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-limit_diagnostics">limit_diagnostics</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-longest_code">longest_code</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-longest_line">longest_line</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-relayout">relayout</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-same_code">same_code</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-same_token">same_token</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-too_long">too_long</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-format_pass">format_pass</a>
+            <a class="list-group-item" href="../module/ffmt_format.html#proc-format_text">format_text</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Formatting a whole source text: the main library entry point.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='ffmt_structure.html'>ffmt_structure</a></li>
+                  <li class="list-inline-item"><a href='ffmt_options.html'>ffmt_options</a></li>
+                  <li class="list-inline-item"><a href='ffmt_tokens.html'>ffmt_tokens</a></li>
+                  <li class="list-inline-item"><a href='ffmt_lexer.html'>ffmt_lexer</a></li>
+                  <li class="list-inline-item"><a href='ffmt_statements.html'>ffmt_statements</a></li>
+                  <li class="list-inline-item"><a href='ffmt_relational.html'>ffmt_relational</a></li>
+                  <li class="list-inline-item"><a href='ffmt_whitespace.html'>ffmt_whitespace</a></li>
+                  <li class="list-inline-item"><a href='ffmt_use_sort.html'>ffmt_use_sort</a></li>
+                  <li class="list-inline-item"><a href='ffmt_layout.html'>ffmt_layout</a></li>
+                  <li class="list-inline-item"><a href='ffmt_source.html'>ffmt_source</a></li>
+                  <li class="list-inline-item"><a href='ffmt_strings.html'>ffmt_strings</a></li>
+                  <li class="list-inline-item"><a href='ffmt_linebreak.html'>ffmt_linebreak</a></li>
+                  <li class="list-inline-item"><a href='ffmt_case.html'>ffmt_case</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_format~~UsesGraph Pages: 1 -->
+<svg id="moduleffmt_formatUsesGraph" width="641pt" height="531pt"
+ viewBox="0.00 0.00 641.00 531.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_format~~UsesGraph" class="graph" transform="scale(0.69624 0.69624) rotate(0) translate(4 759.28)">
+<title>module~~ffmt_format~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-759.28 916.66,-759.28 916.66,4 -4,4"/>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_format~~UsesGraph_node1" class="node">
+<title>module~ffmt_format</title>
+<polygon fill="none" stroke="black" points="912.66,-406.02 838.14,-406.02 838.14,-381.75 912.66,-381.75 912.66,-406.02"/>
+<text xml:space="preserve" text-anchor="middle" x="875.4" y="-390.29" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_format</text>
+</g>
+<!-- module~ffmt_case -->
+<g id="module~~ffmt_format~~UsesGraph_node2" class="node">
+<title>module~ffmt_case</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node2"><a xlink:href="../module/ffmt_case.html" xlink:title="ffmt_case">
+<polygon fill="#337ab7" stroke="#337ab7" points="676.99,-371.02 613.72,-371.02 613.72,-346.75 676.99,-346.75 676.99,-371.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-355.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_format~~UsesGraph_edge1" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C763.28,-297.77 714.74,-322.86 680.31,-340.94"/>
+<polygon fill="#000000" stroke="#000000" points="678.7,-337.83 671.48,-345.58 681.96,-344.02 678.7,-337.83"/>
+</g>
+<!-- module~ffmt_layout -->
+<g id="module~~ffmt_format~~UsesGraph_node3" class="node">
+<title>module~ffmt_layout</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node3"><a xlink:href="../module/ffmt_layout.html" xlink:title="ffmt_layout">
+<polygon fill="#337ab7" stroke="#337ab7" points="802.14,-406.02 730.62,-406.02 730.62,-381.75 802.14,-381.75 802.14,-406.02"/>
+<text xml:space="preserve" text-anchor="middle" x="766.38" y="-390.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_layout -->
+<g id="module~~ffmt_format~~UsesGraph_edge2" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_layout</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M837.87,-393.89C830.05,-393.89 821.69,-393.89 813.56,-393.89"/>
+<polygon fill="#000000" stroke="#000000" points="813.81,-390.39 803.81,-393.89 813.81,-397.39 813.81,-390.39"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~ffmt_format~~UsesGraph_node4" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node4"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-637.02 236.04,-637.02 236.04,-612.75 300.81,-612.75 300.81,-637.02"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-621.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_format~~UsesGraph_edge3" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-662.89C730.68,-680.76 731.18,-701.23 694.62,-714.89 571.95,-760.73 529.17,-765.48 400.94,-738.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-738.89C347.76,-724.9 305.41,-675.7 284.16,-646.71"/>
+<polygon fill="#000000" stroke="#000000" points="287.06,-644.75 278.42,-638.62 281.35,-648.8 287.06,-644.75"/>
+</g>
+<!-- module~ffmt_linebreak -->
+<g id="module~~ffmt_format~~UsesGraph_node5" class="node">
+<title>module~ffmt_linebreak</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node5"><a xlink:href="../module/ffmt_linebreak.html" xlink:title="ffmt_linebreak">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.37,-249.02 601.35,-249.02 601.35,-224.75 689.37,-224.75 689.37,-249.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-233.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_linebreak</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_linebreak -->
+<g id="module~~ffmt_format~~UsesGraph_edge4" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_linebreak</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C733.29,-281.82 727.06,-274.28 694.62,-257.89 692.21,-256.67 689.72,-255.46 687.19,-254.26"/>
+<polygon fill="#000000" stroke="#000000" points="688.65,-251.08 678.1,-250.1 685.74,-257.44 688.65,-251.08"/>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_node6" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node6"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="560.1,-521.02 482.58,-521.02 482.58,-496.75 560.1,-496.75 560.1,-521.02"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-505.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_edge5" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M874.47,-406.28C873.95,-452.2 865.03,-612.63 767.38,-662.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-662.89C717.93,-687.31 737.74,-597.33 694.62,-565.89 674.72,-551.37 614.84,-533.32 571.25,-521.47"/>
+<polygon fill="#000000" stroke="#000000" points="572.31,-518.13 561.74,-518.91 570.49,-524.89 572.31,-518.13"/>
+</g>
+<!-- module~ffmt_relational -->
+<g id="module~~ffmt_format~~UsesGraph_node7" class="node">
+<title>module~ffmt_relational</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node7"><a xlink:href="../module/ffmt_relational.html" xlink:title="ffmt_relational">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.74,-481.02 600.97,-481.02 600.97,-456.75 689.74,-456.75 689.74,-481.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-465.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_relational -->
+<g id="module~~ffmt_format~~UsesGraph_edge6" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_relational</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C749.48,-290.43 685.85,-398.82 658.72,-446.74"/>
+<polygon fill="#000000" stroke="#000000" points="655.82,-444.75 653.97,-455.18 661.92,-448.19 655.82,-444.75"/>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_node8" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node8"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="558.22,-331.02 484.45,-331.02 484.45,-306.75 558.22,-306.75 558.22,-331.02"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-315.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge7" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C718.02,-273.7 699.67,-324.87 646.36,-318.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-318.89C619.89,-316.14 592.48,-315.89 569.85,-316.43"/>
+<polygon fill="#000000" stroke="#000000" points="569.9,-312.93 560.01,-316.73 570.11,-319.93 569.9,-312.93"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_node9" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node9"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-253.02 219.54,-253.02 219.54,-228.75 317.31,-228.75 317.31,-253.02"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-237.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge8" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.92,-381.33C846.19,-360.9 808.18,-320.58 767.38,-298.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C696.37,-262.19 760.07,-180.61 694.62,-137.89 657.95,-113.95 639.59,-132.79 596.1,-137.89 544.59,-143.93 531.12,-146.64 482.58,-164.89 465.65,-171.25 462.95,-176.18 446.58,-183.89 426.7,-193.25 420.64,-193.16 400.94,-202.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-202.89C373.12,-209.67 344.62,-217.94 320.95,-225.03"/>
+<polygon fill="#000000" stroke="#000000" points="320.11,-221.63 311.54,-227.87 322.13,-228.33 320.11,-221.63"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_node10" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node10"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-253.02 0,-253.02 0,-228.75 73.77,-228.75 73.77,-253.02"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-237.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge9" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-738.89C343.42,-723.72 326.38,-730.54 269.42,-738.89"/>
+</g>
+<!-- module~ffmt_structure -->
+<g id="module~~ffmt_format~~UsesGraph_node11" class="node">
+<title>module~ffmt_structure</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node11"><a xlink:href="../module/ffmt_structure.html" xlink:title="ffmt_structure">
+<polygon fill="#337ab7" stroke="#337ab7" points="688.24,-291.02 602.47,-291.02 602.47,-266.75 688.24,-266.75 688.24,-291.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-275.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_structure -->
+<g id="module~~ffmt_format~~UsesGraph_edge10" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C745.46,-288.3 721.25,-283.08 699.88,-280.58"/>
+<polygon fill="#000000" stroke="#000000" points="700.47,-277.12 690.18,-279.63 699.79,-284.09 700.47,-277.12"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_node12" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node12"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-253.02 109.77,-253.02 109.77,-228.75 183.54,-228.75 183.54,-253.02"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-237.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge11" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-662.89C682.71,-704.62 435.23,-644.05 353.31,-600.89 304.93,-575.4 318.77,-534.44 269.42,-510.89"/>
+</g>
+<!-- module~ffmt_use_sort -->
+<g id="module~~ffmt_format~~UsesGraph_node13" class="node">
+<title>module~ffmt_use_sort</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node13"><a xlink:href="../module/ffmt_use_sort.html" xlink:title="ffmt_use_sort">
+<polygon fill="#337ab7" stroke="#337ab7" points="686.74,-171.02 603.97,-171.02 603.97,-146.75 686.74,-146.75 686.74,-171.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-155.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_use_sort</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_use_sort -->
+<g id="module~~ffmt_format~~UsesGraph_edge12" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_use_sort</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-298.89C764.53,-298.43 696.97,-218.69 664.03,-179.77"/>
+<polygon fill="#000000" stroke="#000000" points="666.94,-177.79 657.81,-172.42 661.6,-182.31 666.94,-177.79"/>
+</g>
+<!-- module~ffmt_whitespace -->
+<g id="module~~ffmt_format~~UsesGraph_node14" class="node">
+<title>module~ffmt_whitespace</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node14"><a xlink:href="../module/ffmt_whitespace.html" xlink:title="ffmt_whitespace">
+<polygon fill="#337ab7" stroke="#337ab7" points="694.62,-599.02 596.1,-599.02 596.1,-574.75 694.62,-574.75 694.62,-599.02"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-583.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~ffmt_format~~UsesGraph_edge13" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.38,-662.89C726.21,-683.05 683.39,-637.46 661.34,-608.5"/>
+<polygon fill="#000000" stroke="#000000" points="664.32,-606.65 655.59,-600.65 658.68,-610.78 664.32,-606.65"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_edge14" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M638,-371.25C625.42,-394.87 595.51,-447.26 560.1,-482.89 557.79,-485.22 555.24,-487.47 552.59,-489.61"/>
+<polygon fill="#000000" stroke="#000000" points="550.57,-486.75 544.62,-495.51 554.74,-492.37 550.57,-486.75"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge15" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.25,-348.69C599.97,-344.34 584.19,-339.16 569.52,-334.35"/>
+<polygon fill="#000000" stroke="#000000" points="570.62,-331.03 560.02,-331.24 568.44,-337.68 570.62,-331.03"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge16" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.34,-356.44C588.57,-355.07 553.05,-354.43 522.34,-358.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-358.89C478.24,-365 481,-322.89 446.58,-297.89 428.81,-284.97 421.43,-286.84 400.94,-278.89"/>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge17" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-358.89C391.31,-377.62 384.54,-572.1 269.42,-510.89"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_case -->
+<g id="module~~ffmt_format~~UsesGraph_edge18" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M730.31,-383.58C717,-379.66 701.72,-375.17 687.87,-371.09"/>
+<polygon fill="#000000" stroke="#000000" points="689.17,-367.83 678.59,-368.36 687.19,-374.54 689.17,-367.83"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_edge19" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M759.25,-406.23C748.67,-426.37 725.15,-466.42 694.62,-489.89 676.34,-503.94 666.22,-497.19 646.36,-508.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-508.89C622.79,-521.59 595.14,-522.57 571.61,-519.94"/>
+<polygon fill="#000000" stroke="#000000" points="572.32,-516.5 561.94,-518.6 571.36,-523.44 572.32,-516.5"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge20" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M753.68,-381.27C733.88,-361.25 691.5,-323.95 646.36,-318.89"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge21" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M730.16,-398.49C654.7,-406.52 474.43,-415.64 353.31,-339.89 322.31,-320.5 296.9,-285.91 282.45,-263.18"/>
+<polygon fill="#000000" stroke="#000000" points="285.44,-261.36 277.23,-254.67 279.48,-265.02 285.44,-261.36"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge22" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M764.44,-406.29C761.14,-441.74 747.28,-545.06 694.62,-607.89 638.73,-674.57 605.71,-675.96 522.34,-700.89"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_structure -->
+<g id="module~~ffmt_format~~UsesGraph_edge23" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M757.77,-381.35C746.05,-362.81 722.02,-327.81 694.62,-304.89 691.4,-302.2 687.86,-299.66 684.2,-297.3"/>
+<polygon fill="#000000" stroke="#000000" points="686.08,-294.35 675.69,-292.29 682.53,-300.38 686.08,-294.35"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge24" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-508.89C588.9,-541.55 585.96,-577.12 522.34,-586.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-586.89C467.89,-594.94 453.98,-588.79 400.94,-586.89"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~ffmt_format~~UsesGraph_edge25" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M759.32,-406.32C747.74,-429.73 721.25,-481.7 694.62,-522.89 685.08,-537.64 673.21,-553.41 663.63,-565.6"/>
+<polygon fill="#000000" stroke="#000000" points="660.96,-563.34 657.47,-573.34 666.44,-567.7 660.96,-563.34"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge26" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.45,-637.19C247.68,-671.76 201.73,-765.54 147.65,-738.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-738.89C58.23,-695.79 41.46,-357.87 38.49,-264.64"/>
+<polygon fill="#000000" stroke="#000000" points="41.99,-264.79 38.2,-254.9 35,-265 41.99,-264.79"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge27" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M260.39,-612.29C250.21,-593.67 231.33,-557.47 219.54,-524.89 185.55,-430.96 161.4,-313.99 152,-264.62"/>
+<polygon fill="#000000" stroke="#000000" points="155.45,-264 150.16,-254.82 148.57,-265.29 155.45,-264"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge28" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M612.05,-249.44C606.59,-251.98 601.08,-254.83 596.1,-257.89 576.87,-269.7 557.28,-286.15 543.13,-298.99"/>
+<polygon fill="#000000" stroke="#000000" points="541.15,-296.05 536.18,-305.41 545.9,-301.19 541.15,-296.05"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge29" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M619.33,-224.33C573.41,-203.2 473.73,-166.22 400.94,-202.89"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge30" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M631.28,-224.39C620.54,-213.51 605.61,-196.85 596.1,-179.89 571.16,-135.38 595.22,-107.9 560.1,-70.89 507.85,-15.82 472.52,16.4 400.94,-8.89"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge31" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M625.77,-224.4C591.91,-202.5 517.15,-157.96 446.58,-141.89 406.16,-132.68 392.88,-129.54 353.31,-141.89 310.04,-155.39 313.3,-188.5 269.42,-199.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-199.89C241.16,-206.19 212.51,-215.89 189.82,-224.27"/>
+<polygon fill="#000000" stroke="#000000" points="188.75,-220.94 180.61,-227.73 191.21,-227.49 188.75,-220.94"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_edge32" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M606.09,-481.43C595.07,-485.05 582.9,-489.04 571.33,-492.83"/>
+<polygon fill="#000000" stroke="#000000" points="570.33,-489.47 561.92,-495.91 572.51,-496.12 570.33,-489.47"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge33" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M638,-456.53C625.42,-432.9 595.51,-380.52 560.1,-344.89 557.79,-342.56 555.24,-340.31 552.59,-338.16"/>
+<polygon fill="#000000" stroke="#000000" points="554.74,-335.4 544.62,-332.26 550.57,-341.03 554.74,-335.4"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge34" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M600.49,-463.62C576.96,-462.1 547.67,-462.33 522.34,-468.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-468.89C400.73,-499.84 308.58,-326.76 279.27,-263.42"/>
+<polygon fill="#000000" stroke="#000000" points="282.61,-262.31 275.3,-254.64 276.23,-265.2 282.61,-262.31"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge35" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-468.89C502.3,-474.15 494.78,-473.6 482.58,-487.89 448.36,-527.98 476.72,-557.65 446.58,-600.89 432.31,-621.36 293.96,-734.33 269.42,-738.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-738.89C214.93,-747.72 195.4,-762.43 147.65,-738.89"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge36" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-468.89C502.3,-474.15 497.26,-476.17 482.58,-487.89 438.01,-523.47 457.94,-588.93 400.94,-586.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-586.89C332.24,-584.5 329.66,-539.63 269.42,-510.89"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~ffmt_format~~UsesGraph_edge38" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M499.84,-331.27C493.97,-335.26 487.76,-339.94 482.58,-344.89 394.22,-429.14 313.92,-552.47 282.94,-602.54"/>
+<polygon fill="#000000" stroke="#000000" points="279.97,-600.68 277.73,-611.04 285.94,-604.34 279.97,-600.68"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge39" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M483.97,-307.68C460.16,-300.1 428.46,-289.56 400.94,-278.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-278.89C376.42,-270.15 351.04,-262.29 328.75,-256.01"/>
+<polygon fill="#000000" stroke="#000000" points="329.77,-252.66 319.2,-253.37 327.91,-259.41 329.77,-252.66"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge40" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.15,-329.62C441.55,-342.75 373.96,-365.28 353.31,-381.89 300.02,-424.75 329.89,-542.85 269.42,-510.89"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~ffmt_format~~UsesGraph_node16" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node16"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="444.7,-331.02 355.18,-331.02 355.18,-306.75 444.7,-306.75 444.7,-331.02"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-315.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~ffmt_format~~UsesGraph_edge37" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M484.19,-318.89C475.41,-318.89 465.82,-318.89 456.37,-318.89"/>
+<polygon fill="#000000" stroke="#000000" points="456.49,-315.39 446.49,-318.89 456.49,-322.39 456.49,-315.39"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge41" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M259.28,-228.64C241.05,-202.91 194.87,-146.81 147.65,-161.89"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge42" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.06,-240.89C211.12,-240.89 202.9,-240.89 194.98,-240.89"/>
+<polygon fill="#000000" stroke="#000000" points="195.19,-237.39 185.19,-240.89 195.19,-244.39 195.19,-237.39"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge44" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M606.09,-291.43C594.42,-295.26 581.46,-299.51 569.29,-303.5"/>
+<polygon fill="#000000" stroke="#000000" points="568.25,-300.16 559.84,-306.6 570.43,-306.81 568.25,-300.16"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge45" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-240.89C376.4,-235.99 351.12,-235.02 328.91,-235.61"/>
+<polygon fill="#000000" stroke="#000000" points="328.98,-232.11 319.13,-236 329.26,-239.1 328.98,-232.11"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge46" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M608.63,-266.3C604.16,-263.89 599.85,-261.1 596.1,-257.89 573.36,-238.38 582.16,-221.17 560.1,-200.89 457.7,-106.75 396.29,-27.84 269.42,-84.89"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge47" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M602.3,-273.85C553.56,-267.67 470.96,-256.09 400.94,-240.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-240.89C339.39,-230.95 328.14,-185.8 269.42,-199.89"/>
+</g>
+<!-- module~ffmt_constructs -->
+<g id="module~~ffmt_format~~UsesGraph_node15" class="node">
+<title>module~ffmt_constructs</title>
+<g id="a_module~~ffmt_format~~UsesGraph_node15"><a xlink:href="../module/ffmt_constructs.html" xlink:title="ffmt_constructs">
+<polygon fill="#337ab7" stroke="#337ab7" points="446.58,-175.02 353.31,-175.02 353.31,-150.75 446.58,-150.75 446.58,-175.02"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-159.29" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_constructs -->
+<g id="module~~ffmt_format~~UsesGraph_edge43" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_constructs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M614.92,-266.32C608.69,-263.59 602.16,-260.68 596.1,-257.89 539.63,-231.87 474.89,-199.93 435.99,-180.51"/>
+<polygon fill="#000000" stroke="#000000" points="437.6,-177.4 427.09,-176.05 434.47,-183.66 437.6,-177.4"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge48" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-240.89C101.83,-240.89 93.65,-240.89 85.66,-240.89"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-237.39 75.67,-240.89 85.67,-244.39 85.67,-237.39"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge49" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M633.33,-171.32C623.35,-182.71 608.37,-200.14 596.1,-215.89 574.84,-243.17 551.86,-275.8 537.3,-296.92"/>
+<polygon fill="#000000" stroke="#000000" points="534.51,-294.81 531.73,-305.03 540.28,-298.77 534.51,-294.81"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge50" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M603.69,-163.08C543.79,-169.79 435.21,-184.11 400.94,-202.89"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge51" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M635.75,-146.32C605.66,-104.06 501.51,28.29 400.94,-8.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-8.89C332.93,-18.69 330.21,-57.32 269.42,-84.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-84.89C209.79,-111.02 207.57,-141.52 147.65,-161.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-161.89C110.83,-173.73 77.81,-201.2 57.71,-220.4"/>
+<polygon fill="#000000" stroke="#000000" points="55.43,-217.74 50.75,-227.25 60.34,-222.73 55.43,-217.74"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge52" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M603.49,-147.25C546.83,-132.83 441.43,-112.19 353.31,-129.89 290.12,-142.58 275.32,-153.6 219.54,-185.89 202.08,-195.99 184.06,-209.8 170.42,-221.04"/>
+<polygon fill="#000000" stroke="#000000" points="168.3,-218.26 162.9,-227.37 172.81,-223.61 168.3,-218.26"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_options -->
+<g id="module~~ffmt_format~~UsesGraph_edge53" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M619.45,-574.27C611.84,-570.2 603.52,-565.54 596.1,-560.89 579.38,-550.41 576.23,-546.26 560.1,-534.89 556.88,-532.62 553.49,-530.25 550.13,-527.91"/>
+<polygon fill="#000000" stroke="#000000" points="552.3,-525.16 542.08,-522.36 548.32,-530.92 552.3,-525.16"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_source -->
+<g id="module~~ffmt_format~~UsesGraph_edge54" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M632.1,-574.28C620.98,-562.12 605.01,-542.68 596.1,-522.89 562.98,-449.28 604.58,-412.24 560.1,-344.89 558.56,-342.56 556.74,-340.39 554.74,-338.37"/>
+<polygon fill="#000000" stroke="#000000" points="557.43,-336.05 547.53,-332.3 552.93,-341.41 557.43,-336.05"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge55" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M595.88,-575.72C522.46,-557.92 387.93,-521.59 353.31,-486.89 290.85,-424.28 274.86,-313.35 270.8,-264.79"/>
+<polygon fill="#000000" stroke="#000000" points="274.29,-264.57 270.08,-254.85 267.31,-265.07 274.29,-264.57"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge56" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M637.29,-599.49C621.17,-626.51 578.7,-688.56 522.34,-700.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-700.89C447.08,-716.92 427.42,-713.38 353.31,-724.89 315.96,-730.69 306.7,-732.62 269.42,-738.89"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge57" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M595.71,-583.51C573.25,-582.82 546.31,-583.21 522.34,-586.89"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge58" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M375.96,-175.45C368.64,-179.6 360.56,-184.32 353.31,-188.89 336.83,-199.28 333.81,-203.54 317.31,-213.89 312.61,-216.84 307.57,-219.84 302.59,-222.72"/>
+<polygon fill="#000000" stroke="#000000" points="300.86,-219.68 293.89,-227.66 304.32,-225.77 300.86,-219.68"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_strings -->
+<g id="module~~ffmt_format~~UsesGraph_edge59" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M353.19,-154.43C301.82,-146.81 216.64,-139.85 147.65,-161.89"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge60" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M356.8,-175.49C331.54,-182.9 298.74,-192.28 269.42,-199.89"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~ffmt_format~~UsesGraph_edge61" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M376.57,-306.36C369.13,-302.14 360.83,-297.36 353.31,-292.89 335.01,-282.01 314.72,-269.45 298.68,-259.39"/>
+<polygon fill="#000000" stroke="#000000" points="300.91,-256.66 290.58,-254.3 297.18,-262.58 300.91,-256.66"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~ffmt_format~~UsesGraph_edge62" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M371.02,-331.36C364.68,-335.08 358.34,-339.6 353.31,-344.89 296.34,-404.78 342.51,-549.52 269.42,-510.89"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-510.89C175.54,-462.32 154.08,-321.43 149.12,-264.83"/>
+<polygon fill="#000000" stroke="#000000" points="152.62,-264.73 148.37,-255.02 145.64,-265.26 152.62,-264.73"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmoduleffmt_formatUsesGraph = svgPanZoom('#moduleffmt_formatUsesGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~ffmt_format~~UsedByGraph Pages: 1 -->
+<svg id="moduleffmt_formatUsedByGraph" width="173pt" height="32pt"
+ viewBox="0.00 0.00 173.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~ffmt_format~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>module~~ffmt_format~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 168.52,-28.27 168.52,4 -4,4"/>
+<!-- module~ffmt_format -->
+<g id="module~~ffmt_format~~UsedByGraph_node1" class="node">
+<title>module~ffmt_format</title>
+<polygon fill="none" stroke="black" points="74.52,-24.27 0,-24.27 0,0 74.52,0 74.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="37.26" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">ffmt_format</text>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~ffmt_format~~UsedByGraph_node2" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~ffmt_format~~UsedByGraph_node2"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="164.52,-24.27 110.52,-24.27 110.52,0 164.52,0 164.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="137.52" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~ffmt_format~~UsedByGraph_edge1" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M110.19,-12.13C102.85,-12.13 94.63,-12.13 86.45,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="86.52,-8.64 76.52,-12.14 86.52,-15.64 86.52,-8.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fmt_err_internal"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>FMT_ERR_INTERNAL</strong></td>
+<td> =</td>
+                <td>1</td>
+            <td>
+                <p>formatting would have changed the code; the text is returned unchanged</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fmt_ok"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>FMT_OK</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>formatted</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-code_signature"></span> <h3>private  function <a href='../proc/code_signature.html'>code_signature</a>(src) result(sig)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The code tokens of <code>src</code> as one string that <a href="../proc/same_code.html">same_code</a> compares when <code>use</code> statements may
+be reordered: for each token its kind (operators all alike), whether it is glued to the
+previous token, and its text as <code>key</code> gives it. The signatures of <code>use</code> statements in a run
+are sorted, and so are those of the items of each <code>only:</code> list.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~24"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>source text</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-folded_length"></span> <h3>private pure function <a href='../proc/folded_length.html'>folded_length</a>(text, kind) result(n)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>How much of a token's text, from its start, Fortran reads ignoring case: all of a name, an
+operator or a number (exponent letters and kinds), the kind prefix of a string, and none of
+anything else.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~14"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the token's text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-kind~10"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>kind</strong></td>
+            <td>
+<p>its kind (<code>TK_*</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-limit_diagnostics"></span> <h3>private  function <a href='../proc/limit_diagnostics.html'>limit_diagnostics</a>(src) result(diags)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Warnings for input beyond the limits of the Fortran 2023 standard (6.3.2.1): lines longer than
+10,000 characters, and statements of more than 1,000,000 characters (counted without comments
+and line breaks).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~23"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>source text</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/diagnostic_t.html'>diagnostic_t</a>), allocatable, (:)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-longest_code"></span> <h3>public pure function <a href='../proc/longest_code.html'>longest_code</a>(text) result(width)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>An upper bound of the width of the longest code line of <code>text</code>: the characters of each line
+before a comment, without the blanks before it, as <a href="../proc/long_code_lines.html">long_code_lines</a> counts them.
+Preprocessor lines do not count. Strings are followed across continuation lines, so that a
+<code>!</code> inside one does not end the code, but the scan does not tokenize, so it may count more
+than a token-based count would; never less.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~12"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the formatted text</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-longest_line"></span> <h3>private pure function <a href='../proc/longest_line.html'>longest_line</a>(text) result(width)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Width of the longest line of <code>text</code>, in characters (as <a href="../proc/utf8_width.html">utf8_width</a> counts them).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~13"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>text whose lines end with LF</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-relayout"></span> <h3>private  function <a href='../proc/relayout.html'>relayout</a>(text, changed, opts) result(out)  
+</h3></div>
+    <div class="card-body">
+          
+  <p><code>text</code> with the statements at <code>changed</code> (byte ranges, in order) laid out again, each on its own
+at the column where it starts. <code>text</code> is formatted apart from those statements, and they do
+not depend on the lines around them (see <a href="../proc/stands_alone.html">stands_alone</a>), so this gives what formatting the
+whole text again would, in a fraction of the time.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~10"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the text, after lines were split</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-changed~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>changed</strong>(:,:)</td>
+            <td>
+<p>byte ranges of the statements to lay out</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~5"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>the formatting options</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>character(len=:), allocatable</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-same_code"></span> <h3>public  function <a href='../proc/same_code.html'>same_code</a>(a, b, reordered_use, a_tokens)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>True if <code>a</code> and <code>b</code> have the same code tokens, in the same order, with the same text and the
+same joins across line breaks (blanks, comments and line layout may differ). Names and dot
+operators are compared ignoring case, as Fortran does, and the two spellings of a relational
+operator (<code>&lt;</code> and <code>.lt.</code>) are the same.</p><a href="../proc/same_code.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~5"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+<p>first source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~3"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong></td>
+            <td>
+<p>second source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reordered_use"></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reordered_use</strong></td>
+            <td>
+<p>allow reordered <code>use</code> statements; default false</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a_tokens"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a_tokens</strong></td>
+            <td>
+<p>the tokens of <code>a</code>, if already known</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-same_token"></span> <h3>private pure function <a href='../proc/same_token.html'>same_token</a>(sa, s, sb, t)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>True if code token <code>s</code> of <code>sa</code> matches code token <code>t</code> of <code>sb</code>, as their keys in
+<a href="../proc/code_signature.html">code_signature</a> would: same kind (operators all alike), same glue, and the same text,
+ignoring case where Fortran does (see <a href="../proc/folded_length.html">folded_length</a>), with relational operators in their
+symbol spelling.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-sa"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>sa</strong></td>
+            <td>
+<p>source text of <code>s</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s~2"></span>
+              type(<a href='../type/token_t.html'>token_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s</strong></td>
+            <td>
+<p>a code token of <code>sa</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-sb"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>sb</strong></td>
+            <td>
+<p>source text of <code>t</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t~11"></span>
+              type(<a href='../type/token_t.html'>token_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+            <td>
+<p>a code token of <code>sb</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-too_long"></span> <h3>private pure function <a href='../proc/too_long.html'>too_long</a>(text, limit)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>True if a code line of <code>text</code> may be longer than <code>limit</code> characters (see <a href="../proc/longest_code.html">longest_code</a>).
+A line has no more characters than bytes, so the scan is only needed when a line has more
+bytes than that, which finding the line breaks shows quickly.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-text~11"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>text</strong></td>
+            <td>
+<p>the formatted text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-limit"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>limit</strong></td>
+            <td>
+<p>the line length</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-format_pass"></span> <h3>private  subroutine <a href='../proc/format_pass.html'>format_pass</a>(src, opts, out, diags, src_tokens)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>One pass of the formatter: structure, whitespace, case and layout.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~22"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>source text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~4"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>formatting options</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-out~3"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>out</strong></td>
+            <td>
+<p>the formatted text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-diags~3"></span>
+              type(<a href='../type/diagnostic_t.html'>diagnostic_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>diags</strong>(:)</td>
+            <td>
+<p>problems found in this pass</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src_tokens"></span>
+              type(<a href='../type/token_list_t.html'>token_list_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src_tokens</strong></td>
+            <td>
+<p>the tokens of <code>src</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-format_text"></span> <h3>public  subroutine <a href='../proc/format_text.html'>format_text</a>(src, opts, out, stat, errmsg, diags)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Format <code>src</code>. On success <code>out</code> is the formatted text and <code>stat</code> is <code>FMT_OK</code>.</p><a href="../proc/format_text.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-src~21"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>src</strong></td>
+            <td>
+<p>source text to format</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-opts~3"></span>
+              type(<a href='../type/format_options_t.html'>format_options_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>opts</strong></td>
+            <td>
+<p>formatting options</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-out~2"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>out</strong></td>
+            <td>
+<p>the formatted text</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-stat~3"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>stat</strong></td>
+            <td>
+<p><code>FMT_OK</code> or <code>FMT_ERR_INTERNAL</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-errmsg~3"></span>
+              character(len=:),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>errmsg</strong></td>
+            <td>
+<p>error message; unallocated if <code>stat</code> is <code>FMT_OK</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-diags~2"></span>
+              type(<a href='../type/diagnostic_t.html'>diagnostic_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>diags</strong>(:)</td>
+            <td>
+<p>problems found while formatting</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

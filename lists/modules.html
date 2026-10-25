@@ -1,0 +1,1096 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A formatter for modern Fortran source code">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Modules &ndash; fformat
+</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">fformat </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Modules</h1>
+			 <table class="table">
+			 <thead><tr><th>Module</th><th>Source File</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr class="active">
+                 <td><a href='../module/ffmt_case.html'>ffmt_case</a></td>
+                 <td><a href='../sourcefile/ffmt_case.f90.html'>ffmt_case.f90</a></td>
+                 <td><p>Letter case of keywords, dot operators, intrinsic procedures, the constants of the intrinsic
+modules, and kinds.</p><a href="../module/ffmt_case.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_cli.html'>ffmt_cli</a></td>
+                 <td><a href='../sourcefile/ffmt_cli.f90.html'>ffmt_cli.f90</a></td>
+                 <td><p>Command-line interface: argument parsing and processing of files and directories.</p></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_config.html'>ffmt_config</a></td>
+                 <td><a href='../sourcefile/ffmt_config.f90.html'>ffmt_config.f90</a></td>
+                 <td><p>Configuration files.</p><a href="../module/ffmt_config.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_constructs.html'>ffmt_constructs</a></td>
+                 <td><a href='../sourcefile/ffmt_constructs.f90.html'>ffmt_constructs.f90</a></td>
+                 <td><p>Classifies statements by their role in the block structure: opening a construct or program
+unit, continuing one (<code>else</code>, <code>case</code>, <code>contains</code>, ...), or closing one.</p><a href="../module/ffmt_constructs.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_diff.html'>ffmt_diff</a></td>
+                 <td><a href='../sourcefile/ffmt_diff.f90.html'>ffmt_diff.f90</a></td>
+                 <td><p>Unified diffs of two texts, for <code>--diff</code>.</p><a href="../module/ffmt_diff.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_directives.html'>ffmt_directives</a></td>
+                 <td><a href='../sourcefile/ffmt_directives.f90.html'>ffmt_directives.f90</a></td>
+                 <td><p>Formatter directives in comments, which protect code from formatting:</p><a href="../module/ffmt_directives.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_format.html'>ffmt_format</a></td>
+                 <td><a href='../sourcefile/ffmt_format.f90.html'>ffmt_format.f90</a></td>
+                 <td><p>Formatting a whole source text: the main library entry point.</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_fs.html'>ffmt_fs</a></td>
+                 <td><a href='../sourcefile/ffmt_fs.f90.html'>ffmt_fs.f90</a></td>
+                 <td><p>Portable file system access that standard Fortran lacks: listing a directory and telling
+directories from files. Written in Fortran with interfaces to <code>opendir</code>, <code>readdir</code> and <code>closedir</code>,
+which POSIX systems and MinGW-w64 (gfortran on Windows) provide.</p><a href="../module/ffmt_fs.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_io.html'>ffmt_io</a></td>
+                 <td><a href='../sourcefile/ffmt_io.f90.html'>ffmt_io.f90</a></td>
+                 <td><p>Reading and writing whole files as bytes, so that line endings are preserved on every platform.</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_layout.html'>ffmt_layout</a></td>
+                 <td><a href='../sourcefile/ffmt_layout.f90.html'>ffmt_layout.f90</a></td>
+                 <td><p>Writes the formatted text of a tokenized file: statements indented by their nesting depth,
+continuation lines aligned or indented by a fixed amount, comment lines indented like the code
+around them, and within each line the blanks and letter case that <a href="../proc/compute_gaps.html">compute_gaps</a> and
+<a href="../proc/compute_case.html">compute_case</a> ask for. Trailing blanks are removed.</p><a href="../module/ffmt_layout.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_lexer.html'>ffmt_lexer</a></td>
+                 <td><a href='../sourcefile/ffmt_lexer.f90.html'>ffmt_lexer.f90</a></td>
+                 <td><p>Lexer for free-form Fortran.</p><a href="../module/ffmt_lexer.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_linebreak.html'>ffmt_linebreak</a></td>
+                 <td><a href='../sourcefile/ffmt_linebreak.f90.html'>ffmt_linebreak.f90</a></td>
+                 <td><p>Splitting code lines that are longer than the line length.</p><a href="../module/ffmt_linebreak.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_options.html'>ffmt_options</a></td>
+                 <td><a href='../sourcefile/ffmt_options.f90.html'>ffmt_options.f90</a></td>
+                 <td><p>Formatting options: all the settings, with their defaults, and the modes they take. The modules
+that apply them (<a href="../module/ffmt_whitespace.html">ffmt_whitespace</a>, <a href="../module/ffmt_case.html">ffmt_case</a>, <a href="../module/ffmt_relational.html">ffmt_relational</a>, <a href="../module/ffmt_layout.html">ffmt_layout</a>) use
+this module, not the other way round, so it depends on nothing.</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_relational.html'>ffmt_relational</a></td>
+                 <td><a href='../sourcefile/ffmt_relational.f90.html'>ffmt_relational.f90</a></td>
+                 <td><p>Spelling of the relational operators: <code>==</code> / <code>.eq.</code>, <code>/=</code> / <code>.ne.</code>, <code>&lt;</code> / <code>.lt.</code>, <code>&lt;=</code> / <code>.le.</code>,
+<code>&gt;</code> / <code>.gt.</code> and <code>&gt;=</code> / <code>.ge.</code>. The two spellings are the same operator, also in <code>operator(...)</code>.</p><a href="../module/ffmt_relational.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_settings.html'>ffmt_settings</a></td>
+                 <td><a href='../sourcefile/ffmt_settings.f90.html'>ffmt_settings.f90</a></td>
+                 <td><p>Named settings, as written in a config file or given on the command line, applied to the options.</p><a href="../module/ffmt_settings.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_source.html'>ffmt_source</a></td>
+                 <td><a href='../sourcefile/ffmt_source.f90.html'>ffmt_source.f90</a></td>
+                 <td><p>A source text read for formatting: its tokens, its statements and which of them formatter
+directives protect. Every pass that works on the text (formatting, line splitting, relational
+spelling, <code>use</code> sorting) starts from one of these.</p></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_statements.html'>ffmt_statements</a></td>
+                 <td><a href='../sourcefile/ffmt_statements.f90.html'>ffmt_statements.f90</a></td>
+                 <td><p>Groups tokens into statements and standalone lines.</p><a href="../module/ffmt_statements.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_strings.html'>ffmt_strings</a></td>
+                 <td><a href='../sourcefile/ffmt_strings.f90.html'>ffmt_strings.f90</a></td>
+                 <td><p>String helpers.</p></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_structure.html'>ffmt_structure</a></td>
+                 <td><a href='../sourcefile/ffmt_structure.f90.html'>ffmt_structure.f90</a></td>
+                 <td><p>Block structure of a file: the nesting depth of every statement, from a stack of open
+constructs, plus diagnostics for statements that do not fit (an <code>end</code> with nothing to close,
+an <code>else</code> outside an <code>if</code>, a construct still open at the end of the file, ...).</p></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_tokens.html'>ffmt_tokens</a></td>
+                 <td><a href='../sourcefile/ffmt_tokens.f90.html'>ffmt_tokens.f90</a></td>
+                 <td><p>Tokens of free-form Fortran source.</p><a href="../module/ffmt_tokens.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_use_sort.html'>ffmt_use_sort</a></td>
+                 <td><a href='../sourcefile/ffmt_use_sort.f90.html'>ffmt_use_sort.f90</a></td>
+                 <td><p>Sorting <code>use</code> statements, and the names in their <code>only:</code> lists, alphabetically ignoring case.</p><a href="../module/ffmt_use_sort.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			   <tr class="">
+                 <td><a href='../module/ffmt_walk.html'>ffmt_walk</a></td>
+                 <td><a href='../sourcefile/ffmt_walk.f90.html'>ffmt_walk.f90</a></td>
+                 <td><p>Finding the Fortran files under a directory.</p><a href="../module/ffmt_walk.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!---->			   <tr class="active">
+                 <td><a href='../module/ffmt_whitespace.html'>ffmt_whitespace</a></td>
+                 <td><a href='../sourcefile/ffmt_whitespace.f90.html'>ffmt_whitespace.f90</a></td>
+                 <td><p>Whitespace rules within lines: the blanks wanted between pairs of adjacent tokens.</p><a href="../module/ffmt_whitespace.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+<!--active-->			 </tbody></table>
+             <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~graph~~ModuleGraph Pages: 1 -->
+<svg id="modulegraphModuleGraph" width="855pt" height="972pt"
+ viewBox="0.00 0.00 855.00 972.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~graph~~ModuleGraph" class="graph" transform="scale(0.826358 0.826358) rotate(0) translate(4 1172.46)">
+<title>module~~graph~~ModuleGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1172.46 1030.66,-1172.46 1030.66,4 -4,4"/>
+<!-- module~ffmt_case -->
+<g id="module~~graph~~ModuleGraph_node1" class="node">
+<title>module~ffmt_case</title>
+<g id="a_module~~graph~~ModuleGraph_node1"><a xlink:href="../module/ffmt_case.html" xlink:title="ffmt_case">
+<polygon fill="#337ab7" stroke="#337ab7" points="676.99,-783.88 613.72,-783.88 613.72,-759.61 676.99,-759.61 676.99,-783.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-768.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_case</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_node13" class="node">
+<title>module~ffmt_options</title>
+<g id="a_module~~graph~~ModuleGraph_node13"><a xlink:href="../module/ffmt_options.html" xlink:title="ffmt_options">
+<polygon fill="#337ab7" stroke="#337ab7" points="560.1,-943.88 482.58,-943.88 482.58,-919.61 560.1,-919.61 560.1,-943.88"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-928.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_options</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge1" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.24,-784.02C606.9,-787.67 600.76,-792.21 596.1,-797.74 563.54,-836.47 590.51,-865.31 560.1,-905.74 558.38,-908.03 556.41,-910.18 554.28,-912.2"/>
+<polygon fill="#000000" stroke="#000000" points="552.28,-909.31 546.7,-918.32 556.68,-914.75 552.28,-909.31"/>
+</g>
+<!-- module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_node16" class="node">
+<title>module~ffmt_source</title>
+<g id="a_module~~graph~~ModuleGraph_node16"><a xlink:href="../module/ffmt_source.html" xlink:title="ffmt_source">
+<polygon fill="#337ab7" stroke="#337ab7" points="558.22,-749.88 484.45,-749.88 484.45,-725.61 558.22,-725.61 558.22,-749.88"/>
+<text xml:space="preserve" text-anchor="middle" x="521.34" y="-734.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_source</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge2" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.25,-763.08C599.97,-759.38 584.19,-754.98 569.52,-750.89"/>
+<polygon fill="#000000" stroke="#000000" points="570.62,-747.56 560.04,-748.25 568.74,-754.31 570.62,-747.56"/>
+</g>
+<!-- module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_node17" class="node">
+<title>module~ffmt_statements</title>
+<g id="a_module~~graph~~ModuleGraph_node17"><a xlink:href="../module/ffmt_statements.html" xlink:title="ffmt_statements">
+<polygon fill="#337ab7" stroke="#337ab7" points="317.31,-904.88 219.54,-904.88 219.54,-880.61 317.31,-880.61 317.31,-904.88"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-889.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_statements</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge3" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.36,-780.01C607.36,-782.33 601.33,-785.21 596.1,-788.74 576.01,-802.33 577.18,-812.53 560.1,-829.74 543.41,-846.57 424.64,-972.28 400.94,-971.74"/>
+</g>
+<!-- module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_node20" class="node">
+<title>module~ffmt_tokens</title>
+<g id="a_module~~graph~~ModuleGraph_node20"><a xlink:href="../module/ffmt_tokens.html" xlink:title="ffmt_tokens">
+<polygon fill="#337ab7" stroke="#337ab7" points="183.54,-904.88 109.77,-904.88 109.77,-880.61 183.54,-880.61 183.54,-904.88"/>
+<text xml:space="preserve" text-anchor="middle" x="146.65" y="-889.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_tokens</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_case&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge4" class="edge">
+<title>module~ffmt_case&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613.25,-772.49C565.44,-772.49 471.98,-767.88 400.94,-735.74"/>
+</g>
+<!-- module~ffmt_cli -->
+<g id="module~~graph~~ModuleGraph_node2" class="node">
+<title>module~ffmt_cli</title>
+<g id="a_module~~graph~~ModuleGraph_node2"><a xlink:href="../module/ffmt_cli.html" xlink:title="ffmt_cli">
+<polygon fill="#337ab7" stroke="#337ab7" points="1026.66,-325.88 972.66,-325.88 972.66,-301.61 1026.66,-301.61 1026.66,-325.88"/>
+<text xml:space="preserve" text-anchor="middle" x="999.66" y="-310.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_cli</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_config -->
+<g id="module~~graph~~ModuleGraph_node3" class="node">
+<title>module~ffmt_config</title>
+<g id="a_module~~graph~~ModuleGraph_node3"><a xlink:href="../module/ffmt_config.html" xlink:title="ffmt_config">
+<polygon fill="#337ab7" stroke="#337ab7" points="935.16,-295.88 863.64,-295.88 863.64,-271.61 935.16,-271.61 935.16,-295.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-280.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_config</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_config -->
+<g id="module~~graph~~ModuleGraph_edge6" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_config</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M972.33,-305.71C964.25,-303.24 955.1,-300.45 946.12,-297.7"/>
+<polygon fill="#000000" stroke="#000000" points="947.34,-294.42 936.76,-294.85 945.3,-301.11 947.34,-294.42"/>
+</g>
+<!-- module~ffmt_diff -->
+<g id="module~~graph~~ModuleGraph_node5" class="node">
+<title>module~ffmt_diff</title>
+<g id="a_module~~graph~~ModuleGraph_node5"><a xlink:href="../module/ffmt_diff.html" xlink:title="ffmt_diff">
+<polygon fill="#337ab7" stroke="#337ab7" points="927.28,-165.88 871.51,-165.88 871.51,-141.61 927.28,-141.61 927.28,-165.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-150.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_diff</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_diff -->
+<g id="module~~graph~~ModuleGraph_edge7" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_diff</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M991.36,-301.17C979.92,-281.52 956.97,-242.42 936.66,-209.74 929.6,-198.38 921.53,-185.87 914.8,-175.57"/>
+<polygon fill="#000000" stroke="#000000" points="917.84,-173.82 909.43,-167.38 911.99,-177.66 917.84,-173.82"/>
+</g>
+<!-- module~ffmt_format -->
+<g id="module~~graph~~ModuleGraph_node7" class="node">
+<title>module~ffmt_format</title>
+<g id="a_module~~graph~~ModuleGraph_node7"><a xlink:href="../module/ffmt_format.html" xlink:title="ffmt_format">
+<polygon fill="#337ab7" stroke="#337ab7" points="936.66,-859.88 862.14,-859.88 862.14,-835.61 936.66,-835.61 936.66,-859.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-844.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_format</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_format -->
+<g id="module~~graph~~ModuleGraph_edge8" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_format</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M996.38,-326.16C983.68,-395.18 921.72,-731.87 904.72,-824.26"/>
+<polygon fill="#000000" stroke="#000000" points="901.31,-823.44 902.95,-833.91 908.2,-824.71 901.31,-823.44"/>
+</g>
+<!-- module~ffmt_fs -->
+<g id="module~~graph~~ModuleGraph_node8" class="node">
+<title>module~ffmt_fs</title>
+<g id="a_module~~graph~~ModuleGraph_node8"><a xlink:href="../module/ffmt_fs.html" xlink:title="ffmt_fs">
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-203.88 751.38,-203.88 751.38,-179.61 805.38,-179.61 805.38,-203.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-188.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_fs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_fs -->
+<g id="module~~graph~~ModuleGraph_edge9" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M985.65,-301.31C973.62,-290.24 954.88,-274.08 936.66,-262.74 890.89,-234.26 875.29,-234.9 826.14,-212.74 822.81,-211.25 819.35,-209.69 815.89,-208.13"/>
+<polygon fill="#000000" stroke="#000000" points="817.54,-205.03 806.98,-204.13 814.67,-211.42 817.54,-205.03"/>
+</g>
+<!-- module~ffmt_io -->
+<g id="module~~graph~~ModuleGraph_node9" class="node">
+<title>module~ffmt_io</title>
+<g id="a_module~~graph~~ModuleGraph_node9"><a xlink:href="../module/ffmt_io.html" xlink:title="ffmt_io">
+<polygon fill="#337ab7" stroke="#337ab7" points="926.4,-1015.88 872.4,-1015.88 872.4,-991.61 926.4,-991.61 926.4,-1015.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-1000.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_io</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_io -->
+<g id="module~~graph~~ModuleGraph_edge10" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_io</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.88,-326.29C1000.09,-407.65 1003.72,-860.88 936.66,-977.74 935.53,-979.71 934.19,-981.57 932.69,-983.31"/>
+<polygon fill="#000000" stroke="#000000" points="930.33,-980.73 925.36,-990.09 935.08,-985.87 930.33,-980.73"/>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge11" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.12,-326.36C994.61,-405.07 974.15,-826.83 936.66,-868.74 844.28,-972.02 660.04,-956.5 571.75,-941.78"/>
+<polygon fill="#000000" stroke="#000000" points="572.4,-938.34 561.95,-940.07 571.2,-945.24 572.4,-938.34"/>
+</g>
+<!-- module~ffmt_settings -->
+<g id="module~~graph~~ModuleGraph_node15" class="node">
+<title>module~ffmt_settings</title>
+<g id="a_module~~graph~~ModuleGraph_node15"><a xlink:href="../module/ffmt_settings.html" xlink:title="ffmt_settings">
+<polygon fill="#337ab7" stroke="#337ab7" points="818.26,-367.88 738.49,-367.88 738.49,-343.61 818.26,-343.61 818.26,-367.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-352.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_settings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_settings -->
+<g id="module~~graph~~ModuleGraph_edge12" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M972.21,-318.81C937,-325.55 874.03,-337.62 829.64,-346.12"/>
+<polygon fill="#000000" stroke="#000000" points="829.15,-342.65 819.99,-347.97 830.47,-349.52 829.15,-342.65"/>
+</g>
+<!-- module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_node18" class="node">
+<title>module~ffmt_strings</title>
+<g id="a_module~~graph~~ModuleGraph_node18"><a xlink:href="../module/ffmt_strings.html" xlink:title="ffmt_strings">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.77,-904.88 0,-904.88 0,-880.61 73.77,-880.61 73.77,-904.88"/>
+<text xml:space="preserve" text-anchor="middle" x="36.88" y="-889.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_strings</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge13" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.71,-326.21C998.86,-410.13 997.05,-893.29 936.66,-1024.74 855.7,-1200.98 716.19,-1167.96 522.34,-1161.74"/>
+</g>
+<!-- module~ffmt_walk -->
+<g id="module~~graph~~ModuleGraph_node22" class="node">
+<title>module~ffmt_walk</title>
+<g id="a_module~~graph~~ModuleGraph_node22"><a xlink:href="../module/ffmt_walk.html" xlink:title="ffmt_walk">
+<polygon fill="#337ab7" stroke="#337ab7" points="930.66,-43.88 868.14,-43.88 868.14,-19.61 930.66,-19.61 930.66,-43.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-28.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_walk</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;module~ffmt_walk -->
+<g id="module~~graph~~ModuleGraph_edge14" class="edge">
+<title>module~ffmt_cli&#45;&gt;module~ffmt_walk</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M999.01,-301.15C999.49,-260.77 996,-132.53 936.66,-52.74 936.43,-52.44 936.2,-52.14 935.96,-51.84"/>
+<polygon fill="#000000" stroke="#000000" points="938.57,-49.48 928.87,-45.22 933.79,-54.6 938.57,-49.48"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~graph~~ModuleGraph_node27" class="node">
+<title>iso_fortran_env</title>
+<g id="a_module~~graph~~ModuleGraph_node27"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="825.01,-123.88 731.74,-123.88 731.74,-99.61 825.01,-99.61 825.01,-123.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-108.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_cli&#45;&gt;iso_fortran_env -->
+<g id="module~~graph~~ModuleGraph_edge5" class="edge">
+<title>module~ffmt_cli&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M998.56,-301.18C997.55,-267.78 989.83,-176.34 936.66,-132.74 909.12,-110.17 869.3,-105.04 836.61,-105.49"/>
+<polygon fill="#000000" stroke="#000000" points="836.77,-101.98 826.89,-105.81 837,-108.98 836.77,-101.98"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_fs -->
+<g id="module~~graph~~ModuleGraph_edge15" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M888.23,-271.34C875.15,-255.99 851.12,-229.81 826.14,-212.74 822.88,-210.52 819.35,-208.43 815.74,-206.51"/>
+<polygon fill="#000000" stroke="#000000" points="817.38,-203.41 806.85,-202.18 814.31,-209.71 817.38,-203.41"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_settings -->
+<g id="module~~graph~~ModuleGraph_edge16" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_settings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M882.63,-296.22C868.37,-307.16 846.55,-323.1 826.14,-334.74 824.09,-335.92 821.96,-337.07 819.79,-338.2"/>
+<polygon fill="#000000" stroke="#000000" points="818.28,-335.04 810.85,-342.59 821.37,-341.32 818.28,-335.04"/>
+</g>
+<!-- module~ffmt_config&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge17" class="edge">
+<title>module~ffmt_config&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.17,-279.83C828.39,-277.29 774.22,-276.94 730.62,-292.74 686.66,-308.68 692.6,-348.78 646.36,-355.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-355.74C590.58,-362.71 568.85,-327.85 522.34,-355.74"/>
+</g>
+<!-- tomlf -->
+<g id="module~~graph~~ModuleGraph_node28" class="node">
+<title>tomlf</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-325.88 751.38,-325.88 751.38,-301.61 805.38,-301.61 805.38,-325.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-310.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tomlf</text>
+</g>
+<!-- module~ffmt_config&#45;&gt;tomlf -->
+<g id="module~~graph~~ModuleGraph_edge18" class="edge">
+<title>module~ffmt_config&#45;&gt;tomlf</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M863.33,-292.58C848.58,-296.3 831.4,-300.63 816.44,-304.4"/>
+<polygon fill="#000000" stroke="#000000" points="815.82,-300.95 806.98,-306.79 817.53,-307.74 815.82,-300.95"/>
+</g>
+<!-- tomlf_constants -->
+<g id="module~~graph~~ModuleGraph_node29" class="node">
+<title>tomlf_constants</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="826.14,-245.88 730.62,-245.88 730.62,-221.61 826.14,-221.61 826.14,-245.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-230.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">tomlf_constants</text>
+</g>
+<!-- module~ffmt_config&#45;&gt;tomlf_constants -->
+<g id="module~~graph~~ModuleGraph_edge19" class="edge">
+<title>module~ffmt_config&#45;&gt;tomlf_constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M868.37,-271.13C853.71,-264.97 835.85,-257.47 820,-250.81"/>
+<polygon fill="#000000" stroke="#000000" points="821.37,-247.59 810.8,-246.94 818.66,-254.04 821.37,-247.59"/>
+</g>
+<!-- module~ffmt_constructs -->
+<g id="module~~graph~~ModuleGraph_node4" class="node">
+<title>module~ffmt_constructs</title>
+<g id="a_module~~graph~~ModuleGraph_node4"><a xlink:href="../module/ffmt_constructs.html" xlink:title="ffmt_constructs">
+<polygon fill="#337ab7" stroke="#337ab7" points="446.58,-1095.88 353.31,-1095.88 353.31,-1071.61 446.58,-1071.61 446.58,-1095.88"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-1080.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_constructs</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge20" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M390.45,-1071.21C368.81,-1039.3 311.41,-954.66 284.17,-914.49"/>
+<polygon fill="#000000" stroke="#000000" points="287.14,-912.64 278.64,-906.33 281.35,-916.57 287.14,-912.64"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge21" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-1084.74C217.07,-1067.5 198.08,-1101.8 147.65,-1084.74"/>
+</g>
+<!-- module~ffmt_constructs&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge22" class="edge">
+<title>module~ffmt_constructs&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M353.1,-1091.39C327.77,-1093.83 296.12,-1093.89 269.42,-1084.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-1084.74C244.31,-1076.83 235.91,-1075.88 219.54,-1057.74 181.53,-1015.62 161.27,-950.24 152.71,-915.78"/>
+<polygon fill="#000000" stroke="#000000" points="156.21,-915.38 150.51,-906.45 149.4,-916.99 156.21,-915.38"/>
+</g>
+<!-- module~ffmt_diff&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge24" class="edge">
+<title>module~ffmt_diff&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.22,-151.35C837.91,-148.19 779.82,-141.92 730.62,-132.74 692.68,-125.67 675.97,-86.99 646.36,-111.74"/>
+</g>
+<!-- module~ffmt_diff&#45;&gt;iso_fortran_env -->
+<g id="module~~graph~~ModuleGraph_edge23" class="edge">
+<title>module~ffmt_diff&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.09,-144.11C857.73,-139.39 841.26,-133.58 825.99,-128.19"/>
+<polygon fill="#000000" stroke="#000000" points="827.16,-124.89 816.57,-124.87 824.83,-131.5 827.16,-124.89"/>
+</g>
+<!-- module~ffmt_directives -->
+<g id="module~~graph~~ModuleGraph_node6" class="node">
+<title>module~ffmt_directives</title>
+<g id="a_module~~graph~~ModuleGraph_node6"><a xlink:href="../module/ffmt_directives.html" xlink:title="ffmt_directives">
+<polygon fill="#337ab7" stroke="#337ab7" points="444.7,-825.88 355.18,-825.88 355.18,-801.61 444.7,-801.61 444.7,-825.88"/>
+<text xml:space="preserve" text-anchor="middle" x="399.94" y="-810.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_directives</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge25" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M378.42,-826.26C357.2,-839.21 323.84,-859.55 299.61,-874.33"/>
+<polygon fill="#000000" stroke="#000000" points="297.86,-871.3 291.14,-879.5 301.5,-877.28 297.86,-871.3"/>
+</g>
+<!-- module~ffmt_directives&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge26" class="edge">
+<title>module~ffmt_directives&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M389.53,-801.32C361.15,-764.05 277.87,-655.95 269.42,-659.74"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_case -->
+<g id="module~~graph~~ModuleGraph_edge27" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C765.14,-643.58 698.35,-714.26 665.13,-750.78"/>
+<polygon fill="#000000" stroke="#000000" points="662.59,-748.38 658.48,-758.14 667.78,-753.07 662.59,-748.38"/>
+</g>
+<!-- module~ffmt_layout -->
+<g id="module~~graph~~ModuleGraph_node10" class="node">
+<title>module~ffmt_layout</title>
+<g id="a_module~~graph~~ModuleGraph_node10"><a xlink:href="../module/ffmt_layout.html" xlink:title="ffmt_layout">
+<polygon fill="#337ab7" stroke="#337ab7" points="814.14,-859.88 742.62,-859.88 742.62,-835.61 814.14,-835.61 814.14,-859.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-844.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_layout</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_layout -->
+<g id="module~~graph~~ModuleGraph_edge28" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_layout</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M861.72,-847.74C850.33,-847.74 837.63,-847.74 825.68,-847.74"/>
+<polygon fill="#000000" stroke="#000000" points="826.03,-844.24 816.03,-847.74 826.03,-851.24 826.03,-844.24"/>
+</g>
+<!-- module~ffmt_lexer -->
+<g id="module~~graph~~ModuleGraph_node11" class="node">
+<title>module~ffmt_lexer</title>
+<g id="a_module~~graph~~ModuleGraph_node11"><a xlink:href="../module/ffmt_lexer.html" xlink:title="ffmt_lexer">
+<polygon fill="#337ab7" stroke="#337ab7" points="300.81,-521.88 236.04,-521.88 236.04,-497.61 300.81,-497.61 300.81,-521.88"/>
+<text xml:space="preserve" text-anchor="middle" x="268.42" y="-506.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_lexer</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_lexer -->
+<g id="module~~graph~~ModuleGraph_edge29" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-393.74C509.19,-390.37 370.68,-458.81 304.37,-492.09"/>
+<polygon fill="#000000" stroke="#000000" points="303.09,-488.82 295.73,-496.44 306.24,-495.07 303.09,-488.82"/>
+</g>
+<!-- module~ffmt_linebreak -->
+<g id="module~~graph~~ModuleGraph_node12" class="node">
+<title>module~ffmt_linebreak</title>
+<g id="a_module~~graph~~ModuleGraph_node12"><a xlink:href="../module/ffmt_linebreak.html" xlink:title="ffmt_linebreak">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.37,-559.88 601.35,-559.88 601.35,-535.61 689.37,-535.61 689.37,-559.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-544.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_linebreak</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_linebreak -->
+<g id="module~~graph~~ModuleGraph_edge30" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_linebreak</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C737.36,-625.05 694.27,-589.35 668.84,-567.48"/>
+<polygon fill="#000000" stroke="#000000" points="671.31,-564.99 661.46,-561.09 666.72,-570.28 671.31,-564.99"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge31" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M861.79,-858.99C850.42,-862.32 837.8,-865.84 826.14,-868.74 737.01,-890.9 631.83,-911.49 571.53,-922.77"/>
+<polygon fill="#000000" stroke="#000000" points="571.12,-919.29 561.93,-924.56 572.41,-926.17 571.12,-919.29"/>
+</g>
+<!-- module~ffmt_relational -->
+<g id="module~~graph~~ModuleGraph_node14" class="node">
+<title>module~ffmt_relational</title>
+<g id="a_module~~graph~~ModuleGraph_node14"><a xlink:href="../module/ffmt_relational.html" xlink:title="ffmt_relational">
+<polygon fill="#337ab7" stroke="#337ab7" points="689.74,-1015.88 600.97,-1015.88 600.97,-991.61 689.74,-991.61 689.74,-1015.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-1000.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_relational</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_relational -->
+<g id="module~~graph~~ModuleGraph_edge32" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_relational</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M895.46,-860.36C883.12,-911.8 833.7,-1104.01 779.38,-1123.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-1123.74C723.48,-1143.33 740.53,-1059.11 694.62,-1024.74 693.29,-1023.75 691.91,-1022.8 690.49,-1021.87"/>
+<polygon fill="#000000" stroke="#000000" points="692.43,-1018.95 682.01,-1017.05 688.97,-1025.04 692.43,-1018.95"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge33" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C743.69,-629.27 632.08,-652.14 596.1,-670.74 574.56,-681.89 578.22,-695.63 560.1,-711.74 557.51,-714.05 554.7,-716.32 551.83,-718.51"/>
+<polygon fill="#000000" stroke="#000000" points="549.93,-715.57 543.86,-724.25 554.02,-721.25 549.93,-715.57"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge34" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-1123.74C666.21,-1164.13 630.11,-1096.47 522.34,-1047.74"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge35" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M894.93,-835.25C884.36,-799.73 848.94,-697.77 779.38,-651.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C721.81,-614.98 746.41,-568.67 694.62,-526.74 676.7,-512.24 665.01,-521.29 646.36,-507.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-507.74C597.33,-473.6 607.64,-441.17 560.1,-407.74 545.46,-397.45 539.6,-398.47 522.34,-393.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-393.74C469.16,-379.74 452.21,-380.03 400.94,-393.74"/>
+</g>
+<!-- module~ffmt_structure -->
+<g id="module~~graph~~ModuleGraph_node19" class="node">
+<title>module~ffmt_structure</title>
+<g id="a_module~~graph~~ModuleGraph_node19"><a xlink:href="../module/ffmt_structure.html" xlink:title="ffmt_structure">
+<polygon fill="#337ab7" stroke="#337ab7" points="688.24,-1057.88 602.47,-1057.88 602.47,-1033.61 688.24,-1033.61 688.24,-1057.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-1042.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_structure</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_structure -->
+<g id="module~~graph~~ModuleGraph_edge36" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-1123.74C732.9,-1139.91 686.64,-1095.45 662.79,-1067.16"/>
+<polygon fill="#000000" stroke="#000000" points="665.56,-1065.03 656.54,-1059.47 660.13,-1069.44 665.56,-1065.03"/>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge37" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-507.74C600.47,-475.89 576.4,-512.08 522.34,-507.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-507.74C390.37,-497.33 388.84,-607.4 269.42,-659.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-659.74C183.09,-693.81 157.43,-816.82 150.24,-869.04"/>
+<polygon fill="#000000" stroke="#000000" points="146.8,-868.29 149.03,-878.65 153.75,-869.16 146.8,-868.29"/>
+</g>
+<!-- module~ffmt_use_sort -->
+<g id="module~~graph~~ModuleGraph_node21" class="node">
+<title>module~ffmt_use_sort</title>
+<g id="a_module~~graph~~ModuleGraph_node21"><a xlink:href="../module/ffmt_use_sort.html" xlink:title="ffmt_use_sort">
+<polygon fill="#337ab7" stroke="#337ab7" points="686.74,-623.88 603.97,-623.88 603.97,-599.61 686.74,-599.61 686.74,-623.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-608.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_use_sort</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_use_sort -->
+<g id="module~~graph~~ModuleGraph_edge38" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_use_sort</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C753.68,-635.94 723.48,-626.16 698.05,-620.24"/>
+<polygon fill="#000000" stroke="#000000" points="699.1,-616.89 688.58,-618.18 697.61,-623.73 699.1,-616.89"/>
+</g>
+<!-- module~ffmt_whitespace -->
+<g id="module~~graph~~ModuleGraph_node23" class="node">
+<title>module~ffmt_whitespace</title>
+<g id="a_module~~graph~~ModuleGraph_node23"><a xlink:href="../module/ffmt_whitespace.html" xlink:title="ffmt_whitespace">
+<polygon fill="#337ab7" stroke="#337ab7" points="694.62,-703.88 596.1,-703.88 596.1,-679.61 694.62,-679.61 694.62,-703.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-688.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ffmt_whitespace</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_format&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~graph~~ModuleGraph_edge39" class="edge">
+<title>module~ffmt_format&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M777.38,-651.74C761.63,-641.23 714.76,-659.28 681.6,-674.42"/>
+<polygon fill="#000000" stroke="#000000" points="680.32,-671.16 672.74,-678.56 683.28,-677.5 680.32,-671.16"/>
+</g>
+<!-- iso_c_binding -->
+<g id="module~~graph~~ModuleGraph_node26" class="node">
+<title>iso_c_binding</title>
+<g id="a_module~~graph~~ModuleGraph_node26"><a xlink:href="http://fortranwiki.org/fortran/show/iso_c_binding" xlink:title="iso_c_binding">
+<polygon fill="#337ab7" stroke="#337ab7" points="686.74,-203.88 603.97,-203.88 603.97,-179.61 686.74,-179.61 686.74,-203.88"/>
+<text xml:space="preserve" text-anchor="middle" x="645.36" y="-188.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_c_binding</text>
+</a>
+</g>
+</g>
+<!-- module~ffmt_fs&#45;&gt;iso_c_binding -->
+<g id="module~~graph~~ModuleGraph_edge40" class="edge">
+<title>module~ffmt_fs&#45;&gt;iso_c_binding</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M751.18,-191.74C736.1,-191.74 716.61,-191.74 698.54,-191.74"/>
+<polygon fill="#000000" stroke="#000000" points="698.73,-188.24 688.73,-191.74 698.73,-195.24 698.73,-188.24"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_case -->
+<g id="module~~graph~~ModuleGraph_edge41" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_case</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M755.74,-835.19C734.5,-822.87 701.87,-803.95 677.77,-789.97"/>
+<polygon fill="#000000" stroke="#000000" points="679.74,-787.06 669.34,-785.07 676.23,-793.12 679.74,-787.06"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge42" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-849.74C600.08,-857.55 595.49,-878 560.1,-905.74 557.16,-908.05 554.02,-910.39 550.86,-912.67"/>
+<polygon fill="#000000" stroke="#000000" points="548.91,-909.76 542.73,-918.36 552.93,-915.49 548.91,-909.76"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge43" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M771.01,-835.18C759.26,-813.53 731.92,-769.69 694.62,-750.74 655.89,-731.08 605.84,-729.5 569.68,-731.84"/>
+<polygon fill="#000000" stroke="#000000" points="569.66,-728.33 559.97,-732.6 570.21,-735.31 569.66,-728.33"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge44" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M757.32,-860.27C720.05,-882.89 636.9,-930.29 560.1,-952.74 491.73,-972.74 472.17,-973.04 400.94,-971.74"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge45" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M775.74,-860.17C770.4,-896.2 750.52,-1002.24 694.62,-1066.74 665.99,-1099.78 566.06,-1161.88 522.34,-1161.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1161.74C464.68,-1159.96 456.61,-1125.21 400.94,-1123.74"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_structure -->
+<g id="module~~graph~~ModuleGraph_edge46" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_structure</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M774.77,-860.24C767.54,-891.92 744.45,-976.24 694.62,-1024.74 693.88,-1025.47 693.1,-1026.17 692.3,-1026.85"/>
+<polygon fill="#000000" stroke="#000000" points="690.45,-1023.88 684.21,-1032.44 694.43,-1029.64 690.45,-1023.88"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge47" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M742.34,-845.28C715.78,-844.14 678.51,-844.08 646.36,-849.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-849.74C516.8,-872.22 461.11,-906.56 353.31,-834.74 281.53,-786.93 348.4,-625.07 269.42,-659.74"/>
+</g>
+<!-- module~ffmt_layout&#45;&gt;module~ffmt_whitespace -->
+<g id="module~~graph~~ModuleGraph_edge48" class="edge">
+<title>module~ffmt_layout&#45;&gt;module~ffmt_whitespace</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M772.03,-835.17C760.85,-810.1 732.83,-753.27 694.62,-717.74 691.74,-715.07 688.54,-712.58 685.2,-710.29"/>
+<polygon fill="#000000" stroke="#000000" points="687.17,-707.4 676.81,-705.15 683.51,-713.36 687.17,-707.4"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge49" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M243.87,-497.12C213.8,-481.81 163.73,-459.28 147.65,-469.74"/>
+</g>
+<!-- module~ffmt_lexer&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge50" class="edge">
+<title>module~ffmt_lexer&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.84,-522.04C254.03,-545.81 234.32,-599.75 219.54,-645.74 193.32,-727.36 166,-825.45 153.98,-869.43"/>
+<polygon fill="#000000" stroke="#000000" points="150.66,-868.31 151.4,-878.87 157.41,-870.15 150.66,-868.31"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge51" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M627.25,-560.33C617.28,-568.26 604.98,-579.17 596.1,-590.74 565.74,-630.36 542.45,-684.41 530.73,-714.71"/>
+<polygon fill="#000000" stroke="#000000" points="527.47,-713.43 527.22,-724.02 534.02,-715.9 527.47,-713.43"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge52" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M618.13,-560.36C563.33,-587.74 435.02,-657.33 353.31,-745.74 318.12,-783.82 291.59,-839.25 278.5,-870.02"/>
+<polygon fill="#000000" stroke="#000000" points="275.32,-868.54 274.73,-879.12 281.79,-871.22 275.32,-868.54"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge53" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M614.4,-535.16C607.85,-531.48 601.33,-527.01 596.1,-521.74 572.01,-497.48 585.76,-476.35 560.1,-453.74 531.74,-428.76 437.45,-383.95 400.94,-393.74"/>
+</g>
+<!-- module~ffmt_linebreak&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge54" class="edge">
+<title>module~ffmt_linebreak&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M618.45,-535.27C594.25,-524.59 556.78,-510.5 522.34,-507.74"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge55" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M620.63,-991.35C612.76,-987.13 604,-982.33 596.1,-977.74 581.12,-969.05 564.75,-958.91 551.25,-950.36"/>
+<polygon fill="#000000" stroke="#000000" points="553.14,-947.42 542.83,-945 549.38,-953.33 553.14,-947.42"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge56" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M638.64,-991.27C619.5,-949.56 557.55,-814.51 532.75,-760.44"/>
+<polygon fill="#000000" stroke="#000000" points="536.03,-759.2 528.68,-751.57 529.67,-762.11 536.03,-759.2"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge57" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M600.61,-1006.6C577.37,-1007.94 548.32,-1009.33 522.34,-1009.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1009.74C464.66,-1010.63 456.62,-973 400.94,-971.74"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge58" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M610.74,-1016.34C605.66,-1018.82 600.61,-1021.63 596.1,-1024.74 577.23,-1037.79 579.22,-1049.07 560.1,-1061.74 528.46,-1082.71 438.9,-1123.89 400.94,-1123.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-1123.74C285.92,-1124.02 254.72,-1120.97 147.65,-1084.74"/>
+</g>
+<!-- module~ffmt_relational&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge59" class="edge">
+<title>module~ffmt_relational&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1009.74C465.17,-1010.62 455.88,-1048.9 400.94,-1043.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-1043.74C300.48,-1034.5 206.72,-952.3 167.25,-913.22"/>
+<polygon fill="#000000" stroke="#000000" points="169.84,-910.85 160.31,-906.21 164.86,-915.78 169.84,-910.85"/>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge60" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M775.35,-368.27C763.99,-437.95 708.43,-775.43 694.62,-792.74 664.83,-830.1 630.94,-803.05 596.1,-835.74 570.59,-859.68 583.2,-879.48 560.1,-905.74 558.05,-908.07 555.75,-910.3 553.32,-912.39"/>
+<polygon fill="#000000" stroke="#000000" points="551.21,-909.6 545.4,-918.46 555.47,-915.16 551.21,-909.6"/>
+</g>
+<!-- module~ffmt_settings&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge61" class="edge">
+<title>module~ffmt_settings&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M738.17,-352.71C712.02,-351.43 676.95,-351.14 646.36,-355.74"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_directives -->
+<g id="module~~graph~~ModuleGraph_edge62" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_directives</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M502.11,-750.34C483.93,-762.86 457.22,-781.12 446.58,-787.74 442.49,-790.29 438.14,-792.9 433.81,-795.43"/>
+<polygon fill="#000000" stroke="#000000" points="432.13,-792.35 425.21,-800.37 435.62,-798.42 432.13,-792.35"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_lexer -->
+<g id="module~~graph~~ModuleGraph_edge63" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_lexer</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M506.49,-725.16C465.11,-687.56 342.1,-575.79 291.52,-529.83"/>
+<polygon fill="#000000" stroke="#000000" points="294.1,-527.44 284.35,-523.31 289.4,-532.62 294.1,-527.44"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge64" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497.34,-750.37C491.97,-754.13 486.64,-758.63 482.58,-763.74 420.84,-841.53 500.23,-973.98 400.94,-971.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-971.74C354.35,-970.74 312.07,-936.49 288.56,-913.42"/>
+<polygon fill="#000000" stroke="#000000" points="291.07,-910.98 281.57,-906.3 286.08,-915.88 291.07,-910.98"/>
+</g>
+<!-- module~ffmt_source&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge65" class="edge">
+<title>module~ffmt_source&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M483.97,-744.41C459.43,-747.2 426.92,-747.49 400.94,-735.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-735.74C338.14,-708.23 330.29,-632.35 269.42,-659.74"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge66" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M265.75,-905.35C258.86,-952.2 229.16,-1112.32 147.65,-1084.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-1084.74C75.17,-1060.9 49.57,-962.31 41.34,-916.43"/>
+<polygon fill="#000000" stroke="#000000" points="44.82,-916.03 39.74,-906.73 37.92,-917.17 44.82,-916.03"/>
+</g>
+<!-- module~ffmt_statements&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge67" class="edge">
+<title>module~ffmt_statements&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M219.06,-892.74C211.12,-892.74 202.9,-892.74 194.98,-892.74"/>
+<polygon fill="#000000" stroke="#000000" points="195.19,-889.24 185.19,-892.74 195.19,-896.24 195.19,-889.24"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_constructs -->
+<g id="module~~graph~~ModuleGraph_edge68" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_constructs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1123.74C488.73,-1127.61 454.43,-1114.12 430.74,-1101.78"/>
+<polygon fill="#000000" stroke="#000000" points="432.43,-1098.71 421.97,-1096.98 429.07,-1104.85 432.43,-1098.71"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge69" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M606.19,-1033.29C602.42,-1030.91 598.95,-1028.08 596.1,-1024.74 578.66,-1004.29 540.52,-825.89 527.12,-761.12"/>
+<polygon fill="#000000" stroke="#000000" points="530.59,-760.65 525.15,-751.57 523.74,-762.07 530.59,-760.65"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge70" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M602.17,-1055.09C577.79,-1058.41 547.15,-1058.96 522.34,-1047.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1047.74C502.22,-1039.55 499.36,-1034.42 482.58,-1023.74 446.29,-1000.65 443.96,-972.19 400.94,-971.74"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge71" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1123.74C467.67,-1130.18 453.99,-1125.14 400.94,-1123.74"/>
+</g>
+<!-- module~ffmt_structure&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge72" class="edge">
+<title>module~ffmt_structure&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M619.35,-1058.2C611.73,-1062.26 603.44,-1066.96 596.1,-1071.74 562.5,-1093.65 562.15,-1118.88 522.34,-1123.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-1123.74C478.11,-1128.9 483.01,-1084.72 446.58,-1062.74 427.77,-1051.4 422.05,-1049.84 400.94,-1043.74"/>
+</g>
+<!-- module~ffmt_tokens&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge73" class="edge">
+<title>module~ffmt_tokens&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M109.47,-892.74C101.83,-892.74 93.65,-892.74 85.66,-892.74"/>
+<polygon fill="#000000" stroke="#000000" points="85.67,-889.24 75.67,-892.74 85.67,-896.24 85.67,-889.24"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge74" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M614.01,-624.35C607.56,-628 601.17,-632.46 596.1,-637.74 570.78,-664.14 583.95,-684.01 560.1,-711.74 558.06,-714.12 555.75,-716.38 553.31,-718.5"/>
+<polygon fill="#000000" stroke="#000000" points="551.64,-715.37 545.87,-724.25 555.92,-720.91 551.64,-715.37"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge75" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M623.08,-624.23C614.63,-629.27 604.85,-635.19 596.1,-640.74 544.84,-673.28 530.32,-679.23 482.58,-716.74 465.51,-730.15 464.65,-737.72 446.58,-749.74 408.57,-775.03 389.58,-765.03 353.31,-792.74 324.4,-814.83 298.75,-848.55 283.65,-870.63"/>
+<polygon fill="#000000" stroke="#000000" points="280.78,-868.62 278.14,-878.88 286.6,-872.51 280.78,-868.62"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge76" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M627.17,-599.22C617.18,-591.31 604.87,-580.4 596.1,-568.74 573.86,-539.2 590.56,-514.71 560.1,-493.74 453.32,-420.25 399,-466.11 269.42,-469.74"/>
+</g>
+<!-- module~ffmt_use_sort&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge77" class="edge">
+<title>module~ffmt_use_sort&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M603.57,-609.1C532.23,-606.14 381.68,-607.39 269.42,-659.74"/>
+</g>
+<!-- module~ffmt_walk&#45;&gt;module~ffmt_fs -->
+<g id="module~~graph~~ModuleGraph_edge79" class="edge">
+<title>module~ffmt_walk&#45;&gt;module~ffmt_fs</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M871.95,-44.38C868.37,-46.82 864.97,-49.61 862.14,-52.74 836.01,-81.69 846.4,-99.43 826.14,-132.74 818.05,-146.04 807.36,-159.74 798.25,-170.58"/>
+<polygon fill="#000000" stroke="#000000" points="795.61,-168.29 791.74,-178.15 800.92,-172.86 795.61,-168.29"/>
+</g>
+<!-- module~ffmt_walk&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge80" class="edge">
+<title>module~ffmt_walk&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M869.93,-19.18C835.32,-5.89 775.95,10.47 730.62,-10.74 677.67,-35.53 690.56,-73.48 646.36,-111.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M644.36,-111.74C618.4,-133.51 613.3,-141.56 596.1,-170.74 551.16,-247.01 598.25,-310.21 522.34,-355.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M520.34,-355.74C472.58,-384.39 454.74,-379.36 400.94,-393.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.94,-393.74C376.6,-399.72 373.34,-407.18 353.31,-418.74 315.53,-440.56 313.01,-467.81 269.42,-469.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M267.42,-469.74C214.25,-472.11 192.27,-440.7 147.65,-469.74"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145.65,-469.74C76.86,-514.53 47.32,-786.45 39.87,-869"/>
+<polygon fill="#000000" stroke="#000000" points="36.39,-868.59 39,-878.85 43.36,-869.2 36.39,-868.59"/>
+</g>
+<!-- fregex -->
+<g id="module~~graph~~ModuleGraph_node25" class="node">
+<title>fregex</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="805.38,-43.88 751.38,-43.88 751.38,-19.61 805.38,-19.61 805.38,-43.88"/>
+<text xml:space="preserve" text-anchor="middle" x="778.38" y="-28.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fregex</text>
+</g>
+<!-- module~ffmt_walk&#45;&gt;fregex -->
+<g id="module~~graph~~ModuleGraph_edge78" class="edge">
+<title>module~ffmt_walk&#45;&gt;fregex</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M867.75,-31.74C852.23,-31.74 833.26,-31.74 816.87,-31.74"/>
+<polygon fill="#000000" stroke="#000000" points="817,-28.24 807,-31.74 817,-35.24 817,-28.24"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_options -->
+<g id="module~~graph~~ModuleGraph_edge81" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_options</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M632.44,-704.04C621.86,-715.43 606.51,-733.23 596.1,-750.74 564.48,-803.94 540.48,-873.21 529.29,-908.65"/>
+<polygon fill="#000000" stroke="#000000" points="526.05,-907.26 526.44,-917.85 532.74,-909.33 526.05,-907.26"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_source -->
+<g id="module~~graph~~ModuleGraph_edge82" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_source</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M611.02,-704.31C597.16,-709.54 580.89,-715.67 566.1,-721.25"/>
+<polygon fill="#000000" stroke="#000000" points="565.18,-717.85 557.06,-724.66 567.65,-724.4 565.18,-717.85"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_statements -->
+<g id="module~~graph~~ModuleGraph_edge83" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_statements</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M628.52,-704.32C590.15,-734.85 494.48,-811.45 482.58,-825.74 435,-882.87 475.28,-972.51 400.94,-971.74"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge84" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M628.32,-679.17C567.76,-632.21 352.26,-469.74 269.42,-469.74"/>
+</g>
+<!-- module~ffmt_whitespace&#45;&gt;module~ffmt_tokens -->
+<g id="module~~graph~~ModuleGraph_edge85" class="edge">
+<title>module~ffmt_whitespace&#45;&gt;module~ffmt_tokens</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M613,-679.2C546.36,-654.59 387.08,-606.79 269.42,-659.74"/>
+</g>
+<!-- proc~read_stdin -->
+<g id="module~~graph~~ModuleGraph_node24" class="node">
+<title>proc~read_stdin</title>
+<g id="a_module~~graph~~ModuleGraph_node24"><a xlink:href="../proc/read_stdin.html" xlink:title="read_stdin">
+<polygon fill="#d9534f" stroke="#d9534f" points="932.53,-85.88 866.26,-85.88 866.26,-61.61 932.53,-61.61 932.53,-85.88"/>
+<text xml:space="preserve" text-anchor="middle" x="899.4" y="-70.14" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_stdin</text>
+</a>
+</g>
+</g>
+<!-- proc~read_stdin&#45;&gt;module~ffmt_strings -->
+<g id="module~~graph~~ModuleGraph_edge87" class="edge">
+<title>proc~read_stdin&#45;&gt;module~ffmt_strings</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M866.17,-68.68C813.54,-62.34 708.77,-58.09 646.36,-111.74"/>
+</g>
+<!-- proc~read_stdin&#45;&gt;iso_fortran_env -->
+<g id="module~~graph~~ModuleGraph_edge86" class="edge">
+<title>proc~read_stdin&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M865.88,-84.13C854.59,-87.73 841.66,-91.86 829.3,-95.81"/>
+<polygon fill="#000000" stroke="#000000" points="828.54,-92.37 820.08,-98.75 830.67,-99.04 828.54,-92.37"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmodulegraphModuleGraph = svgPanZoom('#modulegraphModuleGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#ModuleGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="ModuleGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              fformat
+ was developed by Jacob Williams<br>              &copy; 2026 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
